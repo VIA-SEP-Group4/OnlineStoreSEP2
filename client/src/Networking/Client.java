@@ -1,4 +1,6 @@
 package Networking;
 
-public interface Client {
+public interface Client
+{
+  void sendMessage();
 }
