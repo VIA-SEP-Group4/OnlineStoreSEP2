@@ -1,6 +1,6 @@
-package Networking;
+package Model;
 
-public interface Client
+public interface Model
 {
   void sendMessage(String message);
   void toUpperCase(String text);
