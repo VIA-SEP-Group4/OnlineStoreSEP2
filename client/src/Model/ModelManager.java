@@ -18,6 +18,7 @@ public class ModelManager implements Model
 
   @Override public void toUpperCase(String text)
   {
+    System.out.println("Input: " + text);
     client.toUpperCase(text);
   }
 }
