@@ -18,6 +18,7 @@ public class OnlineStoreApp extends Application {
         ViewModelFactory viewModelFactory = new ViewModelFactory(modelFactory);
         ViewHandler viewHandler = new ViewHandler(stage, viewModelFactory);
         viewHandler.start();
+
         /*
         System.out.println("Starting the application ...");
         RMIClient rmiClient = new RMIClient();
@@ -25,9 +26,8 @@ public class OnlineStoreApp extends Application {
 
         modelManager.sendMessage("message message .. ea snd kdn .");
         modelManager.toUpperCase("d sk ssk KK sa kjd KJ skas kjK Jk.");
+        */
 
-        System.exit(0);
-
-         */
+//        System.exit(0);
     }
 }

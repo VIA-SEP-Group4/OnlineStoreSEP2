@@ -1,3 +1,4 @@
+import DataAcess.DBSManager;
 import Model.ServerModelManager;
 import Networking.Server;
 import java.net.MalformedURLException;
@@ -21,6 +22,9 @@ public class RunServer {
         {
             System.err.println("Server launching failed ...[RunServer.main()]");
         }
+
+        DBSManager dbsManager = new DBSManager("eshop");
+        System.out.println("num of users = " + dbsManager.getUserCount());
     }
 
 
