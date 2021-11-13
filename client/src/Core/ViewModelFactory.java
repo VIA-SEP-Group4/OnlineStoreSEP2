@@ -1,15 +1,20 @@
 package Core;
 
-import View.FirstViewModel;
+import View.Login.LoginViewModel;
+import View.Register.RegisterViewModel;
 
 public class ViewModelFactory {
-    private FirstViewModel firstViewModel;
-
+    private LoginViewModel loginViewModel;
+    private RegisterViewModel registerViewModel;
     public ViewModelFactory(ModelFactory modelFactory) {
-        firstViewModel = new FirstViewModel(modelFactory.getManager());
+        loginViewModel = new LoginViewModel(modelFactory.getLoginModel());
+        registerViewModel=new RegisterViewModel(modelFactory.getLoginModel());
     }
 
-    public FirstViewModel getFirstViewModel() {
-        return firstViewModel;
+    public LoginViewModel getLoginViewModel() {
+        return loginViewModel;
+    }
+    public RegisterViewModel getRegisterViewModel() {
+        return registerViewModel;
     }
 }

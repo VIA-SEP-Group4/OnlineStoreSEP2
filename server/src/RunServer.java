@@ -1,8 +1,6 @@
 import DataAcess.DBSManager;
-import Model.Password;
 import Model.ServerModelManager;
 import Model.User;
-import Model.Username;
 import Networking.Server;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
@@ -26,11 +24,7 @@ public class RunServer {
             System.err.println("Server launching failed ...[RunServer.main()]");
         }
 
-        DBSManager dbsManager = new DBSManager();
-        System.out.println("num of users = " + dbsManager.getUserCount());
-        dbsManager.getUsers();
-        dbsManager.registerUser(new User(new Username("asd"), new Password("dsa")));
-        dbsManager.getUsers();
+
     }
 
 

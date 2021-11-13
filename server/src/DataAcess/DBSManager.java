@@ -44,7 +44,6 @@ public class DBSManager implements DataAccessor
     Connection conn = null;
     try {
       conn = DriverManager.getConnection(url, user, password);
-      conn.setAutoCommit(false);
       System.out.println("Connected to the PostgreSQL server successfully.");
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -55,13 +54,17 @@ public class DBSManager implements DataAccessor
 
   @Override public void registerUser(User newUser)
   {
-    String SQL = "INSERT INTO " +SCHEMA+ ".users(username,pass) " + "VALUES(?,?)";
+    String SQL = "INSERT INTO " + "eshop.users(username,pass,email,firstname,lastname) " + "VALUES(?,?,?,?,?)";
     long id = 0;
     try (Connection conn = connect();
         PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
     {
-      pstmt.setString(1, newUser.getUsernameString());
-      pstmt.setString(2, newUser.getPasswordString());
+
+      pstmt.setString(1, newUser.getUsername());
+      pstmt.setString(2, newUser.getPassword());
+      pstmt.setString(3, newUser.getEmail());
+      pstmt.setString(4, newUser.getFirstName());
+      pstmt.setString(5, newUser.getLastName());
 
       System.out.println(pstmt);
       pstmt.executeUpdate();

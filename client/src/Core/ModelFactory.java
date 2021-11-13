@@ -1,18 +1,19 @@
 package Core;
 
-import Model.ModelManager;
+import Model.LoginModel;
+import Model.LoginModelManager;
 
 public class ModelFactory {
-    private ModelManager manager;
+    private LoginModel manager;
     private ClientFactory clientFactory;
 
     public ModelFactory(ClientFactory clientFactory){
         this.clientFactory = clientFactory;
     }
 
-    public ModelManager getManager() {
+    public LoginModel getLoginModel() {
         if(manager == null)
-            manager = new ModelManager(clientFactory.getClient());
+            manager = new LoginModelManager(clientFactory.getClient());
         return manager;
     }
 }

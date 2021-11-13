@@ -21,26 +21,6 @@ public class Server implements RMIServer_Remote{
     UnicastRemoteObject.exportObject(this, 1099);
     Naming.rebind("server", this);
   }
-
-
-  @Override public void messageToServer(String message) throws RemoteException
-  {
-    System.out.println("Message received: " + message);
-  }
-  @Override public void messageToServer(RMIClient_Remote client, String message) throws RemoteException
-  {
-    System.out.println("Message received: " + message);
-    client.receiveReply("callback (" + message + ")");
-  }
-
-
-  @Override public String toUpperCase(String text) throws RemoteException
-  {
-    System.out.println("Message received: " + text);
-    return serverModelManager.toUpperCase(text);
-  }
-
-
   @Override public int userCount() throws RemoteException
   {
     return serverModelManager.userCount();

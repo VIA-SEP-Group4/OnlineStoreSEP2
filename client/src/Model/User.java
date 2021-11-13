@@ -1,33 +1,40 @@
 package Model;
 
-public class User
-{
-  private Username username;
-  private Password password;
+import java.io.Serializable;
 
-  public User(Username username, Password password)
-  {
+public class User implements Serializable
+{
+  private String username;
+  private String password;
+  private String email;
+  private String firstName;
+  private String lastName;
+
+  public User(String username, String password, String email, String firstName, String lastName) {
     this.username = username;
     this.password = password;
+    this.email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
-  public Username getUsername()
-  {
+  public String getEmail() {
+    return email;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public String getUsername() {
     return username;
   }
 
-  public Password getPassword()
-  {
+  public String getPassword() {
     return password;
-  }
-
-  public String getUsernameString()
-  {
-    return username.getUsername();
-  }
-
-  public String getPasswordString()
-  {
-    return password.getPassword();
   }
 }

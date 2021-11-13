@@ -8,7 +8,7 @@ public class ServerModelManager implements Model
   private DataAccessor dbsManager;
   public ServerModelManager()
   {
-    dbsManager = new DBSManager();
+    dbsManager = new DBSManager("postgres","sara1900");
   }
 
 

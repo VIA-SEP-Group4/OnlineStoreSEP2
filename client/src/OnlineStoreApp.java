@@ -3,7 +3,6 @@ import Core.ClientFactory;
 import Core.ModelFactory;
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import Model.ModelManager;
 import Model.*;
 import Networking.RMIClient;
 import javafx.application.Application;
@@ -22,15 +21,15 @@ public class OnlineStoreApp extends Application {
 
 
 
-        System.out.println("Starting the application ...");
-        RMIClient rmiClient = new RMIClient();
-        ModelManager modelManager = new ModelManager(rmiClient);
+        //System.out.println("Starting the application ...");
+        //RMIClient rmiClient = new RMIClient();
+        //LoginModelManager modelManager = new LoginModelManager(rmiClient);
 
 //        modelManager.sendMessage("message message .. ea snd kdn .");
 //        modelManager.toUpperCase("d sk ssk KK sa kjd KJ skas kjK Jk.");
 
-        System.out.println("number of users: " + modelManager.getNumberOfUsers());
-        modelManager.registerUser(new User(new Username("bbbbbbb"), new Password("asdfdhfg")));
+        //System.out.println("number of users: " + modelManager.getNumberOfUsers());
+        //modelManager.registerUser(new User(new Username("bbbbbbb"), new Password("asdfdhfg")));
 
 
 //        System.exit(0);

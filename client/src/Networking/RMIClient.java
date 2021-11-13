@@ -25,27 +25,6 @@ public class RMIClient implements Client, RMIClient_Remote
     }
   }
 
-  @Override public void sendMessage(String message)
-  {
-    try {
-      serverStub.messageToServer(message);
-      serverStub.messageToServer(this, message);
-    } catch (RemoteException e) {
-      System.out.println("Message failed to send ...[RMIClient.sendMessage()]");
-    }
-  }
-
-  @Override public void toUpperCase(String text)
-  {
-    try {
-      String uppercaseText = serverStub.toUpperCase(text);
-      System.out.println("processed text: " + uppercaseText);
-    } catch (RemoteException e)
-    {
-      System.out.println("Text failed to convert ...[RMIClient.toUppercase()]");
-    }
-  }
-
 
   @Override public void receiveReply(String reply) throws RemoteException
   {
@@ -74,6 +53,7 @@ public class RMIClient implements Client, RMIClient_Remote
       System.out.println("Server reply: " + reply);
     } catch (RemoteException e) {
       System.err.println("User registration failed! [RMIClient.registerUser()]");
+      e.printStackTrace();
     }
   }
 

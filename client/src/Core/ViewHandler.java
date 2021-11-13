@@ -1,6 +1,8 @@
 package Core;
 
-import View.FirstViewController;
+
+import View.Login.LoginViewController;
+import View.Register.RegisterViewController;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +16,11 @@ public class ViewHandler {
     private Stage stage;
     private ViewModelFactory viewModelFactory;
 
+    /**
+     * The constructor for the viewHandler, which creates the views
+     * @param stage the stage which will be set in the start method of the application
+     * @param viewModelFactory the class that instantiates view models
+     */
     public ViewHandler(Stage stage, ViewModelFactory viewModelFactory) {
         this.stage = stage;
         this.viewModelFactory = viewModelFactory;
@@ -25,19 +32,33 @@ public class ViewHandler {
     }
 
     public void start() {
-        openPane();
-
-        //on window-close_request action...
+        openLoginPane();
         stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
 
-    private void openPane() {
+    private void openLoginPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../View/FirstView.fxml"));
+            loader.setLocation(getClass().getResource("../View/Login/LoginView.fxml"));
             Parent root = loader.load();
-            FirstViewController view = loader.getController();
-            view.init(this, viewModelFactory.getFirstViewModel());
+            LoginViewController view = loader.getController();
+            view.init(this, viewModelFactory.getLoginViewModel());
+            Scene scene = new Scene(root);
+            stage.setTitle("First");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openRegisterPane() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/Register/RegisterView.fxml"));
+            Parent root = loader.load();
+            RegisterViewController view = loader.getController();
+            view.init(this, viewModelFactory.getRegisterViewModel());
             Scene scene = new Scene(root);
             stage.setTitle("First");
             stage.setScene(scene);

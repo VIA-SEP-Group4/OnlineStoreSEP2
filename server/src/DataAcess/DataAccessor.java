@@ -1,6 +1,6 @@
 package DataAcess;
 
-import Model.User;
+import Model.*;
 
 public interface DataAccessor
 {
