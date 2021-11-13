@@ -1,5 +1,7 @@
 package DataAcess;
 
+import Model.User;
+
 import java.sql.*;
 
 /*
@@ -13,26 +15,24 @@ To query data from a table using JDBC, you use the following steps:
 https://www.postgresqltutorial.com/postgresql-jdbc/query/
  */
 
-public class DBSManager {
+public class DBSManager implements DataAccessor
+{
   
   private Connection connection;
   private final String url;
   private final String user;
   private final String password;
-  private String schemaName;
 
-  public DBSManager(String schemaName)
+  private static final String SCHEMA = "eshop";
+
+  public DBSManager()
   {
-    this.schemaName = schemaName;
-
     url = "jdbc:postgresql://localhost:5432/postgres";
     user = "postgres";
     password = "4280";
   }
-  public DBSManager(String schemaName, String user, String password)
+  public DBSManager(String user, String password)
   {
-    this.schemaName = schemaName;
-
     url = "jdbc:postgresql://localhost:5432/postgres";
     this.user = user;
     this.password = password;
@@ -45,11 +45,6 @@ public class DBSManager {
     try {
       conn = DriverManager.getConnection(url, user, password);
       conn.setAutoCommit(false);
-      System.out.println("Opened database successfully");
-
-      Statement stmt = conn.createStatement();
-      stmt.execute("set search_path to \"users\"");
-
       System.out.println("Connected to the PostgreSQL server successfully.");
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -58,35 +53,119 @@ public class DBSManager {
     return conn;
   }
 
+  @Override public void registerUser(User newUser)
+  {
+    String SQL = "INSERT INTO " +SCHEMA+ ".users(username,pass) " + "VALUES(?,?)";
+    long id = 0;
+    try (Connection conn = connect();
+        PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
+    {
+      pstmt.setString(1, newUser.getUsernameString());
+      pstmt.setString(2, newUser.getPasswordString());
+
+      System.out.println(pstmt);
+      pstmt.executeUpdate();
+
+      try (ResultSet rs = pstmt.getGeneratedKeys()){
+        if (rs.next()) {
+          System.out.println(rs.getString("username") + "\t"
+              + rs.getString("pass"));
+        }
+      }catch (SQLException ex) {
+        System.out.println(ex.getMessage());
+      }
+
+//      int affectedRows = pstmt.executeUpdate();
+//      if (affectedRows > 0)
+//      {
+//        try (ResultSet rs = pstmt.getGeneratedKeys()){
+//          if (rs.next()) {
+//            System.out.println(rs);
+//            id = rs.getLong(1);
+//
+//            System.out.println(rs.getString("username") + "\t"
+//                + rs.getString("pass"));
+//          }
+//        }catch (SQLException ex) {
+//          System.out.println(ex.getMessage());
+//        }
+//      }
+//      else
+//      {
+//        throw new RuntimeException("denied");
+//      }
+
+    }catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+  }
+
+  @Override public void loginUser(User loggingUser)
+  {
+
+  }
 
   /**
    * Get user count
    * @return number of users stored in the user-relation
    */
-  public int getUserCount() {
-    String SQL = "SELECT count(*) FROM users";
+  @Override public int getUserCount() {
     int count = 0;
 
-    Connection conn = connect();
-    try
-    {
-      Statement stmt = conn.createStatement();
-      stmt.execute("SET search_path = 'eshop'");
-      ResultSet rs = stmt.executeQuery(SQL);
+//    String SQL = "SELECT count(*) FROM users";
+//    Connection conn = connect();
+//    try
+//    {
+//      Statement stmt = conn.createStatement();
+//      stmt.execute("SET search_path = 'eshop'");
+//      ResultSet rs = stmt.executeQuery(SQL);
+//
+//      rs.next();
+//      count = rs.getInt(1);
+//
+//      rs.close();
+//      stmt.close();
+//      conn.close();
+//    }
+//    catch (SQLException e)
+//    {
+//      System.out.println(e.getMessage());
+//    }
 
+    String SQL = "SELECT count(*) FROM " +SCHEMA+ ".users";
+    try (Connection conn = connect();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(SQL))
+    {
       rs.next();
       count = rs.getInt(1);
-
-      rs.close();
-      stmt.close();
-      conn.close();
-    }
-    catch (SQLException e)
-    {
-      System.out.println(e.getMessage());
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
     }
 
     return count;
+  }
+
+  /**
+   * Get all rows in the users-relation
+   */
+  public void getUsers() {
+
+    String SQL = "SELECT * FROM " +SCHEMA+ ".users";
+
+    try (Connection conn = connect();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(SQL)) {
+      System.out.println("All users:");
+      // display actor information
+      while (rs.next())
+      {
+        System.out.println(rs.getString("username") + "\t"
+            + rs.getString("pass"));
+      }
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
   }
 
   /**

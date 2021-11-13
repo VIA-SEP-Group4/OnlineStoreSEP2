@@ -21,4 +21,14 @@ public class ModelManager implements Model
     System.out.println("Input: " + text);
     client.toUpperCase(text);
   }
+
+  @Override public void registerUser(User newUser)
+  {
+    client.registerUser(newUser);
+  }
+
+  @Override public int getNumberOfUsers()
+  {
+    return client.getNumberOfUsers();
+  }
 }
