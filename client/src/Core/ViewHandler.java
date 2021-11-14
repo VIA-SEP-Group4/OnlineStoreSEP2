@@ -42,7 +42,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Login/LoginView.fxml"));
             Parent root = loader.load();
             LoginViewController view = loader.getController();
-            view.init(this, viewModelFactory.getLoginViewModel());
+            view.init(this, viewModelFactory);
             Scene scene = new Scene(root);
             stage.setTitle("First");
             stage.setScene(scene);
@@ -58,7 +58,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Register/RegisterView.fxml"));
             Parent root = loader.load();
             RegisterViewController view = loader.getController();
-            view.init(this, viewModelFactory.getRegisterViewModel());
+            view.init(this, viewModelFactory);
             Scene scene = new Scene(root);
             stage.setTitle("First");
             stage.setScene(scene);
