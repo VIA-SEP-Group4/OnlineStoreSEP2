@@ -15,6 +15,7 @@ public class LoginViewController implements ViewController
     public PasswordField passwordTextField;
     public Label usernameErrorLabel;
     public Label passwordErrorLabel;
+    public Label successLabel;
 
     private ViewHandler viewHandler;
     private LoginViewModel viewModel;
@@ -22,9 +23,18 @@ public class LoginViewController implements ViewController
     public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModel = viewModelFactory.getLoginViewModel();
+        usernameTextField.textProperty().bindBidirectional(viewModel.userNameProperty());
+        passwordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
+        usernameErrorLabel.textProperty().bindBidirectional(viewModel.errorUserProperty());
+        passwordErrorLabel.textProperty().bindBidirectional(viewModel.errorPassProperty());
+        successLabel.textProperty().bindBidirectional(viewModel.successProperty());
     }
 
     public void onRegister(ActionEvent actionEvent) {
         viewHandler.openRegisterPane();
+    }
+
+    public void onLogin(ActionEvent actionEvent) {
+        viewModel.login();
     }
 }

@@ -2,18 +2,25 @@ package Networking;
 
 import Model.Model;
 import Model.User;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
-public class Server implements RMIServer_Remote{
+public class Server implements RMIServer_Remote, PropertyChangeListener {
 
   private Model serverModelManager;
+  private ArrayList<RMIClient_Remote> clients;
   public Server(Model serverModelManager) throws RemoteException, MalformedURLException
   {
     super();
+    clients=new ArrayList<>();
     this.serverModelManager = serverModelManager;
+    serverModelManager.addListener("Validation",this);
   }
 
   public void start() throws RemoteException, MalformedURLException
@@ -41,17 +48,33 @@ public class Server implements RMIServer_Remote{
     return reply;
   }
 
-  @Override public String loginUser(User loggingUser) throws RemoteException
+  @Override public void loginUser(String username, String password, String clientID) throws RemoteException
   {
-    String reply;
-    try
-    {
-      serverModelManager.loginUser(loggingUser);
-      reply = "approved";
-    }catch (RuntimeException e){
-      reply = e.getMessage();
+      serverModelManager.loginUser(username,password,clientID);
+  }
+
+  @Override
+  public void registerClient(RMIClient_Remote client) {
+    clients.add(client);
+  }
+
+  @Override
+  public void removeClient(RMIClient_Remote client) {
+    clients.remove(client);
+  }
+
+  @Override
+  public void propertyChange(PropertyChangeEvent evt) {
+    for(RMIClient_Remote client : clients){
+
+      try {
+        System.out.println(client.getID());
+        if(client.getID().equals(evt.getOldValue()))
+          client.receiveReply(evt.getNewValue().toString());
+      } catch (RemoteException e) {
+        e.printStackTrace();
+      }
     }
 
-    return reply;
   }
 }

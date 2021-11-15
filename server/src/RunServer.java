@@ -22,6 +22,7 @@ public class RunServer {
         } catch (RemoteException | MalformedURLException e)
         {
             System.err.println("Server launching failed ...[RunServer.main()]");
+            e.printStackTrace();
         }
 
 

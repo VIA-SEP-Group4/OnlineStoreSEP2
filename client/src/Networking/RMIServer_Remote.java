@@ -6,12 +6,9 @@ import java.rmi.RemoteException;
 
 public interface RMIServer_Remote extends Remote
 {
-  void messageToServer(String message) throws RemoteException;
-  void messageToServer(RMIClient_Remote client, String message) throws RemoteException;
-
-  String toUpperCase(String text) throws RemoteException;;
-
   int userCount() throws RemoteException;
   String registerUser(User newUser)throws RemoteException;
-  String loginUser(User loggingUser) throws RemoteException;
+  void loginUser(String username, String password, String clientID) throws RemoteException;
+  void registerClient(RMIClient_Remote client) throws RemoteException;
+  void removeClient(RMIClient_Remote client) throws RemoteException;
 }

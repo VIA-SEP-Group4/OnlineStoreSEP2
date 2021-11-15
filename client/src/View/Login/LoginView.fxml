@@ -38,5 +38,7 @@
             <Font name="Bauhaus 93" size="24.0" />
          </font>
       </Text>
+      <Button layoutX="466.0" layoutY="188.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
+      <Label fx:id="successLabel" layoutX="274.0" layoutY="192.0" textFill="#88ff00" />
    </children>
 </AnchorPane>

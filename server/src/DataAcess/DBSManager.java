@@ -1,7 +1,10 @@
 package DataAcess;
 
 import Model.User;
+import Utils.Subject;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.sql.*;
 
 /*
@@ -22,7 +25,7 @@ public class DBSManager implements DataAccessor
   private final String url;
   private final String user;
   private final String password;
-
+  private PropertyChangeSupport support=new PropertyChangeSupport(this);
   private static final String SCHEMA = "eshop";
 
   public DBSManager()
@@ -78,34 +81,18 @@ public class DBSManager implements DataAccessor
         System.out.println(ex.getMessage());
       }
 
-//      int affectedRows = pstmt.executeUpdate();
-//      if (affectedRows > 0)
-//      {
-//        try (ResultSet rs = pstmt.getGeneratedKeys()){
-//          if (rs.next()) {
-//            System.out.println(rs);
-//            id = rs.getLong(1);
-//
-//            System.out.println(rs.getString("username") + "\t"
-//                + rs.getString("pass"));
-//          }
-//        }catch (SQLException ex) {
-//          System.out.println(ex.getMessage());
-//        }
-//      }
-//      else
-//      {
-//        throw new RuntimeException("denied");
-//      }
 
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
   }
 
-  @Override public void loginUser(User loggingUser)
+  @Override public void loginUser(String username, String password, String clientID)
   {
 
+    if(!checkUsername(username)) support.firePropertyChange("InvalidUser",clientID,"User doesn't exist");
+    else if(!checkPassword(password,username)) support.firePropertyChange("InvalidPassword",clientID,"Password doesn't match");
+    else support.firePropertyChange("SuccessfulLogin",clientID,"The user is logged in");
   }
 
   /**
@@ -114,26 +101,6 @@ public class DBSManager implements DataAccessor
    */
   @Override public int getUserCount() {
     int count = 0;
-
-//    String SQL = "SELECT count(*) FROM users";
-//    Connection conn = connect();
-//    try
-//    {
-//      Statement stmt = conn.createStatement();
-//      stmt.execute("SET search_path = 'eshop'");
-//      ResultSet rs = stmt.executeQuery(SQL);
-//
-//      rs.next();
-//      count = rs.getInt(1);
-//
-//      rs.close();
-//      stmt.close();
-//      conn.close();
-//    }
-//    catch (SQLException e)
-//    {
-//      System.out.println(e.getMessage());
-//    }
 
     String SQL = "SELECT count(*) FROM " +SCHEMA+ ".users";
     try (Connection conn = connect();
@@ -175,15 +142,29 @@ public class DBSManager implements DataAccessor
    * Check login credentials
    * @return true if passwords matches; false if don't
    */
-  public boolean checkLoginCredentials(String username, String password) {
-    String SQL = "SELECT password FROM user WHERE username = " + username;
-
+  private boolean checkPassword(String pass, String username) {
+    String SQL = "SELECT pass FROM eshop.users WHERE username = " + "'"+username+"'";
     try (Connection conn = connect();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(SQL))
     {
       rs.next();
-      return rs.getString(2).equals(password);
+      System.out.println(rs.getString(1));
+      return rs.getString(1).equals(pass);
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+
+    return false;
+  }
+  private boolean checkUsername( String username) {
+    String SQL = "SELECT username FROM eshop.users WHERE username = " + "'"+username+"'";
+    try (Connection conn = connect();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL))
+    {
+      rs.next();
+      return rs.getString(1).equals(username);
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
@@ -191,4 +172,13 @@ public class DBSManager implements DataAccessor
     return false;
   }
 
+  @Override
+  public void addListener( String eventName,PropertyChangeListener listener) {
+    support.addPropertyChangeListener(eventName,listener);
+  }
+
+  @Override
+  public void removeListener(String eventName, PropertyChangeListener listener) {
+    support.removePropertyChangeListener(eventName,listener);
+  }
 }
