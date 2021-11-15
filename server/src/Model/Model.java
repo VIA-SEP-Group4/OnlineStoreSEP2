@@ -2,11 +2,12 @@ package Model;
 
 import Utils.Subject;
 
+import java.beans.PropertyChangeListener;
+
 public interface Model extends Subject
 {
-  String toUpperCase(String text);
-
   void registerUser(User newUser);
-  void loginUser(String username, String password, String clientID);
+  void loginUser(User loggingUser);
   int userCount();
+
 }

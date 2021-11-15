@@ -2,31 +2,18 @@ package Model;
 
 import DataAcess.DBSManager;
 import DataAcess.DataAccessor;
-
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ServerModelManager implements Model, PropertyChangeListener
+public class ServerModelManager implements Model
 {
   private DataAccessor dbsManager;
-  private PropertyChangeSupport support;
+  private PropertyChangeSupport property;
   public ServerModelManager()
   {
-    support=new PropertyChangeSupport(this);
     dbsManager = new DBSManager("postgres","sara1900");
-    dbsManager.addListener("InvalidPassword",this);
-    dbsManager.addListener("InvalidUser",this);
-    dbsManager.addListener("SuccessfulLogin",this);
-
+    property = new PropertyChangeSupport(this);
   }
-
-
-  @Override public String toUpperCase(String text)
-  {
-    return text.toUpperCase();
-  }
-
 
   @Override public int userCount()
   {
@@ -35,27 +22,26 @@ public class ServerModelManager implements Model, PropertyChangeListener
 
   @Override public void registerUser(User newUser)
   {
+    if(dbsManager.getUsers().contains(newUser)){
+      throw new IllegalArgumentException("The user already exists");
+    }
     dbsManager.registerUser(newUser);
   }
 
-  @Override public void loginUser(String username, String password,String clientID)
+  @Override public void loginUser(User loggingUser)
   {
-    dbsManager.loginUser(username,password,clientID);
+    dbsManager.loginUser(loggingUser.getUsername(), loggingUser.getPassword(), loggingUser.getClientID());
   }
 
-
-  @Override
-  public void propertyChange(PropertyChangeEvent evt) {
-    support.firePropertyChange("Validation",evt.getOldValue(),evt.getNewValue());
+  @Override public void addListener(String eventName,
+      PropertyChangeListener listener)
+  {
+    property.addPropertyChangeListener(eventName, listener);
   }
 
-  @Override
-  public void addListener(String eventName, PropertyChangeListener listener) {
-    support.addPropertyChangeListener(eventName,listener);
-  }
-
-  @Override
-  public void removeListener(String eventName, PropertyChangeListener listener) {
-    support.removePropertyChangeListener(eventName,listener);
+  @Override public void removeListener(String eventName,
+      PropertyChangeListener listener)
+  {
+    property.removePropertyChangeListener(eventName, listener);
   }
 }

@@ -48,9 +48,9 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     return reply;
   }
 
-  @Override public void loginUser(String username, String password, String clientID) throws RemoteException
+  @Override public void loginUser(User loggingUser) throws RemoteException
   {
-      serverModelManager.loginUser(username,password,clientID);
+      serverModelManager.loginUser(loggingUser);
   }
 
   @Override
