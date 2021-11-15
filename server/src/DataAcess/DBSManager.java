@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import Utils.Subject;
 import java.sql.*;
+import java.util.ArrayList;
 
 /*
 To query data from a table using JDBC, you use the following steps:
@@ -111,7 +112,7 @@ public class DBSManager implements DataAccessor
   /**
    * Get all rows in the users-relation
    */
-  public void getUsers() {
+  public ArrayList<User> getUsers() {
 
     String SQL = "SELECT * FROM " +SCHEMA+ ".users";
 
@@ -128,6 +129,7 @@ public class DBSManager implements DataAccessor
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
+    return null;
   }
 
   /**
