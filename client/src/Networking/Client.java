@@ -2,7 +2,6 @@ package Networking;
 
 import Model.User;
 import Utils.Subject;
-
 import java.rmi.RemoteException;
 
 public interface Client extends Subject

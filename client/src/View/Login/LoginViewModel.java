@@ -74,10 +74,11 @@ public class LoginViewModel implements PropertyChangeListener {
             errorUser.setValue(reply);
             errorPass.setValue("");
         });}
-        else Platform.runLater(()->{success.setValue(reply);
+        else if (reply.toLowerCase().contains("success"))
+            Platform.runLater(()->{success.setValue(reply);
                 errorPass.setValue("");
                 errorUser.setValue("");
-        });
+            });
     }
 
     public String getSuccess() {

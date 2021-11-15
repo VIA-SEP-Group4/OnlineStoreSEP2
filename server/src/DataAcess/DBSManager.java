@@ -1,10 +1,9 @@
 package DataAcess;
 
 import Model.User;
-import Utils.Subject;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import Utils.Subject;
 import java.sql.*;
 
 /*
@@ -58,10 +57,11 @@ public class DBSManager implements DataAccessor
   @Override public void registerUser(User newUser)
   {
     String SQL = "INSERT INTO " + "eshop.users(username,pass,email,firstname,lastname) " + "VALUES(?,?,?,?,?)";
-    long id = 0;
+
     try (Connection conn = connect();
         PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
     {
+      System.out.println(newUser);
 
       pstmt.setString(1, newUser.getUsername());
       pstmt.setString(2, newUser.getPassword());
@@ -69,30 +69,22 @@ public class DBSManager implements DataAccessor
       pstmt.setString(4, newUser.getFirstName());
       pstmt.setString(5, newUser.getLastName());
 
-      System.out.println(pstmt);
-      pstmt.executeUpdate();
-
-      try (ResultSet rs = pstmt.getGeneratedKeys()){
-        if (rs.next()) {
-          System.out.println(rs.getString("username") + "\t"
-              + rs.getString("pass"));
-        }
-      }catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-      }
-
+      int affectedRows = pstmt.executeUpdate();
+      if (affectedRows <= 0)
+        throw new RuntimeException("Register failed");
 
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
     }
   }
 
-  @Override public void loginUser(String username, String password, String clientID)
+  @Override public void loginUser(String username, String password)
   {
-
-    if(!checkUsername(username)) support.firePropertyChange("InvalidUser",clientID,"User doesn't exist");
-    else if(!checkPassword(password,username)) support.firePropertyChange("InvalidPassword",clientID,"Password doesn't match");
-    else support.firePropertyChange("SuccessfulLogin",clientID,"The user is logged in");
+    if(!checkUsername(username))
+      throw new RuntimeException("User doesn't exist");
+    else if(!checkPassword(password,username))
+      throw new RuntimeException("Password doesn't match");
   }
 
   /**

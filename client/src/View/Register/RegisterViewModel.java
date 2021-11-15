@@ -34,7 +34,7 @@ public class RegisterViewModel {
         && !email.getValue().equals("") && email!=null
         && !password.getValue().equals("") && password!=null
         )
-            model.registerUser(new User(fName.getValue(),lName.getValue(),userName.getValue(),email.getValue(),password.getValue()));
+            model.registerUser(new User(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
     }
 
     public StringProperty fNameProperty() {

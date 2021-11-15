@@ -74,12 +74,14 @@ public class RMIClient implements Client, RMIClient_Remote
 
   @Override public void loginUser(String username, String password)
   {
+    String reply = "denied";
     try {
-      serverStub.loginUser(username, password, clientID);
+      reply = serverStub.loginUser(username, password);
     } catch (RemoteException | RuntimeException e) {
       System.err.println("Server error! User logging failed! [RMIClient.registerUser()]");
       e.printStackTrace();
     }
+    support.firePropertyChange("LoginReply",null, reply);
   }
 
 
