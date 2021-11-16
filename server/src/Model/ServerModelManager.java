@@ -14,7 +14,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
   public ServerModelManager()
   {
     support=new PropertyChangeSupport(this);
-    dbsManager = new DBSManager("postgres","4280");
+    dbsManager = new DBSManager("postgres","sara1900");
     dbsManager.addListener("InvalidPassword",this);
     dbsManager.addListener("InvalidUser",this);
     dbsManager.addListener("SuccessfulLogin",this);

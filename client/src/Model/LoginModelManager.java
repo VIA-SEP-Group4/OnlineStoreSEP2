@@ -17,6 +17,7 @@ public class LoginModelManager implements LoginModel, PropertyChangeListener
     this.client = client;
     client.startClient();
     client.addListener("LoginReply",this);
+    client.addListener("RegistrationReply",this);
   }
 
 

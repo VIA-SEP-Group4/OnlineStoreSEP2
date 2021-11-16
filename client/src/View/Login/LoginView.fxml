@@ -25,8 +25,8 @@
             <Font name="Bauhaus 93" size="12.0" />
          </font>
       </Text>
-      <Text layoutX="226.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
-      <Button layoutX="262.0" layoutY="329.0" mnemonicParsing="false" onAction="#onRegister" text="Register">
+      <Text layoutX="14.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
+      <Button layoutX="39.0" layoutY="354.0" mnemonicParsing="false" onAction="#onRegister" text="Register">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -38,7 +38,7 @@
             <Font name="Bauhaus 93" size="24.0" />
          </font>
       </Text>
-      <Button layoutX="466.0" layoutY="188.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
+      <Button layoutX="277.0" layoutY="276.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
       <Label fx:id="successLabel" layoutX="274.0" layoutY="192.0" textFill="#88ff00" />
    </children>
 </AnchorPane>

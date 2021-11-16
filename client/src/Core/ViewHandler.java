@@ -36,7 +36,7 @@ public class ViewHandler {
         stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
 
-    private void openLoginPane() {
+    public void openLoginPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../View/Login/LoginView.fxml"));

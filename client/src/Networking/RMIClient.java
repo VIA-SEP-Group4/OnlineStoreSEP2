@@ -66,6 +66,7 @@ public class RMIClient implements Client, RMIClient_Remote
     try {
       String reply = serverStub.registerUser(newUser);
       System.out.println("Server reply: " + reply);
+      support.firePropertyChange("RegistrationReply",null,reply);
     } catch (RemoteException e) {
       System.err.println("User registration failed! [RMIClient.registerUser()]");
       e.printStackTrace();

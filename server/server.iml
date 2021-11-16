@@ -7,6 +7,6 @@
     </content>
     <orderEntry type="jdk" jdkName="16" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="postgres-jdbc" level="application" />
+    <orderEntry type="library" name="postgresql" level="application" />
   </component>
 </module>

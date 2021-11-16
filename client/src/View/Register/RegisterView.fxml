@@ -7,10 +7,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Register.RegisterViewController">
+<AnchorPane prefHeight="405.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Register.RegisterViewController">
    <children>
-      <Text layoutX="268.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
+      <Text layoutX="319.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
          <font>
             <Font name="Bauhaus 93" size="18.0" />
          </font>
@@ -21,18 +20,18 @@
          </font>
       </Label>
       <TextField fx:id="firstNameTextField" layoutX="119.0" layoutY="98.0" />
-      <Label layoutX="312.0" layoutY="100.0" text="Last Name">
+      <Label layoutX="459.0" layoutY="101.0" text="Last Name">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="lastNameTextField" layoutX="386.0" layoutY="98.0" />
-      <Label layoutX="345.0" layoutY="156.0" text="Email">
+      <TextField fx:id="lastNameTextField" layoutX="535.0" layoutY="98.0" />
+      <Label layoutX="482.0" layoutY="155.0" text="Email">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="emailTextField" layoutX="386.0" layoutY="153.0" />
+      <TextField fx:id="emailTextField" layoutX="535.0" layoutY="151.0" />
       <Label layoutX="33.0" layoutY="155.0" text="User Name">
          <font>
             <Font size="14.0" />
@@ -44,13 +43,17 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="292.0" layoutY="209.0" text="Re-enter password">
+      <Label layoutX="409.0" layoutY="208.0" text="Re-enter password">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="passwordTextField" layoutX="111.0" layoutY="205.0" />
-      <TextField fx:id="rePasswordTextField" layoutX="422.0" layoutY="207.0" />
-      <Button layoutX="266.0" layoutY="292.0" mnemonicParsing="false" onAction="#onSignUp" text="Sign Up" />
+      <TextField fx:id="passwordTextField" layoutX="119.0" layoutY="207.0" />
+      <TextField fx:id="rePasswordTextField" layoutX="539.0" layoutY="205.0" />
+      <Button layoutX="322.0" layoutY="292.0" mnemonicParsing="false" onAction="#onSignUp" text="Sign Up" />
+      <Button layoutX="307.0" layoutY="349.0" mnemonicParsing="false" onAction="#backToLogin" text="Back to Login" />
+      <Label fx:id="errorRePasswordLabel" layoutX="408.0" layoutY="239.0" textFill="RED" />
+      <Label fx:id="fieldsError" layoutX="32.0" layoutY="239.0" prefHeight="17.0" prefWidth="333.0" textFill="#f80101" />
+      <Label fx:id="succesLabel" layoutX="350.0" layoutY="68.0" textFill="#1eff00" />
    </children>
 </AnchorPane>

@@ -9,15 +9,13 @@ public class User implements Serializable
   private String email;
   private String firstName;
   private String lastName;
-  private String clientID;
 
-  public User(String username, String password, String email, String firstName, String lastName, String clientID) {
+  public User(String username, String password, String email, String firstName, String lastName) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.clientID = clientID;
   }
 
   public String getEmail() {
@@ -40,5 +38,4 @@ public class User implements Serializable
     return password;
   }
 
-  public String getClientID(){return clientID;}
 }
