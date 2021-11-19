@@ -3,7 +3,6 @@ package DataAcess;
 import Model.User;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import Utils.Subject;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -57,7 +56,7 @@ public class DBSManager implements DataAccessor
 
   @Override public void registerUser(User newUser)
   {
-    String SQL = "INSERT INTO " + "eshop.users(username,pass,email,firstname,lastname) " + "VALUES(?,?,?,?,?)";
+    String SQL = "INSERT INTO " + "eshop.users(user_name,pass,email,first_name,last_name) " + "VALUES(?,?,?,?,?)";
 
     try (Connection conn = connect();
         PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
@@ -123,7 +122,7 @@ public class DBSManager implements DataAccessor
       // display actor information
       while (rs.next())
       {
-        System.out.println(rs.getString("username") + "\t"
+        System.out.println(rs.getString("user_name") + "\t"
             + rs.getString("pass"));
       }
     } catch (SQLException ex) {
@@ -137,7 +136,7 @@ public class DBSManager implements DataAccessor
    * @return true if passwords matches; false if don't
    */
   private boolean checkPassword(String pass, String username) {
-    String SQL = "SELECT pass FROM eshop.users WHERE username = " + "'"+username+"'";
+    String SQL = "SELECT pass FROM eshop.users WHERE user_name = " + "'"+username+"'";
     try (Connection conn = connect();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(SQL))
@@ -152,7 +151,7 @@ public class DBSManager implements DataAccessor
     return false;
   }
   private boolean checkUsername( String username) {
-    String SQL = "SELECT username FROM eshop.users WHERE username = " + "'"+username+"'";
+    String SQL = "SELECT user_name FROM eshop.users WHERE user_name = " + "'"+username+"'";
     try (Connection conn = connect();
          Statement stmt = conn.createStatement();
          ResultSet rs = stmt.executeQuery(SQL))
