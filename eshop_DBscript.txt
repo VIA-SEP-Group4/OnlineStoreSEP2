@@ -1,15 +1,32 @@
+CREATE SCHEMA eshop;
 
-create table eshop.users(
+CREATE TABLE eshop.users(
 	user_id serial,
-	username varchar(20),
+	user_name varchar(20),
 	pass varchar(20),
 	email varchar(50),
-	firstname varchar(20),
-	lastname varchar(20)
+	first_name varchar(20),
+	last_name varchar(20)
+);
+ALTER TABLE eshop.users ADD CONSTRAINT pk_users PRIMARY KEY (user_id);
+ALTER TABLE eshop.users ADD CONSTRAINT unique_username UNIQUE(user_name);
+
+
+CREATE TABLE eshop.employees
+(
+	employee_id SERIAL,
+	first_name VARCHAR(25) NOT NULL,
+	last_name VARCHAR(25) NOT NULL,
+	pin INTEGER CHECK(pin>=1000 AND pin<=9999),
+	PRIMARY KEY (employee_id)
 );
 
-alter table eshop.users add constraint pk_users primary key (user_id);
-alter table eshop.users add constraint unique_username UNIQUE(username);
 
-
-select * from eshop.users;
+CREATE TABLE eshop.products
+(
+	product_id SERIAL PRIMARY KEY,
+	product_name VARCHAR(20) NOT NULL,
+	description VARCHAR(100),
+	amount INTEGER,
+	price INTEGER
+);
