@@ -37,12 +37,12 @@ public class RegisterViewModel implements PropertyChangeListener {
         return fName.get();
     }
     public void sendRegisterData(){
-        if(!fName.getValue().equals("") && fName!=null
-        && !lName.getValue().equals("") && lName!=null
-        && !userName.getValue().equals("") && userName!=null
-        && !email.getValue().equals("") && email!=null
-        && password!=null && !password.getValue().equals("")
-                && !rePassword.getValue().equals("") && rePassword!=null)
+        if(!fName.getValue().equals("") && fName.getValue()!=null
+        && !lName.getValue().equals("") && lName.getValue()!=null
+        && !userName.getValue().equals("") && userName.getValue()!=null
+        && !email.getValue().equals("") && email.getValue()!=null
+        && password.getValue()!=null && !password.getValue().equals("")
+                && !rePassword.getValue().equals("") && rePassword.getValue()!=null)
         {
             if(!password.getValue().equals(rePassword.getValue()))
             {
