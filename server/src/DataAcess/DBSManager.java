@@ -166,7 +166,7 @@ public class DBSManager implements DataAccessor
       System.out.println("All products:");
       while (rs.next())
       {
-        products.add(new Product(rs.getString("product_name"),"type",Integer.parseInt(rs.getString("price")),
+        products.add(new Product(rs.getString("product_name"), rs.getString("type"), Double.parseDouble(rs.getString("price")),
                 rs.getString("description"),Integer.parseInt(rs.getString("amount"))));
 
       }
