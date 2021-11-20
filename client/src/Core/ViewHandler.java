@@ -1,6 +1,7 @@
 package Core;
 
 
+import View.Browser.BrowserViewController;
 import View.Login.LoginViewController;
 import View.Register.RegisterViewController;
 import javafx.event.Event;
@@ -32,7 +33,7 @@ public class ViewHandler {
     }
 
     public void start() {
-        openLoginPane();
+        openBrowserPane();
         stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
 
@@ -61,6 +62,22 @@ public class ViewHandler {
             view.init(this, viewModelFactory);
             Scene scene = new Scene(root);
             stage.setTitle("First");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openBrowserPane() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/Browser/BrowserView.fxml"));
+            Parent root = loader.load();
+            BrowserViewController view = loader.getController();
+            view.init(this, viewModelFactory);
+            Scene scene = new Scene(root);
+            stage.setTitle("Browser");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
