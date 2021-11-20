@@ -6,11 +6,11 @@ public class Product implements Serializable
 {
   private String name;
   private String type;
-  private int price;
+  private double price;
   private String description;
   private int quantityP;
 
-  public Product(String name, String type, int price, String description, int quantityP)
+  public Product(String name, String type, double price, String description, int quantityP)
   {
     this.name = name;
     this.type = type;
@@ -39,12 +39,12 @@ public class Product implements Serializable
     this.type = type;
   }
 
-  public int getPrice()
+  public double getPrice()
   {
     return price;
   }
 
-  public void setPrice(int price)
+  public void setPrice(double price)
   {
     this.price = price;
   }

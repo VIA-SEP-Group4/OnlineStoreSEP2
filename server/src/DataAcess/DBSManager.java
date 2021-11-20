@@ -183,7 +183,7 @@ public class DBSManager implements DataAccessor
    */
   @Override
   public void addProduct(Product p) {
-    String SQL = "INSERT INTO " + "eshop.products(product_name,description,amount,price) " + "VALUES(?,?,?,?)";
+    String SQL = "INSERT INTO " + "eshop.products(product_name,description,type,amount,price) " + "VALUES(?,?,?,?,?)";
 
     try (Connection conn = connect();
          PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
@@ -191,8 +191,9 @@ public class DBSManager implements DataAccessor
       System.out.println(p);
       pstmt.setString(1, p.getName());
       pstmt.setString(2, p.getDescription());
-      pstmt.setInt(3, p.getQuantityP());
-      pstmt.setInt(4, p.getPrice());
+      pstmt.setString(3, p.getType());
+      pstmt.setInt(4, p.getQuantityP());
+      pstmt.setDouble(5, p.getPrice());
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)

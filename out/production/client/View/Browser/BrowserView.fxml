@@ -11,8 +11,6 @@
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -128,19 +126,12 @@
                   <Insets bottom="5.0" left="10.0" top="5.0" />
                </HBox.margin>
             </TextField>
-            <Label fx:id="searchLabel" onMouseClicked="#onClickSearchLabel" prefHeight="29.0" prefWidth="62.0" text="Search">
+            <Label onMouseClicked="#onClickSearchLabel" prefHeight="29.0" prefWidth="62.0" text="Search">
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin>
-               <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../16px-Search_Icon.svg.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
                <padding>
-                  <Insets left="3.0" />
+                  <Insets left="5.0" />
                </padding>
             </Label>
             <Label fx:id="idLabel" prefHeight="25.0" prefWidth="66.0">
@@ -156,14 +147,7 @@
                   <Insets top="5.0" />
                </HBox.margin>
             </Label>
-            <Button fx:id="basketButton" mnemonicParsing="false" onAction="#onBasketButton" prefHeight="30.0" prefWidth="75.0" text="Basket">
-               <graphic>
-                  <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../add-to-basket.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button mnemonicParsing="false" onAction="#onBasketButton" prefHeight="26.0" prefWidth="73.0" text="Basket">
                <HBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </HBox.margin>

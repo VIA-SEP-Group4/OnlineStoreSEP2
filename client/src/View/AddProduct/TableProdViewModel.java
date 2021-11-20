@@ -1,16 +1,13 @@
 package View.AddProduct;
 
 import Model.Product;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class TableProdViewModel
 {
   private StringProperty nameProperty;
   private StringProperty typeProperty;
-  private IntegerProperty priceProperty;
+  private DoubleProperty priceProperty;
   private IntegerProperty quantityProperty;
   private StringProperty descriptionProperty;
 
@@ -18,7 +15,7 @@ public class TableProdViewModel
   {
     nameProperty = new SimpleStringProperty(product.getName());
     typeProperty = new SimpleStringProperty(product.getType());
-    priceProperty = new SimpleIntegerProperty(product.getPrice());
+    priceProperty = new SimpleDoubleProperty(product.getPrice());
     quantityProperty = new SimpleIntegerProperty(product.getQuantityP());
     descriptionProperty = new SimpleStringProperty(product.getDescription());
   }
@@ -34,7 +31,7 @@ public class TableProdViewModel
     return typeProperty;
   }
 
-  public IntegerProperty pricePropertyProperty()
+  public DoubleProperty pricePropertyProperty()
   {
     return priceProperty;
   }

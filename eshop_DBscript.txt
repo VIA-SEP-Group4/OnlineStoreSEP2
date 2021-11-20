@@ -28,6 +28,7 @@ CREATE TABLE eshop.products
 	product_id SERIAL PRIMARY KEY,
 	product_name VARCHAR(20) NOT NULL,
 	description VARCHAR(100),
+	type VARCHAR(30),
 	amount INTEGER,
-	price INTEGER
+	price DECIMAL
 );

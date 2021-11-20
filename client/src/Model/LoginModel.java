@@ -13,4 +13,5 @@ public interface LoginModel extends Subject
   String getId();
   ArrayList<Product> getProducts(int index);
   ArrayList<Product> getBasket();
+  void addProduct(Product p);
 }

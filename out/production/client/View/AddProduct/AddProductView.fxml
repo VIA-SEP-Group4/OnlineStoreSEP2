@@ -48,7 +48,7 @@
             </TableView>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddProdButton" text="Add ">
+                  <Button mnemonicParsing="false" onAction="#onAddProdButton" text="Add ">
                      <HBox.margin>
                         <Insets bottom="20.0" left="65.0" right="20.0" top="20.0" />
                      </HBox.margin>
@@ -56,7 +56,7 @@
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="editButton" mnemonicParsing="false" onAction="#onEditProdButton" text="Edit">
+                  <Button mnemonicParsing="false" onAction="#onEditProdButton" text="Edit">
                      <padding>
                         <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                      </padding>
@@ -64,7 +64,7 @@
                         <Insets bottom="20.0" left="65.0" right="20.0" top="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onDeleteProdButton" text="Delete">
+                  <Button mnemonicParsing="false" onAction="#onDeleteProdButton" text="Delete">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
@@ -72,7 +72,7 @@
                         <Insets bottom="20.0" left="65.0" right="20.0" top="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackProdButton" text="Back">
+                  <Button mnemonicParsing="false" onAction="#onBackProdButton" text="Back">
                      <padding>
                         <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                      </padding>

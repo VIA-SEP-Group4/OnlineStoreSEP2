@@ -20,6 +20,8 @@ public class LoginModelManager implements LoginModel, PropertyChangeListener
     support=new PropertyChangeSupport(this);
     this.client = client;
     client.startClient();
+    addProduct(new Product("Fanta","Non-Alcoholic Beverage",14.2,"Great Fake Orange Juice",10));
+    addProduct(new Product("Whisky","Alcoholic Beverage",25.2,"Kept in Oak Barrels",11));
     client.addListener("LoginReply",this);
     client.addListener("RegistrationReply",this);
     client.addListener("BrowserReply",this);
@@ -55,6 +57,15 @@ public class LoginModelManager implements LoginModel, PropertyChangeListener
   @Override public ArrayList<Product> getBasket()
   {
     return basket;
+  }
+
+  @Override
+  public void addProduct(Product p) {
+    try {
+      client.addProduct(p);
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override public String getId()
