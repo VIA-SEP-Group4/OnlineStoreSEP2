@@ -6,6 +6,7 @@ import DataAcess.DataAccessor;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ServerModelManager implements Model, PropertyChangeListener
 {
@@ -25,6 +26,16 @@ public class ServerModelManager implements Model, PropertyChangeListener
   @Override public int userCount()
   {
     return dbsManager.getUserCount();
+  }
+
+  @Override
+  public ArrayList<Product> getProducts(int index) {
+    return dbsManager.getProducts(index);
+  }
+
+  @Override
+  public void addProduct(Product p) {
+    dbsManager.addProduct(p);
   }
 
   @Override public void registerUser(User newUser)

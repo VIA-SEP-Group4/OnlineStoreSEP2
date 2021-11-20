@@ -11,4 +11,7 @@ public interface DataAccessor extends Subject
   void loginUser(String username, String password);
   int getUserCount();
   ArrayList<User> getUsers();
+  ArrayList<Product> getProducts(int amount);
+
+  void addProduct(Product p);
 }

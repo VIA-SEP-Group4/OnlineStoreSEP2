@@ -36,5 +36,6 @@ public class LoginViewController implements ViewController
 
     public void onLogin(ActionEvent actionEvent) {
         viewModel.login();
+        if(successLabel.textProperty().toString().contains("success")) viewHandler.openBrowserPane();
     }
 }

@@ -30,6 +30,7 @@ public class RMIClient implements Client, RMIClient_Remote
     try {
       //export client
       UnicastRemoteObject.exportObject(this, 0);
+
       //lookup server stub
       serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
       serverStub.registerClient(this);
@@ -42,6 +43,7 @@ public class RMIClient implements Client, RMIClient_Remote
   {
     try
     {
+      System.out.println(serverStub.getProducts(index));
       return serverStub.getProducts(index);
     }
     catch (RemoteException e)
@@ -58,6 +60,11 @@ public class RMIClient implements Client, RMIClient_Remote
   @Override
   public String getID() throws RemoteException {
     return clientID;
+  }
+
+  @Override
+  public void addProduct(Product p) throws RemoteException {
+    serverStub.addProduct(p);
   }
 
 

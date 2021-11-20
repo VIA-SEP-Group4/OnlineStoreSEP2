@@ -2,6 +2,7 @@ package Networking;
 
 import Model.Model;
 import Model.User;
+import Model.Product;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -69,6 +70,17 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
   @Override
   public void removeClient(RMIClient_Remote client) {
     clients.remove(client);
+  }
+
+  @Override
+  public ArrayList<Product> getProducts(int index) throws RemoteException {
+
+    return serverModelManager.getProducts(index);
+  }
+
+  @Override
+  public void addProduct(Product product) throws RemoteException {
+      serverModelManager.addProduct(product);
   }
 
   @Override

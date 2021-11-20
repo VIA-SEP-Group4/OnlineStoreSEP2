@@ -14,4 +14,5 @@ public interface Client extends Subject
   void startClient();
   ArrayList<Product> getProducts(int index);
   String getID() throws RemoteException;
+  void addProduct(Product p) throws RemoteException;
 }
