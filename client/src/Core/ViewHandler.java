@@ -33,7 +33,9 @@ public class ViewHandler {
     }
 
     public void start() {
-        openBrowserPane();
+//        openBrowserPane();
+        openLoginPane();
+
         stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
 

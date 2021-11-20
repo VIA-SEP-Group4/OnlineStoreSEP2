@@ -24,17 +24,20 @@ public class DBSManager implements DataAccessor
   private final String url;
   private final String user;
   private final String password;
-  private PropertyChangeSupport support=new PropertyChangeSupport(this);
+  private PropertyChangeSupport support;
   private static final String SCHEMA = "eshop";
 
   public DBSManager()
   {
+    support = new PropertyChangeSupport(this);
+
     url = "jdbc:postgresql://localhost:5432/postgres";
     user = "postgres";
     password = "4280";
   }
   public DBSManager(String user, String password)
   {
+    support = new PropertyChangeSupport(this);
     url = "jdbc:postgresql://localhost:5432/postgres";
     this.user = user;
     this.password = password;

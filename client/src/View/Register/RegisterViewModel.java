@@ -36,13 +36,14 @@ public class RegisterViewModel implements PropertyChangeListener {
     public String getfName() {
         return fName.get();
     }
+
     public void sendRegisterData(){
-        if(!fName.getValue().equals("") && fName.getValue()!=null
-        && !lName.getValue().equals("") && lName.getValue()!=null
-        && !userName.getValue().equals("") && userName.getValue()!=null
-        && !email.getValue().equals("") && email.getValue()!=null
+        if(fName.getValue()!=null && !fName.getValue().equals("")
+        && lName.getValue()!=null && !lName.getValue().equals("")
+        && userName.getValue()!=null && !userName.getValue().equals("")
+        && email.getValue()!=null && !email.getValue().equals("")
         && password.getValue()!=null && !password.getValue().equals("")
-                && !rePassword.getValue().equals("") && rePassword.getValue()!=null)
+        && rePassword.getValue()!=null && !rePassword.getValue().equals("") )
         {
             if(!password.getValue().equals(rePassword.getValue()))
             {
@@ -55,18 +56,33 @@ public class RegisterViewModel implements PropertyChangeListener {
         }
         else{ errorFields.setValue("Fields cannot be empty on registering "); errorPass.setValue(""); }
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String reply=evt.getNewValue().toString();
         if(reply.contains("approved")){
             success.setValue("Registration was successful!");
             errorFields.setValue("");
+
+            //->change view to LogIn-view automatically?
         }
         else
         {
             errorFields.setValue("Registration failed");
             success.setValue("");
         }
+
+        clearFields();
+    }
+
+    private void clearFields()
+    {
+        fName.set(null);
+        lName.set(null);
+        userName.set(null);
+        email.set(null);
+        password.set(null);
+        rePassword.set(null);
     }
 
     public StringProperty fNameProperty() {

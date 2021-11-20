@@ -79,6 +79,14 @@ public class LoginViewModel implements PropertyChangeListener {
                 errorPass.setValue("");
                 errorUser.setValue("");
             });
+
+        clearFields();
+    }
+
+    private void clearFields()
+    {
+        userName.set(null);
+        password.set(null);
     }
 
     public String getSuccess() {
