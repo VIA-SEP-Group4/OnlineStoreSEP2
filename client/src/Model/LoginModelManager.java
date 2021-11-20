@@ -5,12 +5,16 @@ import Networking.Client;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class LoginModelManager implements LoginModel, PropertyChangeListener
 {
 
   private Client client;
   private PropertyChangeSupport support;
+  private ArrayList<Product> basket;
+
   public LoginModelManager(Client client)
   {
     support=new PropertyChangeSupport(this);
@@ -18,6 +22,7 @@ public class LoginModelManager implements LoginModel, PropertyChangeListener
     client.startClient();
     client.addListener("LoginReply",this);
     client.addListener("RegistrationReply",this);
+    client.addListener("BrowserReply",this);
   }
 
 
@@ -34,6 +39,34 @@ public class LoginModelManager implements LoginModel, PropertyChangeListener
   @Override public int getNumberOfUsers()
   {
     return client.getNumberOfUsers();
+  }
+
+  @Override public ArrayList<Product> getProducts(int index)
+  {
+    return client.getProducts(index);
+  }
+
+  @Override public void addBasket(Product product)
+  {
+    basket.add(product);
+
+  }
+
+  @Override public ArrayList<Product> getBasket()
+  {
+    return basket;
+  }
+
+  @Override public String getId()
+  {
+    try
+    {
+      return client.getID();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    } return "";
   }
 
   @Override

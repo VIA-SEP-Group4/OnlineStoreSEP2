@@ -1,5 +1,6 @@
 package Networking;
 
+import Model.Product;
 import Model.User;
 
 import java.beans.PropertyChangeListener;
@@ -9,6 +10,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -20,7 +22,7 @@ public class RMIClient implements Client, RMIClient_Remote
   private PropertyChangeSupport support;
   public RMIClient()
   {
-    clientID= UUID.randomUUID().toString();
+    clientID= "";
     support=new PropertyChangeSupport(this);
   }
   @Override
@@ -34,6 +36,18 @@ public class RMIClient implements Client, RMIClient_Remote
     } catch (NotBoundException | MalformedURLException | RemoteException e) {
       System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
     }
+  }
+
+  @Override public ArrayList<Product> getProducts(int index)
+  {
+    try
+    {
+      return serverStub.getProducts(index);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    } return null;
   }
 
   @Override public void receiveReply(String reply) throws RemoteException
