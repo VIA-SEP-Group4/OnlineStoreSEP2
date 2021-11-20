@@ -18,6 +18,7 @@ CREATE TABLE eshop.employees
 	first_name VARCHAR(25) NOT NULL,
 	last_name VARCHAR(25) NOT NULL,
 	pin INTEGER CHECK(pin>=1000 AND pin<=9999),
+	type VARCHAR(30) NOT NULL,
 	PRIMARY KEY (employee_id)
 );
 
