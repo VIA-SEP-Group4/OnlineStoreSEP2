@@ -1,4 +1,4 @@
-package View.AddProduct;
+package View.Products;
 
 import Model.LoginModel;
 import javafx.beans.property.*;
@@ -8,19 +8,20 @@ import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class AddProductViewModel implements PropertyChangeListener
+public class ProductsViewModel implements PropertyChangeListener
 {
   private ObservableList<TableProdViewModel> products;
   private ObjectProperty<TableProdViewModel> selectedProduct;
   private LoginModel model;
 
-  public AddProductViewModel(LoginModel model)
+  public ProductsViewModel(LoginModel model)
   {
     this.model = model;
     this.products = FXCollections.observableArrayList();
     this.selectedProduct = new SimpleObjectProperty<>();
     model.addListener("AddProductReply",this);
   }
+
   public ObservableList<TableProdViewModel> getProducts()
   {
     return products;

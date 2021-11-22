@@ -3,7 +3,6 @@ package View.Browser;
 import Model.LoginModel;
 import Model.Product;
 import javafx.beans.property.*;
-import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;

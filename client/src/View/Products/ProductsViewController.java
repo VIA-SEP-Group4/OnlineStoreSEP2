@@ -1,4 +1,4 @@
-package View.AddProduct;
+package View.Products;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class AddProductViewController implements ViewController
+public class ProductsViewController implements ViewController
 {
   @FXML private TableView<TableProdViewModel> tableColumns;
   @FXML private TableColumn<TableProdViewModel, String> nameColumn;
@@ -19,12 +19,12 @@ public class AddProductViewController implements ViewController
   @FXML private TableColumn<TableProdViewModel, String> descriptionColumn;
 
   private ViewHandler viewHandler;
-  private AddProductViewModel viewModel;
+  private ProductsViewModel viewModel;
 
    @Override public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory)
   {
     this.viewHandler = viewHandler;
-    this.viewModel = viewModelFactory.getAddProductViewModel();
+    this.viewModel = viewModelFactory.getProductsViewModel();
     nameColumn.setCellValueFactory(cellData -> cellData.getValue().namePropertyProperty());
     typeColumn.setCellValueFactory(cellData -> cellData.getValue().typePropertyProperty());
     priceColumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
@@ -38,6 +38,7 @@ public class AddProductViewController implements ViewController
 
   public void onAddProdButton(ActionEvent actionEvent)
   {
+    viewHandler.openAddProductPane();
   }
 
   public void onEditProdButton(ActionEvent actionEvent)
