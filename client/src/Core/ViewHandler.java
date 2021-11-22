@@ -35,8 +35,9 @@ public class ViewHandler {
     }
 
     public void start() {
-//        openBrowserPane();
+  //     openBrowserPane();
         openLoginPane();
+  //      openProductsPane();
 
         stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
@@ -92,7 +93,7 @@ public class ViewHandler {
     public void openProductsPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../View/Browser/ProductsView.fxml"));
+            loader.setLocation(getClass().getResource("../View/Products/ProductsView.fxml"));
             Parent root = loader.load();
             ProductsViewController view = loader.getController();
             view.init(this, viewModelFactory);
@@ -108,7 +109,7 @@ public class ViewHandler {
     public void openAddProductPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../View/Browser/AddProductView.fxml"));
+            loader.setLocation(getClass().getResource("../View/Products/AddProductView.fxml"));
             Parent root = loader.load();
             AddProductViewController view = loader.getController();
             view.init(this, viewModelFactory);
