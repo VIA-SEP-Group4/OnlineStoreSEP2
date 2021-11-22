@@ -34,7 +34,7 @@ public class DBSManager implements DataAccessor
 
     url = "jdbc:postgresql://localhost:5432/postgres";
     user = "postgres";
-    password = "1234";
+    password = "sara1900";
   }
   public DBSManager(String user, String password)
   {
