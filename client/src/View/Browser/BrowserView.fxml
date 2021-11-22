@@ -24,7 +24,7 @@
          <content>
           <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="428.0" prefWidth="690.0">
                <children>
-                  <GridPane layoutX="1.0" layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="701.0" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-11.0" AnchorPane.topAnchor="1.0">
+                  <GridPane fx:id="gridPaneBrowser" layoutX="1.0" layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="701.0" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-11.0" AnchorPane.topAnchor="1.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -35,64 +35,34 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="addButton1" mnemonicParsing="false" onAction="#onAddButton" text="Add to basket">
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddButton" text="Add to basket">
                            <GridPane.margin>
                               <Insets left="120.0" top="100.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="addButton2" mnemonicParsing="false" onAction="#onAddButton" text="Add to basket" GridPane.columnIndex="1">
+                        <Label fx:id="nameProdLabel" text="Label">
                            <GridPane.margin>
-                              <Insets left="120.0" top="100.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addButton3" mnemonicParsing="false" onAction="#onAddButton" text="Add to basket" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="100.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addButton4" mnemonicParsing="false" onAction="#onAddButton" text="Add to basket" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="100.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addButton5" mnemonicParsing="false" onAction="#onAddButton" text="Add to basket" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="100.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="addButton6" mnemonicParsing="false" onAction="#onAddButton" text="Add to basket" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="120.0" top="100.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Label fx:id="productDescriptionText5" alignment="CENTER" contentDisplay="CENTER" text="Product&#10;Lorem Ipsum is simply dummy&#10; text of the printing and typesetting&#10; industry." GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="25.0" left="100.0" />
+                              <Insets bottom="100.0" left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="productDescriptionText2" alignment="CENTER" contentDisplay="CENTER" text="Product&#10;Lorem Ipsum is simply dummy&#10; text of the printing and typesetting&#10; industry." GridPane.columnIndex="1">
+                        <Label fx:id="typeLabel" text="Label">
                            <GridPane.margin>
-                              <Insets bottom="25.0" left="100.0" />
+                              <Insets bottom="50.0" left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="productDescriptionText3" alignment="CENTER" contentDisplay="CENTER" text="Product&#10;Lorem Ipsum is simply dummy&#10; text of the printing and typesetting&#10; industry." GridPane.rowIndex="1">
+                        <Label fx:id="descriptionLabel" text="Label">
                            <GridPane.margin>
-                              <Insets bottom="25.0" left="100.0" />
+                              <Insets left="100.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="productDescriptionText1" alignment="CENTER" contentDisplay="CENTER" text="Product&#10;Lorem Ipsum is simply dummy&#10; text of the printing and typesetting&#10; industry.">
+                        <Label fx:id="priceLabel" text="Label">
                            <GridPane.margin>
-                              <Insets bottom="25.0" left="100.0" />
+                              <Insets left="100.0" top="50.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label fx:id="productDescriptionText4" alignment="CENTER" contentDisplay="CENTER" text="Product&#10;Lorem Ipsum is simply dummy&#10; text of the printing and typesetting&#10; industry." GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="quantityLabel" text="Label">
                            <GridPane.margin>
-                              <Insets bottom="25.0" left="100.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label fx:id="productDescriptionText6" alignment="CENTER" contentDisplay="CENTER" text="Product&#10;Lorem Ipsum is simply dummy&#10; text of the printing and typesetting&#10; industry." GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="25.0" left="100.0" />
+                              <Insets left="200.0" top="50.0" />
                            </GridPane.margin>
                         </Label>
                      </children>
