@@ -1,7 +1,9 @@
 package Model;
 
-import DataAcess.DBSManager;
-import DataAcess.DataAccessor;
+import DataAcess.CredentialsDataManager;
+import DataAcess.CredentialsDataAccessor;
+import DataAcess.ProductsDataAcessor;
+import DataAcess.ProductsDataManager;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,42 +12,44 @@ import java.util.ArrayList;
 
 public class ServerModelManager implements Model, PropertyChangeListener
 {
-  private DataAccessor dbsManager;
+  private CredentialsDataAccessor credentialsDataAccessor;
+  private ProductsDataAcessor productsDataAcessor;
   private PropertyChangeSupport support;
   public ServerModelManager()
   {
     support=new PropertyChangeSupport(this);
-    dbsManager = new DBSManager();
-    dbsManager.addListener("InvalidPassword",this);
-    dbsManager.addListener("InvalidUser",this);
-    dbsManager.addListener("SuccessfulLogin",this);
+    credentialsDataAccessor = new CredentialsDataManager();
+    productsDataAcessor=new ProductsDataManager();
+    credentialsDataAccessor.addListener("InvalidPassword",this);
+    credentialsDataAccessor.addListener("InvalidUser",this);
+    credentialsDataAccessor.addListener("SuccessfulLogin",this);
   }
 
 
 
   @Override public int userCount()
   {
-    return dbsManager.getUserCount();
+    return credentialsDataAccessor.getUserCount();
   }
 
   @Override
   public ArrayList<Product> getProducts(int index) {
-    return dbsManager.getProducts(index);
+    return productsDataAcessor.getProducts(index);
   }
 
   @Override
   public void addProduct(Product p) {
-    dbsManager.addProduct(p);
+    productsDataAcessor.addProduct(p);
   }
 
   @Override public void registerUser(User newUser)
   {
-    dbsManager.registerUser(newUser);
+    credentialsDataAccessor.registerUser(newUser);
   }
 
   @Override public void loginUser(String username, String password)
   {
-    dbsManager.loginUser(username,password);
+    credentialsDataAccessor.loginUser(username,password);
   }
 
 

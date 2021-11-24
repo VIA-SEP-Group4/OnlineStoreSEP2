@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="477.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Products.AddProductViewController">
+<AnchorPane prefHeight="477.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Products.AddProductViewController">
    <children>
       <Text layoutX="47.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product name" />
       <Text layoutX="48.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type of product" />
@@ -27,6 +27,6 @@
       <TextArea fx:id="productDescriptionField" layoutX="184.0" layoutY="257.0" prefHeight="126.0" prefWidth="225.0" />
       <Button layoutX="99.0" layoutY="416.0" mnemonicParsing="false" onAction="#addButton" prefHeight="25.0" prefWidth="68.0" text="Add" />
       <Button layoutX="310.0" layoutY="416.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="25.0" prefWidth="68.0" text="Cancel" />
-      <Label fx:id="errorLabel" layoutX="204.0" layoutY="87.0" text="Error label" textFill="RED" />
+      <Label fx:id="errorLabel" layoutX="204.0" layoutY="87.0" textFill="RED" />
    </children>
 </AnchorPane>
