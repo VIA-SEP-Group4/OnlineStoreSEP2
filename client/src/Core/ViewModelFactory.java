@@ -7,33 +7,44 @@ import View.Login.LoginViewModel;
 import View.Register.RegisterViewModel;
 
 public class ViewModelFactory {
-    private LoginViewModel loginViewModel;
-    private RegisterViewModel registerViewModel;
-    private BrowserViewModel browserViewModel;
-    private ProductsViewModel productsViewModel;
-    private AddProductViewModel addProductViewModel;
-
+    private static  LoginViewModel loginViewModel;
+    private static RegisterViewModel registerViewModel;
+    private static BrowserViewModel browserViewModel;
+    private static ProductsViewModel productsViewModel;
+    private static AddProductViewModel addProductViewModel;
+    private static ModelFactory modelFactory;
     public ViewModelFactory(ModelFactory modelFactory) {
-        loginViewModel = new LoginViewModel(modelFactory.getLoginModel());
-        registerViewModel=new RegisterViewModel(modelFactory.getLoginModel());
-        browserViewModel = new BrowserViewModel(modelFactory.getLoginModel());
-        productsViewModel = new ProductsViewModel(modelFactory.getLoginModel());
-        addProductViewModel = new AddProductViewModel(modelFactory.getLoginModel());
+        ViewModelFactory.modelFactory =modelFactory;
     }
 
-    public LoginViewModel getLoginViewModel() {
+    public static LoginViewModel getLoginViewModel() {
+        if(loginViewModel==null){
+            loginViewModel=new LoginViewModel(modelFactory.getCredentialsModel());
+        }
         return loginViewModel;
     }
-    public RegisterViewModel getRegisterViewModel() {
+    public static RegisterViewModel getRegisterViewModel() {
+        if(registerViewModel==null){
+            registerViewModel=new RegisterViewModel(modelFactory.getCredentialsModel());
+        }
         return registerViewModel;
     }
-    public BrowserViewModel getBrowserViewModel(){
+    public static BrowserViewModel getBrowserViewModel(){
+        if(browserViewModel==null){
+            browserViewModel=new BrowserViewModel(modelFactory.getProductsModel());
+        }
         return browserViewModel;
     }
-    public ProductsViewModel getProductsViewModel(){
+    public static ProductsViewModel getProductsViewModel(){
+        if(productsViewModel==null){
+            productsViewModel=new ProductsViewModel(modelFactory.getProductsModel());
+        }
         return productsViewModel;
     }
-    public  AddProductViewModel getAddProductViewModel(){
+    public static   AddProductViewModel getAddProductViewModel(){
+        if(addProductViewModel==null){
+            addProductViewModel=new AddProductViewModel(modelFactory.getProductsModel());
+        }
         return addProductViewModel;
     }
 }

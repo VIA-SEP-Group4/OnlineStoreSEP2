@@ -2,14 +2,13 @@ package View.Products;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import View.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ProductsViewController implements ViewController
+public class ProductsViewController
 {
   @FXML private TableView<TableProdViewModel> tableColumns;
   @FXML private TableColumn<TableProdViewModel, String> nameColumn;
@@ -21,10 +20,10 @@ public class ProductsViewController implements ViewController
   private ViewHandler viewHandler;
   private ProductsViewModel viewModel;
 
-   @Override public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory)
+    public void init(ViewHandler viewHandler)
   {
     this.viewHandler = viewHandler;
-    this.viewModel = viewModelFactory.getProductsViewModel();
+    this.viewModel = ViewModelFactory.getProductsViewModel();
     nameColumn.setCellValueFactory(cellData -> cellData.getValue().namePropertyProperty());
     typeColumn.setCellValueFactory(cellData -> cellData.getValue().typePropertyProperty());
     priceColumn.setCellValueFactory(new PropertyValueFactory<>("Price"));

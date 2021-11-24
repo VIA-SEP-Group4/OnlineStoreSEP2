@@ -1,6 +1,7 @@
 package View.Products;
 
-import Model.LoginModel;
+import Model.CredentialsModel;
+import Model.ProductsModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +13,9 @@ public class ProductsViewModel implements PropertyChangeListener
 {
   private ObservableList<TableProdViewModel> products;
   private ObjectProperty<TableProdViewModel> selectedProduct;
-  private LoginModel model;
+  private ProductsModel model;
 
-  public ProductsViewModel(LoginModel model)
+  public ProductsViewModel(ProductsModel model)
   {
     this.model = model;
     this.products = FXCollections.observableArrayList();

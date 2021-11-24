@@ -48,7 +48,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Login/LoginView.fxml"));
             Parent root = loader.load();
             LoginViewController view = loader.getController();
-            view.init(this, viewModelFactory);
+            view.init(this);
             Scene scene = new Scene(root);
             stage.setTitle("First");
             stage.setScene(scene);
@@ -64,7 +64,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Register/RegisterView.fxml"));
             Parent root = loader.load();
             RegisterViewController view = loader.getController();
-            view.init(this, viewModelFactory);
+            view.init(this);
             Scene scene = new Scene(root);
             stage.setTitle("First");
             stage.setScene(scene);
@@ -80,7 +80,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Browser/BrowserView.fxml"));
             Parent root = loader.load();
             BrowserViewController view = loader.getController();
-            view.init(this, viewModelFactory);
+            view.init(this);
             Scene scene = new Scene(root);
             stage.setTitle("Browser");
             stage.setScene(scene);
@@ -96,7 +96,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Products/ProductsView.fxml"));
             Parent root = loader.load();
             ProductsViewController view = loader.getController();
-            view.init(this, viewModelFactory);
+            view.init(this);
             Scene scene = new Scene(root);
             stage.setTitle("Products");
             stage.setScene(scene);
@@ -112,7 +112,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Products/AddProductView.fxml"));
             Parent root = loader.load();
             AddProductViewController view = loader.getController();
-            view.init(this, viewModelFactory);
+            view.init(this);
             Scene scene = new Scene(root);
             stage.setTitle("Add Product");
             stage.setScene(scene);

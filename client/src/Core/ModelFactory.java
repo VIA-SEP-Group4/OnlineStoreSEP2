@@ -1,19 +1,27 @@
 package Core;
 
-import Model.LoginModel;
-import Model.LoginModelManager;
+import Model.CredentialsModel;
+import Model.CredentialsModelManager;
+import Model.ProductModelManager;
+import Model.ProductsModel;
 
 public class ModelFactory {
-    private LoginModel manager;
+    private CredentialsModel credentialsModel;
+    private ProductsModel productsModel;
     private ClientFactory clientFactory;
 
     public ModelFactory(ClientFactory clientFactory){
         this.clientFactory = clientFactory;
     }
 
-    public LoginModel getLoginModel() {
-        if(manager == null)
-            manager = new LoginModelManager(clientFactory.getClient());
-        return manager;
+    public CredentialsModel getCredentialsModel() {
+        if(credentialsModel == null)
+            credentialsModel = new CredentialsModelManager(clientFactory.getClient());
+        return credentialsModel;
+    }
+    public ProductsModel getProductsModel() {
+        if(productsModel == null)
+            productsModel = new ProductModelManager(clientFactory.getClient());
+        return productsModel;
     }
 }

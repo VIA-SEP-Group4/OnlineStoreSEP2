@@ -2,14 +2,13 @@ package View.Browser;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import View.ViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-public class BrowserViewController implements ViewController
+public class BrowserViewController
 {
   public TextField searchTextField;
   public Button addButton;
@@ -28,9 +27,9 @@ public class BrowserViewController implements ViewController
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
 
-  @Override public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
+   public void init(ViewHandler viewHandler) {
     this.viewHandler = viewHandler;
-    this.viewModel = viewModelFactory.getBrowserViewModel();
+    this.viewModel = ViewModelFactory.getBrowserViewModel();
     searchTextField.textProperty().bindBidirectional(viewModel.searchProperty());
     itemsLabel.textProperty().bindBidirectional(viewModel.itemsProperty());
     pagination.currentPageIndexProperty().bindBidirectional(viewModel.pageProperty());

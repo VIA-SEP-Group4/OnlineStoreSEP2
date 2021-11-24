@@ -1,7 +1,6 @@
 package View.Login;
 
-import Model.LoginModel;
-import Model.User;
+import Model.CredentialsModel;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,25 +9,25 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class LoginViewModel implements PropertyChangeListener {
-    private LoginModel loginModel;
+    private CredentialsModel credentialsModel;
     private StringProperty userName;
     private StringProperty password;
     private StringProperty errorUser;
     private StringProperty errorPass;
     private StringProperty success;
-    public LoginViewModel(LoginModel loginModel) {
-        this.loginModel = loginModel;
+    public LoginViewModel(CredentialsModel credentialsModel) {
+        this.credentialsModel = credentialsModel;
         userName=new SimpleStringProperty();
         password=new SimpleStringProperty();
         errorPass=new SimpleStringProperty();
         errorUser=new SimpleStringProperty();
         success=new SimpleStringProperty();
-        loginModel.addListener("LoginReply",this);
+        credentialsModel.addListener("LoginReply",this);
     }
     public void login() {
         if(userName.getValue().equals("") || userName==null  ) errorUser.setValue("Username cannot be empty");
         else if(password.getValue().equals("") || password==null) errorPass.setValue("Password cannot be empty");
-        else loginModel.login(userName.getValue(),password.getValue());
+        else credentialsModel.login(userName.getValue(),password.getValue());
     }
     public String getUserName() {
         return userName.get();

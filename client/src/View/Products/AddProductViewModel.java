@@ -1,8 +1,8 @@
 package View.Products;
 
-import Model.LoginModel;
-import Model.LoginModelManager;
+import Model.CredentialsModel;
 import Model.Product;
+import Model.ProductsModel;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
 
 public class AddProductViewModel implements PropertyChangeListener
 {
-  private LoginModel loginModel;
+  private ProductsModel productsModel;
   private StringProperty prodName;
   private StringProperty prodType;
   private SimpleIntegerProperty prodPrice;
@@ -20,9 +20,9 @@ public class AddProductViewModel implements PropertyChangeListener
   private StringProperty prodDescription;
   private StringProperty errorLabel;
 
-  public AddProductViewModel(LoginModel loginModel)
+  public AddProductViewModel(ProductsModel credentialsModel)
   {
-    this.loginModel = loginModel;
+    this.productsModel = credentialsModel;
     prodName = new SimpleStringProperty();
     prodType = new SimpleStringProperty();
     prodPrice = new SimpleIntegerProperty();
@@ -30,12 +30,7 @@ public class AddProductViewModel implements PropertyChangeListener
     prodDescription = new SimpleStringProperty();
     errorLabel = new SimpleStringProperty();
 
-    loginModel.addListener("AddProductReply",this);
-  }
-
-  public LoginModel getLoginModel()
-  {
-    return loginModel;
+    credentialsModel.addListener("AddProductReply",this);
   }
 
   public StringProperty prodNameProperty()
@@ -70,7 +65,7 @@ public class AddProductViewModel implements PropertyChangeListener
         && prodDescription.getValue()!=null && !prodDescription.getValue().equals(""))
     {
       Product product = new Product(prodName.getValue(), prodType.getValue(),prodPrice.getValue(),prodDescription.getValue(),prodQuantity.getValue());
-      loginModel.addProduct(product);
+      productsModel.addProduct(product);
     }
     else
     {

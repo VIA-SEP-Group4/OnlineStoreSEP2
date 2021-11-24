@@ -1,6 +1,6 @@
 package View.Register;
 
-import Model.LoginModel;
+import Model.CredentialsModel;
 import Model.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -9,7 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class RegisterViewModel implements PropertyChangeListener {
-    private LoginModel model;
+    private CredentialsModel model;
     private StringProperty fName;
     private StringProperty lName;
     private StringProperty userName;
@@ -19,7 +19,7 @@ public class RegisterViewModel implements PropertyChangeListener {
     private StringProperty errorPass;
     private StringProperty errorFields;
     private StringProperty success;
-    public RegisterViewModel(LoginModel model) {
+    public RegisterViewModel(CredentialsModel model) {
         this.model=model;
         fName=new SimpleStringProperty();
         lName=new SimpleStringProperty();

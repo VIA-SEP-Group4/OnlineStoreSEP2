@@ -2,13 +2,12 @@ package View.Login;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import View.ViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class LoginViewController implements ViewController
+public class LoginViewController
 {
 
     public TextField usernameTextField;
@@ -20,9 +19,9 @@ public class LoginViewController implements ViewController
     private ViewHandler viewHandler;
     private LoginViewModel viewModel;
 
-    public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
+    public void init(ViewHandler viewHandler) {
         this.viewHandler = viewHandler;
-        this.viewModel = viewModelFactory.getLoginViewModel();
+        this.viewModel = ViewModelFactory.getLoginViewModel();
         usernameTextField.textProperty().bindBidirectional(viewModel.userNameProperty());
         passwordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
         usernameErrorLabel.textProperty().bindBidirectional(viewModel.errorUserProperty());

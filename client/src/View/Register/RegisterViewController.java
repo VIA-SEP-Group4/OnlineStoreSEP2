@@ -3,12 +3,11 @@ package View.Register;
 import Core.ViewHandler;
 import Core.ViewModelFactory;
 import View.Login.LoginViewModel;
-import View.ViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class RegisterViewController implements ViewController
+public class RegisterViewController
 {
     public TextField firstNameTextField;
     public TextField lastNameTextField;
@@ -23,9 +22,9 @@ public class RegisterViewController implements ViewController
     private ViewHandler viewHandler;
     private RegisterViewModel viewModel;
 
-    public void init(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
+    public void init(ViewHandler viewHandler) {
         this.viewHandler=viewHandler;
-        this.viewModel = viewModelFactory.getRegisterViewModel();
+        this.viewModel = ViewModelFactory.getRegisterViewModel();
         firstNameTextField.textProperty().bindBidirectional(viewModel.fNameProperty());
         lastNameTextField.textProperty().bindBidirectional(viewModel.lNameProperty());
         emailTextField.textProperty().bindBidirectional(viewModel.emailProperty());

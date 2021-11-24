@@ -1,7 +1,8 @@
 package View.Browser;
 
-import Model.LoginModel;
+import Model.CredentialsModel;
 import Model.Product;
+import Model.ProductsModel;
 import javafx.beans.property.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 public class BrowserViewModel implements PropertyChangeListener
 {
-  private LoginModel model;
+  private ProductsModel model;
   private StringProperty search;
   private StringProperty nameProd;
   private StringProperty type;
@@ -22,7 +23,7 @@ public class BrowserViewModel implements PropertyChangeListener
   private BooleanProperty hideButtons;
   private StringProperty idProperty;
 
-  public BrowserViewModel(LoginModel model)
+  public BrowserViewModel(ProductsModel model)
   {
     this.model = model;
     search = new SimpleStringProperty();
@@ -82,11 +83,6 @@ public class BrowserViewModel implements PropertyChangeListener
     {
     return filter;
     }
-
-  public LoginModel getModel()
-  {
-    return model;
-  }
 
   public BooleanProperty hideButtonsProperty()
   {

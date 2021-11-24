@@ -2,13 +2,12 @@ package View.Products;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import View.ViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class AddProductViewController implements ViewController
+public class AddProductViewController
 {
   public TextField productNameField;
   public TextField productTypeField;
@@ -23,11 +22,10 @@ public class AddProductViewController implements ViewController
 
 
 
-  @Override public void init(ViewHandler viewHandler,
-      ViewModelFactory viewModelFactory)
+   public void init(ViewHandler viewHandler)
   {
     this.viewHandler = viewHandler;
-    this.addProductViewModel = viewModelFactory.getAddProductViewModel();
+    this.addProductViewModel = ViewModelFactory.getAddProductViewModel();
   }
   public void addButton(ActionEvent actionEvent)
   {
