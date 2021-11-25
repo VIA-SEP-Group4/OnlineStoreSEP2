@@ -2,7 +2,6 @@ package Networking;
 
 import Model.Product;
 import Model.User;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.MalformedURLException;
@@ -11,20 +10,25 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.UUID;
 
+/**
+ * Class responsible for communication with the server.
+ */
 public class RMIClient implements Client, RMIClient_Remote
 {
-
   private RMIServer_Remote serverStub;
   private String clientID;
   private PropertyChangeSupport support;
+
   public RMIClient()
   {
     clientID= "";
     support=new PropertyChangeSupport(this);
   }
+
+  /**
+   * Method exporting the client-object and gaining reference of server-stub object
+   */
   @Override
   public void startClient() {
     try {
@@ -39,6 +43,11 @@ public class RMIClient implements Client, RMIClient_Remote
     }
   }
 
+  /**
+   * Method used to request products' data from the database
+   * @param index setting page index based on which specific range of products is requested
+   * @return list of products
+   */
   @Override public ArrayList<Product> getProducts(int index)
   {
     try
@@ -62,12 +71,20 @@ public class RMIClient implements Client, RMIClient_Remote
     return clientID;
   }
 
+  /**
+   * Method used to send request to the server requesting adding new product to the database
+   * @param p new product to be added.
+   * @throws RemoteException
+   */
   @Override
   public void addProduct(Product p) throws RemoteException {
     serverStub.addProduct(p);
   }
 
-
+  /**
+   * Method requesting number of registered users.
+   * @return
+   */
   @Override public int getNumberOfUsers()
   {
     int numOfUsers = 0;
@@ -82,6 +99,10 @@ public class RMIClient implements Client, RMIClient_Remote
     return numOfUsers;
   }
 
+  /**
+   * Method requesting the server to register new user.
+   * @param newUser new user to be added to the database.
+   */
   @Override public void registerUser(User newUser)
   {
     try {
@@ -94,6 +115,11 @@ public class RMIClient implements Client, RMIClient_Remote
     }
   }
 
+  /**
+   * Method requesting to check logging user's presence in the database and if password matches.
+   * @param username inserted username
+   * @param password inserted password
+   */
   @Override public void loginUser(String username, String password)
   {
     String reply = "denied";

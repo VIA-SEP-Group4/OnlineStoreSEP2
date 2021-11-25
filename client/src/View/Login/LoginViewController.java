@@ -29,12 +29,14 @@ public class LoginViewController
         successLabel.textProperty().bindBidirectional(viewModel.successProperty());
     }
 
+
     public void onRegister(ActionEvent actionEvent) {
         viewHandler.openRegisterPane();
     }
 
     public void onLogin(ActionEvent actionEvent) {
         viewModel.login();
-        if(successLabel.textProperty().toString().contains("success")) viewHandler.openBrowserPane();
+        if(successLabel.textProperty().getValue()!=null && successLabel.textProperty().getValue().contains("success"))
+            viewHandler.openBrowserPane();
     }
 }

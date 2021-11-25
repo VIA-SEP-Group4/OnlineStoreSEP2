@@ -3,7 +3,6 @@ package Networking;
 import Model.Model;
 import Model.User;
 import Model.Product;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
@@ -12,10 +11,14 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+/**
+ * Class responsible for server side of the client-server communication, distributing the client's requests and sending back the responses,
+ */
 public class Server implements RMIServer_Remote, PropertyChangeListener {
 
   private Model serverModelManager;
   private ArrayList<RMIClient_Remote> clients;
+
   public Server(Model serverModelManager) throws RemoteException, MalformedURLException
   {
     super();
@@ -29,6 +32,12 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     UnicastRemoteObject.exportObject(this, 1099);
     Naming.rebind("server", this);
   }
+
+  /**
+   * Method forwarding the task to another object and sending the result back to the client.
+   * @return number of registered users.
+   * @throws RemoteException
+   */
   @Override public int userCount() throws RemoteException
   {
     return serverModelManager.userCount();

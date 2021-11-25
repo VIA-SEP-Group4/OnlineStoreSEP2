@@ -33,10 +33,10 @@ public class RegisterViewModel implements PropertyChangeListener {
         model.addListener("RegistrationReply",this);
     }
 
-    public String getfName() {
-        return fName.get();
-    }
-
+    /**
+     * Method called when registering new user.
+     * Checking if all required fields were filled and password and re-entered password match
+     */
     public void sendRegisterData(){
         if(fName.getValue()!=null && !fName.getValue().equals("")
         && lName.getValue()!=null && !lName.getValue().equals("")
@@ -75,6 +75,9 @@ public class RegisterViewModel implements PropertyChangeListener {
         clearFields();
     }
 
+    /**
+     * Method clearing all view fields.
+     */
     private void clearFields()
     {
         fName.set(null);
@@ -83,6 +86,10 @@ public class RegisterViewModel implements PropertyChangeListener {
         email.set(null);
         password.set(null);
         rePassword.set(null);
+    }
+
+    public String getfName() {
+        return fName.get();
     }
 
     public StringProperty fNameProperty() {

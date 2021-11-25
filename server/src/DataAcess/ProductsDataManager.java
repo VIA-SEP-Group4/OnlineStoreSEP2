@@ -8,6 +8,9 @@ import java.beans.PropertyChangeSupport;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Class responsible for managing and accessing database tables/data related to products
+ */
 public class ProductsDataManager implements ProductsDataAcessor, Subject {
     private static final String SCHEMA = "eshop";
     private PropertyChangeSupport support;

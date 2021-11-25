@@ -6,17 +6,9 @@ import java.beans.PropertyChangeSupport;
 import java.sql.*;
 import java.util.ArrayList;
 
-/*
-To query data from a table using JDBC, you use the following steps:
-  1. Establish a database connection to the PostgreSQL server.
-  2. Create an instance of the Statement object
-  3. Execute a statement to get a ResultSet object
-  4. Process the ResultSet object.
-  5. Close the database connection.
-
-https://www.postgresqltutorial.com/postgresql-jdbc/query/
+/**
+ * Class responsible for managing and accessing database tables/data related to users' credentials
  */
-
 public class CredentialsDataManager implements CredentialsDataAccessor
 {
   private PropertyChangeSupport support;

@@ -9,12 +9,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class LoginViewModel implements PropertyChangeListener {
+
     private CredentialsModel credentialsModel;
     private StringProperty userName;
     private StringProperty password;
     private StringProperty errorUser;
     private StringProperty errorPass;
     private StringProperty success;
+
     public LoginViewModel(CredentialsModel credentialsModel) {
         this.credentialsModel = credentialsModel;
         userName=new SimpleStringProperty();
@@ -24,11 +26,19 @@ public class LoginViewModel implements PropertyChangeListener {
         success=new SimpleStringProperty();
         credentialsModel.addListener("LoginReply",this);
     }
+
+    /**
+     * Method called when user tries to log in with inserted credentials.
+     */
     public void login() {
-        if(userName.getValue().equals("") || userName==null  ) errorUser.setValue("Username cannot be empty");
-        else if(password.getValue().equals("") || password==null) errorPass.setValue("Password cannot be empty");
-        else credentialsModel.login(userName.getValue(),password.getValue());
+        if(userName.getValue()==null || userName.getValue().equals(""))
+            errorUser.setValue("Username cannot be empty");
+        else if(password.getValue()==null || password.getValue().equals(""))
+            errorPass.setValue("Password cannot be empty");
+        else
+            credentialsModel.login(userName.getValue(),password.getValue());
     }
+
     public String getUserName() {
         return userName.get();
     }
@@ -82,6 +92,9 @@ public class LoginViewModel implements PropertyChangeListener {
         clearFields();
     }
 
+    /**
+     * Method clearing all view fields.
+     */
     private void clearFields()
     {
         userName.set(null);
