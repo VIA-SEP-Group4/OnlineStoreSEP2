@@ -74,6 +74,8 @@ public class LoginViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String reply=evt.getNewValue().toString();
+        success.setValue("denied");
+
         if(reply.contains("Password")){ Platform.runLater(()-> {
             errorPass.setValue(reply);
         errorUser.setValue("");
@@ -84,10 +86,17 @@ public class LoginViewModel implements PropertyChangeListener {
             errorPass.setValue("");
         });}
         else if (reply.toLowerCase().contains("success"))
+        {
             Platform.runLater(()->{success.setValue(reply);
                 errorPass.setValue("");
                 errorUser.setValue("");
             });
+
+//            success.setValue(reply);
+//            errorPass.setValue("");
+//            errorUser.setValue("");
+        }
+
 
         clearFields();
     }
