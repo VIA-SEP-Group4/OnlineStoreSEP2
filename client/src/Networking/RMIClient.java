@@ -45,15 +45,14 @@ public class RMIClient implements Client, RMIClient_Remote
 
   /**
    * Method used to request products' data from the database
-   * @param index setting page index based on which specific range of products is requested
    * @return list of products
    */
-  @Override public ArrayList<Product> getProducts(int index)
+  @Override public ArrayList<Product> getProducts()
   {
     try
     {
-      System.out.println(serverStub.getProducts(index));
-      return serverStub.getProducts(index);
+      System.out.println(serverStub.getProducts());
+      return serverStub.getProducts();
     }
     catch (RemoteException e)
     {

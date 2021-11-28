@@ -12,7 +12,7 @@ public interface Client extends Subject
   void registerUser(User newUser);
   void loginUser(String username, String password) ;
   void startClient();
-  ArrayList<Product> getProducts(int index);
+  ArrayList<Product> getProducts();
   String getID() throws RemoteException;
   void addProduct(Product p) throws RemoteException;
 }

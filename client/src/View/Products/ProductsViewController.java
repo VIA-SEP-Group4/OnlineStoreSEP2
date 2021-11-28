@@ -10,11 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ProductsViewController
 {
-  @FXML private TableView<TableProdViewModel> tableColumns;
+  @FXML private TableView<TableProdViewModel> prodColumns;
   @FXML private TableColumn<TableProdViewModel, String> nameColumn;
   @FXML private TableColumn<TableProdViewModel, String> typeColumn;
-  @FXML private TableColumn<TableProdViewModel, Integer> priceColumn;
-  @FXML private TableColumn<TableProdViewModel, Integer> quantityColumn;
+  @FXML private TableColumn<TableProdViewModel, String> priceColumn;
+  @FXML private TableColumn<TableProdViewModel, String> quantityColumn;
   @FXML private TableColumn<TableProdViewModel, String> descriptionColumn;
 
   private ViewHandler viewHandler;
@@ -24,16 +24,24 @@ public class ProductsViewController
   {
     this.viewHandler = viewHandler;
     this.viewModel = ViewModelFactory.getProductsViewModel();
-    nameColumn.setCellValueFactory(cellData -> cellData.getValue().namePropertyProperty());
-    typeColumn.setCellValueFactory(cellData -> cellData.getValue().typePropertyProperty());
-    priceColumn.setCellValueFactory(new PropertyValueFactory<>("Price"));
-    quantityColumn.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
-    descriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
-    tableColumns.setItems(viewModel.getProducts());
-    tableColumns.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> viewModel.setSelectedProduct(newValue));
+
+    nameColumn.setCellValueFactory(data -> data.getValue().namePropertyProperty());
+    typeColumn.setCellValueFactory(data -> data.getValue().typePropertyProperty());
+    priceColumn.setCellValueFactory(data -> data.getValue().pricePropertyProperty());
+    quantityColumn.setCellValueFactory(data -> data.getValue().quantityPropertyProperty());
+    descriptionColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
+
+    prodColumns.setItems(viewModel.getProducts());
+
+    viewModel.getProd();
+    reset();
 
   }
 
+  private void reset()
+  {
+    viewModel.reset();
+  }
 
   public void onAddProdButton(ActionEvent actionEvent)
   {

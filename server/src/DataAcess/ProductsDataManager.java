@@ -24,9 +24,8 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
      * @return arraylist of products corresponding to the index that is provided
      */
     @Override
-    public ArrayList<Product> getProducts(int index) {
-        System.out.println(index);
-        String SQL = "SELECT * FROM " +SCHEMA+ ".products where products.product_id > "+ (index-1)*6 + " and products.product_id < "+(index*6+1);
+    public ArrayList<Product> getProducts() {
+        String SQL = "SELECT * FROM " +SCHEMA+ ".products";
         System.out.println(SQL);
         ArrayList<Product> products=new ArrayList<>();
         try (Connection conn =  DBSConnection.getInstance().connect();

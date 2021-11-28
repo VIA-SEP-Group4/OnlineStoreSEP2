@@ -18,8 +18,6 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         this.client = client;
         basket=new ArrayList<>();
         support=new PropertyChangeSupport(this);
-        addProduct(new Product("Fanta","Non-Alcoholic Beverage",14.2,"Great Fake Orange Juice",10));
-        addProduct(new Product("Whisky","Alcoholic Beverage",25.2,"Kept in Oak Barrels",11));
     }
 
     @Override public ArrayList<Product> getBasket()
@@ -46,9 +44,9 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
             e.printStackTrace();
         }
     }
-    @Override public ArrayList<Product> getProducts(int index)
+    @Override public ArrayList<Product> getProducts()
     {
-        return client.getProducts(index);
+        return client.getProducts();
     }
     @Override public void addBasket(Product product)
     {

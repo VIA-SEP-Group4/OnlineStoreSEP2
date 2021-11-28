@@ -1,9 +1,11 @@
 package View.Browser;
 
-import Model.CredentialsModel;
 import Model.Product;
 import Model.ProductsModel;
+import View.Products.TableProdViewModel;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -12,36 +14,31 @@ public class BrowserViewModel implements PropertyChangeListener
 {
   private ProductsModel model;
   private StringProperty search;
-  private StringProperty nameProd;
-  private StringProperty type;
-  private StringProperty prodDescription;
-  private StringProperty price;
-  private StringProperty quantity;
   private StringProperty items;
-  private IntegerProperty page;
-  private ObjectProperty<String> filter;
-  private BooleanProperty hideButtons;
-  private StringProperty idProperty;
+  private StringProperty userName;
+
+  private ObservableList<TableProdViewModel> browserTable;
+
+  private BooleanProperty logOut;
+  private BooleanProperty logIn;
 
   public BrowserViewModel(ProductsModel model)
   {
     this.model = model;
-    search = new SimpleStringProperty();
-    nameProd = new SimpleStringProperty();
-    type = new SimpleStringProperty();
-    prodDescription = new SimpleStringProperty();
-    price = new SimpleStringProperty();
-    quantity = new SimpleStringProperty();
+    search = new SimpleStringProperty("");
     items = new SimpleStringProperty("");
-    page = new SimpleIntegerProperty();
-    hideButtons = new SimpleBooleanProperty(true);
-    idProperty = new SimpleStringProperty();
+    userName = new SimpleStringProperty();
+
+    browserTable = FXCollections.observableArrayList();
+
+    logOut = new SimpleBooleanProperty(true);
+    logIn = new SimpleBooleanProperty(false);
     model.addListener("BrowserReply",this);
   }
 
-  public IntegerProperty pageProperty()
+  public ProductsModel getModel()
   {
-    return page;
+    return model;
   }
 
   public StringProperty searchProperty()
@@ -49,68 +46,59 @@ public class BrowserViewModel implements PropertyChangeListener
     return search;
   }
 
-  public StringProperty nameProdProperty()
-  {
-    return nameProd;
-  }
-
-  public StringProperty typeProperty()
-  {
-    return type;
-  }
-
-  public StringProperty prodDescriptionProperty()
-  {
-    return prodDescription;
-  }
-
-  public StringProperty priceProperty()
-  {
-    return price;
-  }
-
-  public StringProperty quantityProperty()
-  {
-    return quantity;
-  }
 
   public StringProperty itemsProperty()
   {
     return items;
   }
 
-  public ObjectProperty<String> filterProperty()
-    {
-    return filter;
-    }
-
-  public BooleanProperty hideButtonsProperty()
+  public StringProperty userNameProperty()
   {
-    return hideButtons;
+    return userName;
   }
 
-  public StringProperty idPropertyProperty()
+  public ObservableList<TableProdViewModel> getBrowserTable()
   {
-    return idProperty;
+    return browserTable;
+  }
+
+  public BooleanProperty logOutProperty()
+  {
+    return logOut;
+  }
+
+  public BooleanProperty logInProperty()
+  {
+    return logIn;
   }
 
   public void getProd(){
-    ArrayList<Product> prod = model.getProducts(pageProperty().get());
+    ArrayList<Product> prod = model.getProducts();
+    for (Product product:prod)
+    {
+      browserTable.add(new TableProdViewModel(product));
+    }
     }
 
-  public void addBasket(int id)
+  public void addBasket()
   {
-    model.addBasket(model.getProducts(page.getValue()).get(id-1));
+
     items.setValue("("+model.getBasket().size()+") items");
   }
 
   public void reset()
   {
+    browserTable.clear();
+    getProd();
     if(model.getId().equals(""))
-      hideButtons.setValue(true);
+    {
+      logOut.setValue(true);
+      logIn.setValue(false);
+    }
     else {
-      hideButtons.setValue(false);
-      idProperty.setValue(model.getId());
+      logOut.setValue(false);
+      logIn.setValue(true);
+
     }
   }
   @Override public void propertyChange(PropertyChangeEvent evt)

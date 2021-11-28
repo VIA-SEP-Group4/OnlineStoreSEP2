@@ -18,10 +18,6 @@ public class AddProductViewController
   private ViewHandler viewHandler;
   private AddProductViewModel addProductViewModel;
 
-
-
-
-
    public void init(ViewHandler viewHandler)
   {
     this.viewHandler = viewHandler;

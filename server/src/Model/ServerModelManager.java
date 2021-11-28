@@ -33,8 +33,8 @@ public class ServerModelManager implements Model, PropertyChangeListener
   }
 
   @Override
-  public ArrayList<Product> getProducts(int index) {
-    return productsDataAcessor.getProducts(index);
+  public ArrayList<Product> getProducts() {
+    return productsDataAcessor.getProducts();
   }
 
   @Override

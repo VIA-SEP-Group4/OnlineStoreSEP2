@@ -14,6 +14,6 @@ public interface RMIServer_Remote extends Remote
   String loginUser(String username, String password) throws RemoteException;
   void registerClient(RMIClient_Remote client) throws RemoteException;
   void removeClient(RMIClient_Remote client) throws  RemoteException;
-  ArrayList<Product> getProducts(int index) throws RemoteException;
+  ArrayList<Product> getProducts() throws RemoteException;
   void addProduct(Product product) throws RemoteException;
 }

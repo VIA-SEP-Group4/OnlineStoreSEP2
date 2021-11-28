@@ -82,9 +82,9 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
   }
 
   @Override
-  public ArrayList<Product> getProducts(int index) throws RemoteException {
+  public ArrayList<Product> getProducts() throws RemoteException {
 
-    return serverModelManager.getProducts(index);
+    return serverModelManager.getProducts();
   }
 
   @Override

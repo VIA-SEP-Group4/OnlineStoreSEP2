@@ -34,7 +34,7 @@
       </MenuBar>
       <VBox layoutY="26.0" prefHeight="373.0" prefWidth="600.0">
          <children>
-            <TableView fx:id="tableColumns" prefHeight="330.0" prefWidth="600.0">
+            <TableView fx:id="prodColumns" prefHeight="330.0" prefWidth="600.0">
               <columns>
                 <TableColumn fx:id="nameColumn" editable="false" prefWidth="99.20001220703125" text="Name" />
                 <TableColumn fx:id="typeColumn" editable="false" prefWidth="122.4000244140625" text="Type" />

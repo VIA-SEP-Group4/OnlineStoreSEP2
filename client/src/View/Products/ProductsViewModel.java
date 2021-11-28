@@ -1,25 +1,25 @@
 package View.Products;
 
-import Model.CredentialsModel;
+import Model.Product;
 import Model.ProductsModel;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class ProductsViewModel implements PropertyChangeListener
 {
   private ObservableList<TableProdViewModel> products;
-  private ObjectProperty<TableProdViewModel> selectedProduct;
+ 
   private ProductsModel model;
 
   public ProductsViewModel(ProductsModel model)
   {
     this.model = model;
     this.products = FXCollections.observableArrayList();
-    this.selectedProduct = new SimpleObjectProperty<>();
+    
     model.addListener("AddProductReply",this);
   }
 
@@ -28,12 +28,21 @@ public class ProductsViewModel implements PropertyChangeListener
     return products;
   }
 
-  public void setSelectedProduct(TableProdViewModel selectedUser)
-  {
-    this.selectedProduct.set(selectedUser);
+  public void getProd(){
+    ArrayList<Product> prod = model.getProducts();
+    for (Product product:prod)
+    {
+      products.add(new TableProdViewModel(product));
+    }
   }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
 
+  }
+
+  public void reset()
+  {
+    products.clear();
+    getProd();
   }
 }

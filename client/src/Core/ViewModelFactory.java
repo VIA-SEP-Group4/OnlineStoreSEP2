@@ -31,12 +31,14 @@ public class ViewModelFactory {
     }
     public static BrowserViewModel getBrowserViewModel(){
         if(browserViewModel==null){
+            modelFactory.getCredentialsModel();
             browserViewModel=new BrowserViewModel(modelFactory.getProductsModel());
         }
         return browserViewModel;
     }
     public static ProductsViewModel getProductsViewModel(){
         if(productsViewModel==null){
+            modelFactory.getCredentialsModel();
             productsViewModel=new ProductsViewModel(modelFactory.getProductsModel());
         }
         return productsViewModel;

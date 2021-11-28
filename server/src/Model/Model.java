@@ -9,6 +9,6 @@ public interface Model extends Subject
   void registerUser(User newUser);
   void loginUser(String username, String password);
   int userCount();
-  ArrayList<Product> getProducts(int index);
+  ArrayList<Product> getProducts();
   void addProduct(Product p);
 }
