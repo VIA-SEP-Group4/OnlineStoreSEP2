@@ -39,7 +39,7 @@ public class BrowserViewModel implements PropertyChangeListener
     logIn = new SimpleBooleanProperty(false);
 
     basket = new ArrayList<>();
-    model.addListener("BrowserReply",this);
+    model.addListener("ProductsReply",this);
   }
 
   public ProductsModel getModel()
@@ -162,6 +162,10 @@ public class BrowserViewModel implements PropertyChangeListener
   }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-
+    ArrayList<Product> prod = (ArrayList<Product>) evt.getNewValue();
+    for (Product product:prod)
+    {
+      browserTable.add(new TableProdViewModel(product));
+    }
   }
 }

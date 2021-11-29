@@ -1,6 +1,7 @@
 package Core;
 
 
+import View.Browser.ProductDetailController;
 import View.Products.AddProductViewController;
 import View.Products.ProductsViewController;
 import View.Browser.BrowserViewController;
@@ -34,12 +35,11 @@ public class ViewHandler {
         System.exit(0);
     }
 
-    public void start() {
-      openProductsPane();
+    public void startCustomer() {
+      openBrowserPane();
 
-        stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+      stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
-
     public void openLoginPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -48,7 +48,7 @@ public class ViewHandler {
             LoginViewController view = loader.getController();
             view.init(this);
             Scene scene = new Scene(root);
-            stage.setTitle("First");
+            stage.setTitle("Login");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -64,7 +64,7 @@ public class ViewHandler {
             RegisterViewController view = loader.getController();
             view.init(this);
             Scene scene = new Scene(root);
-            stage.setTitle("First");
+            stage.setTitle("Register");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -113,6 +113,21 @@ public class ViewHandler {
             view.init(this);
             Scene scene = new Scene(root);
             stage.setTitle("Add Product");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openProductDetailPane() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/Browser/ProductDetailView.fxml"));
+            Parent root = loader.load();
+            ProductDetailController view = loader.getController();
+            view.init(this);
+            Scene scene = new Scene(root);
+            stage.setTitle("Detail Product");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
