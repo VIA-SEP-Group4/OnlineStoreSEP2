@@ -1,5 +1,7 @@
 package DataAcess;
 
+import org.postgresql.PGConnection;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -38,9 +40,7 @@ public class DBSConnection{
         if(connection==null){
             synchronized (lock){
                 if(connection==null){
-                    connection= new DBSConnection(
-                        "jdbc:postgresql://localhost:5432/postgres", "postgres","4280"
-                    );
+                        connection= new DBSConnection("jdbc:postgresql://localhost:5432/postgres","postgres","12345");
                 }
             }
         }

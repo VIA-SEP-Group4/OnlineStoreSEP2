@@ -1,8 +1,6 @@
 package Model;
 
 import Networking.Client;
-import Utils.Subject;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -42,6 +40,18 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         try {
             client.addProduct(p);
         } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override public void deleteProduct(Product p)
+    {
+        try
+        {
+            client.deleteProduct(p);
+        }
+        catch (RemoteException e)
+        {
             e.printStackTrace();
         }
     }

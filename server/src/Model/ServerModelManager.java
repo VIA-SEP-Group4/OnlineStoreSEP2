@@ -37,6 +37,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
     return productsDataAcessor.getProducts();
   }
 
+
   @Override
   public void addProduct(Product p) {
     productsDataAcessor.addProduct(p);

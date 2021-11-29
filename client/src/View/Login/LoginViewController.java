@@ -34,9 +34,17 @@ public class LoginViewController
         viewHandler.openRegisterPane();
     }
 
+//    public void onLogin(ActionEvent actionEvent) {
+//        viewModel.login();
+//        if(successLabel.textProperty().getValue()!=null && successLabel.textProperty().getValue().contains("success"))
+//            viewHandler.openBrowserPane();
+//    }
+
     public void onLogin(ActionEvent actionEvent) {
         viewModel.login();
         if(successLabel.textProperty().getValue()!=null && successLabel.textProperty().getValue().contains("success"))
-            viewHandler.openBrowserPane();
+            viewHandler.openProductsPane();
     }
+
+
 }

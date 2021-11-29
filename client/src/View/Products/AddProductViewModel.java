@@ -3,6 +3,7 @@ package View.Products;
 import Model.CredentialsModel;
 import Model.Product;
 import Model.ProductsModel;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -33,6 +34,26 @@ public class AddProductViewModel implements PropertyChangeListener
     credentialsModel.addListener("AddProductReply",this);
   }
 
+
+
+  public boolean addProduct() {
+    if(prodName.getValue()!=null && !prodName.getValue().equals("")
+        && prodType.getValue()!=null && !prodType.getValue().equals("")
+        && prodPrice.getValue()!=null && prodQuantity.getValue()!=null
+        && prodDescription.getValue()!=null && !prodDescription.getValue().equals(""))
+    {
+      Product product = new Product(prodName.getValue(), prodType.getValue(),prodPrice.getValue(),prodDescription.getValue(),prodQuantity.getValue());
+      productsModel.addProduct(product);
+      return true;
+    }
+    else
+    {
+      Platform.runLater(()->{errorLabel.setValue("Fields cannot be empty");});
+      return false;
+    }
+
+  }
+
   public StringProperty prodNameProperty()
   {
     return prodName;
@@ -58,20 +79,8 @@ public class AddProductViewModel implements PropertyChangeListener
     return prodDescription;
   }
 
-  public void addProduct() {
-    if(prodName.getValue()!=null && !prodName.getValue().equals("")
-        && prodType.getValue()!=null && !prodType.getValue().equals("")
-        && prodPrice.getValue()!=null && prodQuantity.getValue()!=null
-        && prodDescription.getValue()!=null && !prodDescription.getValue().equals(""))
-    {
-      Product product = new Product(prodName.getValue(), prodType.getValue(),prodPrice.getValue(),prodDescription.getValue(),prodQuantity.getValue());
-      productsModel.addProduct(product);
-    }
-    else
-    {
-      errorLabel.setValue("Fields cannot be empty");
-    }
-
+  public StringProperty getError(){
+    return errorLabel;
   }
 
   @Override public void propertyChange(PropertyChangeEvent evt)

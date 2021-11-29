@@ -87,6 +87,7 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     return serverModelManager.getProducts();
   }
 
+
   @Override
   public void addProduct(Product product) throws RemoteException {
       serverModelManager.addProduct(product);

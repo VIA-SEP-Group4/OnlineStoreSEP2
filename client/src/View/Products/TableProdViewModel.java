@@ -45,4 +45,12 @@ public class TableProdViewModel
   {
     return descriptionProperty;
   }
+
+  @Override public String toString()
+  {
+    return "TableProdViewModel{" + "nameProperty=" + nameProperty
+        + ", typeProperty=" + typeProperty + ", priceProperty=" + priceProperty
+        + ", quantityProperty=" + quantityProperty + ", descriptionProperty="
+        + descriptionProperty + '}';
+  }
 }

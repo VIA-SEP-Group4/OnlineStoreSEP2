@@ -2,6 +2,7 @@ package View.Products;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
+import Model.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -54,10 +55,14 @@ public class ProductsViewController
 
   public void onDeleteProdButton(ActionEvent actionEvent)
   {
+    TableProdViewModel temp = prodColumns.getSelectionModel().getSelectedItem();
+    viewModel.removeProduct(new Product(temp.namePropertyProperty().getValue(),null,0,null,0));
+    viewModel.getProducts().remove(temp);
   }
 
   public void onBackProdButton(ActionEvent actionEvent)
   {
+    viewHandler.openBrowserPane();
   }
 
 

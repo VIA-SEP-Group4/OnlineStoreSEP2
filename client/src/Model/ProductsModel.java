@@ -8,6 +8,7 @@ public interface ProductsModel extends Subject {
     ArrayList<Product> getProducts();
     ArrayList<Product> getBasket();
     void addProduct(Product p);
+    void deleteProduct(Product p);
     void addBasket(Product product);
     String getId();
 }
