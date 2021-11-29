@@ -18,9 +18,12 @@ public class BrowserViewModel implements PropertyChangeListener
   private StringProperty userName;
 
   private ObservableList<TableProdViewModel> browserTable;
+  private ObjectProperty<TableProdViewModel> selectedProd;
 
   private BooleanProperty logOut;
   private BooleanProperty logIn;
+
+  private ArrayList<Product> basket;
 
   public BrowserViewModel(ProductsModel model)
   {
@@ -30,9 +33,12 @@ public class BrowserViewModel implements PropertyChangeListener
     userName = new SimpleStringProperty();
 
     browserTable = FXCollections.observableArrayList();
+    selectedProd = new SimpleObjectProperty<>();
 
     logOut = new SimpleBooleanProperty(true);
     logIn = new SimpleBooleanProperty(false);
+
+    basket = new ArrayList<>();
     model.addListener("BrowserReply",this);
   }
 
@@ -72,18 +78,28 @@ public class BrowserViewModel implements PropertyChangeListener
     return logIn;
   }
 
+  public void setSelectedProd(TableProdViewModel selectedProd)
+  {
+    this.selectedProd.set(selectedProd);
+  }
+
   public void getProd(){
     ArrayList<Product> prod = model.getProducts();
     for (Product product:prod)
     {
       browserTable.add(new TableProdViewModel(product));
     }
-    }
+  }
 
   public void addBasket()
   {
-
-    items.setValue("("+model.getBasket().size()+") items");
+    if (selectedProd.get() != null && selectedProd.get().quantityPropertyProperty().get() != 0) {
+      Product prod = new Product(selectedProd.get().namePropertyProperty().get(),selectedProd.get().typePropertyProperty().get(),
+          selectedProd.get().pricePropertyProperty().get(),selectedProd.get().descriptionProperty().get(),selectedProd.get().quantityPropertyProperty().get());
+      basket.add(prod);
+      items.setValue("("+basket.size()+") items");
+      reset();
+    }
   }
 
   public void reset()

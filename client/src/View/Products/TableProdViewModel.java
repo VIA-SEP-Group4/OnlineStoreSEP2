@@ -7,16 +7,16 @@ public class TableProdViewModel
 {
   private StringProperty nameProperty;
   private StringProperty typeProperty;
-  private StringProperty priceProperty;
-  private StringProperty quantityProperty;
+  private DoubleProperty priceProperty;
+  private IntegerProperty quantityProperty;
   private StringProperty descriptionProperty;
 
   public TableProdViewModel(Product product)
   {
     nameProperty = new SimpleStringProperty(product.getName());
     typeProperty = new SimpleStringProperty(product.getType());
-    priceProperty = new SimpleStringProperty(product.getPrice()+"");
-    quantityProperty = new SimpleStringProperty(product.getQuantityP()+"");
+    priceProperty = new SimpleDoubleProperty(product.getPrice());
+    quantityProperty = new SimpleIntegerProperty(product.getQuantityP());
     descriptionProperty = new SimpleStringProperty(product.getDescription());
   }
 
@@ -31,14 +31,19 @@ public class TableProdViewModel
     return typeProperty;
   }
 
-  public StringProperty pricePropertyProperty()
+  public DoubleProperty pricePropertyProperty()
   {
     return priceProperty;
   }
 
-  public StringProperty quantityPropertyProperty()
+  public IntegerProperty quantityPropertyProperty()
   {
     return quantityProperty;
+  }
+
+  public void setQuantityProperty(int quantityProperty)
+  {
+    this.quantityProperty.set(quantityProperty);
   }
 
   public StringProperty descriptionProperty()

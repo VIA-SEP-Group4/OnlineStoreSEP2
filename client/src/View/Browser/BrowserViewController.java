@@ -23,9 +23,9 @@ public class BrowserViewController
   public TableView<TableProdViewModel> browserTable;
   public TableColumn<TableProdViewModel, String> nameColumn;
   public TableColumn<TableProdViewModel, String> typeColumn;
-  public TableColumn<TableProdViewModel, String> priceColumn;
+  public TableColumn<TableProdViewModel, Number> priceColumn;
   public TableColumn<TableProdViewModel, String> descriptionColumn;
-  public TableColumn<TableProdViewModel, String> quantityColumn;
+  public TableColumn<TableProdViewModel, Number> quantityColumn;
 
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
@@ -46,11 +46,14 @@ public class BrowserViewController
     registerButton.visibleProperty().bind(viewModel.logOutProperty());
 
     browserTable.setItems(viewModel.getBrowserTable());
+    browserTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> viewModel.setSelectedProd(newValue));
     nameColumn.setCellValueFactory(data -> data.getValue().namePropertyProperty());
     typeColumn.setCellValueFactory(data -> data.getValue().typePropertyProperty());
     priceColumn.setCellValueFactory(data -> data.getValue().pricePropertyProperty());
-    descriptionColumn.setCellValueFactory(data -> data.getValue().quantityPropertyProperty());
-    typeColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
+    descriptionColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
+    quantityColumn.setCellValueFactory(data -> data.getValue().quantityPropertyProperty());
+
+
 
     viewModel.getProd();
     reset();
@@ -89,5 +92,6 @@ public class BrowserViewController
 
   public void addButton(ActionEvent actionEvent)
   {
+    viewModel.addBasket();
   }
 }
