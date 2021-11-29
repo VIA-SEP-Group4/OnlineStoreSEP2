@@ -7,4 +7,5 @@ public interface RMIClient_Remote extends Remote
 {
   void receiveReply(String reply) throws RemoteException;
   String getID() throws RemoteException;
+  void receiveUpdatedProducts(Object products) throws RemoteException;
 }

@@ -23,6 +23,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
     credentialsDataAccessor.addListener("InvalidPassword",this);
     credentialsDataAccessor.addListener("InvalidUser",this);
     credentialsDataAccessor.addListener("SuccessfulLogin",this);
+    productsDataAcessor.addListener("ProductReply",this);
   }
 
 
@@ -61,7 +62,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
 
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
-    support.firePropertyChange("Validation",evt.getOldValue(),evt.getNewValue());
+    support.firePropertyChange(evt.getPropertyName(),evt.getOldValue(),evt.getNewValue());
   }
 
   @Override

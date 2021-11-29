@@ -16,6 +16,7 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         this.client = client;
         basket=new ArrayList<>();
         support=new PropertyChangeSupport(this);
+        client.addListener("ProductsReply",this);
     }
 
     @Override public ArrayList<Product> getBasket()

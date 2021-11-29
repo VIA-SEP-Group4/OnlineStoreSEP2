@@ -54,7 +54,7 @@ public class RegisterViewModel implements PropertyChangeListener {
                  errorFields.setValue("");
             }
         }
-        else{ errorFields.setValue("Fields cannot be empty on registering "); errorPass.setValue(""); }
+        else{ errorFields.setValue("Fields cannot be empty on registering"); errorPass.setValue(""); }
     }
 
     @Override

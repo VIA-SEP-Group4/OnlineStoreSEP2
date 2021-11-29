@@ -69,6 +69,11 @@ public class RMIClient implements Client, RMIClient_Remote
     return clientID;
   }
 
+  @Override
+  public void receiveUpdatedProducts(Object products) throws RemoteException {
+    support.firePropertyChange("ProductsReply",null,products);
+  }
+
   /**
    * Method used to send request to the server requesting adding new product to the database
    * @param p new product to be added.

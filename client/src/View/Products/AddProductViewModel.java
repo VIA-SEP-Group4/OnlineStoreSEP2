@@ -31,7 +31,7 @@ public class AddProductViewModel implements PropertyChangeListener
     prodDescription = new SimpleStringProperty();
     errorLabel = new SimpleStringProperty();
 
-    credentialsModel.addListener("AddProductReply",this);
+    credentialsModel.addListener("ProductsReply",this);
   }
 
 

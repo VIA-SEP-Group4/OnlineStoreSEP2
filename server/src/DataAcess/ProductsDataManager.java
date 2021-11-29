@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Class responsible for managing and accessing database tables/data related to products
  */
-public class ProductsDataManager implements ProductsDataAcessor, Subject {
+public class ProductsDataManager implements ProductsDataAcessor {
     private static final String SCHEMA = "eshop";
     private static final String TABLE = "products";
     private PropertyChangeSupport support;
@@ -68,7 +68,7 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows <= 0)
                 throw new RuntimeException("Product insertion failed");
-
+            support.firePropertyChange("ProductReply",null,getProducts());
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw new RuntimeException(ex.getMessage());

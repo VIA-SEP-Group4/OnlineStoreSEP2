@@ -20,7 +20,7 @@ public class ProductsViewModel implements PropertyChangeListener
     this.model = model;
     this.products = FXCollections.observableArrayList();
     
-    model.addListener("AddProductReply",this);
+    model.addListener("ProductsReply",this);
   }
 
   public ObservableList<TableProdViewModel> getProducts()
@@ -41,7 +41,10 @@ public class ProductsViewModel implements PropertyChangeListener
   }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-
+    ArrayList<Product> product= (ArrayList<Product>) evt.getNewValue();
+    for(Product p : product){
+      products.add(new TableProdViewModel(p));
+    }
   }
 
   public void reset()

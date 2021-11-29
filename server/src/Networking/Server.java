@@ -24,7 +24,7 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     super();
     clients=new ArrayList<>();
     this.serverModelManager = serverModelManager;
-
+    serverModelManager.addListener("ProductReply",this);
   }
 
   public void start() throws RemoteException, MalformedURLException
@@ -100,7 +100,12 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
 
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
-
-
+      for(RMIClient_Remote client: clients){
+        try {
+          client.receiveUpdatedProducts(evt.getNewValue());
+        } catch (RemoteException e) {
+          e.printStackTrace();
+        }
+      }
   }
 }
