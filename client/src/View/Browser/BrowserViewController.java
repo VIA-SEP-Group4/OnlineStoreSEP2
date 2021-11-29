@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 
 public class BrowserViewController
 {
-  public ComboBox <String> filterByComboBox;
+  public ComboBox<String> filterByComboBox;
   public TextField searchTextField;
   public Button loginButton;
   public Button registerButton;
@@ -30,7 +30,8 @@ public class BrowserViewController
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
 
-   public void init(ViewHandler viewHandler) {
+  public void init(ViewHandler viewHandler)
+  {
     this.viewHandler = viewHandler;
     this.viewModel = ViewModelFactory.getBrowserViewModel();
 
@@ -53,13 +54,11 @@ public class BrowserViewController
     descriptionColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
     quantityColumn.setCellValueFactory(data -> data.getValue().quantityPropertyProperty());
 
-
-
     viewModel.getProd();
     reset();
   }
 
-   private void reset()
+  private void reset()
   {
     viewModel.reset();
   }
@@ -93,5 +92,14 @@ public class BrowserViewController
   public void addButton(ActionEvent actionEvent)
   {
     viewModel.addBasket();
+  }
+
+  public void onDoubleClick(MouseEvent mouseEvent)
+  {
+    if (mouseEvent.getClickCount() == 2 && !mouseEvent.isConsumed())
+    {
+      mouseEvent.consume();
+      viewHandler.openProductDetailPane();
+    }
   }
 }

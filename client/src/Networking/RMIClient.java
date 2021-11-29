@@ -52,7 +52,6 @@ public class RMIClient implements Client, RMIClient_Remote
   {
     try
     {
-      System.out.println(serverStub.getProducts());
       return serverStub.getProducts();
     }
     catch (RemoteException e)

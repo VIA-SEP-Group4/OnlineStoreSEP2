@@ -1,8 +1,6 @@
 package Model;
 
 import Networking.Client;
-import Utils.Subject;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -24,6 +22,7 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
     {
         return basket;
     }
+
     @Override public String getId()
     {
         try

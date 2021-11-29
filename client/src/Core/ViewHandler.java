@@ -1,6 +1,7 @@
 package Core;
 
 
+import View.Browser.ProductDetailController;
 import View.Products.AddProductViewController;
 import View.Products.ProductsViewController;
 import View.Browser.BrowserViewController;
@@ -115,6 +116,22 @@ public class ViewHandler {
             view.init(this);
             Scene scene = new Scene(root);
             stage.setTitle("Add Product");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openProductDetailPane() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/Browser/ProductDetailView.fxml"));
+            Parent root = loader.load();
+            ProductDetailController view = loader.getController();
+            view.init(this);
+            Scene scene = new Scene(root);
+            stage.setTitle("Detail Product");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

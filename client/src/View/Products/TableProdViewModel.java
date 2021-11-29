@@ -16,7 +16,7 @@ public class TableProdViewModel
     nameProperty = new SimpleStringProperty(product.getName());
     typeProperty = new SimpleStringProperty(product.getType());
     priceProperty = new SimpleDoubleProperty(product.getPrice());
-    quantityProperty = new SimpleIntegerProperty(product.getQuantityP());
+    quantityProperty = new SimpleIntegerProperty(product.getQuantity());
     descriptionProperty = new SimpleStringProperty(product.getDescription());
   }
 

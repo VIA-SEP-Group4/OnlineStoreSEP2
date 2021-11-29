@@ -83,6 +83,11 @@ public class BrowserViewModel implements PropertyChangeListener
     this.selectedProd.set(selectedProd);
   }
 
+  public TableProdViewModel getSelectedProd()
+  {
+    return selectedProd.get();
+  }
+
   public void getProd(){
     ArrayList<Product> prod = model.getProducts();
     for (Product product:prod)
@@ -93,13 +98,51 @@ public class BrowserViewModel implements PropertyChangeListener
 
   public void addBasket()
   {
-    if (selectedProd.get() != null && selectedProd.get().quantityPropertyProperty().get() != 0) {
+     ArrayList<Product> basket = model.getBasket();
+
+      boolean add = true;
+      if (selectedProd.get() != null && selectedProd.get().quantityPropertyProperty().get() != 0 && hasProducts()) {
+        Product prod = new Product(selectedProd.get().namePropertyProperty().get(),selectedProd.get().typePropertyProperty().get(),
+            selectedProd.get().pricePropertyProperty().get(),selectedProd.get().descriptionProperty().get(),1);
+
+        for (int i = 0; i < basket.size(); i++)
+        {
+          if (basket.get(i).getName().equals(prod.getName()))
+          {
+            basket.get(i).setQuantityP(basket.get(i).getQuantity() + 1);
+            add = false;
+            break;
+          }
+        }
+        if (add)
+          model.addBasket(prod);
+      }
+      items.setValue("("+itemQuantity()+") items");
+  }
+
+    public boolean hasProducts()
+    {
+      ArrayList<Product> basket = model.getBasket();
       Product prod = new Product(selectedProd.get().namePropertyProperty().get(),selectedProd.get().typePropertyProperty().get(),
           selectedProd.get().pricePropertyProperty().get(),selectedProd.get().descriptionProperty().get(),selectedProd.get().quantityPropertyProperty().get());
-      basket.add(prod);
-      items.setValue("("+basket.size()+") items");
-      reset();
+      if (basket.size() != 0)
+      {
+        for (int i = 0; i < basket.size(); i++)
+        {
+          if (basket.get(i).getName().equals(prod.getName())
+              && basket.get(i).getQuantity() >= prod.getQuantity())
+            return false;
+        }
+      } return true;
     }
+
+    public int itemQuantity(){
+    int iQ = 0;
+    for (int i = 0; i < model.getBasket().size(); i++)
+    {
+      iQ += model.getBasket().get(i).getQuantity();
+    }
+    return iQ;
   }
 
   public void reset()

@@ -27,22 +27,22 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
     @Override
     public ArrayList<Product> getProducts() {
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
-        System.out.println(SQL);
-        ArrayList<Product> products=new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
+
         try (Connection conn =  DBSConnection.getInstance().connect();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(SQL)) {
-            System.out.println("All products:");
+             ResultSet rs = stmt.executeQuery(SQL))
+        {
             while (rs.next())
             {
                 products.add(new Product(rs.getString("product_name"), rs.getString("type"), Double.parseDouble(rs.getString("price")),
                         rs.getString("description"),Integer.parseInt(rs.getString("amount"))));
 
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
-//        System.out.println(products);
+
         return products;
     }
 
@@ -62,7 +62,7 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
             pstmt.setString(1, p.getName());
             pstmt.setString(2, p.getDescription());
             pstmt.setString(3, p.getType());
-            pstmt.setInt(4, p.getQuantityP());
+            pstmt.setInt(4, p.getQuantity());
             pstmt.setDouble(5, p.getPrice());
 
             int affectedRows = pstmt.executeUpdate();
@@ -77,7 +77,7 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
 
     @Override public void deleteProduct(Product p)
     {
-        String SQL = "DELETE FROM " +SCHEMA+ "." +TABLE+ " WHERE " +SCHEMA+ "." +TABLE+ ".product_name = '"+p.getName()+"'";
+        String SQL = "DELETE FROM " +SCHEMA+ "." +TABLE+ " WHERE " +SCHEMA+ "." +TABLE+ ".product_name = '" +p.getName()+ "'";
 
         try (Connection conn = DBSConnection.getInstance().connect();
             Statement stmt = conn.createStatement())

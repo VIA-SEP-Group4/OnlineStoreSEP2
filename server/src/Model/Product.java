@@ -8,15 +8,15 @@ public class Product implements Serializable
     private String type;
     private double price;
     private String description;
-    private int quantityP;
+    private int quantity;
 
-    public Product(String name, String type, double price, String description, int quantityP)
+    public Product(String name, String type, double price, String description, int quantity)
     {
         this.name = name;
         this.type = type;
         this.price = price;
         this.description = description;
-        this.quantityP = quantityP;
+        this.quantity = quantity;
     }
 
     public String getName()
@@ -59,20 +59,20 @@ public class Product implements Serializable
         this.description = description;
     }
 
-    public int getQuantityP()
+    public int getQuantity()
     {
-        return quantityP;
+        return quantity;
     }
 
-    public void setQuantityP(int quantityP)
+    public void setQuantityP(int amount)
     {
-        this.quantityP = quantityP;
+        this.quantity = amount;
     }
 
     @Override public String toString()
     {
         return name + "(" + type + "),"
-                + "\ndescription= " + description
-                + "\n, price= " + price +", quantity= " + quantityP + '}';
+            + "\ndescription= " + description
+            + "\n, price= " + price +", quantity= " + quantity + '}';
     }
 }
