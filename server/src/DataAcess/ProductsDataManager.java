@@ -27,22 +27,22 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
     @Override
     public ArrayList<Product> getProducts() {
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
-        System.out.println(SQL);
-        ArrayList<Product> products=new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
+
         try (Connection conn =  DBSConnection.getInstance().connect();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(SQL)) {
-            System.out.println("All products:");
+             ResultSet rs = stmt.executeQuery(SQL))
+        {
             while (rs.next())
             {
                 products.add(new Product(rs.getString("product_name"), rs.getString("type"), Double.parseDouble(rs.getString("price")),
                         rs.getString("description"),Integer.parseInt(rs.getString("amount"))));
 
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
-//        System.out.println(products);
+
         return products;
     }
 

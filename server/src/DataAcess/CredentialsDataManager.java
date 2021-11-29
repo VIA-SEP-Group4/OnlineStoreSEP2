@@ -20,7 +20,6 @@ public class CredentialsDataManager implements CredentialsDataAccessor
   }
 
 
-
   /**
    * Method that inserts a new user in the database
    * @param newUser the user to be inserted
