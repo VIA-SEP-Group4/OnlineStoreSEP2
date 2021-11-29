@@ -2,9 +2,10 @@ package View.Browser;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import View.Products.TableProdViewModel;
+import Model.Product;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -20,12 +21,19 @@ public class BrowserViewController
   public Button basketButton;
   public Button addButton;
 
-  public TableView<TableProdViewModel> browserTable;
-  public TableColumn<TableProdViewModel, String> nameColumn;
-  public TableColumn<TableProdViewModel, String> typeColumn;
-  public TableColumn<TableProdViewModel, String> priceColumn;
-  public TableColumn<TableProdViewModel, String> descriptionColumn;
-  public TableColumn<TableProdViewModel, String> quantityColumn;
+//  public TableView<TableProdViewModel> browserTable;
+//  public TableColumn<TableProdViewModel, String> nameColumn;
+//  public TableColumn<TableProdViewModel, String> typeColumn;
+//  public TableColumn<TableProdViewModel, String> priceColumn;
+//  public TableColumn<TableProdViewModel, String> descriptionColumn;
+//  public TableColumn<TableProdViewModel, String> quantityColumn;
+
+  public TableView<Product> browserTable;
+  public TableColumn<Product, String> nameColumn;
+  public TableColumn<Product, String> typeColumn;
+  public TableColumn<Product, Double> priceColumn;
+  public TableColumn<Product, String> descriptionColumn;
+  public TableColumn<Product, Integer> quantityColumn;
 
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
@@ -45,14 +53,15 @@ public class BrowserViewController
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
     registerButton.visibleProperty().bind(viewModel.logOutProperty());
 
+    //table
     browserTable.setItems(viewModel.getBrowserTable());
-    nameColumn.setCellValueFactory(data -> data.getValue().namePropertyProperty());
-    typeColumn.setCellValueFactory(data -> data.getValue().typePropertyProperty());
-    priceColumn.setCellValueFactory(data -> data.getValue().pricePropertyProperty());
-    descriptionColumn.setCellValueFactory(data -> data.getValue().quantityPropertyProperty());
-    typeColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
+    nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+    typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+    priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+    descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+    quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-    viewModel.getProd();
+//    viewModel.fetchProducts();
     reset();
   }
 

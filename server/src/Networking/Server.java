@@ -27,11 +27,6 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
 
   }
 
-  /**
-   * Method responsible for launching/=exporting the server object.
-   * @throws RemoteException
-   * @throws MalformedURLException
-   */
   public void start() throws RemoteException, MalformedURLException
   {
     UnicastRemoteObject.exportObject(this, 1099);

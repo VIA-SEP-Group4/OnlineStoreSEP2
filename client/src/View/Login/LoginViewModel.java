@@ -34,11 +34,13 @@ public class LoginViewModel implements PropertyChangeListener {
         if(userName.getValue()==null || userName.getValue().equals("")) {
             errorUser.setValue("Username cannot be empty");
             success.setValue("denied");
+            clearFields();
         }
 
         else if(password.getValue()==null || password.getValue().equals("")){
             errorPass.setValue("Password cannot be empty");
             success.setValue("denied");
+            clearFields();
         }
 
         else{
@@ -83,27 +85,34 @@ public class LoginViewModel implements PropertyChangeListener {
         String reply=evt.getNewValue().toString();
         success.setValue("denied");
 
-        if(reply.contains("Password")){ Platform.runLater(()-> {
+        if(reply.contains("Password")){
+//            Platform.runLater(()-> {
+//                errorPass.setValue(reply);
+//                errorUser.setValue("");
+//            });
+            success.setValue(reply);
             errorPass.setValue(reply);
-        errorUser.setValue("");
-        });
+            errorUser.setValue("");
         }
-        else if(reply.contains("User")){ Platform.runLater(()->{
+        else if(reply.contains("User")){
+//            Platform.runLater(()->{
+//                errorUser.setValue(reply);
+//                errorPass.setValue("");
+//            });
+            success.setValue(reply);
             errorUser.setValue(reply);
             errorPass.setValue("");
-        });}
-        else if (reply.toLowerCase().contains("success"))
-        {
-            Platform.runLater(()->{success.setValue(reply);
-                errorPass.setValue("");
-                errorUser.setValue("");
-            });
-
-//            success.setValue(reply);
-//            errorPass.setValue("");
-//            errorUser.setValue("");
         }
-
+        else if (reply.toLowerCase().contains("success")) {
+//            Platform.runLater(()->{
+//                success.setValue(reply);
+//                errorPass.setValue("");
+//                errorUser.setValue("");
+//            });
+            success.setValue(reply);
+            errorPass.setValue("");
+            errorUser.setValue("");
+        }
 
         clearFields();
     }

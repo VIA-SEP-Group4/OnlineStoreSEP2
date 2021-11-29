@@ -2,13 +2,11 @@ package View.Browser;
 
 import Model.Product;
 import Model.ProductsModel;
-import View.Products.TableProdViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 
 public class BrowserViewModel implements PropertyChangeListener
 {
@@ -17,7 +15,7 @@ public class BrowserViewModel implements PropertyChangeListener
   private StringProperty items;
   private StringProperty userName;
 
-  private ObservableList<TableProdViewModel> browserTable;
+  private ObservableList<Product> browserTable;
 
   private BooleanProperty logOut;
   private BooleanProperty logIn;
@@ -57,7 +55,8 @@ public class BrowserViewModel implements PropertyChangeListener
     return userName;
   }
 
-  public ObservableList<TableProdViewModel> getBrowserTable()
+
+  public ObservableList<Product> getBrowserTable()
   {
     return browserTable;
   }
@@ -72,13 +71,10 @@ public class BrowserViewModel implements PropertyChangeListener
     return logIn;
   }
 
-  public void getProd(){
-    ArrayList<Product> prod = model.getProducts();
-    for (Product product:prod)
-    {
-      browserTable.add(new TableProdViewModel(product));
-    }
-    }
+
+  public void fetchProducts(){
+    browserTable.addAll(model.getProducts());
+  }
 
   public void addBasket()
   {
@@ -89,7 +85,7 @@ public class BrowserViewModel implements PropertyChangeListener
   public void reset()
   {
     browserTable.clear();
-    getProd();
+    fetchProducts();
     if(model.getId().equals(""))
     {
       logOut.setValue(true);
@@ -98,9 +94,9 @@ public class BrowserViewModel implements PropertyChangeListener
     else {
       logOut.setValue(false);
       logIn.setValue(true);
-
     }
   }
+
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
 

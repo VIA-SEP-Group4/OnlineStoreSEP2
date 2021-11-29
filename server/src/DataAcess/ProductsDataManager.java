@@ -61,7 +61,7 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
             pstmt.setString(1, p.getName());
             pstmt.setString(2, p.getDescription());
             pstmt.setString(3, p.getType());
-            pstmt.setInt(4, p.getQuantityP());
+            pstmt.setInt(4, p.getQuantity());
             pstmt.setDouble(5, p.getPrice());
 
             int affectedRows = pstmt.executeUpdate();
@@ -76,7 +76,7 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
 
     @Override public void deleteProduct(Product p)
     {
-        String SQL = "DELETE FROM " +SCHEMA+ "." +TABLE+ " WHERE " +SCHEMA+ "." +TABLE+ ".product_name = '"+p.getName()+"'";
+        String SQL = "DELETE FROM " +SCHEMA+ "." +TABLE+ " WHERE " +SCHEMA+ "." +TABLE+ ".product_name = '" +p.getName()+ "'";
 
         try (Connection conn = DBSConnection.getInstance().connect();
             Statement stmt = conn.createStatement())

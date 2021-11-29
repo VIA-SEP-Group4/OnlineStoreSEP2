@@ -24,6 +24,7 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
     {
         return basket;
     }
+
     @Override public String getId()
     {
         try
@@ -44,10 +45,12 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
             e.printStackTrace();
         }
     }
+
     @Override public ArrayList<Product> getProducts()
     {
         return client.getProducts();
     }
+
     @Override public void addBasket(Product product)
     {
         basket.add(product);
