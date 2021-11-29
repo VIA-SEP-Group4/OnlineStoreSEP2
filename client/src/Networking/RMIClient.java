@@ -10,6 +10,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Class responsible for communication with the server.
@@ -22,7 +23,7 @@ public class RMIClient implements Client, RMIClient_Remote
 
   public RMIClient()
   {
-    clientID= "";
+    clientID= UUID.randomUUID().toString();
     support=new PropertyChangeSupport(this);
   }
 

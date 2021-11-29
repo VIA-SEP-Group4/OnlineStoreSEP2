@@ -104,18 +104,18 @@
             </Button>
          </children>
       </HBox>
-      <ScrollPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="702.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <content>
-            <TableView fx:id="browserTable" prefHeight="496.0" prefWidth="686.0">
-              <columns>
-                <TableColumn fx:id="nameColumn" prefWidth="112.79995918273926" text="Name" />
-                <TableColumn fx:id="typeColumn" prefWidth="123.99999237060547" text="Type" />
-                  <TableColumn fx:id="priceColumn" prefWidth="84.79998779296875" text="Price" />
-                  <TableColumn fx:id="descriptionColumn" prefWidth="264.8000183105469" text="Description" />
-                  <TableColumn fx:id="quantityColumn" prefWidth="96.00006103515625" text="Quantity" />
-              </columns>
-            </TableView>
-         </content>
+       <ScrollPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="702.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+           <content>
+               <TableView fx:id="browserTable" onMouseClicked="#onDoubleClick" prefHeight="496.0" prefWidth="686.0">
+                   <columns>
+                       <TableColumn fx:id="nameColumn" prefWidth="112.79995918273926" text="Name" />
+                       <TableColumn fx:id="typeColumn" prefWidth="123.99999237060547" text="Type" />
+                       <TableColumn fx:id="priceColumn" prefWidth="84.79998779296875" text="Price" />
+                       <TableColumn fx:id="descriptionColumn" prefWidth="264.8000183105469" text="Description" />
+                       <TableColumn fx:id="quantityColumn" prefWidth="96.00006103515625" text="Stock" />
+                   </columns>
+               </TableView>
+           </content>
       </ScrollPane>
    </children>
 </AnchorPane>

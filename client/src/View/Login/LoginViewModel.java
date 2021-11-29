@@ -1,8 +1,10 @@
 package View.Login;
 
 import Model.CredentialsModel;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -79,19 +81,28 @@ public class LoginViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String reply=evt.getNewValue().toString();
-        success.setValue("denied");
-
-        if(reply.contains("Password")){
-            success.setValue(reply);
+        //success.setValue("denied");
+        success.setValue(reply);
+        if(reply.contains("Password")){ Platform.runLater(()-> {
             errorPass.setValue(reply);
-            errorUser.setValue("");
+        errorUser.setValue("");
+        });
         }
-        else if(reply.contains("User")){
-            success.setValue(reply);
+        else if(reply.contains("User")){ Platform.runLater(()->{
             errorUser.setValue(reply);
             errorPass.setValue("");
+        });}
+        else if (reply.contains("database")){
+            Platform.runLater(()->{success.setValue(reply);});
         }
-        else if (reply.toLowerCase().contains("success")) {
+        else if (reply.toLowerCase().contains("success"))
+        {
+//            Platform.runLater(()->{
+//                success.setValue(reply);
+//                errorPass.setValue("");
+//                errorUser.setValue("");
+//            });
+
             success.setValue(reply);
             errorPass.setValue("");
             errorUser.setValue("");

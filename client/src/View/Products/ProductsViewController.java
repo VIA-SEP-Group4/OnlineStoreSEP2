@@ -14,8 +14,8 @@ public class ProductsViewController
   @FXML private TableView<TableProdViewModel> prodColumns;
   @FXML private TableColumn<TableProdViewModel, String> nameColumn;
   @FXML private TableColumn<TableProdViewModel, String> typeColumn;
-  @FXML private TableColumn<TableProdViewModel, String> priceColumn;
-  @FXML private TableColumn<TableProdViewModel, String> quantityColumn;
+  @FXML private TableColumn<TableProdViewModel, Number> priceColumn;
+  @FXML private TableColumn<TableProdViewModel, Number> quantityColumn;
   @FXML private TableColumn<TableProdViewModel, String> descriptionColumn;
 
   private ViewHandler viewHandler;
