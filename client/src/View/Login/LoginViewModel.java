@@ -92,16 +92,20 @@ public class LoginViewModel implements PropertyChangeListener {
             errorUser.setValue(reply);
             errorPass.setValue("");
         });}
+        else if (reply.contains("database")){
+            Platform.runLater(()->{success.setValue(reply);});
+        }
         else if (reply.toLowerCase().contains("success"))
         {
-            Platform.runLater(()->{success.setValue(reply);
-                errorPass.setValue("");
-                errorUser.setValue("");
-            });
+//            Platform.runLater(()->{
+//                success.setValue(reply);
+//                errorPass.setValue("");
+//                errorUser.setValue("");
+//            });
 
-//            success.setValue(reply);
-//            errorPass.setValue("");
-//            errorUser.setValue("");
+            success.setValue(reply);
+            errorPass.setValue("");
+            errorUser.setValue("");
         }
 
 

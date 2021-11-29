@@ -42,8 +42,10 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+//        System.out.println(products);
         return products;
     }
+
 
     /**
      * Method that adds a product to the database

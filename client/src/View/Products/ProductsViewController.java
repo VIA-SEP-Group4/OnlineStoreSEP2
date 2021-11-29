@@ -58,6 +58,7 @@ public class ProductsViewController
 
   public void onBackProdButton(ActionEvent actionEvent)
   {
+    viewHandler.openBrowserPane();
   }
 
 
