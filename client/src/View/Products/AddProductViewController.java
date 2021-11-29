@@ -2,10 +2,12 @@ package View.Products;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.util.converter.NumberStringConverter;
 
 public class AddProductViewController
 {
@@ -16,19 +18,27 @@ public class AddProductViewController
   public TextArea productDescriptionField;
   public Label errorLabel;
   private ViewHandler viewHandler;
-  private AddProductViewModel addProductViewModel;
+  private AddProductViewModel viewModel;
 
    public void init(ViewHandler viewHandler)
   {
     this.viewHandler = viewHandler;
-    this.addProductViewModel = ViewModelFactory.getAddProductViewModel();
+    this.viewModel = ViewModelFactory.getAddProductViewModel();
+    productNameField.textProperty().bindBidirectional(viewModel.prodNameProperty());
+    productTypeField.textProperty().bindBidirectional(viewModel.prodTypeProperty());
+    productPriceField.textProperty().bindBidirectional(viewModel.prodPriceProperty(), new NumberStringConverter());
+    productPriceField.textProperty().setValue("");
+    productQuantityField.textProperty().bindBidirectional(viewModel.prodQuantityProperty(), new NumberStringConverter());
+    productQuantityField.textProperty().setValue("");
+    productDescriptionField.textProperty().bindBidirectional(viewModel.prodDescriptionProperty());
+    errorLabel.textProperty().bind(viewModel.getError());
   }
   public void addButton(ActionEvent actionEvent)
   {
     try
     {
-      addProductViewModel.addProduct();
-      viewHandler.openProductsPane();
+      if (viewModel.addProduct())
+        viewHandler.openProductsPane();
     }
     catch (Exception e)
     {

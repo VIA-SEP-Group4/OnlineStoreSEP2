@@ -48,6 +48,7 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
     {
         return client.getProducts();
     }
+
     @Override public void addBasket(Product product)
     {
         basket.add(product);
