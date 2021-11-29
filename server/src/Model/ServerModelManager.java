@@ -42,6 +42,11 @@ public class ServerModelManager implements Model, PropertyChangeListener
     productsDataAcessor.addProduct(p);
   }
 
+  @Override public void deleteProduct(Product p)
+  {
+    productsDataAcessor.deleteProduct(p);
+  }
+
   @Override public void registerUser(User newUser)
   {
     credentialsDataAccessor.registerUser(newUser);

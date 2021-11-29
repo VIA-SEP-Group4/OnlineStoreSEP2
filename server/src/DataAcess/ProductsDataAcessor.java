@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface ProductsDataAcessor {
     ArrayList<Product> getProducts();
-
     void addProduct(Product p);
+    void deleteProduct(Product p);
 }

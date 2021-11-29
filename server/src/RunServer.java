@@ -1,4 +1,5 @@
 
+import Model.Product;
 import Model.ServerModelManager;
 import Networking.Server;
 import java.net.MalformedURLException;
@@ -23,8 +24,6 @@ public class RunServer {
             System.err.println("Server launching failed ...[RunServer.main()]");
             e.printStackTrace();
         }
-
-
     }
 
 

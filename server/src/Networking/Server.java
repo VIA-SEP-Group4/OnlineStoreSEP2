@@ -27,6 +27,11 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
 
   }
 
+  /**
+   * Method responsible for launching/=exporting the server object.
+   * @throws RemoteException
+   * @throws MalformedURLException
+   */
   public void start() throws RemoteException, MalformedURLException
   {
     UnicastRemoteObject.exportObject(this, 1099);
@@ -90,6 +95,11 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
   @Override
   public void addProduct(Product product) throws RemoteException {
       serverModelManager.addProduct(product);
+  }
+
+  @Override public void deleteProduct(Product p) throws RemoteException
+  {
+    serverModelManager.deleteProduct(p);
   }
 
   @Override

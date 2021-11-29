@@ -34,7 +34,7 @@ public class DBSConnection{
         this.password = password;
     }
 
-    public static DBSConnection getInstance(){
+    static DBSConnection getInstance(){
         if(connection==null){
             synchronized (lock){
                 if(connection==null){

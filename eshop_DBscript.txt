@@ -26,7 +26,7 @@ CREATE TABLE eshop.employees
 CREATE TABLE eshop.products
 (
 	product_id SERIAL PRIMARY KEY,
-	product_name VARCHAR(20) NOT NULL,
+	product_name VARCHAR(20) NOT NULL UNIQUE,
 	description VARCHAR(100),
 	type VARCHAR(30),
 	amount INTEGER,
@@ -35,5 +35,6 @@ CREATE TABLE eshop.products
 
 
 -- => for testing purposes !!! <=
-insert into eshop.users(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
+INSERT INTO eshop.users(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
+INSERT INTO eshop.products(product_name, description, type, amount, price) VALUES('product', 'description ...', 'type', 5, 9.99);
 

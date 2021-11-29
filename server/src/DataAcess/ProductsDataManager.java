@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class ProductsDataManager implements ProductsDataAcessor, Subject {
     private static final String SCHEMA = "eshop";
+    private static final String TABLE = "products";
     private PropertyChangeSupport support;
 
     public ProductsDataManager() {
@@ -25,7 +26,7 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
      */
     @Override
     public ArrayList<Product> getProducts() {
-        String SQL = "SELECT * FROM " +SCHEMA+ ".products";
+        String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
         System.out.println(SQL);
         ArrayList<Product> products=new ArrayList<>();
         try (Connection conn =  DBSConnection.getInstance().connect();
@@ -51,7 +52,7 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
      */
     @Override
     public void addProduct(Product p) {
-        String SQL = "INSERT INTO " + "eshop.products(product_name,description,type,amount,price) " + "VALUES(?,?,?,?,?)";
+        String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(product_name,description,type,amount,price) " + "VALUES(?,?,?,?,?)";
 
         try (Connection conn = DBSConnection.getInstance().connect();
              PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
@@ -72,6 +73,24 @@ public class ProductsDataManager implements ProductsDataAcessor, Subject {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    @Override public void deleteProduct(Product p)
+    {
+        String SQL = "DELETE FROM " +SCHEMA+ "." +TABLE+ " WHERE " +SCHEMA+ "." +TABLE+ ".product_name = '"+p.getName()+"'";
+
+        try (Connection conn = DBSConnection.getInstance().connect();
+            Statement stmt = conn.createStatement())
+        {
+            int affectedRows = stmt.executeUpdate(SQL);
+            if (affectedRows <= 0)
+                throw new RuntimeException("Product deletion failed");
+
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
 
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
