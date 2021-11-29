@@ -32,3 +32,8 @@ CREATE TABLE eshop.products
 	amount INTEGER,
 	price DECIMAL
 );
+
+
+-- => for testing purposes !!! <=
+insert into eshop.users(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
+

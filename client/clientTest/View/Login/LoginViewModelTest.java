@@ -48,10 +48,125 @@ class LoginViewModelTest
 
     userName.setValue("username");
     password.setValue("pass");
+
     lvm.login();
     waitForRunLater();
 
-    assertTrue(success.getValue().contains("success"));
+    assertTrue(success.getValue().contains("success"), "Expected user does not exist");
   }
 
+  @Test
+  public void nonExistingUser_loginAttempt_Test() throws InterruptedException
+  {
+    //this must be here even though it is not used ->do NOT REMOVE!!!
+    JFXPanel jfxPanel = new JFXPanel();
+
+    SimpleStringProperty userName=new SimpleStringProperty();
+    SimpleStringProperty password=new SimpleStringProperty();
+    SimpleStringProperty success=new SimpleStringProperty();
+
+    lvm.userNameProperty().bindBidirectional(userName);
+    lvm.passwordProperty().bindBidirectional(password);
+    lvm.successProperty().bindBidirectional(success);
+
+    userName.setValue("non-existing_Username");
+    password.setValue("non-existing_Password");
+
+    lvm.login();
+    waitForRunLater();
+
+    assertFalse(success.getValue().contains("success"), "Expected user exist");
+  }
+
+  @Test
+  public void emptyString_in_usernameField_Test() throws InterruptedException
+  {
+    //this must be here even though it is not used ->do NOT REMOVE!!!
+    JFXPanel jfxPanel = new JFXPanel();
+
+    SimpleStringProperty userName=new SimpleStringProperty();
+    SimpleStringProperty password=new SimpleStringProperty();
+    SimpleStringProperty success=new SimpleStringProperty();
+
+    lvm.userNameProperty().bindBidirectional(userName);
+    lvm.passwordProperty().bindBidirectional(password);
+    lvm.successProperty().bindBidirectional(success);
+
+    userName.setValue("");
+    password.setValue("non-existing_Password");
+
+    lvm.login();
+    waitForRunLater();
+
+    assertFalse(success.getValue().contains("success"), "Expected user exist");
+  }
+
+  @Test
+  public void empty_usernameField_Test() throws InterruptedException
+  {
+    //this must be here even though it is not used ->do NOT REMOVE!!!
+    JFXPanel jfxPanel = new JFXPanel();
+
+    SimpleStringProperty userName=new SimpleStringProperty();
+    SimpleStringProperty password=new SimpleStringProperty();
+    SimpleStringProperty success=new SimpleStringProperty();
+
+    lvm.userNameProperty().bindBidirectional(userName);
+    lvm.passwordProperty().bindBidirectional(password);
+    lvm.successProperty().bindBidirectional(success);
+
+    //    userName.setValue("username");
+    password.setValue("non-existing_Password");
+
+    lvm.login();
+    waitForRunLater();
+
+    assertFalse(success.getValue().contains("success"), "Expected user exist");
+  }
+
+  @Test
+  public void emptyString_in_passwordField_Test() throws InterruptedException
+  {
+    //this must be here even though it is not used ->do NOT REMOVE!!!
+    JFXPanel jfxPanel = new JFXPanel();
+
+    SimpleStringProperty userName=new SimpleStringProperty();
+    SimpleStringProperty password=new SimpleStringProperty();
+    SimpleStringProperty success=new SimpleStringProperty();
+
+    lvm.userNameProperty().bindBidirectional(userName);
+    lvm.passwordProperty().bindBidirectional(password);
+    lvm.successProperty().bindBidirectional(success);
+
+    userName.setValue("username");
+    password.setValue("");
+
+    lvm.login();
+    waitForRunLater();
+
+    assertFalse(success.getValue().contains("success"), "Expected user exist");
+  }
+
+  @Test
+  public void empty_passwordField_Test() throws InterruptedException
+  {
+    //this must be here even though it is not used ->do NOT REMOVE!!!
+    JFXPanel jfxPanel = new JFXPanel();
+
+    SimpleStringProperty userName=new SimpleStringProperty();
+    SimpleStringProperty password=new SimpleStringProperty();
+    SimpleStringProperty success=new SimpleStringProperty();
+
+    lvm.userNameProperty().bindBidirectional(userName);
+    lvm.passwordProperty().bindBidirectional(password);
+    lvm.successProperty().bindBidirectional(success);
+
+        userName.setValue("username");
+//    password.setValue("");
+
+    lvm.login();
+    waitForRunLater();
+
+    assertFalse(success.getValue().contains("success"), "Expected user exist");
+  }
 }
