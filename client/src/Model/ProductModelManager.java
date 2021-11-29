@@ -44,6 +44,19 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
             e.printStackTrace();
         }
     }
+
+    @Override public void deleteProduct(Product p)
+    {
+        try
+        {
+            client.deleteProduct(p);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     @Override public ArrayList<Product> getProducts()
     {
         return client.getProducts();

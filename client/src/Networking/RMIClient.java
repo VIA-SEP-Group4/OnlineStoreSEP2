@@ -81,6 +81,16 @@ public class RMIClient implements Client, RMIClient_Remote
   }
 
   /**
+   * Method used to delete one product from the database
+   * @param p the product to be deleted
+   * @throws RemoteException
+   */
+  @Override public void deleteProduct(Product p) throws RemoteException
+  {
+    serverStub.deleteProduct(p);
+  }
+
+  /**
    * Method requesting number of registered users.
    * @return
    */

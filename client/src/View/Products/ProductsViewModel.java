@@ -28,6 +28,10 @@ public class ProductsViewModel implements PropertyChangeListener
     return products;
   }
 
+  public void removeProduct(Product p){
+    model.deleteProduct(p);
+  }
+
   public void getProd(){
     ArrayList<Product> prod = model.getProducts();
     for (Product product:prod)
