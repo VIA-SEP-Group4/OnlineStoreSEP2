@@ -1,5 +1,6 @@
 package Core;
 
+import View.Checkout.CheckoutViewModel;
 import View.Products.AddProductViewModel;
 import View.Products.ProductsViewModel;
 import View.Browser.BrowserViewModel;
@@ -7,12 +8,15 @@ import View.Login.LoginViewModel;
 import View.Register.RegisterViewModel;
 
 public class ViewModelFactory {
+    private static ModelFactory modelFactory;
+
     private static  LoginViewModel loginViewModel;
     private static RegisterViewModel registerViewModel;
     private static BrowserViewModel browserViewModel;
     private static ProductsViewModel productsViewModel;
     private static AddProductViewModel addProductViewModel;
-    private static ModelFactory modelFactory;
+    private static CheckoutViewModel checkoutViewModel;
+
     public ViewModelFactory(ModelFactory modelFactory) {
         ViewModelFactory.modelFactory =modelFactory;
     }
@@ -48,5 +52,12 @@ public class ViewModelFactory {
             addProductViewModel=new AddProductViewModel(modelFactory.getProductsModel());
         }
         return addProductViewModel;
+    }
+
+    public static CheckoutViewModel getCheckoutViewModel(){
+        if(checkoutViewModel == null){
+            checkoutViewModel = new CheckoutViewModel(modelFactory.getProductsModel());
+        }
+        return checkoutViewModel;
     }
 }

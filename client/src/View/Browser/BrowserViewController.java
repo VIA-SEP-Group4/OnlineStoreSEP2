@@ -83,7 +83,8 @@ public class BrowserViewController
 
   public void onBasketButton(ActionEvent actionEvent)
   {
-    viewHandler.openProductsPane();
+//    viewHandler.openProductsPane();
+    viewHandler.openCheckoutPane();
   }
 
   public void onFilterBy(ActionEvent actionEvent)

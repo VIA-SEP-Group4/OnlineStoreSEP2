@@ -49,6 +49,11 @@ public class Product implements Serializable
         this.price = price;
     }
 
+    public double getTotalPrice()
+    {
+        return quantity*price;
+    }
+
     public String getDescription()
     {
         return description;
