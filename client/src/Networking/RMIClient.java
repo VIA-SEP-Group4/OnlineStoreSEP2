@@ -20,6 +20,7 @@ public class RMIClient implements Client, RMIClient_Remote
   private RMIServer_Remote serverStub;
   private String clientID;
   private PropertyChangeSupport support;
+  private User loggedUser = null;
 
   public RMIClient()
   {

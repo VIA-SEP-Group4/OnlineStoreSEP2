@@ -1,6 +1,7 @@
 
 import Model.Product;
 import Model.ServerModelManager;
+import Model.User;
 import Networking.Server;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
@@ -19,6 +20,10 @@ public class RunServer {
             Server server = new Server(serverModelManager);
             server.start();
             System.out.println("Server running ...");
+
+//            server.registerUser(new User("username", "pass", "email", "fname", "lname"));
+            server.loginUser("username", "pass");
+
         } catch (RemoteException | MalformedURLException e)
         {
             System.err.println("Server launching failed ...[RunServer.main()]");
