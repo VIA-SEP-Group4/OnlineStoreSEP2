@@ -1,5 +1,6 @@
 package View.Browser;
 
+import Model.CredentialsModel;
 import Model.Product;
 import Model.ProductsModel;
 import View.Products.TableProdViewModel;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class BrowserViewModel implements PropertyChangeListener
 {
   private ProductsModel model;
+  private CredentialsModel credsModel;
   private StringProperty search;
   private StringProperty items;
   private StringProperty userName;
@@ -25,13 +27,13 @@ public class BrowserViewModel implements PropertyChangeListener
 
   private ArrayList<Product> basket;
 
-  public BrowserViewModel(ProductsModel model)
+  public BrowserViewModel(ProductsModel model,CredentialsModel credsModel)
   {
     this.model = model;
     search = new SimpleStringProperty("");
     items = new SimpleStringProperty("");
     userName = new SimpleStringProperty();
-
+    this.credsModel=credsModel;
     browserTable = FXCollections.observableArrayList();
     selectedProd = new SimpleObjectProperty<>();
 
@@ -149,7 +151,7 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     browserTable.clear();
     fetchProducts();
-    if(model.getLoggedUser() == null)
+    if(credsModel.getLoggedUser() == null)
     {
       logOut.setValue(true);
       logIn.setValue(false);

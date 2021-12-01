@@ -10,7 +10,6 @@ public interface ProductsModel extends Subject {
     void addProduct(Product p);
     void deleteProduct(Product p);
     void addBasket(Product product);
-    String getId();
-    User getLoggedUser();
+
   void processOrder(Order newOrder);
 }

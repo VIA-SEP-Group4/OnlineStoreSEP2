@@ -3,9 +3,7 @@ package View.Login;
 import Core.ViewHandler;
 import Core.ViewModelFactory;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class LoginViewController
 {
@@ -15,9 +13,12 @@ public class LoginViewController
     public Label usernameErrorLabel;
     public Label passwordErrorLabel;
     public Label successLabel;
+    public RadioButton customerButton;
+    public RadioButton employeeButton;
 
     private ViewHandler viewHandler;
     private LoginViewModel viewModel;
+    private ToggleGroup toggleGroup;
 
     public void init() {
         this.viewHandler = ViewHandler.getInstance();
@@ -27,6 +28,9 @@ public class LoginViewController
         usernameErrorLabel.textProperty().bindBidirectional(viewModel.errorUserProperty());
         passwordErrorLabel.textProperty().bindBidirectional(viewModel.errorPassProperty());
         successLabel.textProperty().bindBidirectional(viewModel.successProperty());
+         toggleGroup=new ToggleGroup();
+        customerButton.setToggleGroup(toggleGroup);
+        employeeButton.setToggleGroup(toggleGroup);
     }
 
 
@@ -36,7 +40,8 @@ public class LoginViewController
 
 
     public void onLogin(ActionEvent actionEvent) {
-        viewModel.login();
+        RadioButton selected= (RadioButton) toggleGroup.getSelectedToggle();
+        viewModel.login(selected.getText());
 
         if( successLabel.textProperty().getValue()!=null
             && successLabel.textProperty().getValue().contains("success"))

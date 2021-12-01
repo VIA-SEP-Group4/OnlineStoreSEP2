@@ -10,7 +10,7 @@ public class User implements Serializable
   {
     CUSTOMER,
     MANAGER,
-    WAREHOUSEWORKER,
+    WORKER,
     ADMIN
   }
 

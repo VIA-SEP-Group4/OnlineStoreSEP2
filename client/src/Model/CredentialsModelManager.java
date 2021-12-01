@@ -1,6 +1,5 @@
 package Model;
-
-import Networking.Client;
+import Networking.LoginClient;
 import Utils.Subject;
 
 import java.beans.PropertyChangeEvent;
@@ -12,11 +11,11 @@ import java.util.ArrayList;
 public class CredentialsModelManager implements CredentialsModel, PropertyChangeListener
 {
 
-  private Client client;
+  private LoginClient client;
   private PropertyChangeSupport support;
 
 
-  public CredentialsModelManager(Client client)
+  public CredentialsModelManager(LoginClient client)
   {
     support=new PropertyChangeSupport(this);
     this.client = client;
@@ -28,8 +27,8 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
 
 
   @Override
-  public void login(String username, String password) {
-    client.loginUser(username,password);
+  public void login(String username, String password, String type) {
+    client.loginUser(username,password,type);
   }
 
   @Override public void registerUser(User newUser)
@@ -37,9 +36,9 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     client.registerUser(newUser);
   }
 
-  @Override public int getNumberOfUsers()
-  {
-    return client.getNumberOfUsers();
+  @Override
+  public User getLoggedUser() {
+    return client.getLoggedUser();
   }
 
 

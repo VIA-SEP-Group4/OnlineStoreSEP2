@@ -91,7 +91,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
   {
     User loggedUser;
 
-    if (selectedUserType.equals("customer"))
+    if (selectedUserType.equals("Customer"))
       loggedUser = loginCustomer(username, password);
 
     else

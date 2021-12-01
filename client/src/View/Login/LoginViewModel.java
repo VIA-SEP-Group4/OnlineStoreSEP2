@@ -30,9 +30,8 @@ public class LoginViewModel implements PropertyChangeListener {
     /**
      * Method called when user tries to log in with inserted credentials.
      */
-    public void login() {
+    public void login(String userType) {
         clearLabels();
-
         if(userName.getValue()==null || userName.getValue().equals("")) {
             errorUser.setValue("Username cannot be empty");
             success.setValue("denied");
@@ -44,7 +43,7 @@ public class LoginViewModel implements PropertyChangeListener {
         }
 
         else{
-            credentialsModel.login(userName.getValue(),password.getValue());
+            credentialsModel.login(userName.getValue(),password.getValue(),userType);
         }
     }
 

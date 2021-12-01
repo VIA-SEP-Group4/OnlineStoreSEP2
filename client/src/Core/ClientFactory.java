@@ -1,14 +1,43 @@
 package Core;
 
-import Networking.Client;
-import Networking.RMIClient;
+import Networking.*;
 
 public class ClientFactory {
-    private Client client;
-    public Client getClient() {
-        if(client==null){
-            client=new RMIClient();
+
+    private LoginClient loginClient;
+    private CustomerClient customerClient;
+    private AdminClient adminClient;
+    private ManagerClient managerClient;
+    private WorkerClient workerClient;
+
+    public LoginClient getLoginClient() {
+        if(loginClient==null){
+            loginClient=new LoginClientImpl();
         }
-        return client;
+        return loginClient;
+    }
+    public CustomerClient getCustomerClient() {
+        if(customerClient==null){
+            customerClient=new CustomerClientImpl();
+        }
+        return customerClient;
+    }
+    public AdminClient getAdminClient() {
+        if(adminClient==null){
+            adminClient=new AdminClientImpl();
+        }
+        return adminClient;
+    }
+    public ManagerClient getManagerClient() {
+        if(managerClient==null){
+            managerClient=new ManagerClientImpl();
+        }
+        return managerClient;
+    }
+    public WorkerClient getWorkerClient() {
+        if(workerClient==null){
+            workerClient=new WorkerClientImpl();
+        }
+        return workerClient;
     }
 }

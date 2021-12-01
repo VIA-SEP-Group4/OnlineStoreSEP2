@@ -1,5 +1,6 @@
 package View.Checkout;
 
+import Model.CredentialsModel;
 import Model.Order;
 import Model.Product;
 import Model.ProductsModel;
@@ -14,15 +15,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CheckoutViewModel
 {
   private ProductsModel productsModelManager;
+  private CredentialsModel credentialsModel;
   private ObservableList<Product> cartProducts;
   private ObservableList<Order> orders;
   private ObservableList<Product> orderProducts;
   private StringProperty orderDetailLabel;
 
-  public CheckoutViewModel(ProductsModel productsModelManager)
+  public CheckoutViewModel(ProductsModel productsModelManager,CredentialsModel credentialsModel)
   {
     this.productsModelManager = productsModelManager;
-
+    this.credentialsModel=credentialsModel;
     cartProducts = FXCollections.observableArrayList();
     orders = FXCollections.observableArrayList();
     orderProducts = FXCollections.observableArrayList();
@@ -50,7 +52,7 @@ public class CheckoutViewModel
   {
     if (!cartProducts.isEmpty()){
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      Order newOrder = new Order(serial.getAndIncrement(), productsModelManager.getLoggedUser().getUserId(), tempProducts);
+      Order newOrder = new Order(serial.getAndIncrement(), credentialsModel.getLoggedUser().getUserId(), tempProducts);
 
       orders.add(newOrder);
       productsModelManager.processOrder(newOrder);

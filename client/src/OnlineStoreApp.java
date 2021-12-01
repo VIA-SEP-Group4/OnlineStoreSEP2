@@ -4,7 +4,7 @@ import Core.ModelFactory;
 import Core.ViewHandler;
 import Core.ViewModelFactory;
 import Model.*;
-import Networking.RMIClient;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 

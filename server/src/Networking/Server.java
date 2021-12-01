@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class Server implements RMIServer_Remote, PropertyChangeListener {
 
   private Model serverModelManager;
-  private ArrayList<RMIClient_Remote> clients;
+  private ArrayList<Remote> clients;
 
   public Server(Model serverModelManager) throws RemoteException, MalformedURLException
   {
@@ -59,15 +60,14 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     return reply;
   }
 
-  @Override public String loginUser(String username, String password, RMIClient_Remote loggingClient) throws RemoteException
+  @Override public String loginUser(String username, String password, String type,LoginRemoteClient client) throws RemoteException
   {
     String reply;
     try
     {
-      //TODO ... 'type' should be sent from client
-      User loggedUser = serverModelManager.loginUser(username,password, "customer");
+      User loggedUser = serverModelManager.loginUser(username,password, type);
       reply = "successful login";
-      loggingClient.setLoggedUser(loggedUser);
+      client.setLoggedUser(loggedUser);
     }catch (RuntimeException e){
       reply = e.getMessage();
     }
@@ -75,12 +75,12 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
   }
 
   @Override
-  public void registerClient(RMIClient_Remote client) {
+  public void registerClient(Remote client) {
     clients.add(client);
   }
 
   @Override
-  public void removeClient(RMIClient_Remote client) {
+  public void removeClient(Remote client) {
     clients.remove(client);
   }
 
@@ -108,9 +108,9 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
 
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
-      for(RMIClient_Remote client: clients){
+      for(Remote client: clients){
         try {
-          client.receiveUpdatedProducts(evt.getNewValue());
+          ((ManagerRemoteClient)client).receiveUpdatedProducts(evt.getNewValue());
         } catch (RemoteException e) {
           e.printStackTrace();
         }
