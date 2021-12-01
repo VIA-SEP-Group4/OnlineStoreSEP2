@@ -16,4 +16,5 @@ public interface Client extends Subject
   String getID() throws RemoteException;
   void addProduct(Product p) throws RemoteException;
   void deleteProduct(Product p) throws RemoteException;
+  User getLoggedUser();
 }

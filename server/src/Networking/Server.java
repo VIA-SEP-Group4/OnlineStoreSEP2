@@ -58,14 +58,16 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     return reply;
   }
 
-  @Override public String loginUser(String username, String password) throws RemoteException
+  @Override public String loginUser(String username, String password, RMIClient_Remote loggingClient) throws RemoteException
   {
     String reply;
     try
     {
-      serverModelManager.loginUser(username,password, "customer");
-      //TODO ... 'type' should bve sent from client
+      //TODO ... 'type' should be sent from client
+      User loggedUser = serverModelManager.loginUser(username,password, "customer");
+
       reply = "successful login";
+      loggingClient.setLoggedUser(loggedUser);
     }catch (RuntimeException e){
       reply = e.getMessage();
     }

@@ -87,7 +87,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * @param username Username that the user logs in with
    * @param password Password that the user logs in with
    */
-  @Override public void loginUser(String username, String password, String selectedUserType)
+  @Override public User loginUser(String username, String password, String selectedUserType)
   {
     User loggedUser;
 
@@ -97,7 +97,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     else
       loggedUser = loginEmployee(username, password);
 
-    System.out.println("user-" + loggedUser);
+    return loggedUser;
   }
 
   //TODO ... does NOT fit USER-constructor
@@ -133,9 +133,12 @@ public class CredentialsDataManager implements CredentialsDataAccessor
         ResultSet rs = stmt.executeQuery(SQL))
     {
       rs.next();
-      if (rs.getString(2).equals(username) && rs.getString(3).equals(password))
+//      System.out.println(rs.getRow());
+      if (rs.getRow()==1 && rs.getString(2).equals(username) && rs.getString(3).equals(password))
         loggedCustomer = new User(rs.getString(1), rs.getString(2),
             rs.getString(3), rs.getString(4), rs.getString(5));
+      else
+        throw new RuntimeException("Wrong credentials - access denied");
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }

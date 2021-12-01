@@ -11,4 +11,5 @@ public interface ProductsModel extends Subject {
     void deleteProduct(Product p);
     void addBasket(Product product);
     String getId();
+    User getLoggedUser();
 }

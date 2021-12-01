@@ -76,6 +76,11 @@ public class RMIClient implements Client, RMIClient_Remote
     support.firePropertyChange("ProductsReply",null,products);
   }
 
+  @Override public void setLoggedUser(User loggedUser) throws RemoteException
+  {
+    this.loggedUser = loggedUser;
+  }
+
   /**
    * Method used to send request to the server requesting adding new product to the database
    * @param p new product to be added.
@@ -94,6 +99,11 @@ public class RMIClient implements Client, RMIClient_Remote
   @Override public void deleteProduct(Product p) throws RemoteException
   {
     serverStub.deleteProduct(p);
+  }
+
+  @Override public User getLoggedUser()
+  {
+    return loggedUser;
   }
 
   /**
@@ -139,7 +149,7 @@ public class RMIClient implements Client, RMIClient_Remote
   {
     String reply = "denied";
     try {
-      reply = serverStub.loginUser(username, password);
+      reply = serverStub.loginUser(username, password, this);
     } catch (RemoteException | RuntimeException e) {
       System.err.println("Server error! User logging failed! [RMIClient.registerUser()]");
       e.printStackTrace();

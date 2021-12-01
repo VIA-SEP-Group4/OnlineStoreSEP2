@@ -36,6 +36,11 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         } return "";
     }
 
+    @Override public User getLoggedUser()
+    {
+        return client.getLoggedUser();
+    }
+
     @Override
     public void addProduct(Product p) {
         try {

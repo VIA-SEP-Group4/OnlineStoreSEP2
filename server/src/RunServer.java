@@ -22,7 +22,8 @@ public class RunServer {
             System.out.println("Server running ...");
 
 //            server.registerUser(new User("username", "pass", "email", "fname", "lname"));
-            server.loginUser("username", "pass");
+//            User user = serverModelManager.loginUser("username", "pass", "customer");
+//            System.out.println(user);
 
         } catch (RemoteException | MalformedURLException e)
         {
