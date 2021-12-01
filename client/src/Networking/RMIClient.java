@@ -1,5 +1,6 @@
 package Networking;
 
+import Model.Order;
 import Model.Product;
 import Model.User;
 import java.beans.PropertyChangeListener;
@@ -67,7 +68,8 @@ public class RMIClient implements Client, RMIClient_Remote
   }
 
   @Override
-  public String getID() throws RemoteException {
+  public String getID()
+  {
     return clientID;
   }
 
@@ -87,8 +89,16 @@ public class RMIClient implements Client, RMIClient_Remote
    * @throws RemoteException
    */
   @Override
-  public void addProduct(Product p) throws RemoteException {
-    serverStub.addProduct(p);
+  public void addProduct(Product p)
+  {
+    try
+    {
+      serverStub.addProduct(p);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -96,14 +106,33 @@ public class RMIClient implements Client, RMIClient_Remote
    * @param p the product to be deleted
    * @throws RemoteException
    */
-  @Override public void deleteProduct(Product p) throws RemoteException
+  @Override public void deleteProduct(Product p)
   {
-    serverStub.deleteProduct(p);
+    try
+    {
+      serverStub.deleteProduct(p);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public User getLoggedUser()
   {
     return loggedUser;
+  }
+
+  @Override public void processOrder(Order newOrder)
+  {
+    try
+    {
+      serverStub.addNewOrder(newOrder);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   /**

@@ -1,5 +1,6 @@
 package Networking;
 
+import Model.Order;
 import Model.Product;
 import Model.User;
 import java.rmi.Remote;
@@ -18,4 +19,6 @@ public interface RMIServer_Remote extends Remote
   ArrayList<Product> getProducts() throws RemoteException;
   void addProduct(Product product) throws RemoteException;
   void deleteProduct(Product p) throws RemoteException;
+
+  void addNewOrder(Order newOrder) throws RemoteException;
 }

@@ -29,17 +29,18 @@ CREATE TABLE eshop.products
 	product_name VARCHAR(20) NOT NULL UNIQUE,
 	description VARCHAR(100),
 	type VARCHAR(30),
-	amount INTEGER,
+	quantity INTEGER,
 	price DECIMAL,
 	PRIMARY KEY (product_id)
 );
 
 CREATE TABLE eshop.orders
 (
-	order_id SERIAL,
+	order_id INTEGER,
 	customer_id INTEGER,
 	warehouse_worker_id INTEGER,
 	status VARCHAR(20) DEFAULT('waiting'),
+	timestamp TIMESTAMP,
 	FOREIGN KEY (customer_id) references eshop.customers(customer_id),
 	FOREIGN KEY (warehouse_worker_id) references eshop.employees(employee_id),
 	PRIMARY KEY (order_id)
@@ -57,7 +58,7 @@ CREATE TABLE eshop.ordered_products
 
 -- => for testing purposes !!! <=
 INSERT INTO eshop.customers(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
-INSERT INTO eshop.products(product_name, description, type, amount, price) VALUES('product', 'description ...', 'type', 5, 9.99);
+INSERT INTO eshop.products(product_name, description, type, quantity, price) VALUES('product', 'description ...', 'type', 5, 9.99);
 
 
 

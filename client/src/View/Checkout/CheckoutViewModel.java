@@ -24,8 +24,6 @@ public class CheckoutViewModel
     this.productsModelManager = productsModelManager;
 
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.add(new Product("product", "type", 12.99, "dscrpt", 2));
-
     orders = FXCollections.observableArrayList();
     orderProducts = FXCollections.observableArrayList();
 
@@ -52,9 +50,10 @@ public class CheckoutViewModel
   {
     if (!cartProducts.isEmpty()){
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      orders.add(new Order(serial.getAndIncrement(), tempProducts));
-      //TODO ... create new Order and send to DB ???
-      //productsModelManager.processOrder()
+      Order newOrder = new Order(serial.getAndIncrement(), productsModelManager.getLoggedUser().getUserId(), tempProducts);
+
+      orders.add(newOrder);
+      productsModelManager.processOrder(newOrder);
 
       cartProducts.clear();
     }

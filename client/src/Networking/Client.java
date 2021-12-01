@@ -1,5 +1,6 @@
 package Networking;
 
+import Model.Order;
 import Model.Product;
 import Model.User;
 import Utils.Subject;
@@ -13,8 +14,9 @@ public interface Client extends Subject
   void loginUser(String username, String password) ;
   void startClient();
   ArrayList<Product> getProducts();
-  String getID() throws RemoteException;
-  void addProduct(Product p) throws RemoteException;
-  void deleteProduct(Product p) throws RemoteException;
+  String getID();
+  void addProduct(Product p);
+  void deleteProduct(Product p);
   User getLoggedUser();
+  void processOrder(Order newOrder);
 }

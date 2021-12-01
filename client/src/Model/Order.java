@@ -1,26 +1,30 @@
 package Model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class Order
+public class Order implements Serializable
 {
   private int orderId;
   private ArrayList<Product> products;
   private String state;
   private Timestamp timestamp;
+  private int customerId;
 
-  public Order(int order_id)
+  public Order(int orderId, int customerId)
   {
-    this.orderId = order_id;
+    this.orderId = orderId;
+    this.customerId = customerId;
     products = new ArrayList<>();
     state = "waiting";
     timestamp = new Timestamp(System.currentTimeMillis());
   }
 
-  public Order(int order_id, ArrayList<Product> products)
+  public Order(int orderId, int customerId, ArrayList<Product> products)
   {
-    this.orderId = order_id;
+    this.orderId = orderId;
+    this.customerId = customerId;
     this.products = products;
     state = "waiting";
     timestamp = new Timestamp(System.currentTimeMillis());
@@ -29,6 +33,11 @@ public class Order
   public int getOrderId()
   {
     return orderId;
+  }
+
+  public int getCustomerId()
+  {
+    return customerId;
   }
 
   public double getTotalPrice(){

@@ -3,6 +3,7 @@ package Networking;
 import Model.Model;
 import Model.User;
 import Model.Product;
+import Model.Order;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
@@ -98,6 +99,11 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
   @Override public void deleteProduct(Product p) throws RemoteException
   {
     serverModelManager.deleteProduct(p);
+  }
+
+  @Override public void addNewOrder(Order newOrder)
+  {
+    serverModelManager.addNewOrder(newOrder);
   }
 
   @Override

@@ -12,4 +12,5 @@ public interface ProductsModel extends Subject {
     void addBasket(Product product);
     String getId();
     User getLoggedUser();
+  void processOrder(Order newOrder);
 }

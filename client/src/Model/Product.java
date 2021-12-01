@@ -9,7 +9,17 @@ public class Product implements Serializable
   private double price;
   private String description;
   private int quantity;
+  private int productId;
 
+  public Product(String name, String type, double price, String description, int quantity, int productId)
+  {
+    this.name = name;
+    this.type = type;
+    this.price = price;
+    this.description = description;
+    this.quantity = quantity;
+    this.productId = productId;
+  }
   public Product(String name, String type, double price, String description, int quantity)
   {
     this.name = name;
@@ -17,6 +27,7 @@ public class Product implements Serializable
     this.price = price;
     this.description = description;
     this.quantity = quantity;
+    productId = -1;
   }
 
   public String getName()
@@ -79,5 +90,10 @@ public class Product implements Serializable
     return name + "(" + type + "),"
         + "\ndescription= " + description
         + "\n, price= " + price +", quantity= " + quantity + '}';
+  }
+
+  public int getProductId()
+  {
+    return productId;
   }
 }

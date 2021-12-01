@@ -21,6 +21,7 @@ public class User implements Serializable
   private String lastName;
   private ArrayList<Order> orders;
   private UserType userType;
+  private int userId;
 
   public User(String username, String password, String email, String firstName, String lastName, UserType userType) {
     this.username = username;
@@ -33,12 +34,24 @@ public class User implements Serializable
     this.userType = userType;
   }
   //for customers
+  public User(String username, String password, String email, String firstName, String lastName, int userId) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.userId = userId;
+
+    orders = new ArrayList<>();
+    userType = UserType.CUSTOMER;
+  }
   public User(String username, String password, String email, String firstName, String lastName) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.userId = -1;
 
     orders = new ArrayList<>();
     userType = UserType.CUSTOMER;
@@ -62,6 +75,11 @@ public class User implements Serializable
 
   public String getPassword() {
     return password;
+  }
+
+  public int getUserId()
+  {
+    return userId;
   }
 
   public ArrayList<Order> getOrders()

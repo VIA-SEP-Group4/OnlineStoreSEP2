@@ -1,5 +1,6 @@
 package DataAcess;
 
+import Model.Order;
 import Model.Product;
 import Utils.Subject;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  * Class responsible for managing and accessing database tables/data related to products
  */
 public class ProductsDataManager implements ProductsDataAcessor {
+
     private static final String SCHEMA = "eshop";
     private static final String TABLE = "products";
     private PropertyChangeSupport support;
@@ -35,8 +37,8 @@ public class ProductsDataManager implements ProductsDataAcessor {
         {
             while (rs.next())
             {
-                products.add(new Product(rs.getString("product_name"), rs.getString("type"), Double.parseDouble(rs.getString("price")),
-                        rs.getString("description"),Integer.parseInt(rs.getString("amount"))));
+                products.add(new Product(rs.getString("product_name"), rs.getString("type"), rs.getDouble("price"),
+                        rs.getString("description"), rs.getInt("quantity"), rs.getInt("product_id")));
 
             }
         } catch (SQLException ex){
@@ -93,7 +95,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
     }
 
 
-    @Override
+  @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);
     }

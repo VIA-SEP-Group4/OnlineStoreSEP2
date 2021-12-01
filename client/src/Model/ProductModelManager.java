@@ -26,14 +26,7 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
 
     @Override public String getId()
     {
-        try
-        {
-            return client.getID();
-        }
-        catch (RemoteException e)
-        {
-            e.printStackTrace();
-        } return "";
+        return client.getID();
     }
 
     @Override public User getLoggedUser()
@@ -41,25 +34,19 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         return client.getLoggedUser();
     }
 
+    @Override public void processOrder(Order newOrder)
+    {
+        client.processOrder(newOrder);
+    }
+
     @Override
     public void addProduct(Product p) {
-        try {
-            client.addProduct(p);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        client.addProduct(p);
     }
 
     @Override public void deleteProduct(Product p)
     {
-        try
-        {
-            client.deleteProduct(p);
-        }
-        catch (RemoteException e)
-        {
-            e.printStackTrace();
-        }
+        client.deleteProduct(p);
     }
 
     @Override public ArrayList<Product> getProducts()
