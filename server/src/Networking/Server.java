@@ -65,7 +65,6 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     {
       //TODO ... 'type' should be sent from client
       User loggedUser = serverModelManager.loginUser(username,password, "customer");
-
       reply = "successful login";
       loggingClient.setLoggedUser(loggedUser);
     }catch (RuntimeException e){

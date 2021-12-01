@@ -20,9 +20,9 @@ public class AddProductViewController
   private ViewHandler viewHandler;
   private AddProductViewModel viewModel;
 
-   public void init(ViewHandler viewHandler)
+   public void init()
   {
-    this.viewHandler = viewHandler;
+    this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getAddProductViewModel();
     productNameField.textProperty().bindBidirectional(viewModel.prodNameProperty());
     productTypeField.textProperty().bindBidirectional(viewModel.prodTypeProperty());

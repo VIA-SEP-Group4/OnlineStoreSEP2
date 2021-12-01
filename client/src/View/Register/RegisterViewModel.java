@@ -55,7 +55,6 @@ public class RegisterViewModel implements PropertyChangeListener {
             else {
                 model.registerUser(new User(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
                 clearLabels();
-                errorFields.setValue("Registered SUCCESSFULLY");
             }
         }
         else{

@@ -85,7 +85,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
             int affectedRows = stmt.executeUpdate(SQL);
             if (affectedRows <= 0)
                 throw new RuntimeException("Product deletion failed");
-
+            support.firePropertyChange("ProductReply",null,getProducts());
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw new RuntimeException(ex.getMessage());

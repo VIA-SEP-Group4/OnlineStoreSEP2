@@ -31,9 +31,9 @@ public class BrowserViewController
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
 
-  public void init(ViewHandler viewHandler)
+  public void init()
   {
-    this.viewHandler = viewHandler;
+    this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getBrowserViewModel();
 
     filterByComboBox.getItems().addAll("All products", "Type", "Availability");
