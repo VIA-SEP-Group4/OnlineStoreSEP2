@@ -55,7 +55,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
      */
     @Override
     public void addProduct(Product p) {
-        String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(product_name,description,type,amount,price) " + "VALUES(?,?,?,?,?)";
+        String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(product_name,description,type,quantity,price) " + "VALUES(?,?,?,?,?)";
 
         try (Connection conn = DBSConnection.getInstance().connect();
              PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))

@@ -11,23 +11,37 @@ public class Order implements Serializable
   private String state;
   private Timestamp timestamp;
   private int customerId;
+  private int wwId;
 
-  public Order(int orderId, int customerId)
-  {
-    this.orderId = orderId;
-    this.customerId = customerId;
-    products = new ArrayList<>();
-    state = "waiting";
-    timestamp = new Timestamp(System.currentTimeMillis());
-  }
+  //  public Order(int orderId, int customerId)
+  //  {
+  //    this.orderId = orderId;
+  //    this.customerId = customerId;
+  //    products = new ArrayList<>();
+  //    state = "waiting";
+  //    timestamp = new Timestamp(System.currentTimeMillis());
+  //  }
 
+  //instantiation when creating from GUI ->to be uploaded
   public Order(int orderId, int customerId, ArrayList<Product> products)
   {
     this.orderId = orderId;
     this.customerId = customerId;
     this.products = products;
+
     state = "waiting";
     timestamp = new Timestamp(System.currentTimeMillis());
+    wwId = -1;
+  }
+  //instantiation when fetching from DB
+  public Order(int orderId, int customerId, int wwId, String status, Timestamp timestamp, ArrayList<Product> products)
+  {
+    this.orderId = orderId;
+    this.customerId = customerId;
+    this.products = products;
+    this.wwId = wwId;
+    this.state = status;
+    this.timestamp = timestamp;
   }
 
   public int getOrderId()

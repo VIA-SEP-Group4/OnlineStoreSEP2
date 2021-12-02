@@ -10,7 +10,7 @@ public class User implements Serializable
   {
     CUSTOMER,
     MANAGER,
-    WAREHOUSEWORKER,
+    WORKER,
     ADMIN
   }
 
@@ -33,7 +33,9 @@ public class User implements Serializable
     orders = new ArrayList<>();
     this.userType = userType;
   }
+
   //for customers
+  //when fetched (-> id assigned)
   public User(String username, String password, String email, String firstName, String lastName, int userId) {
     this.username = username;
     this.password = password;
@@ -42,9 +44,10 @@ public class User implements Serializable
     this.lastName = lastName;
     this.userId = userId;
 
-    orders = new ArrayList<>();
+    this.orders = new ArrayList<Order>();
     userType = UserType.CUSTOMER;
   }
+  //when created in GUI (->without id)
   public User(String username, String password, String email, String firstName, String lastName) {
     this.username = username;
     this.password = password;
@@ -85,6 +88,11 @@ public class User implements Serializable
   public ArrayList<Order> getOrders()
   {
     return orders;
+  }
+
+  public void setOrders(ArrayList<Order> orders)
+  {
+    this.orders = orders;
   }
 
   public UserType getUserType()

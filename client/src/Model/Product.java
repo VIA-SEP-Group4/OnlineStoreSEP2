@@ -11,15 +11,7 @@ public class Product implements Serializable
   private int quantity;
   private int productId;
 
-  public Product(String name, String type, double price, String description, int quantity, int productId)
-  {
-    this.name = name;
-    this.type = type;
-    this.price = price;
-    this.description = description;
-    this.quantity = quantity;
-    this.productId = productId;
-  }
+  //when being  created and posted to the DB (-> id created in the DB [-SERIAL])
   public Product(String name, String type, double price, String description, int quantity)
   {
     this.name = name;
@@ -29,6 +21,17 @@ public class Product implements Serializable
     this.quantity = quantity;
     productId = -1;
   }
+  //when being fetched (-> id must be fetched)
+  public Product(String name, String type, double price, String description, int quantity, int productId)
+  {
+    this.name = name;
+    this.type = type;
+    this.price = price;
+    this.description = description;
+    this.quantity = quantity;
+    this.productId = productId;
+  }
+
 
   public String getName()
   {
