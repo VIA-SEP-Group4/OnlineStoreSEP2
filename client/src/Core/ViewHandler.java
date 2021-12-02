@@ -3,6 +3,7 @@ package Core;
 
 import View.Browser.ProductDetailController;
 import View.Checkout.CheckoutViewController;
+import View.Orders.OrdersViewController;
 import View.Products.AddProductViewController;
 import View.Products.ProductsViewController;
 import View.Browser.BrowserViewController;
@@ -37,8 +38,8 @@ public class ViewHandler {
     }
 
     public void startCustomer() {
-      openBrowserPane();
-
+//      openBrowserPane();
+        openOrdersPane();
       stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
     public void openLoginPane() {
@@ -146,6 +147,22 @@ public class ViewHandler {
           view.init(this);
           Scene scene = new Scene(root);
           stage.setTitle("Checkout");
+          stage.setScene(scene);
+          stage.show();
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+  }
+
+  public void openOrdersPane(){
+      try {
+          FXMLLoader loader = new FXMLLoader();
+          loader.setLocation(getClass().getResource("../View/Orders/OrdersView.fxml"));
+          Parent root = loader.load();
+          OrdersViewController view = loader.getController();
+          view.init(this);
+          Scene scene = new Scene(root);
+          stage.setTitle("Orders");
           stage.setScene(scene);
           stage.show();
       } catch (IOException e) {
