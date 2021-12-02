@@ -68,6 +68,6 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
 
     @Override
     public void receiveUpdatedProducts(Object products) throws RemoteException {
-        support.firePropertyChange("ProductReply",null,products);
+        support.firePropertyChange("ProductsReply",null,products);
     }
 }

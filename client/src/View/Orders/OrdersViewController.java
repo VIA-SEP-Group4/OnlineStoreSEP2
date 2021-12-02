@@ -37,8 +37,8 @@ public class OrdersViewController
     public TableColumn myQuantityColumn;
     public TableColumn myDescriptionColumn;
 
-    public void init(ViewHandler viewHandler){
-        this.viewHandler = viewHandler;
+    public void init(){
+        this.viewHandler = ViewHandler.getInstance();
         this.viewModel = ViewModelFactory.getOrdersViewModel();
     }
 

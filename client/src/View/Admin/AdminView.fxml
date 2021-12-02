@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="478.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Admin.AdminViewController">
+   <children>
+      <Text layoutX="283.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin" />
+      <ScrollPane layoutX="43.0" layoutY="68.0" prefHeight="290.0" prefWidth="304.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="300.0">
+               <children>
+                  <TableView fx:id="managersTable" layoutX="-1.0" layoutY="-2.0" prefHeight="290.0" prefWidth="302.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="Username" />
+                      <TableColumn prefWidth="75.0" text="First Name" />
+                        <TableColumn prefWidth="75.0" text="Last Name" />
+                        <TableColumn prefWidth="75.0" text="Pin" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Text layoutX="43.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Managers" />
+      <Button layoutX="391.0" layoutY="79.0" mnemonicParsing="false" onAction="#addNewManager" text="Add New Manager" />
+      <Button layoutX="391.0" layoutY="160.0" mnemonicParsing="false" onAction="#removeManager" text="Remove Selected Manager" />
+      <Button layoutX="391.0" layoutY="118.0" mnemonicParsing="false" onAction="#editManager" text="Edit Selected Manager" />
+      <Button layoutX="43.0" layoutY="411.0" mnemonicParsing="false" onAction="#backToLogin" text="Back To Login" />
+   </children>
+</AnchorPane>

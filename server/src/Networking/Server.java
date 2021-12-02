@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Class responsible for server side of the client-server communication, distributing the client's requests and sending back the responses,
  */
-public class Server implements RMIServer_Remote, PropertyChangeListener {
+public class Server implements RMIServer_Remote{
 
   private Model serverModelManager;
   private ArrayList<Remote> clients;
@@ -26,7 +26,26 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     super();
     clients=new ArrayList<>();
     this.serverModelManager = serverModelManager;
-    serverModelManager.addListener("ProductReply",this);
+    serverModelManager.addListener("ProductReply",this::productsUpdate);
+  }
+
+  private void productsUpdate(PropertyChangeEvent event) {
+    for(Remote client: clients){
+        if(client instanceof ManagerRemoteClient ) {
+          try {
+            ((ManagerRemoteClient) client).receiveUpdatedProducts(event.getNewValue());
+          } catch (RemoteException e) {
+            e.printStackTrace();
+          }
+        }
+        else if(client instanceof CustomerRemoteClient) {
+          try {
+            ((CustomerRemoteClient) client).receiveUpdatedProducts(event.getNewValue());
+          } catch (RemoteException e) {
+            e.printStackTrace();
+          }
+        }
+    }
   }
 
   public void start() throws RemoteException, MalformedURLException
@@ -111,14 +130,4 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     return serverModelManager.getOrders(customerId);
   }
 
-  @Override
-  public void propertyChange(PropertyChangeEvent evt) {
-      for(Remote client: clients){
-        try {
-          ((ManagerRemoteClient)client).receiveUpdatedProducts(evt.getNewValue());
-        } catch (RemoteException e) {
-          e.printStackTrace();
-        }
-      }
-  }
 }

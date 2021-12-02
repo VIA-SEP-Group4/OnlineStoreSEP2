@@ -1,6 +1,7 @@
 package Core;
 
 
+import View.Admin.AdminViewController;
 import View.Browser.ProductDetailController;
 import View.Checkout.CheckoutViewController;
 import View.Orders.OrdersViewController;
@@ -172,7 +173,7 @@ public class ViewHandler {
           loader.setLocation(getClass().getResource("../View/Orders/OrdersView.fxml"));
           Parent root = loader.load();
           OrdersViewController view = loader.getController();
-          view.init(this);
+          view.init();
           Scene scene = new Scene(root);
           stage.setTitle("Orders");
           stage.setScene(scene);
@@ -181,4 +182,19 @@ public class ViewHandler {
           e.printStackTrace();
       }
   }
+    public void openAdminPane(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/Admin/AdminView.fxml"));
+            Parent root = loader.load();
+            AdminViewController view = loader.getController();
+            view.init();
+            Scene scene = new Scene(root);
+            stage.setTitle("Orders");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
