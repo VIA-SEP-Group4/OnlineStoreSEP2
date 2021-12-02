@@ -1,5 +1,6 @@
 package Networking;
 
+import Model.Order;
 import Model.Product;
 import Model.User;
 
@@ -11,12 +12,14 @@ public interface RMIServer_Remote extends Remote
 {
   int userCount() throws RemoteException;
   String registerUser(User newUser)throws RemoteException;
-  String loginUser(String username, String password) throws RemoteException;
+  String loginUser(String username, String password, String loggingClient,LoginRemoteClient client) throws RemoteException;
 
-  void registerClient(RMIClient_Remote client) throws RemoteException;
-  void removeClient(RMIClient_Remote client) throws  RemoteException;
+  void registerClient(Remote client) throws RemoteException;
+  void removeClient(Remote client) throws  RemoteException;
 
   ArrayList<Product> getProducts() throws RemoteException;
   void addProduct(Product product) throws RemoteException;
   void deleteProduct(Product p) throws RemoteException;
+
+  void addNewOrder(Order newOrder) throws RemoteException;
 }

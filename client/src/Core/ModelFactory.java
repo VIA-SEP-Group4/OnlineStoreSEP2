@@ -16,12 +16,12 @@ public class ModelFactory {
 
     public CredentialsModel getCredentialsModel() {
         if(credentialsModel == null)
-            credentialsModel = new CredentialsModelManager(clientFactory.getClient());
+            credentialsModel = new CredentialsModelManager(clientFactory.getLoginClient());
         return credentialsModel;
     }
     public ProductsModel getProductsModel() {
         if(productsModel == null)
-            productsModel = new ProductModelManager(clientFactory.getClient());
+            productsModel = new ProductModelManager(clientFactory.getCustomerClient(),clientFactory.getManagerClient());
         return productsModel;
     }
 }

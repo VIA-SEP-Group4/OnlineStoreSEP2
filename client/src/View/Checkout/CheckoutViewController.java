@@ -42,9 +42,9 @@ public class CheckoutViewController
 
   public Label orderDetailLabel;
 
-  public void init(ViewHandler viewHandler)
+  public void init()
   {
-    this.viewHandler = viewHandler;
+    this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getCheckoutViewModel();
 
     //cart-products Table

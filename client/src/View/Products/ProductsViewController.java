@@ -21,9 +21,9 @@ public class ProductsViewController
   private ViewHandler viewHandler;
   private ProductsViewModel viewModel;
 
-    public void init(ViewHandler viewHandler)
+    public void init()
   {
-    this.viewHandler = viewHandler;
+    this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getProductsViewModel();
 
     nameColumn.setCellValueFactory(data -> data.getValue().namePropertyProperty());

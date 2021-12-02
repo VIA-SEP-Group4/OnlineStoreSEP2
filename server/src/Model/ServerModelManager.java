@@ -1,9 +1,6 @@
 package Model;
 
-import DataAcess.CredentialsDataManager;
-import DataAcess.CredentialsDataAccessor;
-import DataAcess.ProductsDataAcessor;
-import DataAcess.ProductsDataManager;
+import DataAcess.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -14,12 +11,17 @@ public class ServerModelManager implements Model, PropertyChangeListener
 {
   private CredentialsDataAccessor credentialsDataAccessor;
   private ProductsDataAcessor productsDataAcessor;
+  private OrdersDataAccessor ordersDataAccessor;
+
   private PropertyChangeSupport support;
   public ServerModelManager()
   {
     support=new PropertyChangeSupport(this);
+
     credentialsDataAccessor = new CredentialsDataManager();
     productsDataAcessor=new ProductsDataManager();
+    ordersDataAccessor = new OrdersDataManager();
+
     credentialsDataAccessor.addListener("InvalidPassword",this);
     credentialsDataAccessor.addListener("InvalidUser",this);
     credentialsDataAccessor.addListener("SuccessfulLogin",this);
@@ -49,14 +51,19 @@ public class ServerModelManager implements Model, PropertyChangeListener
     productsDataAcessor.deleteProduct(p);
   }
 
+  @Override public void addNewOrder(Order newOrder)
+  {
+    ordersDataAccessor.addNewOrder(newOrder);
+  }
+
   @Override public void registerUser(User newUser)
   {
     credentialsDataAccessor.registerUser(newUser);
   }
 
-  @Override public void loginUser(String username, String password)
+  @Override public User loginUser(String username, String password, String selectedUserType)
   {
-    credentialsDataAccessor.loginUser(username,password);
+    return credentialsDataAccessor.loginUser(username,password, selectedUserType);
   }
 
 

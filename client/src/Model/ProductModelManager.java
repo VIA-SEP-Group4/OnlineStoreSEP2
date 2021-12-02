@@ -1,6 +1,8 @@
 package Model;
 
-import Networking.Client;
+import Networking.CustomerClient;
+import Networking.ManagerClient;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -8,15 +10,19 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class ProductModelManager implements ProductsModel, PropertyChangeListener {
-    private Client client;
+    private CustomerClient customer;
+    private ManagerClient manager;
     private ArrayList<Product> basket;
     private PropertyChangeSupport support;
 
-    public ProductModelManager(Client client) {
-        this.client = client;
+    public ProductModelManager(CustomerClient customerClient, ManagerClient managerClient) {
+        this.customer = customerClient;
+        this.manager=managerClient;
+        manager.startClient();
+        customer.startClient();
         basket=new ArrayList<>();
         support=new PropertyChangeSupport(this);
-        client.addListener("ProductsReply",this);
+        customerClient.addListener("ProductsReply",this);
     }
 
     @Override public ArrayList<Product> getBasket()
@@ -24,42 +30,24 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         return basket;
     }
 
-    @Override public String getId()
+    @Override public void processOrder(Order newOrder)
     {
-        try
-        {
-            return client.getID();
-        }
-        catch (RemoteException e)
-        {
-            e.printStackTrace();
-        } return "";
+        customer.processOrder(newOrder);
     }
 
     @Override
     public void addProduct(Product p) {
-        try {
-            client.addProduct(p);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        manager.addProduct(p);
     }
 
     @Override public void deleteProduct(Product p)
     {
-        try
-        {
-            client.deleteProduct(p);
-        }
-        catch (RemoteException e)
-        {
-            e.printStackTrace();
-        }
+        manager.deleteProduct(p);
     }
 
     @Override public ArrayList<Product> getProducts()
     {
-        return client.getProducts();
+        return customer.getProducts();
     }
 
     @Override public void addBasket(Product product)

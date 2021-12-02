@@ -1,5 +1,6 @@
 package View.Browser;
 
+import Model.CredentialsModel;
 import Model.Product;
 import Model.ProductsModel;
 import View.Products.TableProdViewModel;
@@ -13,11 +14,12 @@ import java.util.ArrayList;
 public class BrowserViewModel implements PropertyChangeListener
 {
   private ProductsModel model;
+  private CredentialsModel credsModel;
   private StringProperty search;
   private StringProperty items;
   private StringProperty userName;
 
-  private ObservableList<TableProdViewModel> browserTable;
+  private ObservableList<Product> browserTable;
   private ObjectProperty<TableProdViewModel> selectedProd;
 
   private BooleanProperty logOut;
@@ -25,13 +27,13 @@ public class BrowserViewModel implements PropertyChangeListener
 
   private ArrayList<Product> basket;
 
-  public BrowserViewModel(ProductsModel model)
+  public BrowserViewModel(ProductsModel model,CredentialsModel credsModel)
   {
     this.model = model;
     search = new SimpleStringProperty("");
     items = new SimpleStringProperty("");
     userName = new SimpleStringProperty();
-
+    this.credsModel=credsModel;
     browserTable = FXCollections.observableArrayList();
     selectedProd = new SimpleObjectProperty<>();
 
@@ -63,7 +65,7 @@ public class BrowserViewModel implements PropertyChangeListener
     return userName;
   }
 
-  public ObservableList<TableProdViewModel> getBrowserTable()
+  public ObservableList<Product> getBrowserTable()
   {
     return browserTable;
   }
@@ -88,11 +90,11 @@ public class BrowserViewModel implements PropertyChangeListener
     return selectedProd.get();
   }
 
-  public void getProd(){
-    ArrayList<Product> prod = model.getProducts();
-    for (Product product:prod)
+  public void fetchProducts(){
+    ArrayList<Product> products = model.getProducts();
+    for (Product p : products)
     {
-      browserTable.add(new TableProdViewModel(product));
+      browserTable.add(p);
     }
   }
 
@@ -148,8 +150,8 @@ public class BrowserViewModel implements PropertyChangeListener
   public void reset()
   {
     browserTable.clear();
-    getProd();
-    if(model.getId().equals(""))
+    fetchProducts();
+    if(credsModel.getLoggedUser() == null)
     {
       logOut.setValue(true);
       logIn.setValue(false);
@@ -162,10 +164,7 @@ public class BrowserViewModel implements PropertyChangeListener
   }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    ArrayList<Product> prod = (ArrayList<Product>) evt.getNewValue();
-    for (Product product:prod)
-    {
-      browserTable.add(new TableProdViewModel(product));
-    }
+    ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
+    browserTable.addAll(products);
   }
 }

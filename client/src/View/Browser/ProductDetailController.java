@@ -15,8 +15,8 @@ public class ProductDetailController
   private ViewHandler viewHandler;
   private BrowserViewModel productDetailModel;
 
-  public void init(ViewHandler viewHandler) {
-    this.viewHandler = viewHandler;
+  public void init() {
+    this.viewHandler = ViewHandler.getInstance();
     this.productDetailModel = ViewModelFactory.getBrowserViewModel();
 
     nameProd.textProperty().bind(productDetailModel.getSelectedProd().namePropertyProperty());

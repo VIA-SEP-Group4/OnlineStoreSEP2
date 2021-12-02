@@ -22,8 +22,8 @@ public class RegisterViewController
     private ViewHandler viewHandler;
     private RegisterViewModel viewModel;
 
-    public void init(ViewHandler viewHandler) {
-        this.viewHandler=viewHandler;
+    public void init() {
+        this.viewHandler=ViewHandler.getInstance();
         this.viewModel = ViewModelFactory.getRegisterViewModel();
         firstNameTextField.textProperty().bindBidirectional(viewModel.fNameProperty());
         lastNameTextField.textProperty().bindBidirectional(viewModel.lNameProperty());

@@ -1,5 +1,6 @@
 package View.Checkout;
 
+import Model.CredentialsModel;
 import Model.Order;
 import Model.Product;
 import Model.ProductsModel;
@@ -8,27 +9,23 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventTarget;
-
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CheckoutViewModel
 {
   private ProductsModel productsModelManager;
+  private CredentialsModel credentialsModel;
   private ObservableList<Product> cartProducts;
   private ObservableList<Order> orders;
   private ObservableList<Product> orderProducts;
   private StringProperty orderDetailLabel;
 
-  public CheckoutViewModel(ProductsModel productsModelManager)
+  public CheckoutViewModel(ProductsModel productsModelManager,CredentialsModel credentialsModel)
   {
     this.productsModelManager = productsModelManager;
-
+    this.credentialsModel=credentialsModel;
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.add(new Product("product", "type", 12.99, "dscrpt", 2));
-
     orders = FXCollections.observableArrayList();
     orderProducts = FXCollections.observableArrayList();
 
@@ -55,9 +52,10 @@ public class CheckoutViewModel
   {
     if (!cartProducts.isEmpty()){
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      orders.add(new Order(serial.getAndIncrement(), tempProducts));
-      //TODO ... create new Order and send to DB ???
-      //productsModelManager.processOrder()
+      Order newOrder = new Order(serial.getAndIncrement(), credentialsModel.getLoggedUser().getUserId(), tempProducts);
+
+      orders.add(newOrder);
+      productsModelManager.processOrder(newOrder);
 
       cartProducts.clear();
     }

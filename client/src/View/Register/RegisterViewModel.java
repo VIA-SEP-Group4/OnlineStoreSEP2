@@ -19,6 +19,7 @@ public class RegisterViewModel implements PropertyChangeListener {
     private StringProperty errorPass;
     private StringProperty errorFields;
     private StringProperty success;
+
     public RegisterViewModel(CredentialsModel model) {
         this.model=model;
         fName=new SimpleStringProperty();
@@ -38,6 +39,8 @@ public class RegisterViewModel implements PropertyChangeListener {
      * Checking if all required fields were filled and password and re-entered password match
      */
     public void sendRegisterData(){
+        clearLabels();
+
         if(fName.getValue()!=null && !fName.getValue().equals("")
         && lName.getValue()!=null && !lName.getValue().equals("")
         && userName.getValue()!=null && !userName.getValue().equals("")
@@ -49,12 +52,14 @@ public class RegisterViewModel implements PropertyChangeListener {
             {
                 errorPass.setValue("Passwords don't match");
             }
-            else { model.registerUser(new User(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
-                 errorPass.setValue("");
-                 errorFields.setValue("");
+            else {
+                model.registerUser(new User(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
+                clearLabels();
             }
         }
-        else{ errorFields.setValue("Fields cannot be empty on registering"); errorPass.setValue(""); }
+        else{
+            errorFields.setValue("Fields cannot be empty on registering"); errorPass.setValue("");
+        }
     }
 
     @Override
@@ -86,6 +91,12 @@ public class RegisterViewModel implements PropertyChangeListener {
         email.set(null);
         password.set(null);
         rePassword.set(null);
+    }
+
+    private void clearLabels()
+    {
+        errorFields.setValue("");
+        errorPass.setValue("");
     }
 
     public String getfName() {

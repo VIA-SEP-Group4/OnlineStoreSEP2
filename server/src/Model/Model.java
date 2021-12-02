@@ -7,10 +7,11 @@ import java.util.ArrayList;
 public interface Model extends Subject
 {
   void registerUser(User newUser);
-  void loginUser(String username, String password);
+  User loginUser(String username, String password, String selectedUserType);
   int userCount();
 
   ArrayList<Product> getProducts();
   void addProduct(Product p);
   void deleteProduct(Product p);
+  void addNewOrder(Order newOrder);
 }

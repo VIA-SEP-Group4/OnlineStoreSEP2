@@ -6,10 +6,8 @@ import java.util.ArrayList;
 
 public interface CredentialsModel extends Subject
 {
-  void login(String username, String password);
+  void login(String username, String password,String type);
   void registerUser(User newUser);
-  int getNumberOfUsers();
-
-
+  User getLoggedUser();
 
 }

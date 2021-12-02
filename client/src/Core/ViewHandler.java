@@ -16,30 +16,42 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.swing.text.View;
 import java.io.IOException;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ViewHandler {
     private Stage stage;
     private ViewModelFactory viewModelFactory;
-
+    private static ViewHandler instance;
+    private static ReentrantLock lock=new ReentrantLock();
     /**
      * The constructor for the viewHandler, which creates the views
-     * @param stage the stage which will be set in the start method of the application
-     * @param viewModelFactory the class that instantiates view models
      */
-    public ViewHandler(Stage stage, ViewModelFactory viewModelFactory) {
-        this.stage = stage;
-        this.viewModelFactory = viewModelFactory;
+    private ViewHandler() {
     }
-
+    public static ViewHandler getInstance(){
+        if(instance==null){
+            synchronized (lock){
+                if(instance==null){
+                    instance=new ViewHandler();
+                }
+            }
+        }
+        return instance;
+    }
+    public void initialize(Stage stage,ViewModelFactory viewModelFactory){
+        this.stage=stage;
+        this.viewModelFactory=viewModelFactory;
+    }
     private <T extends Event> void closeWindowEvent(T t)
     {
         System.exit(0);
     }
 
-    public void startCustomer() {
-//      openBrowserPane();
-        openOrdersPane();
+    public void start() {
+      openBrowserPane();
+
       stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
     public void openLoginPane() {
@@ -48,7 +60,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Login/LoginView.fxml"));
             Parent root = loader.load();
             LoginViewController view = loader.getController();
-            view.init(this);
+            view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Login");
             stage.setScene(scene);
@@ -64,7 +76,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Register/RegisterView.fxml"));
             Parent root = loader.load();
             RegisterViewController view = loader.getController();
-            view.init(this);
+            view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Register");
             stage.setScene(scene);
@@ -80,7 +92,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Browser/BrowserView.fxml"));
             Parent root = loader.load();
             BrowserViewController view = loader.getController();
-            view.init(this);
+            view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Browser");
             stage.setScene(scene);
@@ -96,7 +108,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Products/ProductsView.fxml"));
             Parent root = loader.load();
             ProductsViewController view = loader.getController();
-            view.init(this);
+            view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Products");
             stage.setScene(scene);
@@ -112,7 +124,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Products/AddProductView.fxml"));
             Parent root = loader.load();
             AddProductViewController view = loader.getController();
-            view.init(this);
+            view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Add Product");
             stage.setScene(scene);
@@ -127,7 +139,7 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Browser/ProductDetailView.fxml"));
             Parent root = loader.load();
             ProductDetailController view = loader.getController();
-            view.init(this);
+            view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Detail Product");
             stage.setScene(scene);
@@ -144,7 +156,7 @@ public class ViewHandler {
           loader.setLocation(getClass().getResource("../View/Checkout/checkout.fxml"));
           Parent root = loader.load();
           CheckoutViewController view = loader.getController();
-          view.init(this);
+          view.init();
           Scene scene = new Scene(root);
           stage.setTitle("Checkout");
           stage.setScene(scene);

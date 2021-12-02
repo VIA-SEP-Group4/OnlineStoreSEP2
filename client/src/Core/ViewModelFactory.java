@@ -38,7 +38,7 @@ public class ViewModelFactory {
     public static BrowserViewModel getBrowserViewModel(){
         if(browserViewModel==null){
             modelFactory.getCredentialsModel();
-            browserViewModel=new BrowserViewModel(modelFactory.getProductsModel());
+            browserViewModel=new BrowserViewModel(modelFactory.getProductsModel(),modelFactory.getCredentialsModel());
         }
         return browserViewModel;
     }
@@ -58,7 +58,7 @@ public class ViewModelFactory {
 
     public static CheckoutViewModel getCheckoutViewModel(){
         if(checkoutViewModel == null){
-            checkoutViewModel = new CheckoutViewModel(modelFactory.getProductsModel());
+            checkoutViewModel = new CheckoutViewModel(modelFactory.getProductsModel(),modelFactory.getCredentialsModel());
         }
         return checkoutViewModel;
     }

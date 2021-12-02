@@ -2,7 +2,8 @@ package View.Login;
 
 import Model.CredentialsModel;
 import Model.CredentialsModelManager;
-import Networking.RMIClient;
+import Networking.LoginClientImpl;
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.embed.swing.JFXPanel;
@@ -25,7 +26,7 @@ class LoginViewModelTest
 
   @BeforeEach
   public void setUp(){
-    cm = new CredentialsModelManager(new RMIClient());
+    cm = new CredentialsModelManager(new LoginClientImpl());
     lvm = new LoginViewModel(cm);
   }
 
@@ -49,7 +50,7 @@ class LoginViewModelTest
     userName.setValue("username");
     password.setValue("pass");
 
-    lvm.login();
+    lvm.login("customer");
     waitForRunLater();
 
     assertTrue(success.getValue().contains("success"), "Expected user does not exist");
@@ -72,7 +73,7 @@ class LoginViewModelTest
     userName.setValue("non-existing_Username");
     password.setValue("non-existing_Password");
 
-    lvm.login();
+    lvm.login("customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -95,7 +96,7 @@ class LoginViewModelTest
     userName.setValue("");
     password.setValue("non-existing_Password");
 
-    lvm.login();
+    lvm.login("customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -118,7 +119,7 @@ class LoginViewModelTest
     //    userName.setValue("username");
     password.setValue("non-existing_Password");
 
-    lvm.login();
+    lvm.login("customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -141,7 +142,7 @@ class LoginViewModelTest
     userName.setValue("username");
     password.setValue("");
 
-    lvm.login();
+    lvm.login("customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -164,7 +165,7 @@ class LoginViewModelTest
         userName.setValue("username");
 //    password.setValue("");
 
-    lvm.login();
+    lvm.login("customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
