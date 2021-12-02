@@ -106,6 +106,11 @@ public class Server implements RMIServer_Remote, PropertyChangeListener {
     serverModelManager.addNewOrder(newOrder);
   }
 
+  @Override public ArrayList<Order> getOrders(int customerId)
+  {
+    return serverModelManager.getOrders(customerId);
+  }
+
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
       for(Remote client: clients){

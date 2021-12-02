@@ -166,7 +166,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       System.out.println(ex.getMessage());
     }
 
-    return null;
+    return orders;
   }
 
   @Override public ArrayList<Order> getOrders(String orderStatus)

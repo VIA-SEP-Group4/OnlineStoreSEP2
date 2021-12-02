@@ -35,6 +35,11 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         customer.processOrder(newOrder);
     }
 
+    @Override public ArrayList<Order> fetchOrders()
+    {
+        return customer.getOrders();
+    }
+
     @Override
     public void addProduct(Product p) {
         manager.addProduct(p);

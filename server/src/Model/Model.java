@@ -13,5 +13,7 @@ public interface Model extends Subject
   ArrayList<Product> getProducts();
   void addProduct(Product p);
   void deleteProduct(Product p);
+
   void addNewOrder(Order newOrder);
+  ArrayList<Order> getOrders(int customerId);
 }

@@ -14,7 +14,6 @@ public class BrowserViewController
   public ComboBox<String> filterByComboBox;
   public TextField searchTextField;
   public Button loginButton;
-  public Button registerButton;
   public Label itemsLabel;
 
   public Label userLabel;
@@ -46,7 +45,6 @@ public class BrowserViewController
     userLabel.visibleProperty().bind(viewModel.logInProperty());
     addButton.visibleProperty().bind(viewModel.logInProperty());
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
-    registerButton.visibleProperty().bind(viewModel.logOutProperty());
 
 
     //table
@@ -69,11 +67,6 @@ public class BrowserViewController
   public void onLoginButtonBrowser(ActionEvent actionEvent)
   {
     viewHandler.openLoginPane();
-  }
-
-  public void onRegisterButtonBrowser(ActionEvent actionEvent)
-  {
-    viewHandler.openRegisterPane();
   }
 
   public void onSearchTextFieldEnter(KeyEvent keyEvent)

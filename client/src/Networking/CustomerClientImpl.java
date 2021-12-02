@@ -43,6 +43,20 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         }
     }
 
+    @Override public ArrayList<Order> getOrders()
+    {
+        try
+        {
+            //TODO -need logged user here ... ?
+            return serverStub.getOrders(1);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+        return new ArrayList<Order>();
+    }
+
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);

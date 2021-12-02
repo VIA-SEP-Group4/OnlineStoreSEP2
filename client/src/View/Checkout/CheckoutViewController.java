@@ -63,12 +63,13 @@ public class CheckoutViewController
     orderStateCol.setCellValueFactory(new PropertyValueFactory<>("state"));
 
     //order-products table
+    orderDetailLabel.textProperty().bindBidirectional(viewModel.getDetailLabelProperty());
     orderProductsTable.setItems(viewModel.getOrderProducts());
     productNameCol1.setCellValueFactory(new PropertyValueFactory<>("name"));
     productQuantityCol1.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     pricePerPieceCol1.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-    orderDetailLabel.textProperty().bindBidirectional(viewModel.getDetailLabelProperty());
+    //fetch existing orders
   }
 
   public void orderBtn(ActionEvent actionEvent)

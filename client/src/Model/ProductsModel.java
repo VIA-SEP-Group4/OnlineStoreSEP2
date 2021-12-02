@@ -12,4 +12,5 @@ public interface ProductsModel extends Subject {
     void addBasket(Product product);
 
   void processOrder(Order newOrder);
+  ArrayList<Order> fetchOrders();
 }

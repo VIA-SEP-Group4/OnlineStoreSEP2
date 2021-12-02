@@ -26,7 +26,9 @@ public class CheckoutViewModel
     this.productsModelManager = productsModelManager;
     this.credentialsModel=credentialsModel;
     cartProducts = FXCollections.observableArrayList();
+
     orders = FXCollections.observableArrayList();
+    orders.addAll(productsModelManager.fetchOrders());
     orderProducts = FXCollections.observableArrayList();
 
     orderDetailLabel = new SimpleStringProperty();

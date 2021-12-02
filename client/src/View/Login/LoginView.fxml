@@ -14,35 +14,36 @@
    <children>
       <TextField fx:id="usernameTextField" layoutX="164.0" layoutY="141.0" prefHeight="25.0" prefWidth="272.0" />
 
-      <PasswordField fx:id="passwordTextField" layoutX="164.0" layoutY="224.0" prefHeight="25.0" prefWidth="272.0" />
+      <PasswordField fx:id="passwordTextField" layoutX="164.0" layoutY="188.0" prefHeight="25.0" prefWidth="272.0" />
 
       <Text layoutX="94.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="60.0">
          <font>
             <Font name="Bauhaus 93" size="12.0" />
          </font>
       </Text>
-      <Text layoutX="99.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+      <Text layoutX="94.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
          <font>
             <Font name="Bauhaus 93" size="12.0" />
          </font>
       </Text>
-      <Text layoutX="14.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
-      <Button layoutX="39.0" layoutY="354.0" mnemonicParsing="false" onAction="#onRegister" text="Register">
+      <Text layoutX="391.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
+      <Button layoutX="526.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRegister" text="Register">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="usernameErrorLabel" layoutX="164.0" layoutY="166.0" textFill="#dd0000" />
-      <Label fx:id="passwordErrorLabel" layoutX="164.0" layoutY="259.0" textFill="RED" />
-      <Text layoutX="133.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To The Fictional Store">
+      <Label fx:id="usernameErrorLabel" layoutX="165.0" layoutY="166.0" textFill="#dd0000" />
+      <Label fx:id="passwordErrorLabel" layoutX="165.0" layoutY="218.0" textFill="RED" />
+      <Text layoutX="133.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To The Fictional Store">
          <font>
             <Font name="Bauhaus 93" size="24.0" />
          </font>
       </Text>
-      <Button layoutX="277.0" layoutY="276.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
-      <Label fx:id="successLabel" layoutX="274.0" layoutY="192.0" textFill="#88ff00" />
-      <RadioButton fx:id="customerButton" layoutX="436.0" layoutY="326.0" mnemonicParsing="false" selected="true" text="Customer" />
-      <RadioButton fx:id="employeeButton" layoutX="436.0" layoutY="358.0" mnemonicParsing="false" text="Employee" />
-      <Text layoutX="425.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in as : " />
+      <Button layoutX="166.0" layoutY="283.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="27.0" prefWidth="272.0" text="Login" />
+      <Label fx:id="successLabel" layoutX="165.0" layoutY="339.0" textFill="#88ff00" />
+      <RadioButton fx:id="customerButton" layoutX="229.0" layoutY="245.0" mnemonicParsing="false" selected="true" text="Customer" />
+      <RadioButton fx:id="employeeButton" layoutX="317.0" layoutY="245.0" mnemonicParsing="false" text="Employee" />
+      <Text layoutX="164.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in as : " />
+      <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#backBtnPressed" text="Back" />
    </children>
 </AnchorPane>

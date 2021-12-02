@@ -12,4 +12,5 @@ public interface CustomerClient extends Subject {
     ArrayList<Product> getProducts();
     void startClient();
     void processOrder(Order newOrder);
+  ArrayList<Order> getOrders();
 }

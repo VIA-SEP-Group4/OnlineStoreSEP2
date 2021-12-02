@@ -52,5 +52,8 @@ public class LoginViewController
 
     }
 
-
+  public void backBtnPressed(ActionEvent actionEvent)
+  {
+      viewHandler.openBrowserPane();
+  }
 }
