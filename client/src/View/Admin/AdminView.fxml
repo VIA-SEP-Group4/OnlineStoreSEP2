@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="478.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Admin.AdminViewController">
+<AnchorPane prefHeight="478.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Admin.AdminViewController">
    <children>
       <Text layoutX="283.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin" />
-      <ScrollPane layoutX="43.0" layoutY="68.0" prefHeight="290.0" prefWidth="304.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="43.0" layoutY="68.0" prefHeight="290.0" prefWidth="301.0" vbarPolicy="NEVER">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="300.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="304.0">
                <children>
-                  <TableView fx:id="managersTable" layoutX="-1.0" layoutY="-2.0" prefHeight="290.0" prefWidth="302.0">
+                  <TableView fx:id="managersTable" layoutX="-1.0" layoutY="-2.0" prefHeight="290.0" prefWidth="301.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Username" />
-                      <TableColumn prefWidth="75.0" text="First Name" />
-                        <TableColumn prefWidth="75.0" text="Last Name" />
-                        <TableColumn prefWidth="75.0" text="Pin" />
+                      <TableColumn fx:id="IDCol" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="firstNameCol" prefWidth="75.0" text="First Name" />
+                        <TableColumn fx:id="lastNameCol" prefWidth="75.0" text="Last Name" />
+                        <TableColumn fx:id="pinCol" prefWidth="75.0" text="Pin" />
+                        <TableColumn fx:id="IDCol1" prefWidth="75.0" text="ID" />
                     </columns>
                   </TableView>
                </children>
@@ -28,9 +28,9 @@
         </content>
       </ScrollPane>
       <Text layoutX="43.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Managers" />
-      <Button layoutX="391.0" layoutY="79.0" mnemonicParsing="false" onAction="#addNewManager" text="Add New Manager" />
-      <Button layoutX="391.0" layoutY="160.0" mnemonicParsing="false" onAction="#removeManager" text="Remove Selected Manager" />
-      <Button layoutX="391.0" layoutY="118.0" mnemonicParsing="false" onAction="#editManager" text="Edit Selected Manager" />
+      <Button layoutX="410.0" layoutY="77.0" mnemonicParsing="false" onAction="#addNewManager" text="Add New Manager" />
+      <Button layoutX="410.0" layoutY="161.0" mnemonicParsing="false" onAction="#removeManager" text="Remove Selected Manager" />
+      <Button layoutX="410.0" layoutY="118.0" mnemonicParsing="false" onAction="#editManager" text="Edit Selected Manager" />
       <Button layoutX="43.0" layoutY="411.0" mnemonicParsing="false" onAction="#backToLogin" text="Back To Login" />
    </children>
 </AnchorPane>

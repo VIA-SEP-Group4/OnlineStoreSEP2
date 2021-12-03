@@ -27,6 +27,7 @@ public class LoginViewModel implements PropertyChangeListener {
         credentialsModel.addListener("LoginReply",this);
     }
 
+
     /**
      * Method called when user tries to log in with inserted credentials.
      */
@@ -98,11 +99,6 @@ public class LoginViewModel implements PropertyChangeListener {
         }
         else if (reply.toLowerCase().contains("success"))
         {
-//            Platform.runLater(()->{
-//                success.setValue(reply);
-//                errorPass.setValue("");
-//                errorUser.setValue("");
-//            });
 
             success.setValue(reply);
             errorPass.setValue("");

@@ -56,7 +56,7 @@ public class CheckoutViewModel
   {
     if (!cartProducts.isEmpty()){
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      Order newOrder = new Order(serial.getAndIncrement(), credentialsModel.getLoggedUser().getUserId(), tempProducts);
+      Order newOrder = new Order(serial.getAndIncrement(), credentialsModel.getLoggedCustomer().getUserId(), tempProducts);
 
       orders.add(newOrder);
       productsModelManager.processOrder(newOrder);

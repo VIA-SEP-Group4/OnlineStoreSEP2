@@ -1,13 +1,16 @@
 package Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Employee implements Serializable {
     private String firstName;
     private String lastName;
     private int pin;
-    private int ID=-1;
+    private int ID;
     private EmployeeType type;
+    @Serial
+    private static final long serialVersionUID = 1L;
     public enum EmployeeType{
         ADMIN,
         MANAGER,
@@ -31,5 +34,24 @@ public class Employee implements Serializable {
 
     public int getPin() {
         return pin;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public EmployeeType getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", pin=" + pin +
+                ", ID=" + ID +
+                ", type=" + type +
+                '}';
     }
 }

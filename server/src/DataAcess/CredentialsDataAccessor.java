@@ -9,8 +9,8 @@ public interface CredentialsDataAccessor extends Subject
 {
   void registerCustomer(Customer newUser);
   void registerEmployee(Employee newUser);
-  Customer loginUser(String username, String password, String selectedUserType);
+  Customer loginCustomer(String username, String password);
   int getUserCount();
-  ArrayList<Customer> getUsers();
-
+  ArrayList<Employee> getEmployees();
+  Employee loginEmployee(int ID, int pin);
 }

@@ -10,7 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AdminViewController {
     public TableView<Employee> managersTable;
-    public TableColumn<Employee, String> usernameCol;
+    public TableColumn<Employee, Integer> IDCol;
     public TableColumn<Employee, String> firstNameCol;
     public TableColumn<Employee, String> lastNameCol;
     public TableColumn<Employee, Integer> pinCol;
@@ -20,7 +20,7 @@ public class AdminViewController {
         viewModel= ViewModelFactory.getAdminViewModel();
         viewHandler=ViewHandler.getInstance();
         managersTable.setItems(viewModel.getManagers());
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+        IDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         pinCol.setCellValueFactory(new PropertyValueFactory<>("pin"));

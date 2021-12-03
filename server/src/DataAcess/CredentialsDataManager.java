@@ -90,56 +90,21 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * @param username Username that the user logs in with
    * @param password Password that the user logs in with
    */
-  @Override public Customer loginUser(String username, String password, String selectedUserType)
-  {
-    Customer loggedUser;
-
-    if (selectedUserType.equals("Customer"))
-      loggedUser = loginCustomer(username, password);
-
-    else
-      loggedUser = loginEmployee(username, password);
-
-    return loggedUser;
-  }
-
-  //TODO ... does NOT fit USER-constructor
-  private Customer loginEmployee(String firstName, String pin)
-  {
-    Customer loggedEmployee = null;
-
-    String table = "employees";
-    String SQL = "SELECT * FROM " +SCHEMA+"."+table+ " WHERE first_name = " + "'"+firstName+"'";
-    try (Connection conn =  DBSConnection.getInstance().connect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(SQL))
-    {
-      rs.next();
-      if (rs.getString(1).equals(firstName) && rs.getString(2).equals(pin))
-        loggedEmployee = new Customer(rs.getString(1), rs.getString(2),
-            rs.getString(3), rs.getString(4), rs.getString(5));
-    } catch (SQLException ex) {
-      System.out.println(ex.getMessage());
-    }
-
-    return loggedEmployee;
-  }
-
-  private Customer loginCustomer(String username, String password)
+  public Customer loginCustomer(String username, String password)
   {
     Customer loggedCustomer = null;
 
     String table = "customers";
     String SQL = "SELECT * FROM " +SCHEMA+"."+table+ " WHERE user_name = " + "'"+username+"'";
     try (Connection conn =  DBSConnection.getInstance().connect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(SQL))
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL))
     {
       rs.next();
 //      System.out.println(rs.getRow());
       if (rs.getRow()==1 && rs.getString(2).equals(username) && rs.getString(3).equals(password)){
         loggedCustomer = new Customer(rs.getString(1), rs.getString(2),
-            rs.getString(3), rs.getString(4), rs.getString(5));
+                rs.getString(3), rs.getString(4), rs.getString(5));
       }
       else {
         throw new RuntimeException("Wrong credentials - access denied");
@@ -150,6 +115,34 @@ public class CredentialsDataManager implements CredentialsDataAccessor
 
     return loggedCustomer;
   }
+  @Override
+  public Employee loginEmployee(int ID, int pin)
+  {
+    Employee loggedEmployee = null;
+
+    String table = "employees";
+    String SQL = "SELECT * FROM " +SCHEMA+"."+table+ " WHERE employee_id = " + "'"+ID+"'";
+    try (Connection conn =  DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(SQL))
+    {
+      rs.next();
+      Employee.EmployeeType type=null;
+      if (rs.getInt(1)==ID && rs.getInt(4)==pin) {
+        if (rs.getString(5).equalsIgnoreCase("Admin"))
+          type= Employee.EmployeeType.ADMIN;
+        else if (rs.getString(5).equalsIgnoreCase("Manager")) type= Employee.EmployeeType.MANAGER;
+        else if (rs.getString(5).equalsIgnoreCase("Worker")) type= Employee.EmployeeType.WORKER;
+          loggedEmployee = new Employee(rs.getString(2), rs.getString(3),
+                  rs.getInt(4), type, rs.getInt(1));
+      }
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return loggedEmployee;
+  }
+
+
 
   /**
    * Check login credentials
@@ -217,30 +210,29 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * @return users as arrayList
    */
   @Override
-  public ArrayList<Customer> getUsers() {
+  public ArrayList<Employee> getEmployees() {
 
-    String SQL = "SELECT * FROM " +SCHEMA+ ".users";
-    ArrayList<Customer> users=new ArrayList<>();
+    String SQL = "SELECT * FROM " +SCHEMA+ ".employees";
+    ArrayList<Employee> employees=new ArrayList<>();
     try (Connection conn =  DBSConnection.getInstance().connect();
          Statement stmt = conn.createStatement();
          ResultSet rs = stmt.executeQuery(SQL)) {
       System.out.println("All users:");
       // display actor information
+      Employee.EmployeeType type=null;
       while (rs.next())
       {
-        System.out.println(rs.getString("user_name") + "\t"
-            + rs.getString("pass"));
-        users.add(new Customer(rs.getString("user_name"),rs.getString("pass"),
-                rs.getString("email"),rs.getString("first_name"),rs.getString("last_name")));
+        if (rs.getString("employee_type").equalsIgnoreCase("Admin")) type= Employee.EmployeeType.ADMIN;
+        else if (rs.getString("employee_type").equalsIgnoreCase("Manager")) type= Employee.EmployeeType.MANAGER;
+        else if (rs.getString("employee_type").equalsIgnoreCase("Worker")) type= Employee.EmployeeType.WORKER;
+        employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
+                rs.getInt("pin"), type,rs.getInt("employee_id")));
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
-    return users;
+    return employees;
   }
-
-
-
 
 
 

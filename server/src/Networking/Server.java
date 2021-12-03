@@ -1,9 +1,7 @@
 package Networking;
 
-import Model.Model;
-import Model.Customer;
-import Model.Product;
-import Model.Order;
+
+import Model.*;
 import java.beans.PropertyChangeEvent;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -78,14 +76,29 @@ public class Server implements RMIServer_Remote{
     return reply;
   }
 
-  @Override public String loginUser(String username, String password, String type,LoginRemoteClient client) throws RemoteException
+  @Override public String loginCustomer(String username, String password,LoginRemoteClient client) throws RemoteException
   {
     String reply;
     try
     {
-      Customer loggedUser = serverModelManager.loginUser(username,password, type);
-      reply = "successful login";
+      Customer loggedUser = serverModelManager.loginCustomer(username,password);
+      reply = "successful login ";
       client.setLoggedUser(loggedUser);
+
+    }catch (RuntimeException e){
+      reply = e.getMessage();
+    }
+    return reply;
+  }
+
+  @Override
+  public String loginEmployee(int id, int pin) throws RemoteException {
+    String reply;
+    try
+    {
+      Employee loggedUser = serverModelManager.loginEmployee(id,pin);
+      reply = "successful login "+loggedUser.getType();
+
     }catch (RuntimeException e){
       reply = e.getMessage();
     }
@@ -132,6 +145,12 @@ public class Server implements RMIServer_Remote{
   @Override public void addToCart(Product p, int desiredQuantity) throws RemoteException
   {
     serverModelManager.updateStock(p, desiredQuantity);
+  }
+
+  @Override
+  public ArrayList<Employee> getManagerEmployees() {
+    System.out.println(serverModelManager.getManagers());
+    return serverModelManager.getManagers();
   }
 
 }

@@ -36,6 +36,11 @@ public class ServerModelManager implements Model, PropertyChangeListener
   }
 
   @Override
+  public Employee loginEmployee(int ID, int pin) {
+    return credentialsDataAccessor.loginEmployee(ID,pin);
+  }
+
+  @Override
   public ArrayList<Product> getProducts() {
     return productsDataAcessor.getProducts();
   }
@@ -61,14 +66,41 @@ public class ServerModelManager implements Model, PropertyChangeListener
     return ordersDataAccessor.getOrders(customerId);
   }
 
+  @Override public void updateStock(Product p, int desiredQuantity)
+  {
+    productsDataAcessor.updateStock(p, desiredQuantity);
+  }
+
+  @Override
+  public ArrayList<Employee> getManagers() {
+    ArrayList<Employee> managers=new ArrayList<>();
+    for(Employee e: credentialsDataAccessor.getEmployees()){
+      if(e.getType()== Employee.EmployeeType.MANAGER){
+        managers.add(e);
+      }
+    }
+    return managers;
+  }
+
+  @Override
+  public ArrayList<Employee> getWorkers() {
+    ArrayList<Employee> workers=new ArrayList<>();
+    for(Employee e: credentialsDataAccessor.getEmployees()){
+      if(e.getType()== Employee.EmployeeType.WORKER){
+        workers.add(e);
+      }
+    }
+    return workers;
+  }
+
   @Override public void registerUser(Customer newUser)
   {
     credentialsDataAccessor.registerCustomer(newUser);
   }
 
-  @Override public Customer loginUser(String username, String password, String selectedUserType)
+  @Override public Customer loginCustomer(String username, String password)
   {
-    Customer tempUser = credentialsDataAccessor.loginUser(username,password, selectedUserType);
+    Customer tempUser = credentialsDataAccessor.loginCustomer(username,password);
     tempUser.setOrders(ordersDataAccessor.getOrders(tempUser.getUserId()));
     return tempUser;
   }

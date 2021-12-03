@@ -72,7 +72,7 @@ public class ViewModelFactory {
     }
     public static AdminViewModel getAdminViewModel(){
         if(adminViewModel == null){
-            adminViewModel = new AdminViewModel(modelFactory.getProductsModel());
+            adminViewModel = new AdminViewModel(modelFactory.getAdminModel());
         }
         return adminViewModel;
     }

@@ -147,7 +147,7 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     browserTable.clear();
     fetchProducts();
-    if(credsModel.getLoggedUser() == null)
+    if(credsModel.getLoggedCustomer() == null)
     {
       logOut.setValue(true);
       logIn.setValue(false);

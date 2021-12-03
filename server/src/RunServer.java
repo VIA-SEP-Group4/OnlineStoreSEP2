@@ -14,6 +14,7 @@ public class RunServer {
 
         //create and start server
         ServerModelManager serverModelManager = new ServerModelManager();
+
         try {
             Server server = new Server(serverModelManager);
             server.start();

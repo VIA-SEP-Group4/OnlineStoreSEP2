@@ -70,11 +70,6 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="74.0" prefHeight="30.0" prefWidth="702.0">
          <children>
-            <Label fx:id="itemsLabel" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="57.0" text="(0) Items">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Label>
             <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButton" prefHeight="32.0" prefWidth="90.0" text="Add product">
                <HBox.margin>
                   <Insets right="10.0" />
@@ -89,13 +84,15 @@
       </HBox>
        <ScrollPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="702.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0">
            <content>
-               <TableView fx:id="browserTable" onMouseClicked="#onDoubleClick" prefHeight="439.0" prefWidth="686.0">
+               <TableView fx:id="browserTable" onMouseClicked="#onDoubleClick" prefHeight="439.0" prefWidth="700.0">
                    <columns>
-                       <TableColumn fx:id="nameColumn" prefWidth="112.79995918273926" text="Name" />
-                       <TableColumn fx:id="typeColumn" prefWidth="123.99999237060547" text="Type" />
-                       <TableColumn fx:id="priceColumn" prefWidth="84.79998779296875" text="Price" />
-                       <TableColumn fx:id="descriptionColumn" prefWidth="264.8000183105469" text="Description" />
-                       <TableColumn fx:id="quantityColumn" prefWidth="96.00006103515625" text="Stock" />
+                       <TableColumn fx:id="nameColumn" prefWidth="121.99996960163116" text="Name" />
+                       <TableColumn fx:id="typeColumn" prefWidth="94.00000762939453" text="Type" />
+                       <TableColumn fx:id="priceColumn" prefWidth="64.66664123535156" text="Price" />
+                       <TableColumn fx:id="descriptionColumn" prefWidth="197.3333740234375" text="Description" />
+                       <TableColumn fx:id="quantityColumn" prefWidth="65.99996948242188" text="Stock" />
+                        <TableColumn fx:id="desiredQuantityCol" prefWidth="69.3333740234375" text="Q" />
+                        <TableColumn fx:id="addBtnCol" prefWidth="74.6666259765625" text="Add to Cart" />
                    </columns>
                </TableView>
            </content>

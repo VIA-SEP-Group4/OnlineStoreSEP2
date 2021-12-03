@@ -1,6 +1,7 @@
 package Networking;
 
 import Model.Customer;
+import Model.Employee;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -15,6 +16,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     private String clientID;
     private PropertyChangeSupport support;
     private Customer loggedCustomer = null;
+    private Employee loggedEmployee=null;
 
     public LoginClientImpl() {
         support=new PropertyChangeSupport(this);
@@ -38,9 +40,18 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
      *
      * @return user as type Customer
      */
+
+
     @Override
-    public Customer getLoggedUser() {
-        return loggedCustomer;
+    public void loginEmployee(int ID, int pin)  {
+        String reply = "denied";
+        try {
+            reply = serverStub.loginEmployee(ID,pin);
+        } catch (RemoteException | RuntimeException e) {
+            System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
+            e.printStackTrace();
+        }
+        support.firePropertyChange("LoginReply",null, reply);
     }
 
     @Override
@@ -74,10 +85,10 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
      * @param password inserted password
      */
     @Override
-    public void loginUser(String username, String password,String type) {
+    public void loginCustomer(String username, String password) {
         String reply = "denied";
         try {
-            reply = serverStub.loginUser(username, password,type, this);
+            reply = serverStub.loginCustomer(username, password, this);
         } catch (RemoteException | RuntimeException e) {
             System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
@@ -91,5 +102,19 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         this.loggedCustomer = loggedCustomer;
     }
 
+    public Customer getLoggedCustomer() {
+        return loggedCustomer;
+    }
 
+    public void setLoggedCustomer(Customer loggedCustomer) {
+        this.loggedCustomer = loggedCustomer;
+    }
+
+    public Employee getLoggedEmployee() {
+        return loggedEmployee;
+    }
+
+    public void setLoggedEmployee(Employee loggedEmployee) {
+        this.loggedEmployee = loggedEmployee;
+    }
 }

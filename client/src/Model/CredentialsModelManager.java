@@ -25,7 +25,12 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
 
   @Override
   public void login(String username, String password, String type) {
-    client.loginUser(username,password,type);
+    if(type.equals("Customer")){
+      client.loginCustomer(username,password);
+    }
+    else if(type.equals("Employee")){
+      client.loginEmployee(Integer.parseInt(username),Integer.parseInt(password));
+    }
   }
 
   @Override public void registerUser(Customer newCustomer)
@@ -34,8 +39,13 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
   }
 
   @Override
-  public Customer getLoggedUser() {
-    return client.getLoggedUser();
+  public Customer getLoggedCustomer() {
+    return client.getLoggedCustomer();
+  }
+
+  @Override
+  public Employee getLoggedEmployee() {
+    return client.getLoggedEmployee();
   }
 
 

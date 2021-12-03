@@ -44,11 +44,18 @@ public class LoginViewController
         viewModel.login(selected.getText());
 
         if( successLabel.textProperty().getValue()!=null
-            && successLabel.textProperty().getValue().contains("success"))
+            && successLabel.textProperty().getValue().contains("success") && selected.getText().equals("Customer"))
         {
             viewHandler.openBrowserPane();
-//            viewHandler.openProductsPane();
         }
+        else if( successLabel.textProperty().getValue()!=null
+                && successLabel.textProperty().getValue().contains("MANAGER") ){
+                viewHandler.openProductsPane();
+        }
+        else if(successLabel.textProperty().getValue()!=null && successLabel.textProperty().getValue().contains("ADMIN") ){
+                viewHandler.openAdminPane();
+        }
+
 
     }
 
