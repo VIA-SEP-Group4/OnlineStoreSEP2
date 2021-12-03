@@ -2,7 +2,7 @@ package Networking;
 
 import Model.Order;
 import Model.Product;
-import Model.User;
+import Model.Customer;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public interface RMIServer_Remote extends Remote
 {
   int userCount() throws RemoteException;
-  String registerUser(User newUser)throws RemoteException;
+  String registerUser(Customer newUser)throws RemoteException;
   String loginUser(String username, String password, String loggingClient,LoginRemoteClient client) throws RemoteException;
 
   void registerClient(Remote client) throws RemoteException;

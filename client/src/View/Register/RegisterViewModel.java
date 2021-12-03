@@ -1,7 +1,7 @@
 package View.Register;
 
 import Model.CredentialsModel;
-import Model.User;
+import Model.Customer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -53,7 +53,7 @@ public class RegisterViewModel implements PropertyChangeListener {
                 errorPass.setValue("Passwords don't match");
             }
             else {
-                model.registerUser(new User(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
+                model.registerUser(new Customer(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
                 clearLabels();
             }
         }

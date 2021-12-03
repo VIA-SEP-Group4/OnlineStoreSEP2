@@ -1,11 +1,10 @@
 package Networking;
 
 import Model.Model;
-import Model.User;
+import Model.Customer;
 import Model.Product;
 import Model.Order;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.Remote;
@@ -64,7 +63,7 @@ public class Server implements RMIServer_Remote{
     return serverModelManager.userCount();
   }
 
-  @Override public String registerUser(User newUser) throws RemoteException
+  @Override public String registerUser(Customer newUser) throws RemoteException
   {
     String reply;
     try
@@ -84,7 +83,7 @@ public class Server implements RMIServer_Remote{
     String reply;
     try
     {
-      User loggedUser = serverModelManager.loginUser(username,password, type);
+      Customer loggedUser = serverModelManager.loginUser(username,password, type);
       reply = "successful login";
       client.setLoggedUser(loggedUser);
     }catch (RuntimeException e){

@@ -13,12 +13,16 @@ public class Employee implements Serializable {
         MANAGER,
         WORKER
     }
-    public Employee(String firstName, String lastName, int pin, EmployeeType type,int ID) {
+    public Employee(String firstName, String lastName, int pin, EmployeeType type, int ID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pin = pin;
         this.type=type;
         this.ID=ID;
+    }
+
+    public EmployeeType getType() {
+        return type;
     }
 
     public String getFirstName() {

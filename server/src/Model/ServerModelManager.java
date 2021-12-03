@@ -61,14 +61,14 @@ public class ServerModelManager implements Model, PropertyChangeListener
     return ordersDataAccessor.getOrders(customerId);
   }
 
-  @Override public void registerUser(User newUser)
+  @Override public void registerUser(Customer newUser)
   {
-    credentialsDataAccessor.registerUser(newUser);
+    credentialsDataAccessor.registerCustomer(newUser);
   }
 
-  @Override public User loginUser(String username, String password, String selectedUserType)
+  @Override public Customer loginUser(String username, String password, String selectedUserType)
   {
-    User tempUser = credentialsDataAccessor.loginUser(username,password, selectedUserType);
+    Customer tempUser = credentialsDataAccessor.loginUser(username,password, selectedUserType);
     tempUser.setOrders(ordersDataAccessor.getOrders(tempUser.getUserId()));
     return tempUser;
   }

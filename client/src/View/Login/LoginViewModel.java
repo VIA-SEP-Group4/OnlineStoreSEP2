@@ -89,7 +89,7 @@ public class LoginViewModel implements PropertyChangeListener {
         errorUser.setValue("");
         });
         }
-        else if(reply.contains("User")){ Platform.runLater(()->{
+        else if(reply.contains("Customer")){ Platform.runLater(()->{
             errorUser.setValue(reply);
             errorPass.setValue("");
         });}

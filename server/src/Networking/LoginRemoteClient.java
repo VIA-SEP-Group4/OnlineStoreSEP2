@@ -1,10 +1,10 @@
 package Networking;
 
-import Model.User;
+import Model.Customer;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface LoginRemoteClient extends Remote {
-    void setLoggedUser(User loggedUser) throws RemoteException;
+    void setLoggedUser(Customer loggedUser) throws RemoteException;
 }

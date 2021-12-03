@@ -1,6 +1,6 @@
 package Networking;
 
-import Model.User;
+import Model.Customer;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -14,7 +14,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     private RMIServer_Remote serverStub;
     private String clientID;
     private PropertyChangeSupport support;
-    private User loggedUser = null;
+    private Customer loggedCustomer = null;
 
     public LoginClientImpl() {
         support=new PropertyChangeSupport(this);
@@ -36,11 +36,11 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
 
     /** Method used to get the user that has just been succesfully logged in
      *
-     * @return user as type User
+     * @return user as type Customer
      */
     @Override
-    public User getLoggedUser() {
-        return loggedUser;
+    public Customer getLoggedUser() {
+        return loggedCustomer;
     }
 
     @Override
@@ -55,16 +55,16 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
 
     /**
      * Method requesting the server to register new user.
-     * @param newUser new user to be added to the database.
+     * @param newCustomer new user to be added to the database.
      */
-    @Override public void registerUser(User newUser)
+    @Override public void registerUser(Customer newCustomer)
     {
         try {
-            String reply = serverStub.registerUser(newUser);
+            String reply = serverStub.registerUser(newCustomer);
             System.out.println("Server reply: " + reply);
             support.firePropertyChange("RegistrationReply",null,reply);
         } catch (RemoteException e) {
-            System.err.println("User registration failed! [RMIClient.registerUser()]");
+            System.err.println("Customer registration failed! [RMIClient.registerUser()]");
             e.printStackTrace();
         }
     }
@@ -79,7 +79,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         try {
             reply = serverStub.loginUser(username, password,type, this);
         } catch (RemoteException | RuntimeException e) {
-            System.err.println("Server error! User logging failed! [RMIClient.registerUser()]");
+            System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
         }
         support.firePropertyChange("LoginReply",null, reply);
@@ -87,8 +87,8 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
 
 
     @Override
-    public void setLoggedUser(User loggedUser) throws RemoteException {
-        this.loggedUser=loggedUser;
+    public void setLoggedUser(Customer loggedCustomer) throws RemoteException {
+        this.loggedCustomer = loggedCustomer;
     }
 
 

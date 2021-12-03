@@ -1,12 +1,9 @@
 package Model;
 import Networking.LoginClient;
-import Utils.Subject;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 public class CredentialsModelManager implements CredentialsModel, PropertyChangeListener
 {
@@ -31,13 +28,13 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     client.loginUser(username,password,type);
   }
 
-  @Override public void registerUser(User newUser)
+  @Override public void registerUser(Customer newCustomer)
   {
-    client.registerUser(newUser);
+    client.registerUser(newCustomer);
   }
 
   @Override
-  public User getLoggedUser() {
+  public Customer getLoggedUser() {
     return client.getLoggedUser();
   }
 

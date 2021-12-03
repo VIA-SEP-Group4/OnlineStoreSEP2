@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public interface Model extends Subject
 {
-  void registerUser(User newUser);
-  User loginUser(String username, String password, String selectedUserType);
+  void registerUser(Customer newUser);
+  Customer loginUser(String username, String password, String selectedUserType);
   int userCount();
 
   ArrayList<Product> getProducts();

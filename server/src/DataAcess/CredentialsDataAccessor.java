@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public interface CredentialsDataAccessor extends Subject
 {
-  void registerUser(User newUser);
-  User loginUser(String username, String password, String selectedUserType);
+  void registerCustomer(Customer newUser);
+  void registerEmployee(Employee newUser);
+  Customer loginUser(String username, String password, String selectedUserType);
   int getUserCount();
-  ArrayList<User> getUsers();
+  ArrayList<Customer> getUsers();
 
 }
