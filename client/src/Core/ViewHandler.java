@@ -52,7 +52,7 @@ public class ViewHandler {
 
     public void start() {
       openBrowserPane();
-
+//        openOrdersPane();
       stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
     public void openLoginPane() {

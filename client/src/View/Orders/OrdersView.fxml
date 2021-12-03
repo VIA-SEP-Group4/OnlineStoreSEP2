@@ -17,7 +17,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="openOrdersTable" layoutY="28.0" prefHeight="128.0" prefWidth="600.0" AnchorPane.topAnchor="28.0">
+                        <TableView fx:id="openOrdersTable" layoutY="28.0" onMousePressed="#checkOpenOrderDetail" prefHeight="128.0" prefWidth="600.0" AnchorPane.topAnchor="28.0">
                           <columns>
                             <TableColumn fx:id="IDColumn" prefWidth="130.66665649414062" text="ID" />
                             <TableColumn fx:id="timeColumn" prefWidth="143.20001220703125" text="Time" />
@@ -58,7 +58,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="myOrdersTable" layoutY="14.0" prefHeight="152.0" prefWidth="600.0">
+                        <TableView fx:id="myOrdersTable" layoutY="14.0" onMousePressed="#checkMyOrderDetail" prefHeight="152.0" prefWidth="600.0">
                            <columns>
                               <TableColumn fx:id="myIDColumn" prefWidth="130.66665649414062" text="ID" />
                               <TableColumn fx:id="myTimeColumn" prefWidth="143.20001220703125" text="Time" />
@@ -76,7 +76,7 @@
                            </columns>
                         </TableView>
                         <Button layoutX="108.0" layoutY="341.0" mnemonicParsing="false" onAction="#removeButton" text="Remove from my orders" />
-                        <Button layoutX="388.0" layoutY="341.0" mnemonicParsing="false" onAction="#changeStateButton" text="Change state" />
+                        <Button layoutX="388.0" layoutY="341.0" mnemonicParsing="false" onAction="#completeOrderButton" text="Complete order" />
                      </children>
                   </AnchorPane>
             </content>

@@ -71,7 +71,6 @@ public class CheckoutViewModel
 
   public void showOrderDetails(int orderId){
     orderProducts.clear();
-
     for (Order o : orders){
       if (o.getOrderId() == orderId)
         orderProducts.addAll(o.getProducts());
