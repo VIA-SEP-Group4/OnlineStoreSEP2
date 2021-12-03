@@ -61,6 +61,11 @@ public class ServerModelManager implements Model, PropertyChangeListener
     return ordersDataAccessor.getOrders(customerId);
   }
 
+  @Override public void updateStock(Product p, int desiredQuantity)
+  {
+    productsDataAcessor.updateStock(p, desiredQuantity);
+  }
+
   @Override public void registerUser(User newUser)
   {
     credentialsDataAccessor.registerUser(newUser);

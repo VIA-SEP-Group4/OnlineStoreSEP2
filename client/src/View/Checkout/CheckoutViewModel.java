@@ -25,7 +25,9 @@ public class CheckoutViewModel
   {
     this.productsModelManager = productsModelManager;
     this.credentialsModel=credentialsModel;
+
     cartProducts = FXCollections.observableArrayList();
+    cartProducts.addAll(productsModelManager.getCartProducts());
 
     orders = FXCollections.observableArrayList();
     orders.addAll(productsModelManager.fetchOrders());
@@ -80,5 +82,10 @@ public class CheckoutViewModel
   public Property<String> getDetailLabelProperty()
   {
     return orderDetailLabel;
+  }
+
+  public void fetchCart()
+  {
+    cartProducts.setAll(productsModelManager.getCartProducts());
   }
 }

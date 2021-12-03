@@ -49,6 +49,7 @@ public class CheckoutViewController
 
     //cart-products Table
     cartProductsTable.setItems(viewModel.getCartProducts());
+    viewModel.fetchCart();
     productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     productQuantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     pricePerPieceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -68,8 +69,6 @@ public class CheckoutViewController
     productNameCol1.setCellValueFactory(new PropertyValueFactory<>("name"));
     productQuantityCol1.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     pricePerPieceCol1.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-    //fetch existing orders
   }
 
   public void orderBtn(ActionEvent actionEvent)

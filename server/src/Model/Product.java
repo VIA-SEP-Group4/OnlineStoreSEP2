@@ -95,8 +95,13 @@ public class Product implements Serializable
             + "\n, price= " + price +", quantity= " + quantity + '}';
     }
 
-  public int getProductId()
-  {
-      return productId;
-  }
+    public int getProductId()
+    {
+        return productId;
+    }
+
+    public Product copy()
+    {
+        return new Product(name, type, price, description, quantity, productId);
+    }
 }
