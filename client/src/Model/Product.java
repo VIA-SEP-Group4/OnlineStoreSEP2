@@ -99,4 +99,9 @@ public class Product implements Serializable
   {
     return productId;
   }
+
+  public Product copy()
+  {
+    return new Product(name, type, price, description, quantity, productId);
+  }
 }

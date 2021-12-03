@@ -10,9 +10,10 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class ProductModelManager implements ProductsModel, PropertyChangeListener {
+
     private CustomerClient customer;
     private ManagerClient manager;
-    private ArrayList<Product> basket;
+    private ArrayList<Product> cart;
     private PropertyChangeSupport support;
 
     public ProductModelManager(CustomerClient customerClient, ManagerClient managerClient) {
@@ -20,24 +21,44 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
         this.manager=managerClient;
         manager.startClient();
         customer.startClient();
-        basket=new ArrayList<>();
+        cart=new ArrayList<>();
         support=new PropertyChangeSupport(this);
         customerClient.addListener("ProductsReply",this);
     }
 
-    @Override public ArrayList<Product> getBasket()
+    @Override public ArrayList<Product> getCartProducts()
     {
-        return basket;
+        return cart;
     }
 
     @Override public void processOrder(Order newOrder)
     {
+        cart.clear();
         customer.processOrder(newOrder);
     }
 
     @Override public ArrayList<Order> fetchOrders()
     {
         return customer.getOrders();
+    }
+
+    @Override public void addToCart(Product p, int desiredQuantity)
+    {
+        boolean contains = false;
+        for (Product currP : cart){
+            if (currP.getProductId()==p.getProductId()){
+                currP.setQuantityP(currP.getQuantity()+desiredQuantity);
+                contains = true;
+            }
+        }
+
+        if (!contains){
+            Product orderedProduct = p.copy();
+            orderedProduct.setQuantityP(desiredQuantity);
+            cart.add(orderedProduct);
+        }
+
+        customer.addToCart(p, desiredQuantity);
     }
 
     @Override
@@ -57,8 +78,7 @@ public class ProductModelManager implements ProductsModel, PropertyChangeListene
 
     @Override public void addBasket(Product product)
     {
-        basket.add(product);
-
+        cart.add(product);
     }
 
     @Override

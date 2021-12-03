@@ -16,4 +16,6 @@ public interface Model extends Subject
 
   void addNewOrder(Order newOrder);
   ArrayList<Order> getOrders(int customerId);
+
+  void updateStock(Product p, int desiredQuantity);
 }

@@ -57,6 +57,16 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         return new ArrayList<Order>();
     }
 
+    @Override public void addToCart(Product p, int desiredQuantity)
+    {
+        try {
+            serverStub.addToCart(p, desiredQuantity);
+        }
+        catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);

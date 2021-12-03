@@ -129,4 +129,9 @@ public class Server implements RMIServer_Remote{
     return serverModelManager.getOrders(customerId);
   }
 
+  @Override public void addToCart(Product p, int desiredQuantity) throws RemoteException
+  {
+    serverModelManager.updateStock(p, desiredQuantity);
+  }
+
 }

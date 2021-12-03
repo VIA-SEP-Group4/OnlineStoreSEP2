@@ -94,8 +94,24 @@ public class ProductsDataManager implements ProductsDataAcessor {
         }
     }
 
+    @Override public void updateStock(Product p, int desiredQuantity)
+    {
+        String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET quantity="+(p.getQuantity()-desiredQuantity)+ " WHERE product_id = '" +p.getProductId()+ "'";
 
-  @Override
+        try (Connection conn = DBSConnection.getInstance().connect();
+            Statement stmt = conn.createStatement())
+        {
+            int affectedRows = stmt.executeUpdate(SQL);
+            if (affectedRows <= 0)
+                throw new RuntimeException("Product update failed");
+            support.firePropertyChange("ProductReply",null,getProducts());
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);
     }

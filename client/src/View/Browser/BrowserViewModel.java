@@ -25,7 +25,7 @@ public class BrowserViewModel implements PropertyChangeListener
   private BooleanProperty logOut;
   private BooleanProperty logIn;
 
-  private ArrayList<Product> basket;
+  private ArrayList<Product> cart;
 
   public BrowserViewModel(ProductsModel model,CredentialsModel credsModel)
   {
@@ -40,7 +40,7 @@ public class BrowserViewModel implements PropertyChangeListener
     logOut = new SimpleBooleanProperty(true);
     logIn = new SimpleBooleanProperty(false);
 
-    basket = new ArrayList<>();
+    cart = new ArrayList<>();
     model.addListener("ProductsReply",this);
   }
 
@@ -91,16 +91,12 @@ public class BrowserViewModel implements PropertyChangeListener
   }
 
   public void fetchProducts(){
-    ArrayList<Product> products = model.getProducts();
-    for (Product p : products)
-    {
-      browserTable.add(p);
-    }
+    browserTable.addAll(model.getProducts());
   }
 
   public void addBasket()
   {
-     ArrayList<Product> basket = model.getBasket();
+     ArrayList<Product> basket = model.getCartProducts();
 
       boolean add = true;
       if (selectedProd.get() != null && selectedProd.get().quantityPropertyProperty().get() != 0 && hasProducts()) {
@@ -124,7 +120,7 @@ public class BrowserViewModel implements PropertyChangeListener
 
     public boolean hasProducts()
     {
-      ArrayList<Product> basket = model.getBasket();
+      ArrayList<Product> basket = model.getCartProducts();
       Product prod = new Product(selectedProd.get().namePropertyProperty().get(),selectedProd.get().typePropertyProperty().get(),
           selectedProd.get().pricePropertyProperty().get(),selectedProd.get().descriptionProperty().get(),selectedProd.get().quantityPropertyProperty().get());
       if (basket.size() != 0)
@@ -140,9 +136,9 @@ public class BrowserViewModel implements PropertyChangeListener
 
     public int itemQuantity(){
     int iQ = 0;
-    for (int i = 0; i < model.getBasket().size(); i++)
+    for (int i = 0; i < model.getCartProducts().size(); i++)
     {
-      iQ += model.getBasket().get(i).getQuantity();
+      iQ += model.getCartProducts().get(i).getQuantity();
     }
     return iQ;
   }
@@ -166,5 +162,19 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
     browserTable.addAll(products);
+  }
+
+  public void addToCart(Product p, int desiredQuantity)
+  {
+    if (desiredQuantity>0 && desiredQuantity<=p.getQuantity())
+    {
+      model.addToCart(p, desiredQuantity);
+      reset();
+    }
+    else
+    {
+      //TODO .. put it in some label so customer can see what's going on
+      System.out.println("error label ->wrong quantity ...");
+    }
   }
 }
