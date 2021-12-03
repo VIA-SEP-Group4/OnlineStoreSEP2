@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Order implements Serializable
@@ -29,7 +30,7 @@ public class Order implements Serializable
     this.customerId = customerId;
     this.products = products;
 
-    state = "waiting";
+    state = "Waiting";
     timestamp = new Timestamp(System.currentTimeMillis());
     wwId = -1;
   }
@@ -66,13 +67,25 @@ public class Order implements Serializable
     return state;
   }
 
-  public Timestamp getTimestamp()
+  public void setStatus(String status){
+    state = status;
+  }
+
+  public String getTimestamp()
   {
-    return timestamp;
+    String t = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(timestamp);
+    return t;
   }
 
   public ArrayList<Product> getProducts()
   {
     return products;
+  }
+
+  @Override public String toString()
+  {
+    return "Order{" + "orderId=" + orderId + ", products=" + products
+        + ", state='" + state + '\'' + ", timestamp=" + timestamp
+        + ", customerId=" + customerId + ", wwId=" + wwId + '}';
   }
 }

@@ -31,7 +31,7 @@ public class CheckoutViewController
   public TableView<Order> ordersTable;
   public TableColumn<Order, Integer> orderIdCol;
   public TableColumn<Order, Double> orderTotalPrice;
-  public TableColumn<Order, Timestamp> timestampCol;
+  public TableColumn<Order, String> timestampCol;
   public TableColumn<Order, String> orderStateCol;
 
   //order-products Table
