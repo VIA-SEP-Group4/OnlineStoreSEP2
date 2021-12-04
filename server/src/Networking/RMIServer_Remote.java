@@ -27,4 +27,7 @@ public interface RMIServer_Remote extends Remote
 
   void addToCart(Product p, int desiredQuantity) throws RemoteException;
   ArrayList<Employee> getManagerEmployees() throws RemoteException;
+  String addManager(Employee manager) throws RemoteException;
+  void removeManager(Employee manager) throws  RemoteException;
+
 }

@@ -13,4 +13,6 @@ public interface CredentialsDataAccessor extends Subject
   int getUserCount();
   ArrayList<Employee> getEmployees();
   Employee loginEmployee(int ID, int pin);
+
+    void removeEmployee(Employee e);
 }

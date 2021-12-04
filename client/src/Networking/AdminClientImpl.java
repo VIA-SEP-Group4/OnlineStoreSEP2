@@ -28,7 +28,8 @@ public class AdminClientImpl implements AdminClient,AdminRemoteClient{
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("Admin Client failed to initialize client-object ...[RMIClient.RMIClient()]");
+            e.printStackTrace();
         }
     }
     @Override
@@ -50,5 +51,30 @@ public class AdminClientImpl implements AdminClient,AdminRemoteClient{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void addManager(Employee manager) {
+        String reply=null;
+        try {
+            reply=serverStub.addManager(manager);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        support.firePropertyChange("ManagerAddReply",null,reply);
+    }
+
+    @Override
+    public void removeManager(Employee manager) {
+        try {
+            serverStub.removeManager(manager);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void receiveUpdatedManagers(Object managers) throws RemoteException {
+        support.firePropertyChange("AdminReply",null,managers);
     }
 }

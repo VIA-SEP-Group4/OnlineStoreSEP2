@@ -22,9 +22,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
     productsDataAcessor=new ProductsDataManager();
     ordersDataAccessor = new OrdersDataManager();
 
-    credentialsDataAccessor.addListener("InvalidPassword",this);
-    credentialsDataAccessor.addListener("InvalidUser",this);
-    credentialsDataAccessor.addListener("SuccessfulLogin",this);
+    credentialsDataAccessor.addListener("AdminReply",this);
     productsDataAcessor.addListener("ProductReply",this);
   }
 
@@ -54,6 +52,11 @@ public class ServerModelManager implements Model, PropertyChangeListener
   @Override public void deleteProduct(Product p)
   {
     productsDataAcessor.deleteProduct(p);
+  }
+
+  @Override
+  public void removeEmployee(Employee e) {
+    credentialsDataAccessor.removeEmployee(e);
   }
 
   @Override public void addNewOrder(Order newOrder)
@@ -93,9 +96,14 @@ public class ServerModelManager implements Model, PropertyChangeListener
     return workers;
   }
 
-  @Override public void registerUser(Customer newUser)
+  @Override public void registerCustomer(Customer newUser)
   {
     credentialsDataAccessor.registerCustomer(newUser);
+  }
+
+  @Override
+  public void registerEmployee(Employee employee) {
+    credentialsDataAccessor.registerEmployee(employee);
   }
 
   @Override public Customer loginCustomer(String username, String password)

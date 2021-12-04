@@ -24,6 +24,19 @@ public class Server implements RMIServer_Remote{
     clients=new ArrayList<>();
     this.serverModelManager = serverModelManager;
     serverModelManager.addListener("ProductReply",this::productsUpdate);
+    serverModelManager.addListener("AdminReply",this::adminUpdate);
+  }
+
+  private void adminUpdate(PropertyChangeEvent event) {
+    for(Remote client: clients){
+      if(client instanceof AdminRemoteClient){
+        try {
+          ((AdminRemoteClient) client).receiveUpdatedManagers(event.getNewValue());
+        } catch (RemoteException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   private void productsUpdate(PropertyChangeEvent event) {
@@ -66,7 +79,7 @@ public class Server implements RMIServer_Remote{
     String reply;
     try
     {
-      serverModelManager.registerUser(newUser);
+      serverModelManager.registerCustomer(newUser);
       reply = "approved";
     }
     catch (RuntimeException e){
@@ -151,6 +164,26 @@ public class Server implements RMIServer_Remote{
   public ArrayList<Employee> getManagerEmployees() {
     System.out.println(serverModelManager.getManagers());
     return serverModelManager.getManagers();
+  }
+
+  @Override
+  public String addManager(Employee manager) throws RemoteException {
+    String reply;
+    try
+    {
+      serverModelManager.registerEmployee(manager);
+      reply = "approved";
+    }
+    catch (RuntimeException e){
+      reply = e.getMessage();
+    }
+
+    return reply;
+  }
+
+  @Override
+  public void removeManager(Employee manager) throws RemoteException {
+      serverModelManager.removeEmployee(manager);
   }
 
 }

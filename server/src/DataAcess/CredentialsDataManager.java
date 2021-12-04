@@ -22,21 +22,10 @@ public class CredentialsDataManager implements CredentialsDataAccessor
   }
 
 
-  /**
-   * Method that inserts a new user in the database
-   * @param newUser the user to be inserted
-   */
-  @Override public void registerCustomer(Customer newUser)
-  {
-      registerNewCustomer(newUser);
-  }
 
-  @Override
-  public void registerEmployee(Employee newEmployee) {
-    registerNewEmployee(newEmployee);
-  }
 
-  private void registerNewEmployee(Employee newEmployee)
+
+  public void registerEmployee(Employee newEmployee)
   {
     String SQL = "INSERT INTO " +SCHEMA+".employees" +"(first_name,last_name, pin, employee_type) " + "VALUES(?,?,?,?)";
 
@@ -52,14 +41,14 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)
         throw new RuntimeException("Register failed");
-
+      if(newEmployee.getType()== Employee.EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
   }
 
-  private void registerNewCustomer(Customer newCustomer)
+  public void registerCustomer(Customer newCustomer)
   {
     String SQL = "INSERT INTO " +SCHEMA+".customers" +"(user_name, pass, email, first_name, last_name) " + "VALUES(?,?,?,?,?)";
 
@@ -142,6 +131,45 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     return loggedEmployee;
   }
 
+  @Override
+  public void removeEmployee(Employee e) {
+    String SQL = "DELETE FROM " +SCHEMA+ ".employees WHERE " +SCHEMA+ ".employees"+ ".employee_id = '" +e.getID()+ "'";
+
+    try (Connection conn = DBSConnection.getInstance().connect();
+         Statement stmt = conn.createStatement())
+    {
+      int affectedRows = stmt.executeUpdate(SQL);
+      if (affectedRows <= 0)
+        throw new RuntimeException("Employee deletion failed");
+      if(e.getType()== Employee.EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+    }catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
+    }
+  }
+
+  private ArrayList<Employee> getManagers() {
+    String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"MANAGER"+"'";
+    ArrayList<Employee> employees=new ArrayList<>();
+    try (Connection conn =  DBSConnection.getInstance().connect();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL)) {
+      System.out.println("All users:");
+      // display actor information
+      Employee.EmployeeType type=null;
+      while (rs.next())
+      {
+        if (rs.getString("employee_type").equalsIgnoreCase("Admin")) type= Employee.EmployeeType.ADMIN;
+        else if (rs.getString("employee_type").equalsIgnoreCase("Manager")) type= Employee.EmployeeType.MANAGER;
+        else if (rs.getString("employee_type").equalsIgnoreCase("Worker")) type= Employee.EmployeeType.WORKER;
+        employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
+                rs.getInt("pin"), type,rs.getInt("employee_id")));
+      }
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return employees;
+  }
 
 
   /**

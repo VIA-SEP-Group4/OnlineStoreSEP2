@@ -40,6 +40,10 @@ public class Employee implements Serializable {
         return pin;
     }
 
+    public int getID() {
+        return ID;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
