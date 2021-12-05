@@ -6,20 +6,34 @@ import java.util.ArrayList;
 public class Customer implements Serializable
 {
 
+
   private String username;
   private String password;
   private String email;
   private String firstName;
   private String lastName;
   private ArrayList<Order> orders;
-  private int userId=-1;
+  private int customerId = -1;
 
+  //when registered ->created without ID(DB takes care of it)
   public Customer(String username, String password, String email, String firstName, String lastName) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
+
+    orders = new ArrayList<>();
+  }
+
+  //whe fetched from DB ->ID must be fetched and assigned to the object!!!
+  public Customer(String username, String password, String email, String firstName, String lastName, int customerId) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.customerId = customerId;
 
     orders = new ArrayList<>();
   }
@@ -46,9 +60,9 @@ public class Customer implements Serializable
     return password;
   }
 
-  public int getUserId()
+  public int getCustomerId()
   {
-    return userId;
+    return customerId;
   }
 
   public ArrayList<Order> getOrders()
@@ -60,4 +74,5 @@ public class Customer implements Serializable
   {
     this.orders = orders;
   }
+
 }

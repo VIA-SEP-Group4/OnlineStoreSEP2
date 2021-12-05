@@ -51,12 +51,12 @@ public class CheckoutViewModel
     return orderProducts;
   }
 
-  private static final AtomicInteger serial = new AtomicInteger();
+
   public void processOrder()
   {
     if (!cartProducts.isEmpty()){
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      Order newOrder = new Order(serial.getAndIncrement(), credentialsModel.getLoggedCustomer().getUserId(), tempProducts);
+      Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
 
       orders.add(newOrder);
       productsModelManager.processOrder(newOrder);

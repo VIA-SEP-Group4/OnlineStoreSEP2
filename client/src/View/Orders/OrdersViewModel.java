@@ -32,8 +32,8 @@ public class OrdersViewModel
         ArrayList<Product> list1 = new ArrayList<>();
         list1.add(prod3);
         list1.add(prod4);
-        openOrders.add(new Order(1,1,list));
-        openOrders.add(new Order(2,2, list1));
+        openOrders.add(new Order(1,list));
+        openOrders.add(new Order(2, list1));
         openOrdersDetail = FXCollections.observableArrayList();
         myOrders = FXCollections.observableArrayList();
         myOrdersDetail = FXCollections.observableArrayList();

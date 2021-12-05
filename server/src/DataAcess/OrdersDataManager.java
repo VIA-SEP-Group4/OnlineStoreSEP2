@@ -22,16 +22,13 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   @Override public void addNewOrder(Order newOrder)
   {
-    String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(order_id, customer_id, timestamp) " + "VALUES(?,?,?)";
+    String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(customer_id, timestamp) " + "VALUES(?,?)";
 
     try (Connection conn = DBSConnection.getInstance().connect();
         PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
     {
-      System.out.println(newOrder);
-      pstmt.setInt(1, newOrder.getOrderId());
-      pstmt.setInt(2, newOrder.getCustomerId());
-      pstmt.setTimestamp(3, newOrder.getTimestamp());
-
+      pstmt.setInt(1, newOrder.getCustomerId());
+      pstmt.setTimestamp(2, newOrder.getTimestampSQL());
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)
@@ -42,15 +39,28 @@ public class OrdersDataManager implements OrdersDataAccessor
       throw new RuntimeException(ex.getMessage());
     }
 
+    //get ID of newly-created order:
+    SQL = "Select order_id FROM " +SCHEMA+"."+TABLE+ " WHERE customer_id="+newOrder.getCustomerId()+ " AND " + "timestamp='"+newOrder.getTimestampSQL()+"'";
+    try (Connection conn = DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(SQL))
+    {
+      rs.next();
+      int newOrderId = rs.getInt("order_id");
+      newOrder.setOrderId(newOrderId);
+    }
+    catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
+    }
+
 
     SQL = "INSERT INTO " +SCHEMA+ "." +TABLE2+ "(product_id, order_id, quantity) " + "VALUES(?,?,?)";
-
     try (Connection conn = DBSConnection.getInstance().connect();
         PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
     {
       for (Product p : newOrder.getProducts())
       {
-        System.out.println(p);
         pstmt.setInt(1, p.getProductId());
         pstmt.setInt(2, newOrder.getOrderId());
         pstmt.setInt(3, p.getQuantity());

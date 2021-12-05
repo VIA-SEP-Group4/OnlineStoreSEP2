@@ -36,7 +36,7 @@ CREATE TABLE eshop.products
 
 CREATE TABLE eshop.orders
 (
-	order_id INTEGER,
+	order_id SERIAL,
 	customer_id INTEGER,
 	warehouse_worker_id INTEGER,
 	status VARCHAR(20) DEFAULT('waiting'),
@@ -58,55 +58,4 @@ CREATE TABLE eshop.ordered_products
 
 -- => for testing purposes !!! <=
 INSERT INTO eshop.customers(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
-INSERT INTO eshop.products(product_name, description, type, quantity, price) VALUES('product', 'description ...', 'type', 5, 9.99);
-
-
-
-
-
-
-
--- ----------------------------------------------------------------------
-
--- OLD DATABASE (just in case)
-
-CREATE SCHEMA eshop;
-
-CREATE TABLE eshop.users(
-	user_id serial,
-	user_name varchar(20),
-	pass varchar(20),
-	email varchar(50),
-	first_name varchar(20),
-	last_name varchar(20)
-);
-ALTER TABLE eshop.users ADD CONSTRAINT pk_users PRIMARY KEY (user_id);
-ALTER TABLE eshop.users ADD CONSTRAINT unique_username UNIQUE(user_name);
-
-
-CREATE TABLE eshop.employees
-(
-	employee_id SERIAL,
-	first_name VARCHAR(25) NOT NULL,
-	last_name VARCHAR(25) NOT NULL,
-	pin INTEGER CHECK(pin>=1000 AND pin<=9999),
-	type VARCHAR(30) NOT NULL,
-	PRIMARY KEY (employee_id)
-);
-
-
-CREATE TABLE eshop.products
-(
-	product_id SERIAL PRIMARY KEY,
-	product_name VARCHAR(20) NOT NULL UNIQUE,
-	description VARCHAR(100),
-	type VARCHAR(30),
-	amount INTEGER,
-	price DECIMAL
-);
-
-
--- => for testing purposes !!! <=
-INSERT INTO eshop.users(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
-INSERT INTO eshop.products(product_name, description, type, amount, price) VALUES('product', 'description ...', 'type', 5, 9.99);
-
+INSERT INTO eshop.products(product_name, description, type, quantity, price) VALUES('product', 'description ...', 'type', 100, 9.99);
