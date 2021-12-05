@@ -1,6 +1,7 @@
 package Model;
 
 import DataAcess.*;
+import Enums.EmployeeType;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -78,7 +79,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
   public ArrayList<Employee> getManagers() {
     ArrayList<Employee> managers=new ArrayList<>();
     for(Employee e: credentialsDataAccessor.getEmployees()){
-      if(e.getType()== Employee.EmployeeType.MANAGER){
+      if(e.getType()== EmployeeType.MANAGER){
         managers.add(e);
       }
     }
@@ -89,7 +90,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
   public ArrayList<Employee> getWorkers() {
     ArrayList<Employee> workers=new ArrayList<>();
     for(Employee e: credentialsDataAccessor.getEmployees()){
-      if(e.getType()== Employee.EmployeeType.WORKER){
+      if(e.getType()== EmployeeType.WAREHOUSE_WORKER){
         workers.add(e);
       }
     }

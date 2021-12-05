@@ -1,5 +1,7 @@
 package Model;
 
+import Enums.EmployeeType;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -11,11 +13,7 @@ public class Employee implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private EmployeeType type;
-    public enum EmployeeType{
-        ADMIN,
-        MANAGER,
-        WORKER
-    }
+
     public Employee(String firstName, String lastName, int pin, EmployeeType type, int ID) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -1,5 +1,6 @@
 package View.Admin;
 
+import Enums.EmployeeType;
 import Model.AdminModel;
 import Model.Employee;
 import javafx.beans.property.*;
@@ -61,7 +62,7 @@ public class AdminViewModel {
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
             else {
-                adminModel.addManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), Employee.EmployeeType.MANAGER,0));
+                adminModel.addManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
                 clearFields();
             }
 
