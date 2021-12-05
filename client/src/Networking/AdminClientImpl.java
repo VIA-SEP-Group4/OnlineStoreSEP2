@@ -1,6 +1,6 @@
 package Networking;
 
-import Model.Employee;
+import Model.Models.Employee;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

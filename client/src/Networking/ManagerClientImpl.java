@@ -1,6 +1,8 @@
 package Networking;
 
-import Model.Product;
+import Model.Models.Employee;
+import Model.Models.Order;
+import Model.Models.Product;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -9,6 +11,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     private RMIServer_Remote serverStub;
@@ -31,6 +34,42 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
             System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
         }
     }
+
+    @Override
+    public ArrayList<Order> getAllOrders() {
+        try {
+            return serverStub.getAllOrders();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Product> getAllProducts() {
+        try {
+            return serverStub.getProducts();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Employee> getAllWorkers() {
+        return null;
+    }
+
+    @Override
+    public void addWorker(Employee employee) {
+
+    }
+
+    @Override
+    public void removeWorker(Employee employee) {
+
+    }
+
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);

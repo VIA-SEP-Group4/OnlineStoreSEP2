@@ -2,6 +2,10 @@ package Model;
 
 import DataAcess.*;
 import Enums.EmployeeType;
+import Model.Models.Customer;
+import Model.Models.Employee;
+import Model.Models.Order;
+import Model.Models.Product;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

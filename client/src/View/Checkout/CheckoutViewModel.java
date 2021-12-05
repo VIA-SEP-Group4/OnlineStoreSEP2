@@ -1,36 +1,36 @@
 package View.Checkout;
 
 import Model.CredentialsModel;
-import Model.Order;
-import Model.Product;
-import Model.ProductsModel;
+import Model.CustomerModel;
+import Model.Models.Order;
+import Model.Models.Product;
+
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class CheckoutViewModel
 {
-  private ProductsModel productsModelManager;
+  private CustomerModel customerModel;
   private CredentialsModel credentialsModel;
   private ObservableList<Product> cartProducts;
   private ObservableList<Order> orders;
   private ObservableList<Product> orderProducts;
   private StringProperty orderDetailLabel;
 
-  public CheckoutViewModel(ProductsModel productsModelManager,CredentialsModel credentialsModel)
+  public CheckoutViewModel(CustomerModel customerModel, CredentialsModel credentialsModel)
   {
-    this.productsModelManager = productsModelManager;
+    this.customerModel = customerModel;
     this.credentialsModel=credentialsModel;
 
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.addAll(productsModelManager.getCartProducts());
+    cartProducts.addAll(customerModel.getCartProducts());
 
     orders = FXCollections.observableArrayList();
-    orders.addAll(productsModelManager.fetchOrders());
+    orders.addAll(customerModel.fetchCustomerOrders());
     orderProducts = FXCollections.observableArrayList();
 
     orderDetailLabel = new SimpleStringProperty();
@@ -59,7 +59,7 @@ public class CheckoutViewModel
       Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
 
       orders.add(newOrder);
-      productsModelManager.processOrder(newOrder);
+      customerModel.processOrder(newOrder);
 
       cartProducts.clear();
     }
@@ -85,6 +85,6 @@ public class CheckoutViewModel
 
   public void fetchCart()
   {
-    cartProducts.setAll(productsModelManager.getCartProducts());
+    cartProducts.setAll(customerModel.getCartProducts());
   }
 }

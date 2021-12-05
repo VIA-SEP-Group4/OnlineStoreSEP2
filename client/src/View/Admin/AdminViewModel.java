@@ -2,7 +2,7 @@ package View.Admin;
 
 import Enums.EmployeeType;
 import Model.AdminModel;
-import Model.Employee;
+import Model.Models.Employee;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

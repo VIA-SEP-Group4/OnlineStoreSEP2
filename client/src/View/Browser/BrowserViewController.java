@@ -2,7 +2,7 @@ package View.Browser;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import Model.Product;
+import Model.Models.Product;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

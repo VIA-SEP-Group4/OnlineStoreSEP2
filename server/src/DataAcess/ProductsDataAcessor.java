@@ -1,7 +1,6 @@
 package DataAcess;
 
-import Model.Order;
-import Model.Product;
+import Model.Models.Product;
 import Utils.Subject;
 
 import java.util.ArrayList;

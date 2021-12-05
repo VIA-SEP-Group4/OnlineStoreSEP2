@@ -1,4 +1,4 @@
-package Model;
+package Model.Models;
 
 import Enums.EmployeeType;
 
@@ -10,20 +10,16 @@ public class Employee implements Serializable {
     private String lastName;
     private int pin;
     private int ID;
+    private EmployeeType type;
     @Serial
     private static final long serialVersionUID = 1L;
-    private EmployeeType type;
 
-    public Employee(String firstName, String lastName, int pin, EmployeeType type, int ID) {
+    public Employee(String firstName, String lastName, int pin, EmployeeType type,int ID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pin = pin;
         this.type=type;
         this.ID=ID;
-    }
-
-    public EmployeeType getType() {
-        return type;
     }
 
     public String getFirstName() {
@@ -40,6 +36,10 @@ public class Employee implements Serializable {
 
     public int getID() {
         return ID;
+    }
+
+    public EmployeeType getType() {
+        return type;
     }
 
     @Override

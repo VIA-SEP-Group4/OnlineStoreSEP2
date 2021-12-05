@@ -2,12 +2,11 @@ package View.Products;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import Model.Product;
+import Model.Models.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ProductsViewController
 {

@@ -1,10 +1,9 @@
 package Networking;
 
-import Model.Order;
-import Model.Product;
+import Model.Models.Order;
+import Model.Models.Product;
 import Utils.Subject;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public interface CustomerClient extends Subject {

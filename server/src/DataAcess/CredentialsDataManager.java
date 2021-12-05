@@ -1,8 +1,8 @@
 package DataAcess;
 
 import Enums.EmployeeType;
-import Model.Customer;
-import Model.Employee;
+import Model.Models.Customer;
+import Model.Models.Employee;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.*;

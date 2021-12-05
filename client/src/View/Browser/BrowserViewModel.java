@@ -1,8 +1,8 @@
 package View.Browser;
 
 import Model.CredentialsModel;
-import Model.Product;
-import Model.ProductsModel;
+import Model.CustomerModel;
+import Model.Models.Product;
 import View.Products.TableProdViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class BrowserViewModel implements PropertyChangeListener
 {
-  private ProductsModel model;
+  private CustomerModel customerModel;
   private CredentialsModel credsModel;
   private StringProperty search;
   private StringProperty items;
@@ -27,9 +27,9 @@ public class BrowserViewModel implements PropertyChangeListener
 
   private ArrayList<Product> cart;
 
-  public BrowserViewModel(ProductsModel model,CredentialsModel credsModel)
+  public BrowserViewModel(CustomerModel customerModel, CredentialsModel credsModel)
   {
-    this.model = model;
+    this.customerModel = customerModel;
     search = new SimpleStringProperty("");
     items = new SimpleStringProperty("");
     userName = new SimpleStringProperty();
@@ -41,13 +41,9 @@ public class BrowserViewModel implements PropertyChangeListener
     logIn = new SimpleBooleanProperty(false);
 
     cart = new ArrayList<>();
-    model.addListener("ProductsReply",this);
+    customerModel.addListener("ProductsReply",this);
   }
 
-  public ProductsModel getModel()
-  {
-    return model;
-  }
 
   public StringProperty searchProperty()
   {
@@ -91,12 +87,12 @@ public class BrowserViewModel implements PropertyChangeListener
   }
 
   public void fetchProducts(){
-    browserTable.addAll(model.getProducts());
+    browserTable.addAll(customerModel.getProducts());
   }
 
   public void addBasket()
   {
-     ArrayList<Product> basket = model.getCartProducts();
+     ArrayList<Product> basket = customerModel.getCartProducts();
 
       boolean add = true;
       if (selectedProd.get() != null && selectedProd.get().quantityPropertyProperty().get() != 0 && hasProducts()) {
@@ -113,14 +109,14 @@ public class BrowserViewModel implements PropertyChangeListener
           }
         }
         if (add)
-          model.addBasket(prod);
+          customerModel.addToCart(prod);
       }
       items.setValue("("+itemQuantity()+") items");
   }
 
     public boolean hasProducts()
     {
-      ArrayList<Product> basket = model.getCartProducts();
+      ArrayList<Product> basket = customerModel.getCartProducts();
       Product prod = new Product(selectedProd.get().namePropertyProperty().get(),selectedProd.get().typePropertyProperty().get(),
           selectedProd.get().pricePropertyProperty().get(),selectedProd.get().descriptionProperty().get(),selectedProd.get().quantityPropertyProperty().get());
       if (basket.size() != 0)
@@ -136,9 +132,9 @@ public class BrowserViewModel implements PropertyChangeListener
 
     public int itemQuantity(){
     int iQ = 0;
-    for (int i = 0; i < model.getCartProducts().size(); i++)
+    for (int i = 0; i < customerModel.getCartProducts().size(); i++)
     {
-      iQ += model.getCartProducts().get(i).getQuantity();
+      iQ += customerModel.getCartProducts().get(i).getQuantity();
     }
     return iQ;
   }
@@ -168,7 +164,7 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     if (desiredQuantity>0 && desiredQuantity<=p.getQuantity())
     {
-      model.addToCart(p, desiredQuantity);
+      customerModel.addToCart(p, desiredQuantity);
       reset();
     }
     else

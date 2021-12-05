@@ -1,7 +1,7 @@
 package Networking;
 
-import Model.Order;
-import Model.Product;
+import Model.Models.Order;
+import Model.Models.Product;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

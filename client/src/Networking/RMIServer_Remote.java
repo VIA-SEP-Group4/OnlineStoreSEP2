@@ -1,9 +1,9 @@
 package Networking;
 
-import Model.Employee;
-import Model.Order;
-import Model.Product;
-import Model.Customer;
+import Model.Models.Employee;
+import Model.Models.Order;
+import Model.Models.Product;
+import Model.Models.Customer;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ public interface RMIServer_Remote extends Remote
 
   void addNewOrder(Order newOrder) throws RemoteException;
   ArrayList<Order> getOrders(int customerId) throws RemoteException;
+  ArrayList<Order> getAllOrders() throws RemoteException;
 
   void addToCart(Product p, int desiredQuantity) throws RemoteException;
 

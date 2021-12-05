@@ -1,6 +1,6 @@
 package DataAcess;
 
-import Model.Order;
+import Model.Models.Order;
 
 import java.util.ArrayList;
 
@@ -14,4 +14,7 @@ public interface OrdersDataAccessor
   ArrayList<Order> getOrders(int customerId);
   //get orders by status
   ArrayList<Order> getOrders(String orderStatus);
+  //get orders by workers
+  ArrayList<Order> getWorkerOrders(int workerId);
+
 }

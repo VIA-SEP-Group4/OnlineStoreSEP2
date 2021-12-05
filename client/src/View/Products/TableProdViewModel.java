@@ -1,6 +1,6 @@
 package View.Products;
 
-import Model.Product;
+import Model.Models.Product;
 import javafx.beans.property.*;
 
 public class TableProdViewModel

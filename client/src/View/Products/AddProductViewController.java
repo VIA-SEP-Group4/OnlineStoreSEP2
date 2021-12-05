@@ -26,6 +26,16 @@ public class AddProductViewController
     this.viewModel = ViewModelFactory.getAddProductViewModel();
     productNameField.textProperty().bindBidirectional(viewModel.prodNameProperty());
     productTypeField.textProperty().bindBidirectional(viewModel.prodTypeProperty());
+    productPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue!=null &&!newValue.matches("\\d*") ) {
+        productPriceField.setText(newValue.replaceAll("[^\\d]", ""));
+      }
+    });
+    productQuantityField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue!=null &&!newValue.matches("\\d*") ) {
+        productQuantityField.setText(newValue.replaceAll("[^\\d]", ""));
+      }
+    });
     productPriceField.textProperty().bindBidirectional(viewModel.prodPriceProperty(), new NumberStringConverter());
     productPriceField.textProperty().setValue("");
     productQuantityField.textProperty().bindBidirectional(viewModel.prodQuantityProperty(), new NumberStringConverter());

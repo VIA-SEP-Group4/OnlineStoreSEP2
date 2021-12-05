@@ -1,4 +1,6 @@
-package Model;
+package Model.Models;
+
+import Model.Models.Order;
 
 import java.io.Serializable;
 import java.util.ArrayList;

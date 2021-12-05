@@ -1,4 +1,4 @@
-package Networking;
+package Model;
 
 import Model.Models.Employee;
 import Model.Models.Order;
@@ -7,17 +7,16 @@ import Utils.Subject;
 
 import java.util.ArrayList;
 
-public interface ManagerClient extends Subject {
+public interface ManagerModel extends Subject {
+    ArrayList<Order> getAllOrders();
+    ArrayList<Product> getProducts();
+    ArrayList<Employee> getWorkers();
+
     void addProduct(Product p);
     void deleteProduct(Product p);
-    void startClient();
-
-    ArrayList<Order> getAllOrders();
-    ArrayList<Product> getAllProducts();
-
-    ArrayList<Employee> getAllWorkers();
-
     void addWorker(Employee employee);
-
     void removeWorker(Employee employee);
+
+    Employee getLoggedEmployee();
+
 }

@@ -1,8 +1,6 @@
 package DataAcess;
 
-import Model.Order;
-import Model.Product;
-import Utils.Subject;
+import Model.Models.Product;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

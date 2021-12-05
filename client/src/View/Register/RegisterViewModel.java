@@ -1,7 +1,7 @@
 package View.Register;
 
 import Model.CredentialsModel;
-import Model.Customer;
+import Model.Models.Customer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

@@ -24,7 +24,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ViewHandler {
     private Stage stage;
-    private ViewModelFactory viewModelFactory;
     private static ViewHandler instance;
     private static ReentrantLock lock=new ReentrantLock();
     /**
@@ -42,9 +41,8 @@ public class ViewHandler {
         }
         return instance;
     }
-    public void initialize(Stage stage,ViewModelFactory viewModelFactory){
+    public void initialize(Stage stage){
         this.stage=stage;
-        this.viewModelFactory=viewModelFactory;
     }
     private <T extends Event> void closeWindowEvent(T t)
     {

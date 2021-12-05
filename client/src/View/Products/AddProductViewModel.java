@@ -1,8 +1,8 @@
 package View.Products;
 
-import Model.CredentialsModel;
-import Model.Product;
-import Model.ProductsModel;
+import Model.ManagerModel;
+import Model.Models.Product;
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +13,7 @@ import java.beans.PropertyChangeListener;
 
 public class AddProductViewModel implements PropertyChangeListener
 {
-  private ProductsModel productsModel;
+  private ManagerModel managerModel;
   private StringProperty prodName;
   private StringProperty prodType;
   private SimpleIntegerProperty prodPrice;
@@ -21,9 +21,9 @@ public class AddProductViewModel implements PropertyChangeListener
   private StringProperty prodDescription;
   private StringProperty errorLabel;
 
-  public AddProductViewModel(ProductsModel credentialsModel)
+  public AddProductViewModel(ManagerModel managerModel)
   {
-    this.productsModel = credentialsModel;
+    this.managerModel = managerModel;
     prodName = new SimpleStringProperty();
     prodType = new SimpleStringProperty();
     prodPrice = new SimpleIntegerProperty();
@@ -31,7 +31,7 @@ public class AddProductViewModel implements PropertyChangeListener
     prodDescription = new SimpleStringProperty();
     errorLabel = new SimpleStringProperty();
 
-    credentialsModel.addListener("ProductsReply",this);
+    managerModel.addListener("ProductsReply",this);
   }
 
 
@@ -43,7 +43,7 @@ public class AddProductViewModel implements PropertyChangeListener
         && prodDescription.getValue()!=null && !prodDescription.getValue().equals(""))
     {
       Product product = new Product(prodName.getValue(), prodType.getValue(),prodPrice.getValue(),prodDescription.getValue(),prodQuantity.getValue());
-      productsModel.addProduct(product);
+      managerModel.addProduct(product);
       return true;
     }
     else

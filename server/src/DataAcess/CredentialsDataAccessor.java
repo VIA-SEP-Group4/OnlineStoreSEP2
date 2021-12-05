@@ -1,6 +1,7 @@
 package DataAcess;
 
-import Model.*;
+import Model.Models.Customer;
+import Model.Models.Employee;
 import Utils.Subject;
 
 import java.util.ArrayList;

@@ -2,6 +2,11 @@ package Networking;
 
 
 import Model.*;
+import Model.Models.Customer;
+import Model.Models.Employee;
+import Model.Models.Order;
+import Model.Models.Product;
+
 import java.beans.PropertyChangeEvent;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -153,6 +158,12 @@ public class Server implements RMIServer_Remote{
   @Override public ArrayList<Order> getOrders(int customerId)
   {
     return serverModelManager.getOrders(customerId);
+  }
+
+  //TODO return from model
+  @Override
+  public ArrayList<Order> getAllOrders() throws RemoteException {
+    return null;
   }
 
   @Override public void addToCart(Product p, int desiredQuantity) throws RemoteException

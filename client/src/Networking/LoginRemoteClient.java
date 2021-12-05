@@ -1,6 +1,6 @@
 package Networking;
 
-import Model.Customer;
+import Model.Models.Customer;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

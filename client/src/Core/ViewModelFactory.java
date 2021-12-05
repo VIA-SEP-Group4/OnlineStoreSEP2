@@ -39,34 +39,34 @@ public class ViewModelFactory {
     public static BrowserViewModel getBrowserViewModel(){
         if(browserViewModel==null){
             modelFactory.getCredentialsModel();
-            browserViewModel=new BrowserViewModel(modelFactory.getProductsModel(),modelFactory.getCredentialsModel());
+            browserViewModel=new BrowserViewModel(modelFactory.getCustomerModel(),modelFactory.getCredentialsModel());
         }
         return browserViewModel;
     }
     public static ProductsViewModel getProductsViewModel(){
         if(productsViewModel==null){
             modelFactory.getCredentialsModel();
-            productsViewModel=new ProductsViewModel(modelFactory.getProductsModel());
+            productsViewModel=new ProductsViewModel(modelFactory.getManagerModel());
         }
         return productsViewModel;
     }
     public static   AddProductViewModel getAddProductViewModel(){
         if(addProductViewModel==null){
-            addProductViewModel=new AddProductViewModel(modelFactory.getProductsModel());
+            addProductViewModel=new AddProductViewModel(modelFactory.getManagerModel());
         }
         return addProductViewModel;
     }
 
     public static CheckoutViewModel getCheckoutViewModel(){
         if(checkoutViewModel == null){
-            checkoutViewModel = new CheckoutViewModel(modelFactory.getProductsModel(),modelFactory.getCredentialsModel());
+            checkoutViewModel = new CheckoutViewModel(modelFactory.getCustomerModel(),modelFactory.getCredentialsModel());
         }
         return checkoutViewModel;
     }
 
     public static OrdersViewModel getOrdersViewModel(){
         if(ordersViewModel == null){
-            ordersViewModel = new OrdersViewModel(modelFactory.getProductsModel());
+            ordersViewModel = new OrdersViewModel(modelFactory.getWorkerModel());
         }
         return ordersViewModel;
     }
