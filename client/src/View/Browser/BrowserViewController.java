@@ -10,6 +10,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
+import java.util.ArrayList;
+
 public class BrowserViewController
 {
   public ComboBox<String> filterByComboBox;
@@ -31,6 +33,9 @@ public class BrowserViewController
 
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
+
+  private ArrayList<Button> buttons = new ArrayList<>();
+  private ArrayList<Spinner<Integer>> spinners = new ArrayList<>();
 
   public void init()
   {
@@ -59,7 +64,6 @@ public class BrowserViewController
     addBtnCol.setCellFactory(addButtonToTable());
     addBtnCol.visibleProperty().bind(viewModel.logInProperty());
 
-    //    viewModel.fetchProducts();
     reset();
   }
 
@@ -116,10 +120,9 @@ public class BrowserViewController
           {
             btn.setOnAction((ActionEvent event) -> {
               Product tempProduct = getTableView().getItems().get(getIndex());
-              System.out.println("selectedData: " + tempProduct);
+              int desiredQuantity = spinners.get(buttons.indexOf(btn)).getValue();
 
-              //TODO ... desired quantity
-              viewModel.addToCart(tempProduct, 1);
+              viewModel.addToCart(tempProduct, desiredQuantity);
             });
           }
 
@@ -128,6 +131,7 @@ public class BrowserViewController
             if (empty) {
               setGraphic(null);
             } else {
+              buttons.add(btn);
               setGraphic(btn);
             }
           }
@@ -152,6 +156,7 @@ public class BrowserViewController
             if (empty) {
               setGraphic(null);
             } else {
+              spinners.add(spinner);
               setGraphic(spinner);
             }
           }
