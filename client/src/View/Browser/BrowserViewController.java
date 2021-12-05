@@ -20,7 +20,6 @@ public class BrowserViewController
 
   public Label userLabel;
   public Button basketButton;
-  public Button addButton;
 
   public TableView<Product> browserTable;
   public TableColumn<Product, String> nameColumn;
@@ -48,9 +47,7 @@ public class BrowserViewController
     //logged In/Out dependents
     basketButton.visibleProperty().bind(viewModel.logInProperty());
     userLabel.visibleProperty().bind(viewModel.logInProperty());
-    addButton.visibleProperty().bind(viewModel.logInProperty());
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
-
 
     //table
     browserTable.setItems(viewModel.getBrowserTable());

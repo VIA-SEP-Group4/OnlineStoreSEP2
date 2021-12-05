@@ -57,5 +57,7 @@ CREATE TABLE eshop.ordered_products
 );
 
 -- => for testing purposes !!! <=
+INSERT INTO eshop.employees(employee_id, first_name, last_name, pin, employee_type) VALUES(1, 'fname', 'lname', 1111, 'ADMIN');
 INSERT INTO eshop.customers(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
 INSERT INTO eshop.products(product_name, description, type, quantity, price) VALUES('product', 'description ...', 'type', 100, 9.99);
+INSERT INTO eshop.products(product_name, description, type, quantity, price) VALUES('prod', 'desadsd s..', 'type-bb', 55, 15.99);

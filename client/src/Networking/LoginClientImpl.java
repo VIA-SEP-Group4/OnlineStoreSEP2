@@ -13,7 +13,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     private RMIServer_Remote serverStub;
-    private String clientID;
+    private String clientId;
     private PropertyChangeSupport support;
     private Customer loggedCustomer = null;
     private Employee loggedEmployee=null;
@@ -32,16 +32,14 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("failed to initialize client-object ...[LoginClient.startClient()]");
         }
     }
 
-    /** Method used to get the user that has just been succesfully logged in
-     *
+    /**
+     * Method used to get the user that has just been successfully logged in
      * @return user as type Customer
      */
-
-
     @Override
     public void loginEmployee(int ID, int pin)  {
         String reply = "denied";

@@ -58,10 +58,10 @@
          <children>
             <Label fx:id="userLabel" onMouseClicked="#onClickSearchLabel" prefHeight="30.0" prefWidth="29.0" text="User">
                <HBox.margin>
-                  <Insets right="150.0" />
+                  <Insets right="200.0" />
                </HBox.margin>
             </Label>
-            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#onLoginButtonBrowser" prefHeight="25.0" prefWidth="112.0" text="Log in/Register">
+            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#onLoginButtonBrowser" prefHeight="30.0" prefWidth="120.0" text="Log in/Register">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -70,12 +70,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="74.0" prefHeight="30.0" prefWidth="702.0">
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButton" prefHeight="32.0" prefWidth="90.0" text="Add product">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="basketButton" mnemonicParsing="false" onAction="#onBasketButton" prefHeight="30.0" prefWidth="70.0" text="CheckOut">
+            <Button fx:id="basketButton" mnemonicParsing="false" onAction="#onBasketButton" prefHeight="30.0" prefWidth="120.0" text="CheckOut">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

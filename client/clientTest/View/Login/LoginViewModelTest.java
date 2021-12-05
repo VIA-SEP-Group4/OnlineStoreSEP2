@@ -32,7 +32,7 @@ class LoginViewModelTest
 
 
   @Test
-  public void loginExistingUser_test() throws InterruptedException
+  public void loginExistingCustomer_test() throws InterruptedException
   {
     //this must be here even though it is not used ->do NOT REMOVE!!!
     JFXPanel jfxPanel = new JFXPanel();
@@ -50,14 +50,14 @@ class LoginViewModelTest
     userName.setValue("username");
     password.setValue("pass");
 
-    lvm.login("customer");
+    lvm.login("Customer");
     waitForRunLater();
 
     assertTrue(success.getValue().contains("success"), "Expected user does not exist");
   }
 
   @Test
-  public void nonExistingUser_loginAttempt_Test() throws InterruptedException
+  public void nonExistingCustomer_loginAttempt_Test() throws InterruptedException
   {
     //this must be here even though it is not used ->do NOT REMOVE!!!
     JFXPanel jfxPanel = new JFXPanel();
@@ -73,7 +73,7 @@ class LoginViewModelTest
     userName.setValue("non-existing_Username");
     password.setValue("non-existing_Password");
 
-    lvm.login("customer");
+    lvm.login("Customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -96,7 +96,7 @@ class LoginViewModelTest
     userName.setValue("");
     password.setValue("non-existing_Password");
 
-    lvm.login("customer");
+    lvm.login("Customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -119,7 +119,7 @@ class LoginViewModelTest
     //    userName.setValue("username");
     password.setValue("non-existing_Password");
 
-    lvm.login("customer");
+    lvm.login("Customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -142,7 +142,7 @@ class LoginViewModelTest
     userName.setValue("username");
     password.setValue("");
 
-    lvm.login("customer");
+    lvm.login("Customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");
@@ -165,7 +165,7 @@ class LoginViewModelTest
         userName.setValue("username");
 //    password.setValue("");
 
-    lvm.login("customer");
+    lvm.login("Customer");
     waitForRunLater();
 
     assertFalse(success.getValue().contains("success"), "Expected user exist");

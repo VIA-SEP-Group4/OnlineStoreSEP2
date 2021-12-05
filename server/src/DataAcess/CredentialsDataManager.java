@@ -2,7 +2,6 @@ package DataAcess;
 
 import Model.Customer;
 import Model.Employee;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.*;
@@ -90,6 +89,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
          ResultSet rs = stmt.executeQuery(SQL))
     {
       rs.next();
+//      System.out.println(rs.getRow());
       if (rs.getRow()==1 && rs.getString(2).equals(username) && rs.getString(3).equals(password)){
         loggedCustomer = new Customer(rs.getString(1), rs.getString(2),
                 rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt("customer_id"));
