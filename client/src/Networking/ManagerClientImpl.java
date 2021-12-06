@@ -57,17 +57,33 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
 
     @Override
     public ArrayList<Employee> getAllWorkers() {
+        try {
+            return serverStub.getWorkers();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public void addWorker(Employee employee) {
 
+        String reply=null;
+        try {
+            reply=serverStub.addWorker(employee);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        support.firePropertyChange("AddedWorker",null,reply);
     }
 
     @Override
     public void removeWorker(Employee employee) {
-
+        try {
+            serverStub.removeWorker(employee);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -82,6 +98,7 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
 
     @Override
     public void addProduct(Product p) {
+        String reply;
         try
         {
             serverStub.addProduct(p);
@@ -108,5 +125,10 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     @Override
     public void receiveUpdatedProducts(Object products) throws RemoteException {
         support.firePropertyChange("ProductsReply",null,products);
+    }
+
+    @Override
+    public void receiveUpdatedManagers(Object workers) throws RemoteException {
+        support.firePropertyChange("ManagerWorkersReply",null,workers);
     }
 }

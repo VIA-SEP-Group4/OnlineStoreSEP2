@@ -42,6 +42,8 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       if (affectedRows <= 0)
         throw new RuntimeException("Register failed");
       if(newEmployee.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+      else if(newEmployee.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
+
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
@@ -142,6 +144,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       if (affectedRows <= 0)
         throw new RuntimeException("Employee deletion failed");
       if(e.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+      else if(e.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
@@ -159,11 +162,29 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       EmployeeType type=null;
       while (rs.next())
       {
-        if (rs.getString("employee_type").equalsIgnoreCase("Admin")) type= EmployeeType.ADMIN;
-        else if (rs.getString("employee_type").equalsIgnoreCase("Manager")) type= EmployeeType.MANAGER;
-        else if (rs.getString("employee_type").equalsIgnoreCase("Worker")) type= EmployeeType.WAREHOUSE_WORKER;
+
         employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
-                rs.getInt("pin"), type,rs.getInt("employee_id")));
+                rs.getInt("pin"), EmployeeType.MANAGER,rs.getInt("employee_id")));
+      }
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return employees;
+  }
+  private ArrayList<Employee> getWorkers() {
+    String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"WAREHOUSE_WORKER"+"'";
+    ArrayList<Employee> employees=new ArrayList<>();
+    try (Connection conn =  DBSConnection.getInstance().connect();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL)) {
+      System.out.println("All users:");
+      // display actor information
+      EmployeeType type=null;
+      while (rs.next())
+      {
+
+        employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
+                rs.getInt("pin"), EmployeeType.WAREHOUSE_WORKER,rs.getInt("employee_id")));
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
@@ -252,7 +273,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       {
         if (rs.getString("employee_type").equalsIgnoreCase("Admin")) type= EmployeeType.ADMIN;
         else if (rs.getString("employee_type").equalsIgnoreCase("Manager")) type= EmployeeType.MANAGER;
-        else if (rs.getString("employee_type").equalsIgnoreCase("Worker")) type= EmployeeType.WAREHOUSE_WORKER;
+        else if (rs.getString("employee_type").equalsIgnoreCase("Warehouse_Worker")) type= EmployeeType.WAREHOUSE_WORKER;
         employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
                 rs.getInt("pin"), type,rs.getInt("employee_id")));
       }

@@ -1,4 +1,4 @@
-package View.Products;
+package View.Manager;
 
 import Model.Models.Product;
 import javafx.beans.property.*;

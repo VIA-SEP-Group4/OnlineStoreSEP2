@@ -5,9 +5,11 @@ import View.Admin.AdminViewController;
 import View.Admin.ManagerDetailViewController;
 import View.Browser.ProductDetailController;
 import View.Checkout.CheckoutViewController;
+import View.Manager.ManagerTabViewController;
+import View.Manager.WorkersDetailViewController;
 import View.Orders.OrdersViewController;
-import View.Products.AddProductViewController;
-import View.Products.ProductsViewController;
+import View.Manager.AddProductViewController;
+import View.Manager.ProductsViewController;
 import View.Browser.BrowserViewController;
 import View.Login.LoginViewController;
 import View.Register.RegisterViewController;
@@ -18,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import javax.swing.text.View;
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -102,12 +103,12 @@ public class ViewHandler {
         }
     }
 
-    public void openProductsPane() {
+    public void openManagerPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../View/Products/ProductsView.fxml"));
+            loader.setLocation(getClass().getResource("../View/Manager/ManagerTabView.fxml"));
             Parent root = loader.load();
-            ProductsViewController view = loader.getController();
+            ManagerTabViewController view = loader.getController();
             view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Products");
@@ -121,7 +122,7 @@ public class ViewHandler {
     public void openAddProductPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../View/Products/AddProductView.fxml"));
+            loader.setLocation(getClass().getResource("../View/Manager/AddProductView.fxml"));
             Parent root = loader.load();
             AddProductViewController view = loader.getController();
             view.init();
@@ -203,6 +204,21 @@ public class ViewHandler {
             loader.setLocation(getClass().getResource("../View/Admin/ManagerDetailView.fxml"));
             Parent root = loader.load();
             ManagerDetailViewController view = loader.getController();
+            view.init();
+            Scene scene = new Scene(root);
+            stage.setTitle("Orders");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openWorkersDetailPane() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/Manager/WorkersDetailView.fxml"));
+            Parent root = loader.load();
+            WorkersDetailViewController view = loader.getController();
             view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Orders");

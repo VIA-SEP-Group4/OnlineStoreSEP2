@@ -1,4 +1,4 @@
-package View.Products;
+package View.Manager;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;

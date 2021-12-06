@@ -1,4 +1,4 @@
-package View.Products;
+package View.Manager;
 
 import Model.ManagerModel;
 import Model.Models.Product;

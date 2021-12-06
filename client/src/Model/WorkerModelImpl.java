@@ -44,7 +44,7 @@ public class WorkerModelImpl implements WorkerModel,PropertyChangeListener {
 
     @Override
     public void removeListener(String eventName, PropertyChangeListener listener) {
-        support.addPropertyChangeListener(eventName,listener);
+        support.removePropertyChangeListener(eventName,listener);
     }
 
     /**

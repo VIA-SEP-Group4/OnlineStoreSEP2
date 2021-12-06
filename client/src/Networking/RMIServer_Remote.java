@@ -14,6 +14,7 @@ public interface RMIServer_Remote extends Remote
   String registerUser(Customer newCustomer)throws RemoteException;
   String loginCustomer(String username, String password, LoginRemoteClient client) throws RemoteException;
   String loginEmployee(int id, int pin) throws RemoteException;
+
   void registerClient(Remote client) throws RemoteException;
   void removeClient(Remote client) throws RemoteException;
 
@@ -28,7 +29,11 @@ public interface RMIServer_Remote extends Remote
   void addToCart(Product p, int desiredQuantity) throws RemoteException;
 
   ArrayList<Employee> getManagerEmployees() throws RemoteException;
-  String addManager(Employee manager) throws RemoteException;
+  ArrayList<Employee> getWorkers() throws RemoteException;
 
+  String addManager(Employee manager) throws RemoteException;
+  String addWorker(Employee e) throws RemoteException;
+
+  void removeWorker(Employee e) throws RemoteException;
   void removeManager(Employee manager) throws  RemoteException;
 }

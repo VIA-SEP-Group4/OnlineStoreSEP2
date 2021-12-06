@@ -1,39 +1,37 @@
-package View.Admin;
+package View.Manager;
 
 import Enums.EmployeeType;
-import Model.AdminModel;
+import Model.ManagerModel;
 import Model.Models.Employee;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
-public class AdminViewModel {
-    private AdminModel adminModel;
-    private ObservableList<Employee> managers;
+public class WorkersOverviewViewModel {
+    private ManagerModel model;
+    private ObservableList<Employee> employees;
     private StringProperty firstName;
     private StringProperty lastName;
     private StringProperty pin;
     private StringProperty error;
     private BooleanProperty isAdded;
-    public AdminViewModel(AdminModel adminModel) {
-        this.adminModel=adminModel;
+    public WorkersOverviewViewModel(ManagerModel managerModel) {
+        model=managerModel;
+        employees= FXCollections.observableArrayList();
+        employees.addAll(model.getWorkers());
         firstName=new SimpleStringProperty();
         lastName=new SimpleStringProperty();
         pin=new SimpleStringProperty();
         error=new SimpleStringProperty();
         isAdded=new SimpleBooleanProperty();
-        managers= FXCollections.observableArrayList();
-        managers.addAll(adminModel.getManagerEmployees());
-        adminModel.addListener("ManagerAddReply",this::replyAdd);
-        adminModel.addListener("AdminReply",this::managersUpdate);
-    }
-
-    private void managersUpdate(PropertyChangeEvent event) {
-        ArrayList<Employee> temp= (ArrayList<Employee>) event.getNewValue();
-        managers.setAll(temp);
+        model.addListener("ManagerWorkersReply",this::updateWorkers);
+        model.addListener("AddedWorker",this::replyAdd);
     }
 
     private void replyAdd(PropertyChangeEvent event) {
@@ -43,17 +41,16 @@ public class AdminViewModel {
         } else isAdded.setValue(true);
     }
 
-    public ObservableList<Employee> getManagers() {
-        return managers;
-    }
-    public void removeManager(Employee manager) {
-        adminModel.removeManager(manager);
+    private void updateWorkers(PropertyChangeEvent event) {
+        ArrayList<Employee> temp= (ArrayList<Employee>) event.getNewValue();
+        employees.setAll(temp);
     }
 
-    public void editManager() {
+    public ObservableList<Employee> getWorkers() {
+        return  employees;
     }
 
-    public void addNewManager() {
+    public void addNewWorker() {
         isAdded.setValue(false);
         if(firstName.getValue()!=null && !firstName.getValue().equals("") &&
                 lastName.getValue()!=null && !lastName.getValue().equals("") &&
@@ -61,7 +58,7 @@ public class AdminViewModel {
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
             else {
-                adminModel.addManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
+                model.addWorker(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.WAREHOUSE_WORKER,0));
                 clearFields();
             }
 
@@ -70,19 +67,19 @@ public class AdminViewModel {
             error.setValue("None of the fields can be left empty");
         }
     }
-    public void clearFields(){
-       firstName.setValue("");
-       lastName.setValue("");
-       pin.setValue("");
-       error.setValue("");
+    public void removeWorker(Employee e) {
+        model.removeWorker(e);
     }
-    public String getError() {
-        return error.get();
-    }
+
     public String getFirstName() {
         return firstName.get();
     }
-
+    public void clearFields(){
+        firstName.setValue("");
+        lastName.setValue("");
+        pin.setValue("");
+        error.setValue("");
+    }
     public StringProperty firstNameProperty() {
         return firstName;
     }
@@ -103,6 +100,10 @@ public class AdminViewModel {
         return pin;
     }
 
+    public String getError() {
+        return error.get();
+    }
+
     public StringProperty errorProperty() {
         return error;
     }
@@ -114,5 +115,6 @@ public class AdminViewModel {
     public BooleanProperty isAddedProperty() {
         return isAdded;
     }
-}
 
+
+}

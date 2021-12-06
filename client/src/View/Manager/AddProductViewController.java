@@ -1,8 +1,7 @@
-package View.Products;
+package View.Manager;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -48,7 +47,7 @@ public class AddProductViewController
     try
     {
       if (viewModel.addProduct())
-        viewHandler.openProductsPane();
+        viewHandler.openManagerPane();
     }
     catch (Exception e)
     {
@@ -58,6 +57,6 @@ public class AddProductViewController
 
   public void cancelButton(ActionEvent actionEvent)
   {
-    viewHandler.openProductsPane();
+    viewHandler.openManagerPane();
   }
 }

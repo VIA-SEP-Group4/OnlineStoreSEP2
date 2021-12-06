@@ -53,7 +53,7 @@ public class LoginViewController
         }
         else if( successLabel.textProperty().getValue()!=null
                 && successLabel.textProperty().getValue().contains("MANAGER") ){
-                viewHandler.openProductsPane();
+                viewHandler.openManagerPane();
         }
         else if(successLabel.textProperty().getValue()!=null && successLabel.textProperty().getValue().contains("ADMIN") ){
                 viewHandler.openAdminPane();

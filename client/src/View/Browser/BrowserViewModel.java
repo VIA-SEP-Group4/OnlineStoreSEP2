@@ -3,7 +3,7 @@ package View.Browser;
 import Model.CredentialsModel;
 import Model.CustomerModel;
 import Model.Models.Product;
-import View.Products.TableProdViewModel;
+import View.Manager.TableProdViewModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

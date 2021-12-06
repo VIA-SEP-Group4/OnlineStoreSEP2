@@ -7,4 +7,5 @@ import java.rmi.RemoteException;
 
 public interface LoginRemoteClient extends Remote {
     void setLoggedUser(Customer loggedUser) throws RemoteException;
+    //TODO set logged employee
 }

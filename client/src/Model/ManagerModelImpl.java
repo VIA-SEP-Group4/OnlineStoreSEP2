@@ -25,6 +25,8 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
         if(!login.isStarted()) login.startClient();
 
         support=new PropertyChangeSupport(this);
+        manager.addListener("ManagerWorkersReply",this);
+        manager.addListener("AddedWorker",this);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
 
     @Override
     public void removeListener(String eventName, PropertyChangeListener listener) {
-        support.addPropertyChangeListener(eventName,listener);
+        support.removePropertyChangeListener(eventName,listener);
     }
 
     /**

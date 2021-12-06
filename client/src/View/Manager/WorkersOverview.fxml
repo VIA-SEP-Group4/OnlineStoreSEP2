@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="410.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Manager.WorkersOverviewController">
+   <children>
+      <TableView fx:id="workersTable" layoutX="14.0" layoutY="28.0" prefHeight="318.0" prefWidth="302.0">
+        <columns>
+            <TableColumn fx:id="IDCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="firstNameCol" prefWidth="75.0" text="First Name" />
+          <TableColumn fx:id="lastNameCol" prefWidth="75.0" text="Last Name" />
+            <TableColumn fx:id="pinCol" prefWidth="75.0" text="Pin" />
+        </columns>
+      </TableView>
+      <Button layoutX="27.0" layoutY="361.0" mnemonicParsing="false" onAction="#onAddEmployee" text="Add" />
+      <Button layoutX="102.0" layoutY="361.0" mnemonicParsing="false" onAction="#onRemove" text="Remove" />
+      <Button layoutX="187.0" layoutY="361.0" mnemonicParsing="false" onAction="#onEdit" text="Edit" />
+      <TableView layoutX="348.0" layoutY="87.0" prefHeight="200.0" prefWidth="227.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="OrderId" />
+          <TableColumn prefWidth="75.0" text="Status" />
+            <TableColumn prefWidth="75.0" text="Time" />
+        </columns>
+      </TableView>
+      <Text layoutX="16.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workers:" />
+      <Text layoutX="348.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Responsible For Order(s)" />
+   </children>
+</AnchorPane>
