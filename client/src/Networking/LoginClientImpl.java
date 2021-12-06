@@ -17,7 +17,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     private PropertyChangeSupport support;
     private Customer loggedCustomer = null;
     private Employee loggedEmployee=null;
-
+    private boolean started=false;
     public LoginClientImpl() {
         support=new PropertyChangeSupport(this);
     }
@@ -31,6 +31,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             //lookup server stub
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
+            started=true;
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
             System.err.println("failed to initialize client-object ...[LoginClient.startClient()]");
         }
@@ -50,6 +51,11 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             e.printStackTrace();
         }
         support.firePropertyChange("LoginReply",null, reply);
+    }
+
+    @Override
+    public boolean isStarted() {
+        return started;
     }
 
     @Override

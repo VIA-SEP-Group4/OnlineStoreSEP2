@@ -11,4 +11,5 @@ public interface LoginClient extends Subject {
     Customer getLoggedCustomer();
     Employee getLoggedEmployee();
     void loginEmployee(int ID, int pin);
+    boolean isStarted();
 }

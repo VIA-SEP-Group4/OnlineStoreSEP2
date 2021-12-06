@@ -35,7 +35,7 @@ public class ModelFactory {
     }
 
     public WorkerModel getWorkerModel() {
-        if(workerModel==null) workerModel=new WorkerModelImpl(clientFactory.getWorkerClient());
+        if(workerModel==null) workerModel=new WorkerModelImpl(clientFactory.getWorkerClient(), clientFactory.getLoginClient());
         return workerModel;
     }
 }

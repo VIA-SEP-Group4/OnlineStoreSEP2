@@ -22,7 +22,7 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
         this.customer = customer;
         this.login = login;
         customer.startClient();
-        login.startClient();
+        if(!login.isStarted()) login.startClient();
         support=new PropertyChangeSupport(this);
         cart=new ArrayList<>();
         customer.addListener("ProductsReply",this);

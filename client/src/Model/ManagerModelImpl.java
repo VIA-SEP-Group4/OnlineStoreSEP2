@@ -22,7 +22,8 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
         this.manager = manager;
         this.login = login;
         manager.startClient();
-        login.startClient();
+        if(!login.isStarted()) login.startClient();
+
         support=new PropertyChangeSupport(this);
     }
 
