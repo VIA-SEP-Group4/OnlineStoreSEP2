@@ -122,8 +122,11 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       if (rs.getInt(1)==ID && rs.getInt(4)==pin) {
         if (rs.getString(5).equalsIgnoreCase("Admin"))
           type= EmployeeType.ADMIN;
-        else if (rs.getString(5).equalsIgnoreCase("Manager")) type= EmployeeType.MANAGER;
-        else if (rs.getString(5).equalsIgnoreCase("Worker")) type= EmployeeType.WAREHOUSE_WORKER;
+        else if (rs.getString(5).equalsIgnoreCase("Manager"))
+          type= EmployeeType.MANAGER;
+        else if (rs.getString(5).equalsIgnoreCase("warehouse_worker"))
+          type= EmployeeType.WAREHOUSE_WORKER;
+
           loggedEmployee = new Employee(rs.getString(2), rs.getString(3),
                   rs.getInt(4), type, rs.getInt(1));
       }

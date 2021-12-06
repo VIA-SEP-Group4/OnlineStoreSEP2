@@ -22,22 +22,29 @@ public class OrdersViewModel
     public OrdersViewModel(WorkerModel workerModel){
         this.workerModel = workerModel;
         openOrders = FXCollections.observableArrayList();
-        // TODO: 02/12/2021 calculation of the total price - separate quantity of product per order? 
-        Product prod1 = new Product("Slinky", "Toy", 52.6, "desc", 5);
-        Product prod2 = new Product("Woody", "Toy", 31.1, "desc", 50);
-        Product prod3 = new Product("Buzz", "Toy", 50.6, "desc", 20);
-        Product prod4 = new Product("Rex", "Toy", 70, "desc", 14);
-        ArrayList<Product> list = new ArrayList<>();
-        list.add(prod1);
-        list.add(prod2);
-        ArrayList<Product> list1 = new ArrayList<>();
-        list1.add(prod3);
-        list1.add(prod4);
-        openOrders.add(new Order(1,list));
-        openOrders.add(new Order(2, list1));
+//        Product prod1 = new Product("Slinky", "Toy", 52.6, "desc", 5);
+//        Product prod2 = new Product("Woody", "Toy", 31.1, "desc", 50);
+//        Product prod3 = new Product("Buzz", "Toy", 50.6, "desc", 20);
+//        Product prod4 = new Product("Rex", "Toy", 70, "desc", 14);
+//        ArrayList<Product> list = new ArrayList<>();
+//        list.add(prod1);
+//        list.add(prod2);
+//        ArrayList<Product> list1 = new ArrayList<>();
+//        list1.add(prod3);
+//        list1.add(prod4);
+//        openOrders.add(new Order(1,1,list));
+//        openOrders.add(new Order(2,2, list1));
         openOrdersDetail = FXCollections.observableArrayList();
         myOrders = FXCollections.observableArrayList();
         myOrdersDetail = FXCollections.observableArrayList();
+    }
+
+    public void getOrders(){
+        ArrayList<Order> orders = workerModel.getAllOrders();
+        for (Order o : orders)
+        {
+            openOrders.add(o);
+        }
     }
 
     public ObservableList<Order> getOpenOrders()

@@ -18,6 +18,7 @@ public class ModelFactory {
             credentialsModel = new CredentialsModelManager(clientFactory.getLoginClient());
         return credentialsModel;
     }
+
     public AdminModel getAdminModel() {
         if(adminModel == null)
             adminModel = new AdminModelImpl(clientFactory.getAdminClient());

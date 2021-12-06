@@ -9,7 +9,7 @@ public interface OrdersDataAccessor
   void addNewOrder(Order newOrder);
 
   //get all orders
-  ArrayList<Order> getOrders();
+  ArrayList<Order> getAllOrders();
   //get orders by customer
   ArrayList<Order> getOrders(int customerId);
   //get orders by status

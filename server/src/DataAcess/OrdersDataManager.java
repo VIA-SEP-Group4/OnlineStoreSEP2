@@ -76,7 +76,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     }
   }
 
-  @Override public ArrayList<Order> getOrders()
+  @Override public ArrayList<Order> getAllOrders()
   {
     String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
     ArrayList<Order> orders = new ArrayList<>();

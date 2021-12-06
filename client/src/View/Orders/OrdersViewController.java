@@ -46,6 +46,7 @@ public class OrdersViewController
         this.viewHandler = ViewHandler.getInstance();
         this.viewModel = ViewModelFactory.getOrdersViewModel();
 
+        viewModel.getOrders();
         openOrdersTable.setItems(viewModel.getOpenOrders());
         IDColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));

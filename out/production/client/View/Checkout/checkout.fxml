@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="cartTab" text="shopping cart">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="cartProductsTable" prefHeight="203.0" prefWidth="600.0" AnchorPane.topAnchor="30.0">
+                          <columns>
+                            <TableColumn fx:id="productNameCol" prefWidth="130.66665649414062" text="name" />
+                            <TableColumn fx:id="productQuantityCol" prefWidth="56.666656494140625" text="quantity" />
+                              <TableColumn fx:id="pricePerPieceCol" prefWidth="91.3333740234375" text="price per piece" />
+                              <TableColumn fx:id="totalPriceCol" prefWidth="78.6666259765625" text="total price" />
+                              <TableColumn fx:id="productDescriptionCol" prefWidth="240.66668701171875" text="description" />
+                          </columns>
+                        </TableView>
+                        <Label layoutY="5.0" text="My Shopping cart" AnchorPane.leftAnchor="10.0" />
+                        <Button layoutX="512.0" layoutY="325.0" mnemonicParsing="false" onAction="#orderBtn" prefHeight="25.0" prefWidth="73.0" text="Order" />
+                        <Button layoutX="14.0" layoutY="325.0" mnemonicParsing="false" onAction="#continueShoppingBtn" text="Continue shopping" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="ordersTab" text="my orders">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="ordersTable" layoutX="6.0" layoutY="23.0" onMousePressed="#checkOrderedProductDetail" prefHeight="297.0" prefWidth="310.0" AnchorPane.topAnchor="23.0">
+                           <columns>
+                              <TableColumn fx:id="orderIdCol" prefWidth="70.0" text="order_id" />
+                              <TableColumn fx:id="orderTotalPrice" prefWidth="67.33331298828125" text="total price" />
+                              <TableColumn fx:id="timestampCol" prefWidth="76.66665649414062" text="timestamp" />
+                              <TableColumn fx:id="orderStateCol" prefWidth="95.3333740234375" text="state" />
+                           </columns>
+                        </TableView>
+                        <Button layoutX="14.0" layoutY="331.0" mnemonicParsing="false" onAction="#continueShoppingBtn" text="Continue shopping" />
+                        <TableView fx:id="orderProductsTable" layoutX="343.0" layoutY="49.0" prefHeight="272.0" prefWidth="244.0">
+                           <columns>
+                              <TableColumn fx:id="productNameCol1" prefWidth="130.66668701171875" text="name" />
+                              <TableColumn fx:id="productQuantityCol1" prefWidth="36.66668701171875" text="q" />
+                              <TableColumn fx:id="pricePerPieceCol1" prefWidth="76.00006103515625" text="price/pcs." />
+                           </columns>
+                        </TableView>
+                        <Label fx:id="orderDetailLabel" layoutX="343.0" layoutY="32.0" prefHeight="17.0" prefWidth="243.0" text="..." />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

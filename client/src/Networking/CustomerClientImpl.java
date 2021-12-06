@@ -48,7 +48,7 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         try
         {
             //TODO -need logged user here ... ?
-            return serverStub.getOrders(1);
+            return serverStub.getOrders(2);
         }
         catch (RemoteException e)
         {
