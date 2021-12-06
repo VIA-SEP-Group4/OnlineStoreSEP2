@@ -7,15 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ProductsViewController
 {
-  @FXML private TableView<TableProdViewModel> prodColumns;
-  @FXML private TableColumn<TableProdViewModel, String> nameColumn;
-  @FXML private TableColumn<TableProdViewModel, String> typeColumn;
-  @FXML private TableColumn<TableProdViewModel, Number> priceColumn;
-  @FXML private TableColumn<TableProdViewModel, Number> quantityColumn;
-  @FXML private TableColumn<TableProdViewModel, String> descriptionColumn;
+  @FXML private TableView<Product> prodColumns;
+  @FXML private TableColumn<Product, String> nameColumn;
+  @FXML private TableColumn<Product, String> typeColumn;
+  @FXML private TableColumn<Product, Number> priceColumn;
+  @FXML private TableColumn<Product, Number> quantityColumn;
+  @FXML private TableColumn<Product, String> descriptionColumn;
 
   private ViewHandler viewHandler;
   private ProductsViewModel viewModel;
@@ -25,11 +26,11 @@ public class ProductsViewController
     this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getProductsViewModel();
 
-    nameColumn.setCellValueFactory(data -> data.getValue().namePropertyProperty());
-    typeColumn.setCellValueFactory(data -> data.getValue().typePropertyProperty());
-    priceColumn.setCellValueFactory(data -> data.getValue().pricePropertyProperty());
-    quantityColumn.setCellValueFactory(data -> data.getValue().quantityPropertyProperty());
-    descriptionColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
+    nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+    typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+    priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+    descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+    quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
     prodColumns.setItems(viewModel.getProducts());
 
@@ -54,8 +55,8 @@ public class ProductsViewController
 
   public void onDeleteProdButton(ActionEvent actionEvent)
   {
-    TableProdViewModel temp = prodColumns.getSelectionModel().getSelectedItem();
-    viewModel.removeProduct(new Product(temp.namePropertyProperty().getValue(),null,0,null,0));
+    Product temp = prodColumns.getSelectionModel().getSelectedItem();
+    viewModel.removeProduct(new Product(temp.getName(),null,0,null,0));
     viewModel.getProducts().remove(temp);
   }
 

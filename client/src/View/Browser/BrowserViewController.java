@@ -77,10 +77,7 @@ public class BrowserViewController
 
   public void onSearchTextFieldEnter(KeyEvent keyEvent)
   {
-  }
-
-  public void onClickSearchLabel(MouseEvent mouseEvent)
-  {
+    viewModel.getSearch();
   }
 
   public void onBasketButton(ActionEvent actionEvent)

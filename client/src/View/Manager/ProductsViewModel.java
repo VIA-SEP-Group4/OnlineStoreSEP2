@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ProductsViewModel implements PropertyChangeListener
 {
-  private ObservableList<TableProdViewModel> products;
+  private ObservableList<Product> products;
  
   private ManagerModel managerModel;
 
@@ -24,7 +24,7 @@ public class ProductsViewModel implements PropertyChangeListener
     managerModel.addListener("ProductsReply",this);
   }
 
-  public ObservableList<TableProdViewModel> getProducts()
+  public ObservableList<Product> getProducts()
   {
     return products;
   }
@@ -37,14 +37,14 @@ public class ProductsViewModel implements PropertyChangeListener
     ArrayList<Product> prod = managerModel.getProducts();
     for (Product product:prod)
     {
-      products.add(new TableProdViewModel(product));
+      products.add(new Product(product.getName(),product.getType(),product.getPrice(),product.getDescription(),product.getQuantity()));
     }
   }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     ArrayList<Product> product= (ArrayList<Product>) evt.getNewValue();
     for(Product p : product){
-      products.add(new TableProdViewModel(p));
+      products.add(new Product(p.getName(),p.getType(),p.getPrice(),p.getDescription(),p.getQuantity()));
     }
   }
 
