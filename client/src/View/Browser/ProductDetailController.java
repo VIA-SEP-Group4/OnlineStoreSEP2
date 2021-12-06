@@ -13,16 +13,17 @@ public class ProductDetailController
   public Label priceProd;
 
   private ViewHandler viewHandler;
-  private BrowserViewModel productDetailModel;
+  private BrowserViewModel browserViewModel;
 
   public void init() {
     this.viewHandler = ViewHandler.getInstance();
-    this.productDetailModel = ViewModelFactory.getBrowserViewModel();
+    this.browserViewModel = ViewModelFactory.getBrowserViewModel();
 
-    nameProd.textProperty().bind(productDetailModel.getSelectedProd().namePropertyProperty());
-    typeProd.textProperty().bind(productDetailModel.getSelectedProd().typePropertyProperty());
-    descriptionProd.textProperty().bind(productDetailModel.getSelectedProd().descriptionProperty());
-    priceProd.textProperty().bind(productDetailModel.getSelectedProd().pricePropertyProperty().asString());
+    nameProd.textProperty().setValue(browserViewModel.getSelectedProd().getName());
+    typeProd.textProperty().setValue(browserViewModel.getSelectedProd().getType());
+    descriptionProd.textProperty().setValue(browserViewModel.getSelectedProd().getDescription());
+    priceProd.textProperty().setValue(
+        String.valueOf(browserViewModel.getSelectedProd().getPrice()));
 
   }
 

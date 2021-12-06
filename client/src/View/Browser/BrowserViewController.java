@@ -18,7 +18,6 @@ public class BrowserViewController
 
   public Label userLabel;
   public Button basketButton;
-  public Button addButton;
 
   public TableView<Product> browserTable;
   public TableColumn<Product, String> nameColumn;
@@ -43,12 +42,12 @@ public class BrowserViewController
     //logged In/Out dependents
     basketButton.visibleProperty().bind(viewModel.logInProperty());
     userLabel.visibleProperty().bind(viewModel.logInProperty());
-    addButton.visibleProperty().bind(viewModel.logInProperty());
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
 
 
     //table
     browserTable.setItems(viewModel.getBrowserTable());
+    browserTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> viewModel.setSelectedProd(newValue));
     nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
     typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
     priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -90,16 +89,12 @@ public class BrowserViewController
   {
   }
 
-  public void addButton(ActionEvent actionEvent)
-  {
-    viewModel.addBasket();
-  }
-
   public void onDoubleClick(MouseEvent mouseEvent)
   {
     if (mouseEvent.getClickCount() == 2 && !mouseEvent.isConsumed())
     {
       mouseEvent.consume();
+
       viewHandler.openProductDetailPane();
     }
   }
