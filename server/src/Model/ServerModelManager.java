@@ -80,6 +80,11 @@ public class ServerModelManager implements Model, PropertyChangeListener
     return ordersDataAccessor.getAllOrders();
   }
 
+  @Override public void changeOrderAssignee(Order order)
+  {
+    ordersDataAccessor.changeOrderAssignee(order);
+  }
+
   @Override public void updateStock(Product p, int desiredQuantity)
   {
     productsDataAcessor.updateStock(p, desiredQuantity);

@@ -235,4 +235,27 @@ public class OrdersDataManager implements OrdersDataAccessor
     return orders;
   }
 
+  @Override public void changeOrderAssignee(Order order)
+  {
+//    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
+
+    try (Connection conn =  DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement())
+    {
+      String orderSQL = "UPDATE " +SCHEMA+ "." +TABLE + " SET warehouse_worker_id = " + order.getWorkerID() + " WHERE order_id = " + order.getOrderId();
+      stmt.executeUpdate(orderSQL);
+//      ResultSet rs = stmt.executeQuery(SQL);
+//      while (rs.next()){
+//        //display values for testing
+//        System.out.println("Order ID: " + rs.getInt("order_id"));
+//        System.out.println("Customer ID: " + rs.getInt("customer_id"));
+//        System.out.println("Worker ID: " + rs.getInt("warehouse_worker_id"));
+//        System.out.println("Status: " + rs.getString("status"));
+//        System.out.println("Timestamp: " + rs.getTimestamp("timestamp"));
+//      }
+//      rs.close();
+    } catch (SQLException ex){
+      System.out.println(ex.getMessage());
+    }
+  }
 }

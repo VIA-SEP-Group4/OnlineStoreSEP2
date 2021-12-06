@@ -79,6 +79,7 @@ public class OrdersViewController
     {
         Order tempOrder = openOrdersTable.getSelectionModel().getSelectedItem();
         if(tempOrder != null){
+            viewModel.changeOrderAssignee(tempOrder);
             viewModel.pickOrder(tempOrder.getOrderId());
         }
     }

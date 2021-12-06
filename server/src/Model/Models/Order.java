@@ -63,6 +63,16 @@ public class Order implements Serializable
     state = status;
   }
 
+  public void setWorkerID(int wwId)
+  {
+    this.wwId = wwId;
+  }
+
+  public int getWorkerID()
+  {
+    return wwId;
+  }
+
   public String getTimestamp()
   {
     String t = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(timestamp);

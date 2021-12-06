@@ -32,6 +32,14 @@ public class WorkerModelImpl implements WorkerModel,PropertyChangeListener {
 
     }
 
+    @Override public void changeOrderAssignee(Order order)
+    {
+        // TODO: 07/12/2021 get the client???
+//        order.setWorkerID(getLoggedEmployee().getID());
+        order.setWorkerID(3);
+        worker.changeOrderAssignee(order);
+    }
+
     @Override public ArrayList<Order> getAllOrders()
     {
         return worker.getAllOrders();
