@@ -19,7 +19,7 @@ public class OnlineStoreApp extends Application {
         ModelFactory modelFactory = new ModelFactory(clientFactory);
         ViewModelFactory viewModelFactory = new ViewModelFactory(modelFactory);
         ViewHandler viewHandler = ViewHandler.getInstance();
-        viewHandler.initialize(stage,viewModelFactory);
+        viewHandler.initialize(stage);
         viewHandler.start();
     }
 }

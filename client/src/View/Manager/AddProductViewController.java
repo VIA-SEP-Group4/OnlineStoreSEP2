@@ -1,8 +1,7 @@
-package View.Products;
+package View.Manager;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -26,6 +25,16 @@ public class AddProductViewController
     this.viewModel = ViewModelFactory.getAddProductViewModel();
     productNameField.textProperty().bindBidirectional(viewModel.prodNameProperty());
     productTypeField.textProperty().bindBidirectional(viewModel.prodTypeProperty());
+    productPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue!=null &&!newValue.matches("\\d*") ) {
+        productPriceField.setText(newValue.replaceAll("[^\\d]", ""));
+      }
+    });
+    productQuantityField.textProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue!=null &&!newValue.matches("\\d*") ) {
+        productQuantityField.setText(newValue.replaceAll("[^\\d]", ""));
+      }
+    });
     productPriceField.textProperty().bindBidirectional(viewModel.prodPriceProperty(), new NumberStringConverter());
     productPriceField.textProperty().setValue("");
     productQuantityField.textProperty().bindBidirectional(viewModel.prodQuantityProperty(), new NumberStringConverter());
@@ -38,7 +47,7 @@ public class AddProductViewController
     try
     {
       if (viewModel.addProduct())
-        viewHandler.openProductsPane();
+        viewHandler.openManagerPane();
     }
     catch (Exception e)
     {
@@ -48,6 +57,6 @@ public class AddProductViewController
 
   public void cancelButton(ActionEvent actionEvent)
   {
-    viewHandler.openProductsPane();
+    viewHandler.openManagerPane();
   }
 }

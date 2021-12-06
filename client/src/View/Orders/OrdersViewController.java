@@ -2,16 +2,14 @@ package View.Orders;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import Model.Order;
-import Model.Product;
+import Model.Models.Order;
+import Model.Models.Product;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
-import java.sql.Timestamp;
 
 public class OrdersViewController
 {

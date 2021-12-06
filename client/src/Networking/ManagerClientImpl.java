@@ -1,6 +1,8 @@
 package Networking;
 
-import Model.Product;
+import Model.Models.Employee;
+import Model.Models.Order;
+import Model.Models.Product;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -9,6 +11,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     private RMIServer_Remote serverStub;
@@ -31,6 +34,58 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
             System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
         }
     }
+
+    @Override
+    public ArrayList<Order> getAllOrders() {
+        try {
+            return serverStub.getAllOrders();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Product> getAllProducts() {
+        try {
+            return serverStub.getProducts();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Employee> getAllWorkers() {
+        try {
+            return serverStub.getWorkers();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void addWorker(Employee employee) {
+
+        String reply=null;
+        try {
+            reply=serverStub.addWorker(employee);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        support.firePropertyChange("AddedWorker",null,reply);
+    }
+
+    @Override
+    public void removeWorker(Employee employee) {
+        try {
+            serverStub.removeWorker(employee);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);
@@ -43,6 +98,7 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
 
     @Override
     public void addProduct(Product p) {
+        String reply;
         try
         {
             serverStub.addProduct(p);
@@ -69,5 +125,10 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     @Override
     public void receiveUpdatedProducts(Object products) throws RemoteException {
         support.firePropertyChange("ProductsReply",null,products);
+    }
+
+    @Override
+    public void receiveUpdatedManagers(Object workers) throws RemoteException {
+        support.firePropertyChange("ManagerWorkersReply",null,workers);
     }
 }

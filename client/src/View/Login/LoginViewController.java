@@ -4,6 +4,7 @@ import Core.ViewHandler;
 import Core.ViewModelFactory;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 
 public class LoginViewController
 {
@@ -15,6 +16,8 @@ public class LoginViewController
     public Label successLabel;
     public RadioButton customerButton;
     public RadioButton employeeButton;
+    public Text usernameLabel;
+    public Text passwordLabel;
 
     private ViewHandler viewHandler;
     private LoginViewModel viewModel;
@@ -50,7 +53,7 @@ public class LoginViewController
         }
         else if( successLabel.textProperty().getValue()!=null
                 && successLabel.textProperty().getValue().contains("MANAGER") ){
-                viewHandler.openProductsPane();
+                viewHandler.openManagerPane();
         }
         else if(successLabel.textProperty().getValue()!=null && successLabel.textProperty().getValue().contains("ADMIN") ){
                 viewHandler.openAdminPane();
@@ -62,5 +65,18 @@ public class LoginViewController
   public void backBtnPressed(ActionEvent actionEvent)
   {
       viewHandler.openBrowserPane();
+  }
+
+
+  public void customerSelected(ActionEvent actionEvent)
+  {
+      usernameLabel.setText("Username");
+      passwordLabel.setText("Password");
+  }
+
+  public void employeeSelected(ActionEvent actionEvent)
+  {
+      usernameLabel.setText("Employee ID");
+      passwordLabel.setText("PIN");
   }
 }

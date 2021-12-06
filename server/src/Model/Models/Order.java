@@ -1,37 +1,26 @@
-package Model;
+package Model.Models;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Order implements Serializable
 {
-  private int orderId;
+  private int orderId = -1;
   private ArrayList<Product> products;
-  private String state;
+  private String state = "WAITING";
   private Timestamp timestamp;
   private int customerId;
-  private int wwId;
+  private int wwId = -1;
 
-//  public Order(int orderId, int customerId)
-//  {
-//    this.orderId = orderId;
-//    this.customerId = customerId;
-//    products = new ArrayList<>();
-//    state = "waiting";
-//    timestamp = new Timestamp(System.currentTimeMillis());
-//  }
-
-  //instantiation when creating from GUI ->to be uploaded
-  public Order(int orderId, int customerId, ArrayList<Product> products)
+  //instantiation when created in GUI ->to be uploaded
+  public Order(int customerId, ArrayList<Product> products)
   {
-    this.orderId = orderId;
     this.customerId = customerId;
     this.products = products;
 
-    state = "waiting";
     timestamp = new Timestamp(System.currentTimeMillis());
-    wwId = -1;
   }
   //instantiation when fetching from DB
   public Order(int orderId, int customerId, int wwId, String status, Timestamp timestamp, ArrayList<Product> products)
@@ -47,6 +36,10 @@ public class Order implements Serializable
   public int getOrderId()
   {
     return orderId;
+  }
+  public void setOrderId(int orderId)
+  {
+    this.orderId = orderId;
   }
 
   public int getCustomerId()
@@ -66,13 +59,29 @@ public class Order implements Serializable
     return state;
   }
 
-  public Timestamp getTimestamp()
+  public void setStatus(String status){
+    state = status;
+  }
+
+  public String getTimestamp()
   {
+    String t = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(timestamp);
+    return t;
+  }
+
+  public Timestamp getTimestampSQL(){
     return timestamp;
   }
 
   public ArrayList<Product> getProducts()
   {
     return products;
+  }
+
+  @Override public String toString()
+  {
+    return "Order{" + "orderId=" + orderId + ", products=" + products
+        + ", state='" + state + '\'' + ", timestamp=" + timestamp
+        + ", customerId=" + customerId + ", wwId=" + wwId + '}';
   }
 }

@@ -1,7 +1,8 @@
 package View.Admin;
 
+import Enums.EmployeeType;
 import Model.AdminModel;
-import Model.Employee;
+import Model.Models.Employee;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +27,6 @@ public class AdminViewModel {
         isAdded=new SimpleBooleanProperty();
         managers= FXCollections.observableArrayList();
         managers.addAll(adminModel.getManagerEmployees());
-        isAdded=new SimpleBooleanProperty();
         adminModel.addListener("ManagerAddReply",this::replyAdd);
         adminModel.addListener("AdminReply",this::managersUpdate);
     }
@@ -61,7 +61,7 @@ public class AdminViewModel {
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
             else {
-                adminModel.addManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), Employee.EmployeeType.MANAGER,0));
+                adminModel.addManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
                 clearFields();
             }
 

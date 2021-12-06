@@ -2,8 +2,7 @@ package View.Admin;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import Model.Employee;
-import javafx.beans.property.BooleanProperty;
+import Model.Models.Employee;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

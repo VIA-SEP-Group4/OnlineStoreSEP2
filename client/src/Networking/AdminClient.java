@@ -1,6 +1,6 @@
 package Networking;
 
-import Model.Employee;
+import Model.Models.Employee;
 import Utils.Subject;
 
 import java.util.ArrayList;

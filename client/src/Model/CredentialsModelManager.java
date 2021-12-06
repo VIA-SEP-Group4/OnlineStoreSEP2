@@ -1,4 +1,6 @@
 package Model;
+import Model.Models.Customer;
+import Model.Models.Employee;
 import Networking.LoginClient;
 
 import java.beans.PropertyChangeEvent;

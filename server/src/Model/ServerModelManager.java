@@ -1,6 +1,11 @@
 package Model;
 
 import DataAcess.*;
+import Enums.EmployeeType;
+import Model.Models.Customer;
+import Model.Models.Employee;
+import Model.Models.Order;
+import Model.Models.Product;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -23,6 +28,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
     ordersDataAccessor = new OrdersDataManager();
 
     credentialsDataAccessor.addListener("AdminReply",this);
+    credentialsDataAccessor.addListener("ManagerReply",this);
     productsDataAcessor.addListener("ProductReply",this);
   }
 
@@ -78,7 +84,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
   public ArrayList<Employee> getManagers() {
     ArrayList<Employee> managers=new ArrayList<>();
     for(Employee e: credentialsDataAccessor.getEmployees()){
-      if(e.getType()== Employee.EmployeeType.MANAGER){
+      if(e.getType()== EmployeeType.MANAGER){
         managers.add(e);
       }
     }
@@ -89,7 +95,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
   public ArrayList<Employee> getWorkers() {
     ArrayList<Employee> workers=new ArrayList<>();
     for(Employee e: credentialsDataAccessor.getEmployees()){
-      if(e.getType()== Employee.EmployeeType.WORKER){
+      if(e.getType()== EmployeeType.WAREHOUSE_WORKER){
         workers.add(e);
       }
     }
@@ -109,7 +115,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
   @Override public Customer loginCustomer(String username, String password)
   {
     Customer tempUser = credentialsDataAccessor.loginCustomer(username,password);
-    tempUser.setOrders(ordersDataAccessor.getOrders(tempUser.getUserId()));
+    tempUser.setOrders(ordersDataAccessor.getOrders(tempUser.getCustomerId()));
     return tempUser;
   }
 

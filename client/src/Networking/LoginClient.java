@@ -1,7 +1,7 @@
 package Networking;
 
-import Model.Customer;
-import Model.Employee;
+import Model.Models.Customer;
+import Model.Models.Employee;
 import Utils.Subject;
 
 public interface LoginClient extends Subject {
@@ -11,4 +11,5 @@ public interface LoginClient extends Subject {
     Customer getLoggedCustomer();
     Employee getLoggedEmployee();
     void loginEmployee(int ID, int pin);
+    boolean isStarted();
 }

@@ -1,5 +1,6 @@
 package Model;
 
+import Model.Models.Employee;
 import Networking.AdminClient;
 
 import java.beans.PropertyChangeEvent;

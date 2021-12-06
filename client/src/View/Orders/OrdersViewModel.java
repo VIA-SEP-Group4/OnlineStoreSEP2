@@ -1,9 +1,10 @@
 package View.Orders;
 
-import Model.Order;
-import Model.Product;
-import Model.ProductModelManager;
-import Model.ProductsModel;
+import Model.CustomerModel;
+import Model.Models.Order;
+import Model.Models.Product;
+
+import Model.WorkerModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,14 +13,14 @@ import java.util.List;
 
 public class OrdersViewModel
 {
-    private ProductsModel productsModel;
+    private WorkerModel workerModel;
     private ObservableList<Order> openOrders;
     private ObservableList<Product> openOrdersDetail;
     private ObservableList<Order> myOrders;
     private ObservableList<Product> myOrdersDetail;
 
-    public OrdersViewModel(ProductsModel productsModel){
-        this.productsModel = productsModel;
+    public OrdersViewModel(WorkerModel workerModel){
+        this.workerModel = workerModel;
         openOrders = FXCollections.observableArrayList();
         // TODO: 02/12/2021 calculation of the total price - separate quantity of product per order? 
         Product prod1 = new Product("Slinky", "Toy", 52.6, "desc", 5);
@@ -32,8 +33,8 @@ public class OrdersViewModel
         ArrayList<Product> list1 = new ArrayList<>();
         list1.add(prod3);
         list1.add(prod4);
-        openOrders.add(new Order(1,1,list));
-        openOrders.add(new Order(2,2, list1));
+        openOrders.add(new Order(1,list));
+        openOrders.add(new Order(2, list1));
         openOrdersDetail = FXCollections.observableArrayList();
         myOrders = FXCollections.observableArrayList();
         myOrdersDetail = FXCollections.observableArrayList();

@@ -1,7 +1,7 @@
 package Networking;
 
-import Model.Order;
-import Model.Product;
+import Model.Models.Order;
+import Model.Models.Product;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -30,7 +30,7 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("failed to initialize client-object ...[CustomerClient.startClient()]");
         }
     }
 

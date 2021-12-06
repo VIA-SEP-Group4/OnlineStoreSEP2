@@ -1,5 +1,9 @@
 package Model;
 
+import Model.Models.Customer;
+import Model.Models.Employee;
+import Model.Models.Order;
+import Model.Models.Product;
 import Utils.Subject;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package DataAcess;
 
-import Model.Customer;
-import Model.Employee;
-
+import Enums.EmployeeType;
+import Model.Models.Customer;
+import Model.Models.Employee;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.*;
@@ -41,7 +41,9 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)
         throw new RuntimeException("Register failed");
-      if(newEmployee.getType()== Employee.EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+      if(newEmployee.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+      else if(newEmployee.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
+
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
@@ -93,7 +95,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
 //      System.out.println(rs.getRow());
       if (rs.getRow()==1 && rs.getString(2).equals(username) && rs.getString(3).equals(password)){
         loggedCustomer = new Customer(rs.getString(1), rs.getString(2),
-                rs.getString(3), rs.getString(4), rs.getString(5));
+                rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt("customer_id"));
       }
       else {
         throw new RuntimeException("Wrong credentials - access denied");
@@ -116,12 +118,12 @@ public class CredentialsDataManager implements CredentialsDataAccessor
         ResultSet rs = stmt.executeQuery(SQL))
     {
       rs.next();
-      Employee.EmployeeType type=null;
+      EmployeeType type=null;
       if (rs.getInt(1)==ID && rs.getInt(4)==pin) {
         if (rs.getString(5).equalsIgnoreCase("Admin"))
-          type= Employee.EmployeeType.ADMIN;
-        else if (rs.getString(5).equalsIgnoreCase("Manager")) type= Employee.EmployeeType.MANAGER;
-        else if (rs.getString(5).equalsIgnoreCase("Worker")) type= Employee.EmployeeType.WORKER;
+          type= EmployeeType.ADMIN;
+        else if (rs.getString(5).equalsIgnoreCase("Manager")) type= EmployeeType.MANAGER;
+        else if (rs.getString(5).equalsIgnoreCase("Worker")) type= EmployeeType.WAREHOUSE_WORKER;
           loggedEmployee = new Employee(rs.getString(2), rs.getString(3),
                   rs.getInt(4), type, rs.getInt(1));
       }
@@ -141,7 +143,8 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       int affectedRows = stmt.executeUpdate(SQL);
       if (affectedRows <= 0)
         throw new RuntimeException("Employee deletion failed");
-      if(e.getType()== Employee.EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+      if(e.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+      else if(e.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
@@ -156,14 +159,32 @@ public class CredentialsDataManager implements CredentialsDataAccessor
          ResultSet rs = stmt.executeQuery(SQL)) {
       System.out.println("All users:");
       // display actor information
-      Employee.EmployeeType type=null;
+      EmployeeType type=null;
       while (rs.next())
       {
-        if (rs.getString("employee_type").equalsIgnoreCase("Admin")) type= Employee.EmployeeType.ADMIN;
-        else if (rs.getString("employee_type").equalsIgnoreCase("Manager")) type= Employee.EmployeeType.MANAGER;
-        else if (rs.getString("employee_type").equalsIgnoreCase("Worker")) type= Employee.EmployeeType.WORKER;
+
         employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
-                rs.getInt("pin"), type,rs.getInt("employee_id")));
+                rs.getInt("pin"), EmployeeType.MANAGER,rs.getInt("employee_id")));
+      }
+    } catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+    }
+    return employees;
+  }
+  private ArrayList<Employee> getWorkers() {
+    String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"WAREHOUSE_WORKER"+"'";
+    ArrayList<Employee> employees=new ArrayList<>();
+    try (Connection conn =  DBSConnection.getInstance().connect();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL)) {
+      System.out.println("All users:");
+      // display actor information
+      EmployeeType type=null;
+      while (rs.next())
+      {
+
+        employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
+                rs.getInt("pin"), EmployeeType.WAREHOUSE_WORKER,rs.getInt("employee_id")));
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
@@ -247,12 +268,12 @@ public class CredentialsDataManager implements CredentialsDataAccessor
          ResultSet rs = stmt.executeQuery(SQL)) {
       System.out.println("All users:");
       // display actor information
-      Employee.EmployeeType type=null;
+      EmployeeType type=null;
       while (rs.next())
       {
-        if (rs.getString("employee_type").equalsIgnoreCase("Admin")) type= Employee.EmployeeType.ADMIN;
-        else if (rs.getString("employee_type").equalsIgnoreCase("Manager")) type= Employee.EmployeeType.MANAGER;
-        else if (rs.getString("employee_type").equalsIgnoreCase("Worker")) type= Employee.EmployeeType.WORKER;
+        if (rs.getString("employee_type").equalsIgnoreCase("Admin")) type= EmployeeType.ADMIN;
+        else if (rs.getString("employee_type").equalsIgnoreCase("Manager")) type= EmployeeType.MANAGER;
+        else if (rs.getString("employee_type").equalsIgnoreCase("Warehouse_Worker")) type= EmployeeType.WAREHOUSE_WORKER;
         employees.add(new Employee(rs.getString("first_name"),rs.getString("last_name"),
                 rs.getInt("pin"), type,rs.getInt("employee_id")));
       }
