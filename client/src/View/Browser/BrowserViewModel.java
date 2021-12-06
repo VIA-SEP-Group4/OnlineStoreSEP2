@@ -128,7 +128,7 @@ public class BrowserViewModel implements PropertyChangeListener
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
-    browserTable.addAll(products);
+    browserTable.setAll(products);
   }
 
   public void addToCart(Product p, int desiredQuantity)

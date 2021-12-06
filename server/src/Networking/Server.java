@@ -238,4 +238,14 @@ public class Server implements RMIServer_Remote{
   {
     return serverModelManager.getAllOrders();
   }
+
+  @Override
+  public ArrayList<Order> getWorkerOrdersForManager(int workerID) throws RemoteException {
+    return serverModelManager.getWorkerOrdersForManager(workerID);
+  }
+
+  @Override
+  public ArrayList<Order> getOrdersForWorker(int workerID) throws RemoteException {
+    return null;
+  }
 }

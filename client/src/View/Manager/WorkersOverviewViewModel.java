@@ -3,6 +3,7 @@ package View.Manager;
 import Enums.EmployeeType;
 import Model.ManagerModel;
 import Model.Models.Employee;
+import Model.Models.Order;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class WorkersOverviewViewModel {
     private ManagerModel model;
     private ObservableList<Employee> employees;
+    private ObservableList<Order> responsibleFor;
     private StringProperty firstName;
     private StringProperty lastName;
     private StringProperty pin;
@@ -24,6 +26,7 @@ public class WorkersOverviewViewModel {
     public WorkersOverviewViewModel(ManagerModel managerModel) {
         model=managerModel;
         employees= FXCollections.observableArrayList();
+        responsibleFor= FXCollections.observableArrayList();
         employees.addAll(model.getWorkers());
         firstName=new SimpleStringProperty();
         lastName=new SimpleStringProperty();
@@ -117,4 +120,10 @@ public class WorkersOverviewViewModel {
     }
 
 
+    public void setWorkerOrders(int wwId) {
+        responsibleFor.setAll(model.getWorkerOrdersForManager(wwId));
+    }
+    public ObservableList<Order> getWorkerOrders(){
+        return responsibleFor;
+    }
 }

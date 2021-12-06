@@ -35,6 +35,11 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
     }
 
     @Override
+    public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
+        return manager.getWorkerOrdersForManager(workerID);
+    }
+
+    @Override
     public ArrayList<Product> getProducts() {
         return manager.getAllProducts();
     }

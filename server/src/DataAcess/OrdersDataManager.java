@@ -186,8 +186,8 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   //TODO make it  return only certain worker's orders
   @Override
-  public ArrayList<Order> getWorkerOrders(int workerId) {
-    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
+  public ArrayList<Order> getWorkerOrdersForManager(int workerId) {
+    String SQL = "select order_id,status,timestamp from eshop.orders ord join eshop.employees emp on ord.warehouse_worker_id=emp.employee_id where warehouse_worker_id=" +workerId;
     ArrayList<Order> orders = new ArrayList<>();
 
     try (Connection conn =  DBSConnection.getInstance().connect();
@@ -197,35 +197,14 @@ public class OrdersDataManager implements OrdersDataAccessor
       //for each order
       while (rs.next())
       {
-        int currOrderId = rs.getInt("order_id");
-        String productsSQL = "select * from eshop.ordered_products o_p join eshop.products prod on o_p.product_id=prod.product_id WHERE order_id=" +currOrderId;
-
-        Statement productsStmt = conn.createStatement();
-        ResultSet productsRs = productsStmt.executeQuery(productsSQL);
-        ArrayList<Product> currProducts = new ArrayList<>();
-        //for each product
-        while (productsRs.next())
-        {
-          currProducts.add(new Product(
-                          productsRs.getString("product_name"),
-                          productsRs.getString("type"),
-                          productsRs.getDouble("price"),
-                          productsRs.getString("description"),
-                          productsRs.getInt("quantity"),
-                          productsRs.getInt("product_id")
-                  )
-          );
-        }
-        productsRs.close();
 
         orders.add(new Order(
                 rs.getInt("order_id"),
-                rs.getInt("customer_id"),
-                rs.getInt("warehouse_worker_id"),
+                -1,
+                -1,
                 rs.getString("status"),
                 rs.getTimestamp("timestamp"),
-                currProducts)
-        );
+                null));
       }
 
     } catch (SQLException ex){

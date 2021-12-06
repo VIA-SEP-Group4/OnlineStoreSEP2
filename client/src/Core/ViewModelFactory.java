@@ -2,6 +2,7 @@ package Core;
 
 import View.Admin.AdminViewModel;
 import View.Checkout.CheckoutViewModel;
+import View.Manager.OrderOverviewViewModel;
 import View.Manager.WorkersOverviewViewModel;
 import View.Orders.OrdersViewModel;
 import View.Manager.AddProductViewModel;
@@ -22,6 +23,7 @@ public class ViewModelFactory {
     private static OrdersViewModel ordersViewModel;
     private static AdminViewModel adminViewModel;
     private static WorkersOverviewViewModel workersOverviewViewModel;
+    private static OrderOverviewViewModel orderOverviewViewModel;
     public ViewModelFactory(ModelFactory modelFactory) {
         ViewModelFactory.modelFactory =modelFactory;
     }
@@ -83,5 +85,11 @@ public class ViewModelFactory {
             workersOverviewViewModel=new WorkersOverviewViewModel(modelFactory.getManagerModel());
         }
         return workersOverviewViewModel;
+    }
+    public static OrderOverviewViewModel getOrdersOverviewViewModel(){
+        if(orderOverviewViewModel ==null){
+            orderOverviewViewModel =new OrderOverviewViewModel(modelFactory.getManagerModel());
+        }
+        return orderOverviewViewModel;
     }
 }
