@@ -15,6 +15,6 @@ public interface OrdersDataAccessor
   //get orders by status
   ArrayList<Order> getOrders(String orderStatus);
   //get orders by workers
-  ArrayList<Order> getWorkerOrders(int workerId);
+  ArrayList<Order> getWorkerOrdersForManager(int workerId);
 
 }

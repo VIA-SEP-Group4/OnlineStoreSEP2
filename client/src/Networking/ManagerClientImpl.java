@@ -46,6 +46,16 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     }
 
     @Override
+    public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
+        try {
+            return serverStub.getWorkerOrdersForManager(workerID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<Product> getAllProducts() {
         try {
             return serverStub.getProducts();

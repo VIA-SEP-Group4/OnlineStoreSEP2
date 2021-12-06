@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public interface ManagerModel extends Subject {
     ArrayList<Order> getAllOrders();
+    ArrayList<Order> getWorkerOrdersForManager(int workerID);
     ArrayList<Product> getProducts();
     ArrayList<Employee> getWorkers();
 

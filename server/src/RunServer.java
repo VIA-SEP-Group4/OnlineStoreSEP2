@@ -20,10 +20,6 @@ public class RunServer {
             server.start();
             System.out.println("Server running ...");
 
-//            server.registerUser(new Customer("username", "pass", "email", "fname", "lname"));
-//            Customer user = serverModelManager.loginUser("username", "pass", "customer");
-//            System.out.println(user);
-
         } catch (RemoteException | MalformedURLException e)
         {
             System.err.println("Server launching failed ...[RunServer.main()]");

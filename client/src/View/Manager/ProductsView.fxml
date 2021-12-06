@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Manager.ProductsViewController">
+<AnchorPane prefHeight="446.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Manager.ProductsViewController">
    <children>
-      <VBox layoutY="26.0" prefHeight="373.0" prefWidth="600.0">
+      <VBox layoutX="1.0" layoutY="14.0" prefHeight="407.0" prefWidth="887.0">
          <children>
-            <TableView fx:id="prodColumns" prefHeight="330.0" prefWidth="600.0">
+            <TableView fx:id="prodColumns" prefHeight="406.0" prefWidth="887.0">
               <columns>
                 <TableColumn fx:id="nameColumn" editable="false" prefWidth="99.20001220703125" text="Name" />
                 <TableColumn fx:id="typeColumn" editable="false" prefWidth="122.4000244140625" text="Type" />
@@ -24,7 +24,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="98.0" prefWidth="887.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#onAddProdButton" text="Add ">
                      <HBox.margin>

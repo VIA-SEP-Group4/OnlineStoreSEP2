@@ -16,10 +16,12 @@ public class OnlineStoreApp extends Application {
     public void start(Stage stage)
     {
         ClientFactory clientFactory = new ClientFactory();
+
         ModelFactory modelFactory = new ModelFactory(clientFactory);
         ViewModelFactory viewModelFactory = new ViewModelFactory(modelFactory);
         ViewHandler viewHandler = ViewHandler.getInstance();
         viewHandler.initialize(stage);
         viewHandler.start();
+
     }
 }
