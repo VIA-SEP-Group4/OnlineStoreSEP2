@@ -30,7 +30,7 @@ public class WorkerClientImpl implements WorkerClient, WorkerRemoteClient {
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("worker failed to initialize client-object ...[RMIClient.RMIClient()]");
         }
     }
 
@@ -47,7 +47,17 @@ public class WorkerClientImpl implements WorkerClient, WorkerRemoteClient {
         return null;
     }
 
-
+    @Override public void changeOrderAssignee(Order order)
+    {
+        try
+        {
+            serverStub.changeOrderAssignee(order);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {

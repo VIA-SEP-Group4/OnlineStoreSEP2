@@ -81,6 +81,11 @@ public class ServerModelManager implements Model, PropertyChangeListener
     return ordersDataAccessor.getAllOrders();
   }
 
+  @Override public void changeOrderAssignee(Order order)
+  {
+    ordersDataAccessor.changeOrderAssignee(order);
+  }
+
   @Override
   public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
     return ordersDataAccessor.getWorkerOrdersForManager(workerID);

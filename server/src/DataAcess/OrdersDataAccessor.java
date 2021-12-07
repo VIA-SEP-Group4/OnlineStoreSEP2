@@ -17,5 +17,8 @@ public interface OrdersDataAccessor extends Subject
   ArrayList<Order> getOrders(String orderStatus);
   //get orders by workers
   ArrayList<Order> getWorkerOrdersForManager(int workerId);
+  //change worker ID on a specific order
+  void changeOrderAssignee(Order order);
+
 
 }

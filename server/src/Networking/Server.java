@@ -186,6 +186,10 @@ public class Server implements RMIServer_Remote{
     return serverModelManager.getOrders(customerId);
   }
 
+  @Override public void changeOrderAssignee(Order order) throws RemoteException
+  {
+    serverModelManager.changeOrderAssignee(order);
+  }
 
   @Override public void addToCart(Product p, int desiredQuantity) throws RemoteException
   {

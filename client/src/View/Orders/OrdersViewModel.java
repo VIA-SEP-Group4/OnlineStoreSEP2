@@ -47,6 +47,10 @@ public class OrdersViewModel
         }
     }
 
+    void changeOrderAssignee(Order order){
+        workerModel.changeOrderAssignee(order);
+    }
+
     public ObservableList<Order> getOpenOrders()
     {
         return openOrders;
