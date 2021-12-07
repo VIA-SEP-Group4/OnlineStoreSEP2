@@ -155,7 +155,7 @@ public class BrowserViewModel implements PropertyChangeListener
 
   public void filterBy()
   {
-    if (type.getValue().equals("Available"))
+    if (type.getValue() != null && type.getValue().equals("Available"))
     {
       browserTable.clear();
       for (int i = 0; i < customerModel.getProducts().size(); i++)
@@ -164,12 +164,12 @@ public class BrowserViewModel implements PropertyChangeListener
           browserTable.add(customerModel.getProducts().get(i));
       }
     }
-    else if (type.getValue().equals("All products"))
+    else if (type.getValue() != null && type.getValue().equals("All products"))
     {
       browserTable.clear();
       browserTable.addAll(customerModel.getProducts());
     }
-    else if (type != null)
+    else if (type.getValue() != null)
     {
     browserTable.clear();
     for (int i = 0; i < customerModel.getProducts().size(); i++)

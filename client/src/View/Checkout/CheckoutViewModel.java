@@ -85,6 +85,28 @@ public class CheckoutViewModel
 
   public void fetchCart()
   {
+    cartProducts.clear();
     cartProducts.setAll(customerModel.getCartProducts());
+  }
+
+  public void removeFromCart(Product p,int quantityProd)
+  {
+    if (quantityProd<0)
+    {
+      ArrayList<Product> tempProducts = customerModel.getProducts();
+      Product selectProd = null;
+      for (Product tempProduct : tempProducts)
+      {
+        if (tempProduct.getProductId() == p.getProductId())
+          selectProd = tempProduct;
+      }
+      customerModel.removeFromCart(selectProd, quantityProd);
+      fetchCart();
+    }
+    else
+    {
+      //TODO .. put it in some label so customer can see what's going on
+      System.out.println("error label ->no product to remove ...");
+    }
   }
 }

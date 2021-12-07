@@ -29,6 +29,7 @@ public interface RMIServer_Remote extends Remote
   ArrayList<Order> getWorkerOrdersForManager(int workerID) throws RemoteException;
   ArrayList<Order> getOrdersForWorker(int workerID) throws RemoteException;
   void changeOrderAssignee(Order order) throws RemoteException;
+  void updateOrderStatus(Order order, String status) throws RemoteException;
 
   void addToCart(Product p, int desiredQuantity) throws RemoteException;
 

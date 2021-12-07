@@ -248,4 +248,22 @@ public class OrdersDataManager implements OrdersDataAccessor
       System.out.println(ex.getMessage());
     }
   }
+
+  @Override public void updateOrderStatus(Order order, String status)
+  {
+    String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status="+(status)+ " WHERE order_id = '" +order.getOrderId()+ "'";
+
+    try (Connection conn = DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement())
+    {
+      int affectedRows = stmt.executeUpdate(SQL);
+      if (affectedRows <= 0)
+        throw new RuntimeException("Order status update failed");
+      support.firePropertyChange("newOrder",null,getAllOrders());
+    }catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
+    }
+  }
+
 }

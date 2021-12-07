@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface CustomerModel  extends Subject {
     void processOrder(Order o);
     void addToCart(Product p, int desiredQuantity);
+    void removeFromCart(Product p, int desiredQuantity);
     void addToCart(Product p);
 
     ArrayList<Order> fetchCustomerOrders();

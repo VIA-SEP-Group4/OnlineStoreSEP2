@@ -89,4 +89,16 @@ public class CheckoutViewController
     }
     ordersTable.getSelectionModel().clearSelection();
   }
+
+  public void deleteProdCart(ActionEvent event)
+  {
+    Product tempProduct = cartProductsTable.getSelectionModel().getSelectedItem();
+   if (tempProduct != null)
+   {
+     int quantityProd = -tempProduct.getQuantity();
+     viewModel.removeFromCart(tempProduct, quantityProd);
+   }
+    //TODO .. put it in some label so customer can see what's going on
+    System.out.println("error label ->no product to remove ...");
+  }
 }
