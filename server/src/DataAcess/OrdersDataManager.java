@@ -186,7 +186,6 @@ public class OrdersDataManager implements OrdersDataAccessor
     return null;
   }
 
-  //TODO make it  return only certain worker's orders
   @Override
   public ArrayList<Order> getWorkerOrdersForManager(int workerId) {
     String SQL = "select order_id,status,timestamp from eshop.orders ord join eshop.employees emp on ord.warehouse_worker_id=emp.employee_id where warehouse_worker_id=" +workerId;

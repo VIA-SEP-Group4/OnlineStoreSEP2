@@ -73,7 +73,6 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
     @Override
     public Employee getLoggedEmployee() {
         loggedEmployee=login.getLoggedEmployee();
-
         return loggedEmployee;
     }
 
