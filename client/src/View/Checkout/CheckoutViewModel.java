@@ -5,9 +5,7 @@ import Model.CustomerModel;
 import Model.Models.Order;
 import Model.Models.Product;
 
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
@@ -20,6 +18,7 @@ public class CheckoutViewModel
   private ObservableList<Order> orders;
   private ObservableList<Product> orderProducts;
   private StringProperty orderDetailLabel;
+  private ObjectProperty<String> status;
 
   public CheckoutViewModel(CustomerModel customerModel, CredentialsModel credentialsModel)
   {
@@ -32,6 +31,8 @@ public class CheckoutViewModel
     orders = FXCollections.observableArrayList();
     orders.addAll(customerModel.fetchCustomerOrders());
     orderProducts = FXCollections.observableArrayList();
+
+    status = new SimpleObjectProperty<>();
 
     orderDetailLabel = new SimpleStringProperty();
   }
@@ -51,6 +52,10 @@ public class CheckoutViewModel
     return orderProducts;
   }
 
+  public ObjectProperty<String> getStatusProperty()
+  {
+    return status;
+  }
 
   public void processOrder()
   {
@@ -107,6 +112,24 @@ public class CheckoutViewModel
     {
       //TODO .. put it in some label so customer can see what's going on
       System.out.println("error label ->no product to remove ...");
+    }
+  }
+
+  public void filterBy(String stat)
+  {
+    orders.clear();
+    if (status.getValue() != null && stat.equals("All orders"))
+    {
+      orders.setAll(customerModel.fetchCustomerOrders());
+    }
+    else if (status.getValue() != null)
+    {
+      orders.clear();
+      for (int i = 0; i < customerModel.fetchCustomerOrders().size(); i++)
+      {
+        if (customerModel.fetchCustomerOrders().get(i).getState().equals(stat))
+          orders.add(customerModel.fetchCustomerOrders().get(i));
+      }
     }
   }
 }
