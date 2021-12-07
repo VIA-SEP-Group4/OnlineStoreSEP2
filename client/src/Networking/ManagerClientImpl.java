@@ -31,7 +31,7 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("failed to initialize client-object ...[ManagerClientImpl.startClient()]");
         }
     }
 

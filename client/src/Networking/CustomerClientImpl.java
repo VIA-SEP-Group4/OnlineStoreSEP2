@@ -43,12 +43,11 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         }
     }
 
-    @Override public ArrayList<Order> getOrders()
+    @Override public ArrayList<Order> getOrders(int customerId)
     {
         try
         {
-            //TODO -need logged user here ... ?
-            return serverStub.getOrders(1);
+            return serverStub.getOrders(customerId);
         }
         catch (RemoteException e)
         {

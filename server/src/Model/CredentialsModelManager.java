@@ -36,9 +36,9 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
   }
   @Override public Customer loginCustomer(String username, String password)
   {
-    Customer tempUser = credentialsDataAccessor.loginCustomer(username,password);
-    tempUser.setOrders(ordersDataAccessor.getOrders(tempUser.getCustomerId()));
-    return tempUser;
+    Customer loggedCustomer = credentialsDataAccessor.loginCustomer(username,password);
+    loggedCustomer.setOrders(ordersDataAccessor.getOrders(loggedCustomer.getCustomerId()));
+    return loggedCustomer;
   }
 
   @Override

@@ -16,7 +16,7 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
     private PropertyChangeSupport support;
     private CustomerClient customer;
     private LoginClient login;
-    private Customer loggedCustomer=null;
+    private Customer loggedCustomer = null;
 
     public CustomerModelImpl(CustomerClient customer, LoginClient login) {
         this.customer = customer;
@@ -25,8 +25,11 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
         if(!login.isStarted()) login.startClient();
         support=new PropertyChangeSupport(this);
         cart=new ArrayList<>();
+
+        login.addListener("LoggedCustomerObj", this::setLoggedCustomer);
         customer.addListener("ProductsReply",this);
     }
+
 
     @Override
     public void processOrder(Order o) {
@@ -58,7 +61,7 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
     }
 
     @Override public ArrayList<Order> fetchCustomerOrders() {
-        return customer.getOrders();
+        return customer.getOrders(loggedCustomer.getCustomerId());
     }
 
     @Override
@@ -95,5 +98,10 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         support.firePropertyChange(evt);
+    }
+
+    private void setLoggedCustomer(PropertyChangeEvent evt)
+    {
+        loggedCustomer = (Customer) evt.getNewValue();
     }
 }

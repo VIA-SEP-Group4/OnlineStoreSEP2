@@ -32,7 +32,7 @@ public class WorkerClientImpl implements WorkerClient, WorkerRemoteClient {
             serverStub.registerClient(this);
             started = true;
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("worker failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("worker failed to initialize client-object ...[WorkerClientImpl.startClient()]");
         }
     }
 

@@ -147,9 +147,9 @@ public class Server implements RMIServer_Remote{
     String reply;
     try
     {
-      Customer loggedUser = credentialsModelManager.loginCustomer(username,password);
+      Customer loggedCustomer = credentialsModelManager.loginCustomer(username,password);
       reply = "successful login ";
-      client.setLoggedUser(loggedUser);
+      client.setLoggedCustomer(loggedCustomer);
 
     }catch (RuntimeException e){
       reply = e.getMessage();

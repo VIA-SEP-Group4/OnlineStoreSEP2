@@ -91,9 +91,7 @@ public class ViewHandler {
             Parent root = loader.load();
             BrowserViewController view = loader.getController();
             view.init();
-
             Scene scene = new Scene(root);
-//            scene.getStylesheets().add("BrowserView_Stylesheet.css");
             stage.setTitle("Browser");
             stage.setScene(scene);
             stage.show();
