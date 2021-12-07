@@ -1,6 +1,5 @@
 package Core;
 
-
 import View.Admin.AdminViewController;
 import View.Admin.ManagerDetailViewController;
 import View.Browser.ProductDetailController;
@@ -9,7 +8,6 @@ import View.Manager.ManagerTabViewController;
 import View.Manager.WorkersDetailViewController;
 import View.Orders.OrdersViewController;
 import View.Manager.AddProductViewController;
-import View.Manager.ProductsViewController;
 import View.Browser.BrowserViewController;
 import View.Login.LoginViewController;
 import View.Register.RegisterViewController;
@@ -19,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -52,9 +49,9 @@ public class ViewHandler {
 
     public void start() {
       openBrowserPane();
-//        openOrdersPane();
       stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
+
     public void openLoginPane() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -94,7 +91,9 @@ public class ViewHandler {
             Parent root = loader.load();
             BrowserViewController view = loader.getController();
             view.init();
+
             Scene scene = new Scene(root);
+//            scene.getStylesheets().add("BrowserView_Stylesheet.css");
             stage.setTitle("Browser");
             stage.setScene(scene);
             stage.show();

@@ -84,7 +84,7 @@
       </HBox>
        <ScrollPane layoutY="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="702.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0">
            <content>
-               <TableView fx:id="browserTable" onMouseClicked="#onDoubleClick" prefHeight="439.0" prefWidth="700.0">
+               <TableView fx:id="browserTable" onMouseClicked="#onDoubleClick" prefHeight="440.0" prefWidth="700.0" stylesheets="@BrowserView_Stylesheet.css">
                    <columns>
                        <TableColumn fx:id="nameColumn" prefWidth="121.99996960163116" text="Name" />
                        <TableColumn fx:id="typeColumn" prefWidth="94.00000762939453" text="Type" />

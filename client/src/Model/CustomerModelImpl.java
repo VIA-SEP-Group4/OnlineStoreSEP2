@@ -52,11 +52,12 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
 
         customer.addToCart(p, desiredQuantity);
     }
+
     public void addToCart(Product p){
         cart.add(p);
     }
-    @Override
-    public ArrayList<Order> fetchCustomerOrders() {
+
+    @Override public ArrayList<Order> fetchCustomerOrders() {
         return customer.getOrders();
     }
 

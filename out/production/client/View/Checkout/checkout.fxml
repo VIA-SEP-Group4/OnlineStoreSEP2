@@ -38,10 +38,10 @@
                      <children>
                         <TableView fx:id="ordersTable" layoutX="6.0" layoutY="23.0" onMousePressed="#checkOrderedProductDetail" prefHeight="297.0" prefWidth="310.0" AnchorPane.topAnchor="23.0">
                            <columns>
-                              <TableColumn fx:id="orderIdCol" prefWidth="70.0" text="order_id" />
-                              <TableColumn fx:id="orderTotalPrice" prefWidth="67.33331298828125" text="total price" />
-                              <TableColumn fx:id="timestampCol" prefWidth="76.66665649414062" text="timestamp" />
-                              <TableColumn fx:id="orderStateCol" prefWidth="95.3333740234375" text="state" />
+                              <TableColumn fx:id="orderIdCol" prefWidth="55.999969482421875" text="order_id" />
+                              <TableColumn fx:id="orderTotalPrice" prefWidth="69.33331298828125" text="total price" />
+                              <TableColumn fx:id="timestampCol" prefWidth="122.00003051757812" text="timestamp" />
+                              <TableColumn fx:id="orderStateCol" prefWidth="65.99993896484375" text="state" />
                            </columns>
                         </TableView>
                         <Button layoutX="14.0" layoutY="331.0" mnemonicParsing="false" onAction="#continueShoppingBtn" text="Continue shopping" />

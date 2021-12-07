@@ -1,15 +1,14 @@
-package Model;
-
-import Model.Models.Customer;
-import Model.Models.Employee;
-import Model.Models.Order;
-import Model.Models.Product;
-import Utils.Subject;
-
-import java.util.ArrayList;
-
-public interface Model extends Subject
-{
+//package Model;
+//
+//import Model.Models.Customer;
+//import Model.Models.Employee;
+//import Model.Models.Order;
+//import Model.Models.Product;
+//import Utils.Subject;
+//import java.util.ArrayList;
+//
+//public interface Model extends Subject
+//{
 //  ArrayList<Employee> getManagers();
 //  ArrayList<Employee> getWorkers();
 //  void registerCustomer(Customer newUser);
@@ -30,4 +29,4 @@ public interface Model extends Subject
 //  ArrayList<Order> getWorkerOrdersForManager(int workerID);
 //  ArrayList<Order> getOrdersForWorker(int workerID);
 //  void changeOrderAssignee(Order order);
-}
+//}
