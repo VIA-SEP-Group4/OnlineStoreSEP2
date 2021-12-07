@@ -40,9 +40,10 @@ public class BrowserViewController
   {
     this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getBrowserViewModel();
-
-    filterByComboBox.getItems().addAll("All products", "Type", "Availability");
+    filterByComboBox.setItems(viewModel.getAllTypes());
+    filterByComboBox.valueProperty().bindBidirectional(viewModel.getTypeProperty());
     searchTextField.textProperty().bindBidirectional(viewModel.searchProperty());
+    userLabel.textProperty().bind(viewModel.userNameProperty());
 
     //logged In/Out dependents
     basketButton.visibleProperty().bind(viewModel.logInProperty());
@@ -87,6 +88,8 @@ public class BrowserViewController
 
   public void onFilterBy(ActionEvent actionEvent)
   {
+    viewModel.setType(filterByComboBox.valueProperty().getValue());
+    viewModel.filterBy();
   }
 
   public void onDoubleClick(MouseEvent mouseEvent)
