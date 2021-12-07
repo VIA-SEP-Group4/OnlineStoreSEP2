@@ -82,6 +82,16 @@ public class BrowserViewModel implements PropertyChangeListener
     return logIn;
   }
 
+  public void setLogIn(boolean logIn)
+  {
+    this.logIn.set(logIn);
+  }
+
+  public void setLogOut(boolean logOut)
+  {
+    this.logOut.set(logOut);
+  }
+
   public void setSelectedProd(Product selectedProd)
   {
     this.selectedProd.set(selectedProd);
