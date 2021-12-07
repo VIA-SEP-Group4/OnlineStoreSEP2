@@ -1,4 +1,7 @@
 
+import Model.CredentialsModelManager;
+import Model.OrdersModelManager;
+import Model.ProductsModelManager;
 import Model.ServerModelManager;
 import Networking.Server;
 import java.net.MalformedURLException;
@@ -13,10 +16,14 @@ public class RunServer {
         createRegistry();
 
         //create and start server
-        ServerModelManager serverModelManager = new ServerModelManager();
+//        ServerModelManager serverModelManager = new ServerModelManager();
+        CredentialsModelManager cmm = new CredentialsModelManager();
+        ProductsModelManager pmm = new ProductsModelManager();
+        OrdersModelManager omm = new OrdersModelManager();
 
         try {
-            Server server = new Server(serverModelManager);
+//            Server server = new Server(serverModelManager);
+            Server server = new Server(cmm, pmm, omm);
             server.start();
             System.out.println("Server running ...");
 
