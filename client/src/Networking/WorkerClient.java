@@ -10,4 +10,5 @@ public interface WorkerClient extends Subject {
     ArrayList<Order> getAllOrders();
     void changeOrderAssignee(Order order);
     void startClient();
+    boolean isStarted();
 }

@@ -45,7 +45,24 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     public void loginEmployee(int ID, int pin)  {
         String reply = "denied";
         try {
-            reply = serverStub.loginEmployee(ID,pin);
+            reply = serverStub.loginEmployee(ID,pin, this);
+        } catch (RemoteException | RuntimeException e) {
+            System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
+            e.printStackTrace();
+        }
+        support.firePropertyChange("LoginReply",null, reply);
+    }
+
+    /**
+     * Method requesting to check logging user's presence in the database and if password matches.
+     * @param username inserted username
+     * @param password inserted password
+     */
+    @Override
+    public void loginCustomer(String username, String password) {
+        String reply = "denied";
+        try {
+            reply = serverStub.loginCustomer(username, password, this);
         } catch (RemoteException | RuntimeException e) {
             System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
@@ -83,22 +100,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             e.printStackTrace();
         }
     }
-    /**
-     * Method requesting to check logging user's presence in the database and if password matches.
-     * @param username inserted username
-     * @param password inserted password
-     */
-    @Override
-    public void loginCustomer(String username, String password) {
-        String reply = "denied";
-        try {
-            reply = serverStub.loginCustomer(username, password, this);
-        } catch (RemoteException | RuntimeException e) {
-            System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
-            e.printStackTrace();
-        }
-        support.firePropertyChange("LoginReply",null, reply);
-    }
+
 
 
     @Override

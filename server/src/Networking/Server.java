@@ -135,12 +135,13 @@ public class Server implements RMIServer_Remote{
   }
 
   @Override
-  public String loginEmployee(int id, int pin) throws RemoteException {
+  public String loginEmployee(int id, int pin, LoginRemoteClient client) throws RemoteException {
     String reply;
     try
     {
-      Employee loggedUser = serverModelManager.loginEmployee(id,pin);
-      reply = "successful login "+loggedUser.getType();
+      Employee loggedEmployee = serverModelManager.loginEmployee(id,pin);
+      reply = "successful login "+loggedEmployee.getType();
+      client.setLoggedEmployee(loggedEmployee);
       System.out.println(reply);
 
     }catch (RuntimeException e){
