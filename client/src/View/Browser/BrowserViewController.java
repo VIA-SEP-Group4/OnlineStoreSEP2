@@ -17,7 +17,7 @@ public class BrowserViewController
   public ComboBox<String> filterByComboBox;
   public TextField searchTextField;
   public Button loginButton;
-
+  public Button logoutButton;
   public Label userLabel;
   public Button basketButton;
 
@@ -29,6 +29,7 @@ public class BrowserViewController
   public TableColumn<Product, Integer> quantityColumn;
   public TableColumn<Product, Void> addBtnCol;
   public TableColumn<Product, Void> desiredQuantityCol;
+
 
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
@@ -49,6 +50,7 @@ public class BrowserViewController
     basketButton.visibleProperty().bind(viewModel.logInProperty());
     userLabel.visibleProperty().bind(viewModel.logInProperty());
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
+    logoutButton.visibleProperty().bind(viewModel.logInProperty());
 
     //table
     browserTable.setItems(viewModel.getBrowserTable());
@@ -74,6 +76,13 @@ public class BrowserViewController
   public void onLoginButtonBrowser(ActionEvent actionEvent)
   {
     viewHandler.openLoginPane();
+  }
+
+  public void onLogOut(ActionEvent actionEvent)
+  {
+    // TODO: 07/12/2021 open the same view with a different visibility 
+    viewHandler.openBrowserPane();
+    reset();
   }
 
   public void onSearchTextFieldEnter(KeyEvent keyEvent)
@@ -161,4 +170,6 @@ public class BrowserViewController
 
     return cellFactory;
   }
+
+
 }
