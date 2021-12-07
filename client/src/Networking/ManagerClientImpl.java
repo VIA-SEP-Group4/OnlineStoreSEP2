@@ -141,4 +141,9 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     public void receiveUpdatedManagers(Object workers) throws RemoteException {
         support.firePropertyChange("ManagerWorkersReply",null,workers);
     }
+
+    @Override
+    public void receiveUpdatedOrders(Object orders) throws RemoteException {
+        support.firePropertyChange("newOrder",null,orders);
+    }
 }

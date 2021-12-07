@@ -7,6 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
+import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+
 public class OrderOverviewViewModel {
     private ManagerModel model;
     private ObservableList<Order> orders;
@@ -16,7 +19,14 @@ public class OrderOverviewViewModel {
         orders= FXCollections.observableArrayList();
         products=FXCollections.observableArrayList();
         orders.setAll(model.getAllOrders());
+        model.addListener("newOrder",this::updateOrders);
     }
+
+    private void updateOrders(PropertyChangeEvent event) {
+        ArrayList<Order> temp=(ArrayList<Order>) event.getNewValue();
+        orders.setAll(temp);
+    }
+
     public ObservableList<Order> getAllOrders() {
 
         return orders;

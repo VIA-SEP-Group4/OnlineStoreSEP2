@@ -30,6 +30,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
     credentialsDataAccessor.addListener("AdminReply",this);
     credentialsDataAccessor.addListener("ManagerReply",this);
     productsDataAcessor.addListener("ProductReply",this);
+    ordersDataAccessor.addListener("newOrder",this);
   }
 
 

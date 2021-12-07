@@ -1,10 +1,11 @@
 package DataAcess;
 
 import Model.Models.Order;
+import Utils.Subject;
 
 import java.util.ArrayList;
 
-public interface OrdersDataAccessor
+public interface OrdersDataAccessor extends Subject
 {
   void addNewOrder(Order newOrder);
 

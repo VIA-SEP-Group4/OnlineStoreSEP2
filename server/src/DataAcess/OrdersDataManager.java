@@ -3,6 +3,7 @@ package DataAcess;
 import Model.Models.Order;
 import Model.Models.Product;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class OrdersDataManager implements OrdersDataAccessor
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)
-        throw new RuntimeException("Product insertion failed");
+        throw new RuntimeException("Order insertion failed");
     }
     catch (SQLException ex) {
       System.out.println(ex.getMessage());
@@ -74,6 +75,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
+    support.firePropertyChange("newOrder",null,getAllOrders());
   }
 
   @Override public ArrayList<Order> getAllOrders()
@@ -214,4 +216,13 @@ public class OrdersDataManager implements OrdersDataAccessor
     return orders;
   }
 
+  @Override
+  public void addListener(String eventName, PropertyChangeListener listener) {
+    support.addPropertyChangeListener(eventName,listener);
+  }
+
+  @Override
+  public void removeListener(String eventName, PropertyChangeListener listener) {
+    support.removePropertyChangeListener(eventName,listener);
+  }
 }
