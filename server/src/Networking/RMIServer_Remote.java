@@ -14,7 +14,7 @@ public interface RMIServer_Remote extends Remote
   int userCount() throws RemoteException;
   String registerUser(Customer newCustomer)throws RemoteException;
   String loginCustomer(String username, String password, LoginRemoteClient client) throws RemoteException;
-  String loginEmployee(int id, int pin) throws RemoteException;
+  String loginEmployee(int id, int pin, LoginRemoteClient client) throws RemoteException;
 
   void registerClient(Remote client) throws RemoteException;
   void removeClient(Remote client) throws RemoteException;

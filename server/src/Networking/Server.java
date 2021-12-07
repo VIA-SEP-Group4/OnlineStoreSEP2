@@ -6,7 +6,6 @@ import Model.Models.Customer;
 import Model.Models.Employee;
 import Model.Models.Order;
 import Model.Models.Product;
-
 import java.beans.PropertyChangeEvent;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -20,18 +19,42 @@ import java.util.ArrayList;
  */
 public class Server implements RMIServer_Remote{
 
-  private Model serverModelManager;
+//  private Model serverModelManager;
+
+  private CredentialsModel credentialsModelManager;
+  private ProductsModel productsModelManager;
+  private OrdersModel ordersModelManager;
+
   private ArrayList<Remote> clients;
 
-  public Server(Model serverModelManager) throws RemoteException, MalformedURLException
+//  public Server(Model serverModelManager) throws RemoteException, MalformedURLException
+//  {
+//    super();
+//    clients = new ArrayList<>();
+//    this.serverModelManager = serverModelManager;
+//    serverModelManager.addListener("ProductReply",this::productsUpdate);
+//    serverModelManager.addListener("AdminReply",this::adminUpdate);
+//    serverModelManager.addListener("ManagerReply",this::managerUpdate);
+//    serverModelManager.addListener("newOrder",this::managerOrderUpdate);
+//  }
+
+  public Server(CredentialsModel cm ,ProductsModel pm, OrdersModel om) throws RemoteException, MalformedURLException
   {
     super();
-    clients=new ArrayList<>();
-    this.serverModelManager = serverModelManager;
-    serverModelManager.addListener("ProductReply",this::productsUpdate);
-    serverModelManager.addListener("AdminReply",this::adminUpdate);
-    serverModelManager.addListener("ManagerReply",this::managerUpdate);
-    serverModelManager.addListener("newOrder",this::managerOrderUpdate);
+    clients = new ArrayList<>();
+
+    credentialsModelManager = cm;
+    productsModelManager = pm;
+    ordersModelManager = om;
+
+
+    credentialsModelManager.addListener("AdminReply",this::adminUpdate);
+    credentialsModelManager.addListener("ManagerReply",this::managerUpdate);
+    credentialsModelManager.addListener("newOrder",this::managerOrderUpdate);
+
+    productsModelManager.addListener("ProductReply",this::productsUpdate);
+
+    ordersModelManager.addListener("newOrder",this::managerOrderUpdate);
   }
 
   private void managerOrderUpdate(PropertyChangeEvent event) {
@@ -101,7 +124,7 @@ public class Server implements RMIServer_Remote{
    */
   @Override public int userCount() throws RemoteException
   {
-    return serverModelManager.userCount();
+    return credentialsModelManager.userCount();
   }
 
   @Override public String registerUser(Customer newUser) throws RemoteException
@@ -109,7 +132,7 @@ public class Server implements RMIServer_Remote{
     String reply;
     try
     {
-      serverModelManager.registerCustomer(newUser);
+      credentialsModelManager.registerCustomer(newUser);
       reply = "approved";
     }
     catch (RuntimeException e){
@@ -124,9 +147,9 @@ public class Server implements RMIServer_Remote{
     String reply;
     try
     {
-      Customer loggedUser = serverModelManager.loginCustomer(username,password);
+      Customer loggedCustomer = credentialsModelManager.loginCustomer(username,password);
       reply = "successful login ";
-      client.setLoggedUser(loggedUser);
+      client.setLoggedCustomer(loggedCustomer);
 
     }catch (RuntimeException e){
       reply = e.getMessage();
@@ -135,12 +158,13 @@ public class Server implements RMIServer_Remote{
   }
 
   @Override
-  public String loginEmployee(int id, int pin) throws RemoteException {
+  public String loginEmployee(int id, int pin, LoginRemoteClient client) throws RemoteException {
     String reply;
     try
     {
-      Employee loggedUser = serverModelManager.loginEmployee(id,pin);
-      reply = "successful login "+loggedUser.getType();
+      Employee loggedEmployee = credentialsModelManager.loginEmployee(id,pin);
+      reply = "successful login "+loggedEmployee.getType();
+      client.setLoggedEmployee(loggedEmployee);
       System.out.println(reply);
 
     }catch (RuntimeException e){
@@ -162,44 +186,43 @@ public class Server implements RMIServer_Remote{
   @Override
   public ArrayList<Product> getProducts() throws RemoteException {
 
-    return serverModelManager.getProducts();
+    return productsModelManager.getProducts();
   }
 
 
   @Override
   public void addProduct(Product product) throws RemoteException {
-      serverModelManager.addProduct(product);
+      productsModelManager.addProduct(product);
   }
 
   @Override public void deleteProduct(Product p) throws RemoteException
   {
-    serverModelManager.deleteProduct(p);
+    productsModelManager.deleteProduct(p);
   }
 
   @Override public void addNewOrder(Order newOrder)
   {
-    serverModelManager.addNewOrder(newOrder);
+    ordersModelManager.addNewOrder(newOrder);
   }
 
   @Override public ArrayList<Order> getOrders(int customerId)
   {
-    return serverModelManager.getOrders(customerId);
+    return ordersModelManager.getOrders(customerId);
   }
 
   @Override public void changeOrderAssignee(Order order) throws RemoteException
   {
-    serverModelManager.changeOrderAssignee(order);
+    ordersModelManager.changeOrderAssignee(order);
   }
 
   @Override public void addToCart(Product p, int desiredQuantity) throws RemoteException
   {
-    serverModelManager.updateStock(p, desiredQuantity);
+    productsModelManager.updateStock(p, desiredQuantity);
   }
 
   @Override
   public ArrayList<Employee> getManagerEmployees() {
-    System.out.println(serverModelManager.getManagers());
-    return serverModelManager.getManagers();
+    return credentialsModelManager.getManagers();
   }
 
   @Override
@@ -207,7 +230,7 @@ public class Server implements RMIServer_Remote{
     String reply;
     try
     {
-      serverModelManager.registerEmployee(manager);
+      credentialsModelManager.registerEmployee(manager);
       reply = "approved";
     }
     catch (RuntimeException e){
@@ -219,12 +242,12 @@ public class Server implements RMIServer_Remote{
 
   @Override
   public void removeManager(Employee manager) throws RemoteException {
-      serverModelManager.removeEmployee(manager);
+      credentialsModelManager.removeEmployee(manager);
   }
 
   @Override
   public ArrayList<Employee> getWorkers() throws RemoteException {
-    return serverModelManager.getWorkers();
+    return credentialsModelManager.getWorkers();
   }
 
   @Override
@@ -232,7 +255,7 @@ public class Server implements RMIServer_Remote{
     String reply;
     try
     {
-      serverModelManager.registerEmployee(e);
+      credentialsModelManager.registerEmployee(e);
       reply = "approved";
     }
     catch (RuntimeException re){
@@ -244,17 +267,17 @@ public class Server implements RMIServer_Remote{
 
   @Override
   public void removeWorker(Employee e) throws RemoteException {
-    serverModelManager.removeEmployee(e);
+    credentialsModelManager.removeEmployee(e);
   }
 
   @Override public ArrayList<Order> getAllOrders() throws RemoteException
   {
-    return serverModelManager.getAllOrders();
+    return ordersModelManager.getAllOrders();
   }
 
   @Override
   public ArrayList<Order> getWorkerOrdersForManager(int workerID) throws RemoteException {
-    return serverModelManager.getWorkerOrdersForManager(workerID);
+    return ordersModelManager.getWorkerOrdersForManager(workerID);
   }
 
   @Override

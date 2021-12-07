@@ -28,7 +28,7 @@ public class AdminClientImpl implements AdminClient,AdminRemoteClient{
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("Admin Client failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("Admin Client failed to initialize client-object ...[AdminClientImpl.startClient()]");
             e.printStackTrace();
         }
     }

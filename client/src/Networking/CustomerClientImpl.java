@@ -17,7 +17,7 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
     private PropertyChangeSupport support;
 
     public CustomerClientImpl() {
-        support=new PropertyChangeSupport(this);
+        support = new PropertyChangeSupport(this);
     }
 
     @Override
@@ -43,12 +43,11 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         }
     }
 
-    @Override public ArrayList<Order> getOrders()
+    @Override public ArrayList<Order> getOrders(int customerId)
     {
         try
         {
-            //TODO -need logged user here ... ?
-            return serverStub.getOrders(2);
+            return serverStub.getOrders(customerId);
         }
         catch (RemoteException e)
         {

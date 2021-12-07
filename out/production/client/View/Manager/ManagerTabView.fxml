@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="446.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Manager.ManagerTabViewController">
+   <children>
+      <TabPane layoutY="-1.0" prefHeight="446.0" prefWidth="887.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Products">
+            <fx:include fx:id="productsView" source="../Manager/ProductsView.fxml" />
+          </Tab>
+          <Tab text="Warehouse Workers">
+            <fx:include fx:id="workersOverview" source="../Manager/WorkersOverview.fxml" />
+          </Tab>
+            <Tab text="Orders">
+              <content>
+                  <fx:include fx:id="orderOverview" source="../Manager/OrderOverview.fxml" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

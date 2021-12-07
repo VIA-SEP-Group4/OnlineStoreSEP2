@@ -18,8 +18,9 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     private Customer loggedCustomer = null;
     private Employee loggedEmployee=null;
     private boolean started=false;
+
     public LoginClientImpl() {
-        support=new PropertyChangeSupport(this);
+        support = new PropertyChangeSupport(this);
     }
 
     @Override
@@ -31,9 +32,9 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             //lookup server stub
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
-            started=true;
+            started = true;
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[LoginClient.startClient()]");
+            System.err.println("failed to initialize client-object ...[LoginClientImpl.startClient()]");
         }
     }
 
@@ -45,11 +46,29 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     public void loginEmployee(int ID, int pin)  {
         String reply = "denied";
         try {
-            reply = serverStub.loginEmployee(ID,pin);
+            reply = serverStub.loginEmployee(ID,pin, this);
         } catch (RemoteException | RuntimeException e) {
             System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
         }
+        support.firePropertyChange("LoginReply",null, reply);
+    }
+
+    /**
+     * Method requesting to check logging user's presence in the database and if password matches.
+     * @param username inserted username
+     * @param password inserted password
+     */
+    @Override
+    public void loginCustomer(String username, String password) {
+        String reply = "denied";
+        try {
+            reply = serverStub.loginCustomer(username, password, this);
+        } catch (RemoteException | RuntimeException e) {
+            System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
+            e.printStackTrace();
+        }
+        support.firePropertyChange("LoggedCustomerObj", null, loggedCustomer);
         support.firePropertyChange("LoginReply",null, reply);
     }
 
@@ -83,26 +102,10 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             e.printStackTrace();
         }
     }
-    /**
-     * Method requesting to check logging user's presence in the database and if password matches.
-     * @param username inserted username
-     * @param password inserted password
-     */
-    @Override
-    public void loginCustomer(String username, String password) {
-        String reply = "denied";
-        try {
-            reply = serverStub.loginCustomer(username, password, this);
-        } catch (RemoteException | RuntimeException e) {
-            System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
-            e.printStackTrace();
-        }
-        support.firePropertyChange("LoginReply",null, reply);
-    }
 
 
-    @Override
-    public void setLoggedUser(Customer loggedCustomer) throws RemoteException {
+
+    @Override public void setLoggedCustomer(Customer loggedCustomer) throws RemoteException {
         this.loggedCustomer = loggedCustomer;
     }
 
@@ -110,9 +113,6 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         return loggedCustomer;
     }
 
-    public void setLoggedCustomer(Customer loggedCustomer) {
-        this.loggedCustomer = loggedCustomer;
-    }
 
     public Employee getLoggedEmployee() {
         return loggedEmployee;

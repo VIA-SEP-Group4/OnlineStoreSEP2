@@ -17,7 +17,7 @@ public class BrowserViewController
   public ComboBox<String> filterByComboBox;
   public TextField searchTextField;
   public Button loginButton;
-
+  public Button logoutButton;
   public Label userLabel;
   public Button basketButton;
 
@@ -30,6 +30,7 @@ public class BrowserViewController
   public TableColumn<Product, Void> addBtnCol;
   public TableColumn<Product, Void> desiredQuantityCol;
 
+
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
 
@@ -40,14 +41,16 @@ public class BrowserViewController
   {
     this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getBrowserViewModel();
-
-    filterByComboBox.getItems().addAll("All products", "Type", "Availability");
+    filterByComboBox.setItems(viewModel.getAllTypes());
+    filterByComboBox.valueProperty().bindBidirectional(viewModel.getTypeProperty());
     searchTextField.textProperty().bindBidirectional(viewModel.searchProperty());
+    userLabel.textProperty().bind(viewModel.userNameProperty());
 
     //logged In/Out dependents
     basketButton.visibleProperty().bind(viewModel.logInProperty());
     userLabel.visibleProperty().bind(viewModel.logInProperty());
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
+    logoutButton.visibleProperty().bind(viewModel.logInProperty());
 
     //table
     browserTable.setItems(viewModel.getBrowserTable());
@@ -75,6 +78,13 @@ public class BrowserViewController
     viewHandler.openLoginPane();
   }
 
+  public void onLogOut(ActionEvent actionEvent)
+  {
+    // TODO: 07/12/2021 open the same view with a different visibility 
+    viewHandler.openBrowserPane();
+    reset();
+  }
+
   public void onSearchTextFieldEnter(KeyEvent keyEvent)
   {
     viewModel.getSearch();
@@ -87,6 +97,8 @@ public class BrowserViewController
 
   public void onFilterBy(ActionEvent actionEvent)
   {
+    viewModel.setType(filterByComboBox.valueProperty().getValue());
+    viewModel.filterBy();
   }
 
   public void onDoubleClick(MouseEvent mouseEvent)
@@ -158,4 +170,6 @@ public class BrowserViewController
 
     return cellFactory;
   }
+
+
 }

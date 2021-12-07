@@ -22,13 +22,14 @@ public class BrowserViewModel implements PropertyChangeListener
   private StringProperty items;
   private StringProperty userName;
 
+  private ObservableList<String> typeList;
+  private ObjectProperty<String> type;
   private ObservableList<Product> browserTable;
   private ObjectProperty<Product> selectedProd;
 
   private BooleanProperty logOut;
   private BooleanProperty logIn;
 
-  private ArrayList<Product> cart;
 
   public BrowserViewModel(CustomerModel customerModel, CredentialsModel credsModel)
   {
@@ -36,6 +37,10 @@ public class BrowserViewModel implements PropertyChangeListener
     search = new SimpleStringProperty("");
     items = new SimpleStringProperty("");
     userName = new SimpleStringProperty();
+
+    typeList = FXCollections.observableArrayList();
+    type = new SimpleObjectProperty();
+
     this.credsModel=credsModel;
     browserTable = FXCollections.observableArrayList();
     selectedProd = new SimpleObjectProperty<>();
@@ -43,10 +48,8 @@ public class BrowserViewModel implements PropertyChangeListener
     logOut = new SimpleBooleanProperty(true);
     logIn = new SimpleBooleanProperty(false);
 
-    cart = new ArrayList<>();
     customerModel.addListener("ProductsReply",this);
   }
-
 
   public StringProperty searchProperty()
   {
@@ -79,6 +82,16 @@ public class BrowserViewModel implements PropertyChangeListener
     return logIn;
   }
 
+  public void setLogIn(boolean logIn)
+  {
+    this.logIn.set(logIn);
+  }
+
+  public void setLogOut(boolean logOut)
+  {
+    this.logOut.set(logOut);
+  }
+
   public void setSelectedProd(Product selectedProd)
   {
     this.selectedProd.set(selectedProd);
@@ -97,14 +110,17 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     browserTable.clear();
     fetchProducts();
+    loadTypes();
     if(credsModel.getLoggedCustomer() == null)
     {
       logOut.setValue(true);
       logIn.setValue(false);
+      userName.setValue("");
     }
     else {
       logOut.setValue(false);
       logIn.setValue(true);
+      userName.setValue("Hello, "+credsModel.getLoggedCustomer().getLastName());
 
     }
   }
@@ -125,6 +141,45 @@ public class BrowserViewModel implements PropertyChangeListener
     }).collect(Collectors.toList());
   }
 
+  private void loadTypes()
+  {
+    typeList.clear();
+    typeList.add("All products");
+    typeList.add("Available");
+    for (int i = 0; i < browserTable.size(); i++)
+    {
+      if(!typeList.contains(getBrowserTable().get(i).getType()))
+        typeList.add(getBrowserTable().get(i).getType());
+    }
+  }
+
+  public void filterBy()
+  {
+    if (type.getValue().equals("Available"))
+    {
+      browserTable.clear();
+      for (int i = 0; i < customerModel.getProducts().size(); i++)
+      {
+        if (customerModel.getProducts().get(i).getQuantity() > 0)
+          browserTable.add(customerModel.getProducts().get(i));
+      }
+    }
+    else if (type.getValue().equals("All products"))
+    {
+      browserTable.clear();
+      browserTable.addAll(customerModel.getProducts());
+    }
+    else if (type != null)
+    {
+    browserTable.clear();
+    for (int i = 0; i < customerModel.getProducts().size(); i++)
+    {
+      if (customerModel.getProducts().get(i).getType().equals(type.getValue()))
+        browserTable.add(customerModel.getProducts().get(i));
+    }
+    }
+  }
+
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
@@ -143,5 +198,20 @@ public class BrowserViewModel implements PropertyChangeListener
       //TODO .. put it in some label so customer can see what's going on
       System.out.println("error label ->wrong quantity ...");
     }
+  }
+
+  public void setType(String type)
+  {
+    this.type.set(type);
+  }
+
+  public ObjectProperty<String> getTypeProperty()
+  {
+    return type;
+  }
+
+  public ObservableList<String> getAllTypes()
+  {
+    return typeList;
   }
 }

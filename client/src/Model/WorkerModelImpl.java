@@ -11,14 +11,18 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class WorkerModelImpl implements WorkerModel,PropertyChangeListener {
-    private WorkerClient worker;
-    private LoginClient login;
+    private WorkerClient workerClient;
+    private LoginClient loginClient;
     private PropertyChangeSupport support;
     private Employee loggedEmployee=null;
-    public WorkerModelImpl(WorkerClient workerClient,LoginClient login) {
-        this.worker=workerClient;
-        workerClient.startClient();
-        if(!login.isStarted()) login.startClient();
+
+    public WorkerModelImpl(WorkerClient workerClient,LoginClient loginClient) {
+        this.workerClient=workerClient;
+        this.loginClient = loginClient;
+//        worker.startClient();
+        if(!workerClient.isStarted()) workerClient.startClient();
+//        login.startClient();
+        if(!loginClient.isStarted()) loginClient.startClient();
         support=new PropertyChangeSupport(this);
     }
 
@@ -34,20 +38,18 @@ public class WorkerModelImpl implements WorkerModel,PropertyChangeListener {
 
     @Override public void changeOrderAssignee(Order order)
     {
-        // TODO: 07/12/2021 get the client???
-//        order.setWorkerID(getLoggedEmployee().getID());
-        order.setWorkerID(3);
-        worker.changeOrderAssignee(order);
+        order.setWorkerID(getLoggedEmployee().getID());
+        workerClient.changeOrderAssignee(order);
     }
 
     @Override public ArrayList<Order> getAllOrders()
     {
-        return worker.getAllOrders();
+        return workerClient.getAllOrders();
     }
 
     @Override
     public Employee getLoggedEmployee() {
-        loggedEmployee=login.getLoggedEmployee();
+        loggedEmployee=loginClient.getLoggedEmployee();
         return loggedEmployee;
     }
 

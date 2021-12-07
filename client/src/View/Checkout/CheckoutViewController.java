@@ -54,6 +54,7 @@ public class CheckoutViewController
     totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
     productDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
 
+
     //orders table
     ordersTable.setItems(viewModel.getOrders());
     orderIdCol.setCellValueFactory(new PropertyValueFactory<>("orderId"));

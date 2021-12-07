@@ -15,6 +15,7 @@ public class WorkerClientImpl implements WorkerClient, WorkerRemoteClient {
 
     private RMIServer_Remote serverStub;
     private PropertyChangeSupport support;
+    private boolean started = false;
 
     public WorkerClientImpl(){
         support = new PropertyChangeSupport(this);
@@ -29,9 +30,15 @@ public class WorkerClientImpl implements WorkerClient, WorkerRemoteClient {
             //lookup server stub
             serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
             serverStub.registerClient(this);
+            started = true;
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("worker failed to initialize client-object ...[RMIClient.RMIClient()]");
+            System.err.println("worker failed to initialize client-object ...[WorkerClientImpl.startClient()]");
         }
+    }
+
+    @Override public boolean isStarted()
+    {
+        return started;
     }
 
     @Override public ArrayList<Order> getAllOrders()
