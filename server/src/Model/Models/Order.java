@@ -1,5 +1,6 @@
 package Model.Models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -13,7 +14,8 @@ public class Order implements Serializable
   private Timestamp timestamp;
   private int customerId;
   private int wwId = -1;
-
+  @Serial
+  private static final long serialVersionUID = 2L;
   //instantiation when created in GUI ->to be uploaded
   public Order(int customerId, ArrayList<Product> products)
   {
@@ -61,6 +63,16 @@ public class Order implements Serializable
 
   public void setStatus(String status){
     state = status;
+  }
+
+  public void setWorkerID(int wwId)
+  {
+    this.wwId = wwId;
+  }
+
+  public int getWorkerID()
+  {
+    return wwId;
   }
 
   public String getTimestamp()

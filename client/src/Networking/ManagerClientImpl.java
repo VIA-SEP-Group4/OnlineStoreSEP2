@@ -46,6 +46,16 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     }
 
     @Override
+    public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
+        try {
+            return serverStub.getWorkerOrdersForManager(workerID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<Product> getAllProducts() {
         try {
             return serverStub.getProducts();
@@ -130,5 +140,10 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
     @Override
     public void receiveUpdatedManagers(Object workers) throws RemoteException {
         support.firePropertyChange("ManagerWorkersReply",null,workers);
+    }
+
+    @Override
+    public void receiveUpdatedOrders(Object orders) throws RemoteException {
+        support.firePropertyChange("newOrder",null,orders);
     }
 }

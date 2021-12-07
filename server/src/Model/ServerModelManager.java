@@ -30,6 +30,7 @@ public class ServerModelManager implements Model, PropertyChangeListener
     credentialsDataAccessor.addListener("AdminReply",this);
     credentialsDataAccessor.addListener("ManagerReply",this);
     productsDataAcessor.addListener("ProductReply",this);
+    ordersDataAccessor.addListener("newOrder",this);
   }
 
 
@@ -73,6 +74,26 @@ public class ServerModelManager implements Model, PropertyChangeListener
   @Override public ArrayList<Order> getOrders(int customerId)
   {
     return ordersDataAccessor.getOrders(customerId);
+  }
+
+  @Override public ArrayList<Order> getAllOrders()
+  {
+    return ordersDataAccessor.getAllOrders();
+  }
+
+  @Override public void changeOrderAssignee(Order order)
+  {
+    ordersDataAccessor.changeOrderAssignee(order);
+  }
+
+  @Override
+  public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
+    return ordersDataAccessor.getWorkerOrdersForManager(workerID);
+  }
+
+  @Override
+  public ArrayList<Order> getOrdersForWorker(int workerID) {
+    return null;
   }
 
   @Override public void updateStock(Product p, int desiredQuantity)

@@ -14,15 +14,20 @@ public interface Model extends Subject
   ArrayList<Employee> getWorkers();
   void registerCustomer(Customer newUser);
   void registerEmployee(Employee employee);
+  void removeEmployee(Employee e);
   Customer loginCustomer(String username, String password);
   int userCount();
   Employee loginEmployee(int ID, int pin);
+
   ArrayList<Product> getProducts();
   void addProduct(Product p);
   void deleteProduct(Product p);
-  void removeEmployee(Employee e);
+
   void addNewOrder(Order newOrder);
   ArrayList<Order> getOrders(int customerId);
-
+  ArrayList<Order> getAllOrders();
+  ArrayList<Order> getWorkerOrdersForManager(int workerID);
+  ArrayList<Order> getOrdersForWorker(int workerID);
+  void changeOrderAssignee(Order order);
   void updateStock(Product p, int desiredQuantity);
 }

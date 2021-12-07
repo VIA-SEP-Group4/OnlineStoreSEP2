@@ -31,6 +31,19 @@ public class Server implements RMIServer_Remote{
     serverModelManager.addListener("ProductReply",this::productsUpdate);
     serverModelManager.addListener("AdminReply",this::adminUpdate);
     serverModelManager.addListener("ManagerReply",this::managerUpdate);
+    serverModelManager.addListener("newOrder",this::managerOrderUpdate);
+  }
+
+  private void managerOrderUpdate(PropertyChangeEvent event) {
+    for(Remote client: clients){
+      if(client instanceof ManagerRemoteClient){
+        try {
+          ((ManagerRemoteClient) client).receiveUpdatedOrders(event.getNewValue());
+        } catch (RemoteException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   private void managerUpdate(PropertyChangeEvent event) {
@@ -128,6 +141,7 @@ public class Server implements RMIServer_Remote{
     {
       Employee loggedUser = serverModelManager.loginEmployee(id,pin);
       reply = "successful login "+loggedUser.getType();
+      System.out.println(reply);
 
     }catch (RuntimeException e){
       reply = e.getMessage();
@@ -172,10 +186,9 @@ public class Server implements RMIServer_Remote{
     return serverModelManager.getOrders(customerId);
   }
 
-  //TODO return from model
-  @Override
-  public ArrayList<Order> getAllOrders() throws RemoteException {
-    return null;
+  @Override public void changeOrderAssignee(Order order) throws RemoteException
+  {
+    serverModelManager.changeOrderAssignee(order);
   }
 
   @Override public void addToCart(Product p, int desiredQuantity) throws RemoteException
@@ -234,4 +247,18 @@ public class Server implements RMIServer_Remote{
     serverModelManager.removeEmployee(e);
   }
 
+  @Override public ArrayList<Order> getAllOrders() throws RemoteException
+  {
+    return serverModelManager.getAllOrders();
+  }
+
+  @Override
+  public ArrayList<Order> getWorkerOrdersForManager(int workerID) throws RemoteException {
+    return serverModelManager.getWorkerOrdersForManager(workerID);
+  }
+
+  @Override
+  public ArrayList<Order> getOrdersForWorker(int workerID) throws RemoteException {
+    return null;
+  }
 }

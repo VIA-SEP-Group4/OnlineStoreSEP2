@@ -27,11 +27,17 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
         support=new PropertyChangeSupport(this);
         manager.addListener("ManagerWorkersReply",this);
         manager.addListener("AddedWorker",this);
+        manager.addListener("newOrder",this);
     }
 
     @Override
     public ArrayList<Order> getAllOrders() {
         return manager.getAllOrders();
+    }
+
+    @Override
+    public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
+        return manager.getWorkerOrdersForManager(workerID);
     }
 
     @Override

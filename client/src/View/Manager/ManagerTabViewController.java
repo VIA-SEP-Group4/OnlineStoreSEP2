@@ -7,8 +7,11 @@ public class ManagerTabViewController {
     private ProductsViewController productsViewController;
     @FXML
     private WorkersOverviewController workersOverviewController;
+    @FXML
+    private OrderOverviewController orderOverviewController;
     public void init(){
         productsViewController.init();
         workersOverviewController.init();
+        orderOverviewController.init();
     }
 }

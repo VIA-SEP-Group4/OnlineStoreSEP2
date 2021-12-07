@@ -17,6 +17,7 @@ public class WorkerModelImpl implements WorkerModel,PropertyChangeListener {
     private Employee loggedEmployee=null;
     public WorkerModelImpl(WorkerClient workerClient,LoginClient login) {
         this.worker=workerClient;
+        workerClient.startClient();
         if(!login.isStarted()) login.startClient();
         support=new PropertyChangeSupport(this);
     }
@@ -29,6 +30,19 @@ public class WorkerModelImpl implements WorkerModel,PropertyChangeListener {
     @Override
     public void changeOrderStatus(Order order) {
 
+    }
+
+    @Override public void changeOrderAssignee(Order order)
+    {
+        // TODO: 07/12/2021 get the client???
+//        order.setWorkerID(getLoggedEmployee().getID());
+        order.setWorkerID(3);
+        worker.changeOrderAssignee(order);
+    }
+
+    @Override public ArrayList<Order> getAllOrders()
+    {
+        return worker.getAllOrders();
     }
 
     @Override

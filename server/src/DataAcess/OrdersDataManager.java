@@ -3,6 +3,7 @@ package DataAcess;
 import Model.Models.Order;
 import Model.Models.Product;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class OrdersDataManager implements OrdersDataAccessor
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)
-        throw new RuntimeException("Product insertion failed");
+        throw new RuntimeException("Order insertion failed");
     }
     catch (SQLException ex) {
       System.out.println(ex.getMessage());
@@ -74,9 +75,10 @@ public class OrdersDataManager implements OrdersDataAccessor
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
+    support.firePropertyChange("newOrder",null,getAllOrders());
   }
 
-  @Override public ArrayList<Order> getOrders()
+  @Override public ArrayList<Order> getAllOrders()
   {
     String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
     ArrayList<Order> orders = new ArrayList<>();
@@ -186,8 +188,8 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   //TODO make it  return only certain worker's orders
   @Override
-  public ArrayList<Order> getWorkerOrders(int workerId) {
-    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
+  public ArrayList<Order> getWorkerOrdersForManager(int workerId) {
+    String SQL = "select order_id,status,timestamp from eshop.orders ord join eshop.employees emp on ord.warehouse_worker_id=emp.employee_id where warehouse_worker_id=" +workerId;
     ArrayList<Order> orders = new ArrayList<>();
 
     try (Connection conn =  DBSConnection.getInstance().connect();
@@ -197,35 +199,14 @@ public class OrdersDataManager implements OrdersDataAccessor
       //for each order
       while (rs.next())
       {
-        int currOrderId = rs.getInt("order_id");
-        String productsSQL = "select * from eshop.ordered_products o_p join eshop.products prod on o_p.product_id=prod.product_id WHERE order_id=" +currOrderId;
-
-        Statement productsStmt = conn.createStatement();
-        ResultSet productsRs = productsStmt.executeQuery(productsSQL);
-        ArrayList<Product> currProducts = new ArrayList<>();
-        //for each product
-        while (productsRs.next())
-        {
-          currProducts.add(new Product(
-                          productsRs.getString("product_name"),
-                          productsRs.getString("type"),
-                          productsRs.getDouble("price"),
-                          productsRs.getString("description"),
-                          productsRs.getInt("quantity"),
-                          productsRs.getInt("product_id")
-                  )
-          );
-        }
-        productsRs.close();
 
         orders.add(new Order(
                 rs.getInt("order_id"),
-                rs.getInt("customer_id"),
-                rs.getInt("warehouse_worker_id"),
+                -1,
+                -1,
                 rs.getString("status"),
                 rs.getTimestamp("timestamp"),
-                currProducts)
-        );
+                null));
       }
 
     } catch (SQLException ex){
@@ -235,4 +216,36 @@ public class OrdersDataManager implements OrdersDataAccessor
     return orders;
   }
 
+  @Override
+  public void addListener(String eventName, PropertyChangeListener listener) {
+    support.addPropertyChangeListener(eventName,listener);
+  }
+
+  @Override
+  public void removeListener(String eventName, PropertyChangeListener listener) {
+    support.removePropertyChangeListener(eventName,listener);
+  }
+  @Override public void changeOrderAssignee(Order order)
+  {
+//    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
+
+    try (Connection conn =  DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement())
+    {
+      String orderSQL = "UPDATE " +SCHEMA+ "." +TABLE + " SET warehouse_worker_id = " + order.getWorkerID() + " WHERE order_id = " + order.getOrderId();
+      stmt.executeUpdate(orderSQL);
+//      ResultSet rs = stmt.executeQuery(SQL);
+//      while (rs.next()){
+//        //display values for testing
+//        System.out.println("Order ID: " + rs.getInt("order_id"));
+//        System.out.println("Customer ID: " + rs.getInt("customer_id"));
+//        System.out.println("Worker ID: " + rs.getInt("warehouse_worker_id"));
+//        System.out.println("Status: " + rs.getString("status"));
+//        System.out.println("Timestamp: " + rs.getTimestamp("timestamp"));
+//      }
+//      rs.close();
+    } catch (SQLException ex){
+      System.out.println(ex.getMessage());
+    }
+  }
 }

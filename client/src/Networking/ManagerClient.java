@@ -13,6 +13,9 @@ public interface ManagerClient extends Subject {
     void startClient();
 
     ArrayList<Order> getAllOrders();
+    ArrayList<Order> getWorkerOrdersForManager(int workerID);
+
+
     ArrayList<Product> getAllProducts();
 
     ArrayList<Employee> getAllWorkers();
