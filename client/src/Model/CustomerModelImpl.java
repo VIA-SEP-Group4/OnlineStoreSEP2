@@ -56,6 +56,18 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
         customer.addToCart(p, desiredQuantity);
     }
 
+    @Override public void removeFromCart(Product p, int desiredQuantity)
+    {
+        for (int i = 0; i < cart.size(); i++)
+        {
+            if(cart.get(i).getProductId()==p.getProductId())
+            {
+                cart.remove(i);
+            }
+        }
+        customer.addToCart(p, desiredQuantity);
+    }
+
     public void addToCart(Product p){
         cart.add(p);
     }

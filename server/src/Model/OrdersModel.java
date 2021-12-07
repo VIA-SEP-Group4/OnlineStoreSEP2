@@ -14,4 +14,5 @@ public interface OrdersModel extends Subject
   ArrayList<Order> getWorkerOrdersForManager(int workerID);
   ArrayList<Order> getOrdersForWorker(int workerID);
   void changeOrderAssignee(Order order);
+  void updateOrderStatus(Order order, String status);
 }

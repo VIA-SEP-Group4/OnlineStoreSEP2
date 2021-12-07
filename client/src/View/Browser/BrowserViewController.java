@@ -97,7 +97,6 @@ public class BrowserViewController
 
   public void onFilterBy(ActionEvent actionEvent)
   {
-    viewModel.setType(filterByComboBox.valueProperty().getValue());
     viewModel.filterBy();
   }
 
