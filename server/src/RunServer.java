@@ -1,5 +1,8 @@
 
+import Enums.EmployeeType;
 import Model.CredentialsModelManager;
+import Model.Models.Employee;
+import Model.Models.Product;
 import Model.OrdersModelManager;
 import Model.ProductsModelManager;
 import Networking.Server;
@@ -15,7 +18,6 @@ public class RunServer {
         createRegistry();
 
         //create and start server
-//        ServerModelManager serverModelManager = new ServerModelManager();
         CredentialsModelManager cmm = new CredentialsModelManager();
         ProductsModelManager pmm = new ProductsModelManager();
         OrdersModelManager omm = new OrdersModelManager();

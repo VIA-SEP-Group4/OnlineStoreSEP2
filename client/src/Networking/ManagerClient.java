@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface ManagerClient extends Subject {
     void addProduct(Product p);
     void deleteProduct(Product p);
+    void editProduct(Product p);
     void startClient();
 
     ArrayList<Order> getAllOrders();

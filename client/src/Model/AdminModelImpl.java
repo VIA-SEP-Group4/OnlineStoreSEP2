@@ -45,6 +45,11 @@ public class AdminModelImpl implements AdminModel,PropertyChangeListener {
     }
 
     @Override
+    public void editManager(Employee manager) {
+        client.editManager(manager);
+    }
+
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println(evt.getNewValue());
         support.firePropertyChange(evt);

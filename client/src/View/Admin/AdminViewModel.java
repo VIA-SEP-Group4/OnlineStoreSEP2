@@ -18,6 +18,8 @@ public class AdminViewModel {
     private StringProperty pin;
     private StringProperty error;
     private BooleanProperty isAdded;
+    private boolean isEdit=false;
+    private int tempId=0;
     public AdminViewModel(AdminModel adminModel) {
         this.adminModel=adminModel;
         firstName=new SimpleStringProperty();
@@ -50,7 +52,12 @@ public class AdminViewModel {
         adminModel.removeManager(manager);
     }
 
-    public void editManager() {
+    public void editManager(Employee e) {
+        firstName.setValue(e.getFirstName());
+        lastName.setValue(e.getLastName());
+        pin.setValue(String.valueOf(e.getPin()));
+        isEdit=true;
+        tempId=e.getID();
     }
 
     public void addNewManager() {
@@ -60,8 +67,13 @@ public class AdminViewModel {
                 pin.getValue()!=null && !pin.getValue().equals("")
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
-            else {
+            else if(!isEdit) {
                 adminModel.addManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
+                clearFields();
+            }else{
+                adminModel.editManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.MANAGER,tempId));
+                isEdit=false;
+                isAdded.setValue(true);
                 clearFields();
             }
 

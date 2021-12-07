@@ -19,6 +19,7 @@
                   <TableColumn fx:id="priceColumn" editable="false" prefWidth="88.79998779296875" text="Price" />
                   <TableColumn fx:id="quantityColumn" editable="false" prefWidth="92.79998779296875" text="Quantity" />
                   <TableColumn fx:id="descriptionColumn" editable="false" prefWidth="195.20001220703125" text="Description" />
+                  <TableColumn fx:id="prodIDCol" prefWidth="75.0" text="Product ID" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

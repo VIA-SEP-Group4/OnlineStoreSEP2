@@ -49,6 +49,9 @@ public class WorkersOverviewController {
     }
 
     public void onEdit(ActionEvent actionEvent) {
+        Employee e=workersTable.getSelectionModel().getSelectedItem();
+        viewModel.setEditFields(e);
+        viewHandler.openWorkersDetailPane();
     }
 
     public void onSelectWorker(MouseEvent mouseEvent) {

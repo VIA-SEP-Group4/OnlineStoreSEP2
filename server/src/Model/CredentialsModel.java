@@ -15,6 +15,7 @@ public interface CredentialsModel extends Subject
   void registerCustomer(Customer newUser);
   void registerEmployee(Employee employee);
   void removeEmployee(Employee e);
+  void editEmployee(Employee e);
 
   Customer loginCustomer(String username, String password);
   Employee loginEmployee(int ID, int pin);

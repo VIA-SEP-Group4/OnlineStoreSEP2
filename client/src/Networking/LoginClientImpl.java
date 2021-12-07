@@ -78,6 +78,15 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     }
 
     @Override
+    public void editEmployee(Employee e) {
+        try {
+            serverStub.editEmployee(e);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);
     }

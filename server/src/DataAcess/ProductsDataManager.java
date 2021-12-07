@@ -42,7 +42,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
-
         return products;
     }
 
@@ -108,7 +107,25 @@ public class ProductsDataManager implements ProductsDataAcessor {
             throw new RuntimeException(ex.getMessage());
         }
     }
+    @Override public void editProduct(Product p)
+    {
+        System.out.println(p);
+        String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET product_name="+"'"+p.getName()+"'"+",description="+"'"+p.getDescription()+"'"
+                +",type="+"'"+p.getType()+"'"+",quantity="+p.getQuantity()+",price="+p.getPrice()
+                + " WHERE product_id = '" +p.getProductId()+ "'";
 
+        try (Connection conn = DBSConnection.getInstance().connect();
+             Statement stmt = conn.createStatement())
+        {
+            int affectedRows = stmt.executeUpdate(SQL);
+            if (affectedRows <= 0)
+                throw new RuntimeException("Product update failed");
+            support.firePropertyChange("ProductReply",null,getProducts());
+        }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);

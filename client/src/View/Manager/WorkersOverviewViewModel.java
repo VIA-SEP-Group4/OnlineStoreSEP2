@@ -23,6 +23,8 @@ public class WorkersOverviewViewModel {
     private StringProperty pin;
     private StringProperty error;
     private BooleanProperty isAdded;
+    private boolean isEdit=false;
+    private int tempID=0;
     public WorkersOverviewViewModel(ManagerModel managerModel) {
         model=managerModel;
         employees= FXCollections.observableArrayList();
@@ -60,8 +62,14 @@ public class WorkersOverviewViewModel {
                 pin.getValue()!=null && !pin.getValue().equals("")
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
-            else {
+            else if(!isEdit){
                 model.addWorker(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.WAREHOUSE_WORKER,0));
+                clearFields();
+            }else {
+                model.editEmployee(new Employee(firstName.get(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.WAREHOUSE_WORKER,tempID));
+                isEdit=false;
+                tempID=0;
+                isAdded.setValue(true);
                 clearFields();
             }
 
@@ -125,5 +133,13 @@ public class WorkersOverviewViewModel {
     }
     public ObservableList<Order> getWorkerOrders(){
         return responsibleFor;
+    }
+
+    public void setEditFields(Employee e) {
+        firstName.setValue(e.getFirstName());
+        lastName.setValue(e.getLastName());
+        pin.setValue(String.valueOf(e.getPin()));
+        isEdit=true;
+        tempID=e.getID();
     }
 }

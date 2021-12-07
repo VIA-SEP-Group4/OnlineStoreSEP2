@@ -36,9 +36,7 @@ public class AddProductViewController
       }
     });
     productPriceField.textProperty().bindBidirectional(viewModel.prodPriceProperty(), new NumberStringConverter());
-    productPriceField.textProperty().setValue("");
     productQuantityField.textProperty().bindBidirectional(viewModel.prodQuantityProperty(), new NumberStringConverter());
-    productQuantityField.textProperty().setValue("");
     productDescriptionField.textProperty().bindBidirectional(viewModel.prodDescriptionProperty());
     errorLabel.textProperty().bind(viewModel.getError());
   }

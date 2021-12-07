@@ -61,6 +61,11 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
     }
 
     @Override
+    public void editProduct(Product p) {
+        manager.editProduct(p);
+    }
+
+    @Override
     public void addWorker(Employee employee) {
         manager.addWorker(employee);
     }
@@ -74,6 +79,10 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
     public Employee getLoggedEmployee() {
         loggedEmployee=login.getLoggedEmployee();
         return loggedEmployee;
+    }
+    @Override
+    public void editEmployee(Employee e) {
+       login.editEmployee(e);
     }
 
     @Override

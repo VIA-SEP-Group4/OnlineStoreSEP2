@@ -54,6 +54,11 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     credentialsDataAccessor.removeEmployee(e);
   }
 
+  @Override
+  public void editEmployee(Employee e) {
+    credentialsDataAccessor.editEmployee(e);
+  }
+
 
   @Override public int userCount()
   {

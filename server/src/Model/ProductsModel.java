@@ -11,4 +11,6 @@ public interface ProductsModel extends Subject
   void addProduct(Product p);
   void deleteProduct(Product p);
   void updateStock(Product p, int quantityTaken);
+
+    void editProduct(Product p);
 }

@@ -200,6 +200,11 @@ public class Server implements RMIServer_Remote{
     productsModelManager.deleteProduct(p);
   }
 
+  @Override
+  public void editProduct(Product p) throws RemoteException {
+    productsModelManager.editProduct(p);
+  }
+
   @Override public void addNewOrder(Order newOrder)
   {
     ordersModelManager.addNewOrder(newOrder);
@@ -243,6 +248,11 @@ public class Server implements RMIServer_Remote{
   @Override
   public void removeManager(Employee manager) throws RemoteException {
       credentialsModelManager.removeEmployee(manager);
+  }
+
+  @Override
+  public void editEmployee(Employee e) {
+    credentialsModelManager.editEmployee(e);
   }
 
   @Override

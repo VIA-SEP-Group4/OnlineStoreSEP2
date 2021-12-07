@@ -11,32 +11,29 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ProductsViewController
 {
+
   @FXML private TableView<Product> prodColumns;
   @FXML private TableColumn<Product, String> nameColumn;
   @FXML private TableColumn<Product, String> typeColumn;
   @FXML private TableColumn<Product, Number> priceColumn;
   @FXML private TableColumn<Product, Number> quantityColumn;
   @FXML private TableColumn<Product, String> descriptionColumn;
-
+  @FXML private TableColumn<Product, Integer> prodIDCol;
   private ViewHandler viewHandler;
   private ProductsViewModel viewModel;
-
+  private AddProductViewModel addViewModel;
     public void init()
   {
     this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getProductsViewModel();
-
+    this.addViewModel=ViewModelFactory.getAddProductViewModel();
+    prodColumns.setItems(viewModel.getProducts());
     nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
     typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
     priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
     quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-    prodColumns.setItems(viewModel.getProducts());
-
-    viewModel.getProd();
-    reset();
-
+    prodIDCol.setCellValueFactory(new PropertyValueFactory<>("productId"));
   }
 
   private void reset()
@@ -51,6 +48,9 @@ public class ProductsViewController
 
   public void onEditProdButton(ActionEvent actionEvent)
   {
+    Product p=prodColumns.getSelectionModel().getSelectedItem();
+    addViewModel.editProduct(p);
+    viewHandler.openAddProductPane();
   }
 
   public void onDeleteProdButton(ActionEvent actionEvent)

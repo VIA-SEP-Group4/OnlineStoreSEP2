@@ -37,7 +37,9 @@ public class AdminViewController {
     }
 
     public void editManager(ActionEvent actionEvent) {
-        viewModel.editManager();
+        Employee e=managersTable.getSelectionModel().getSelectedItem();
+        viewModel.editManager(e);
+        viewHandler.openManagerDetailPane();
     }
 
 

@@ -20,7 +20,8 @@ public class AddProductViewModel implements PropertyChangeListener
   private SimpleIntegerProperty prodQuantity;
   private StringProperty prodDescription;
   private StringProperty errorLabel;
-
+  private boolean isEdit=false;
+  private int tempId=0;
   public AddProductViewModel(ManagerModel managerModel)
   {
     this.managerModel = managerModel;
@@ -42,9 +43,18 @@ public class AddProductViewModel implements PropertyChangeListener
         && prodPrice.getValue()!=null && prodQuantity.getValue()!=null
         && prodDescription.getValue()!=null && !prodDescription.getValue().equals(""))
     {
-      Product product = new Product(prodName.getValue(), prodType.getValue(),prodPrice.getValue(),prodDescription.getValue(),prodQuantity.getValue());
-      managerModel.addProduct(product);
-      return true;
+      if(!isEdit) {
+        Product product = new Product(prodName.getValue(), prodType.getValue(), prodPrice.getValue(), prodDescription.getValue(), prodQuantity.getValue());
+        managerModel.addProduct(product);
+        return true;
+      }
+      else {
+        Product p=new Product(prodName.getValue(),prodType.getValue(),prodPrice.getValue(),prodDescription.getValue(),prodQuantity.getValue(),tempId);
+        managerModel.editProduct(p);
+        isEdit=false;
+        tempId=0;
+        return true;
+      }
     }
     else
     {
@@ -86,5 +96,15 @@ public class AddProductViewModel implements PropertyChangeListener
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
 
+  }
+
+  public void editProduct(Product p) {
+    prodName.setValue(p.getName());
+    prodType.setValue(p.getType());
+    prodDescription.setValue(p.getDescription());
+    prodPrice.setValue(p.getPrice());
+    prodQuantity.setValue(p.getQuantity());
+    isEdit=true;
+    tempId=p.getProductId();
   }
 }

@@ -20,7 +20,7 @@ public class ProductsViewModel implements PropertyChangeListener
   {
     this.managerModel = managerModel;
     this.products = FXCollections.observableArrayList();
-    
+    products.setAll(managerModel.getProducts());
     managerModel.addListener("ProductsReply",this);
   }
 
@@ -33,24 +33,16 @@ public class ProductsViewModel implements PropertyChangeListener
     managerModel.deleteProduct(p);
   }
 
-  public void getProd(){
-    ArrayList<Product> prod = managerModel.getProducts();
-    for (Product product:prod)
-    {
-      products.add(new Product(product.getName(),product.getType(),product.getPrice(),product.getDescription(),product.getQuantity()));
-    }
-  }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     ArrayList<Product> product= (ArrayList<Product>) evt.getNewValue();
     for(Product p : product){
-      products.add(new Product(p.getName(),p.getType(),p.getPrice(),p.getDescription(),p.getQuantity()));
+      products.add(new Product(p.getName(),p.getType(),p.getPrice(),p.getDescription(),p.getQuantity(),p.getProductId()));
     }
   }
 
   public void reset()
   {
     products.clear();
-    getProd();
   }
 }

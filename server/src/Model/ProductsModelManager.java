@@ -41,6 +41,10 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
     productsDataAcessor.updateStock(p, desiredQuantity);
   }
 
+  @Override
+  public void editProduct(Product p) {
+    productsDataAcessor.editProduct(p);
+  }
 
 
   @Override public void addListener(String eventName, PropertyChangeListener listener) {

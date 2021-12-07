@@ -135,7 +135,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
     return loggedEmployee;
   }
-
+ //TODO handle exception by sending string back
   @Override
   public void removeEmployee(Employee e) {
     String SQL = "DELETE FROM " +SCHEMA+ ".employees WHERE " +SCHEMA+ ".employees"+ ".employee_id = '" +e.getID()+ "'";
@@ -287,7 +287,23 @@ public class CredentialsDataManager implements CredentialsDataAccessor
   }
 
 
+  @Override
+  public void editEmployee(Employee e) {
+    String SQL = "update eshop.employees set first_name="+"'"+e.getFirstName()+"'"+", last_name="+"'"+e.getLastName()+"'"+",  pin ="+e.getPin()+ " where employee_id="+e.getID();
 
+    try (Connection conn = DBSConnection.getInstance().connect();
+         Statement stmt = conn.createStatement())
+    {
+      int affectedRows = stmt.executeUpdate(SQL);
+      if (affectedRows <= 0)
+        throw new RuntimeException("Employee update failed");
+      if(e.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
+      else if(e.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
+    }catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
+    }
+  }
   @Override
   public void addListener( String eventName,PropertyChangeListener listener) {
     support.addPropertyChangeListener(eventName,listener);

@@ -74,6 +74,15 @@ public class AdminClientImpl implements AdminClient,AdminRemoteClient{
     }
 
     @Override
+    public void editManager(Employee manager) {
+        try {
+            serverStub.editEmployee(manager);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void receiveUpdatedManagers(Object managers) throws RemoteException {
         support.firePropertyChange("AdminReply",null,managers);
     }

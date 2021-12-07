@@ -1,5 +1,6 @@
 package Model.Models;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Product implements Serializable
@@ -10,6 +11,8 @@ public class Product implements Serializable
     private String description;
     private int quantity;
     private int productId;
+    @Serial
+    private static final long serialVersionUID=3L;
 
     //when being  created and posted to the DB (-> id created in the DB [-SERIAL])
     public Product(String name, String type, double price, String description, int quantity)
@@ -88,11 +91,16 @@ public class Product implements Serializable
         this.quantity = amount;
     }
 
-    @Override public String toString()
-    {
-        return name + "(" + type + "),"
-            + "\ndescription= " + description
-            + "\n, price= " + price +", quantity= " + quantity + '}';
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", productId=" + productId +
+                '}';
     }
 
     public int getProductId()

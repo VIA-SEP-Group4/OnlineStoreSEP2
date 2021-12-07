@@ -15,5 +15,6 @@ public interface CredentialsDataAccessor extends Subject
   ArrayList<Employee> getEmployees();
   Employee loginEmployee(int ID, int pin);
 
-    void removeEmployee(Employee e);
+  void editEmployee(Employee e);
+  void removeEmployee(Employee e);
 }

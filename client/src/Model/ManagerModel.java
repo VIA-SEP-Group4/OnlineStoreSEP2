@@ -15,9 +15,11 @@ public interface ManagerModel extends Subject {
 
     void addProduct(Product p);
     void deleteProduct(Product p);
+    void editProduct(Product p);
+
     void addWorker(Employee employee);
     void removeWorker(Employee employee);
-
+    void editEmployee(Employee e);
     Employee getLoggedEmployee();
 
 }

@@ -11,4 +11,5 @@ public interface AdminClient extends Subject {
     void addManager(Employee manager);
 
     void removeManager(Employee manager);
+    void editManager(Employee manager);
 }

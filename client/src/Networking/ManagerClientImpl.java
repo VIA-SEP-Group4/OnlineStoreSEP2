@@ -131,6 +131,15 @@ public class ManagerClientImpl implements ManagerClient, ManagerRemoteClient {
         }
     }
 
+    @Override
+    public void editProduct(Product p) {
+        try {
+            serverStub.editProduct(p);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void receiveUpdatedProducts(Object products) throws RemoteException {

@@ -21,6 +21,7 @@ public interface RMIServer_Remote extends Remote
   ArrayList<Product> getProducts() throws RemoteException;
   void addProduct(Product product) throws RemoteException;
   void deleteProduct(Product p) throws RemoteException;
+  void editProduct(Product p) throws RemoteException;
 
   void addNewOrder(Order newOrder) throws RemoteException;
   ArrayList<Order> getOrders(int customerId) throws RemoteException;
@@ -40,4 +41,5 @@ public interface RMIServer_Remote extends Remote
 
   void removeWorker(Employee e) throws RemoteException;
   void removeManager(Employee manager) throws  RemoteException;
+  void editEmployee(Employee e) throws RemoteException;
 }
