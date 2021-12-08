@@ -26,7 +26,6 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     //listeners
     credentialsDataAccessor.addListener("AdminReply",this);
     credentialsDataAccessor.addListener("ManagerReply",this);
-    ordersDataAccessor.addListener("newOrder",this);
   }
 
 

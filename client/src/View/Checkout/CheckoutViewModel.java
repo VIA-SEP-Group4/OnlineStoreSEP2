@@ -8,6 +8,8 @@ import Model.Models.Product;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 public class CheckoutViewModel
@@ -35,6 +37,13 @@ public class CheckoutViewModel
     status = new SimpleObjectProperty<>();
 
     orderDetailLabel = new SimpleStringProperty();
+
+    customerModel.addListener("newOrder", this::updateOrders);
+  }
+
+  private void updateOrders(PropertyChangeEvent evt)
+  {
+    orders.setAll((ArrayList<Order>)evt.getNewValue());
   }
 
   public ObservableList<Order> getOrders()
@@ -63,7 +72,7 @@ public class CheckoutViewModel
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
       Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
 
-      orders.add(newOrder);
+//      orders.add(newOrder);
       customerModel.processOrder(newOrder);
 
       cartProducts.clear();

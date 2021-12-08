@@ -26,7 +26,13 @@ public class ProductsDataManager implements ProductsDataAcessor {
      */
     @Override
     public ArrayList<Product> getProducts() {
+        int pageIndex = 1;
+        int numberOfProductsPerPage = 10;
+
+        int offset = (pageIndex -1) * numberOfProductsPerPage;
+        int limit = numberOfProductsPerPage;
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
+        //        String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " OFFSET "+offset+ "LIMIT "+limit;
         ArrayList<Product> products = new ArrayList<>();
 
         try (Connection conn =  DBSConnection.getInstance().connect();
@@ -42,6 +48,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
+        System.out.println(products);
         return products;
     }
 

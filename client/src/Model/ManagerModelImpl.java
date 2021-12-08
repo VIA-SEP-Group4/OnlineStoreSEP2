@@ -28,6 +28,7 @@ public class ManagerModelImpl implements ManagerModel, PropertyChangeListener {
         manager.addListener("ManagerWorkersReply",this);
         manager.addListener("AddedWorker",this);
         manager.addListener("newOrder",this);
+        manager.addListener("ProductsReply",this);
     }
 
     @Override

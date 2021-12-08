@@ -64,11 +64,11 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         String reply = "denied";
         try {
             reply = serverStub.loginCustomer(username, password, this);
+            support.firePropertyChange("LoggedCustomerObj", null, loggedCustomer);
         } catch (RemoteException | RuntimeException e) {
             System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
         }
-        support.firePropertyChange("LoggedCustomerObj", null, loggedCustomer);
         support.firePropertyChange("LoginReply",null, reply);
     }
 

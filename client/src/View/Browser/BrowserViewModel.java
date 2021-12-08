@@ -183,6 +183,7 @@ public class BrowserViewModel implements PropertyChangeListener
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
+    System.out.println(products);
     browserTable.setAll(products);
   }
 

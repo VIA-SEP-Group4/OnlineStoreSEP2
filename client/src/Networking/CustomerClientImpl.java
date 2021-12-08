@@ -92,4 +92,9 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
     public void receiveUpdatedProducts(Object products) throws RemoteException {
         support.firePropertyChange("ProductsReply",null,products);
     }
+
+    @Override public void receiveUpdatedOrders(Object orders) throws RemoteException
+    {
+        support.firePropertyChange("newOrder", null, orders);
+    }
 }

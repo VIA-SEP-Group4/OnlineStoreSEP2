@@ -28,6 +28,7 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
 
         login.addListener("LoggedCustomerObj", this::setLoggedCustomer);
         customer.addListener("ProductsReply",this);
+        customer.addListener("newOrder", this);
     }
 
 

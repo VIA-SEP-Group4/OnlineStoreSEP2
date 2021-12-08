@@ -36,9 +36,7 @@ public class ProductsViewModel implements PropertyChangeListener
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     ArrayList<Product> product= (ArrayList<Product>) evt.getNewValue();
-    for(Product p : product){
-      products.add(new Product(p.getName(),p.getType(),p.getPrice(),p.getDescription(),p.getQuantity(),p.getProductId()));
-    }
+    products.setAll(product);
   }
 
   public void reset()

@@ -50,18 +50,24 @@ public class Server implements RMIServer_Remote{
 
     credentialsModelManager.addListener("AdminReply",this::adminUpdate);
     credentialsModelManager.addListener("ManagerReply",this::managerUpdate);
-    credentialsModelManager.addListener("newOrder",this::managerOrderUpdate);
 
     productsModelManager.addListener("ProductReply",this::productsUpdate);
 
-    ordersModelManager.addListener("newOrder",this::managerOrderUpdate);
+    ordersModelManager.addListener("newOrder",this::ordersUpdate);
   }
 
-  private void managerOrderUpdate(PropertyChangeEvent event) {
+  private void ordersUpdate(PropertyChangeEvent event) {
     for(Remote client: clients){
       if(client instanceof ManagerRemoteClient){
         try {
           ((ManagerRemoteClient) client).receiveUpdatedOrders(event.getNewValue());
+        } catch (RemoteException e) {
+          e.printStackTrace();
+        }
+      }
+      else if(client instanceof CustomerRemoteClient){
+        try {
+          ((CustomerRemoteClient) client).receiveUpdatedOrders(event.getNewValue());
         } catch (RemoteException e) {
           e.printStackTrace();
         }
