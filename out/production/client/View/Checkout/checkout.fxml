@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -28,6 +29,7 @@
                         <Label layoutY="5.0" text="My Shopping cart" AnchorPane.leftAnchor="10.0" />
                         <Button layoutX="512.0" layoutY="325.0" mnemonicParsing="false" onAction="#orderBtn" prefHeight="25.0" prefWidth="73.0" text="Order" />
                         <Button layoutX="14.0" layoutY="325.0" mnemonicParsing="false" onAction="#continueShoppingBtn" text="Continue shopping" />
+                        <Button layoutX="252.0" layoutY="325.0" mnemonicParsing="false" onAction="#deleteProdCart" text="Remove Product" />
                      </children>
                   </AnchorPane>
             </content>
@@ -53,6 +55,7 @@
                            </columns>
                         </TableView>
                         <Label fx:id="orderDetailLabel" layoutX="343.0" layoutY="32.0" prefHeight="17.0" prefWidth="243.0" text="..." />
+                        <ComboBox fx:id="filterByComboBox" layoutX="166.0" layoutY="331.0" onAction="#filterBy" prefWidth="150.0" promptText="Filter by" />
                      </children>
                   </AnchorPane>
             </content>

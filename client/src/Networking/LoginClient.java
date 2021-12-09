@@ -13,4 +13,7 @@ public interface LoginClient extends Subject {
     void loginEmployee(int ID, int pin);
     boolean isStarted();
     void editEmployee(Employee e);
+
+    //TODO ... added 9.12.12:50
+    void deleteCustomer();
 }

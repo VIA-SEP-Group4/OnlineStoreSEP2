@@ -52,7 +52,7 @@
                   <Insets />
                </HBox.margin>
             </TextField>
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#onLogOut" prefHeight="26.0" prefWidth="124.0" text="Log out">
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#onLogOut" prefHeight="30.0" prefWidth="123.0" text="Log out">
                <HBox.margin>
                   <Insets left="190.0" right="10.0" />
                </HBox.margin>
@@ -75,7 +75,12 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="74.0" prefHeight="30.0" prefWidth="702.0">
          <children>
-            <Button fx:id="basketButton" mnemonicParsing="false" onAction="#onBasketButton" prefHeight="30.0" prefWidth="120.0" text="CheckOut">
+            <Button fx:id="accSettingsBtn" mnemonicParsing="false" onAction="#accSettingsBtnPressed" prefHeight="30.0" prefWidth="110.0" text="Account settings">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="checkoutButton" mnemonicParsing="false" onAction="#onBasketButton" prefHeight="30.0" prefWidth="120.0" text="CheckOut">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

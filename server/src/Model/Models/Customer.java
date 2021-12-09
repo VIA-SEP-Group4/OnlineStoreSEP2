@@ -1,21 +1,20 @@
 package Model.Models;
 
-import Model.Models.Order;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Customer implements Serializable
 {
 
-
+  private int customerId = -1;
   private String username;
   private String password;
   private String email;
   private String firstName;
   private String lastName;
+
   private ArrayList<Order> orders;
-  private int customerId = -1;
+  private ArrayList<Product> cart;
 
   //when registered ->created without ID(DB takes care of it)
   public Customer(String username, String password, String email, String firstName, String lastName) {
@@ -25,10 +24,11 @@ public class Customer implements Serializable
     this.firstName = firstName;
     this.lastName = lastName;
 
+    cart = new ArrayList<>();
     orders = new ArrayList<>();
   }
 
-  //whe fetched from DB ->ID must be fetched and assigned to the object!!!
+  //when fetched from DB ->ID must be fetched and assigned to the object!!!
   public Customer(String username, String password, String email, String firstName, String lastName, int customerId) {
     this.username = username;
     this.password = password;
@@ -38,6 +38,7 @@ public class Customer implements Serializable
     this.customerId = customerId;
 
     orders = new ArrayList<>();
+    cart = new ArrayList<>();
   }
 
 
@@ -72,6 +73,10 @@ public class Customer implements Serializable
     return orders;
   }
 
+  public ArrayList<Product> getCart() {
+    return cart;
+  }
+
   public void setOrders(ArrayList<Order> orders)
   {
     this.orders = orders;
@@ -80,13 +85,13 @@ public class Customer implements Serializable
   @Override
   public String toString() {
     return "Customer{" +
-            "username='" + username + '\'' +
-            ", password='" + password + '\'' +
-            ", email='" + email + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", orders=" + orders +
-            ", customerId=" + customerId +
-            '}';
+        "username='" + username + '\'' +
+        ", password='" + password + '\'' +
+        ", email='" + email + '\'' +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", orders=" + orders +
+        ", customerId=" + customerId +
+        '}';
   }
 }

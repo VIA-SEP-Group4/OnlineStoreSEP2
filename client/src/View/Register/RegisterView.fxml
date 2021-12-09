@@ -54,6 +54,6 @@
       <Button layoutX="307.0" layoutY="349.0" mnemonicParsing="false" onAction="#backToLogin" text="Back to Login" />
       <Label fx:id="errorRePasswordLabel" layoutX="408.0" layoutY="239.0" textFill="RED" />
       <Label fx:id="fieldsError" layoutX="32.0" layoutY="239.0" prefHeight="17.0" prefWidth="333.0" textFill="#f80101" />
-      <Label fx:id="succesLabel" layoutX="350.0" layoutY="68.0" textFill="#1eff00" />
+      <Label fx:id="succesLabel" layoutX="235.0" layoutY="266.0" prefHeight="17.0" prefWidth="231.0" textFill="#1eff00" />
    </children>
 </AnchorPane>

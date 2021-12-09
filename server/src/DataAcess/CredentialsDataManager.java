@@ -154,6 +154,23 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
 
+  @Override public void deleteCustomer(int customerId)
+  {
+    String table = "customers";
+    String SQL = "DELETE FROM " +SCHEMA+"."+table+ " WHERE customer_id = '"+customerId+"'";
+
+    try (Connection conn = DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement())
+    {
+      int affectedRows = stmt.executeUpdate(SQL);
+      if (affectedRows <= 0)
+        throw new RuntimeException("Customer deletion failed");
+    }catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
+    }
+  }
+
   private ArrayList<Employee> getManagers() {
     String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"MANAGER"+"'";
     ArrayList<Employee> employees=new ArrayList<>();

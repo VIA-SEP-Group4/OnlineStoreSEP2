@@ -1,5 +1,6 @@
 package Core;
 
+import View.AccountSettings.AccSettingsViewModel;
 import View.Admin.AdminViewModel;
 import View.Checkout.CheckoutViewModel;
 import View.Manager.OrderOverviewViewModel;
@@ -24,9 +25,13 @@ public class ViewModelFactory {
     private static AdminViewModel adminViewModel;
     private static WorkersOverviewViewModel workersOverviewViewModel;
     private static OrderOverviewViewModel orderOverviewViewModel;
+    private static AccSettingsViewModel accSettingsViewModel;
+
+
     public ViewModelFactory(ModelFactory modelFactory) {
         ViewModelFactory.modelFactory =modelFactory;
     }
+
 
     public static LoginViewModel getLoginViewModel() {
         if(loginViewModel==null){
@@ -34,12 +39,14 @@ public class ViewModelFactory {
         }
         return loginViewModel;
     }
+
     public static RegisterViewModel getRegisterViewModel() {
         if(registerViewModel==null){
             registerViewModel=new RegisterViewModel(modelFactory.getCredentialsModel());
         }
         return registerViewModel;
     }
+
     public static BrowserViewModel getBrowserViewModel(){
         if(browserViewModel==null){
             modelFactory.getCredentialsModel();
@@ -47,6 +54,7 @@ public class ViewModelFactory {
         }
         return browserViewModel;
     }
+
     public static ProductsViewModel getProductsViewModel(){
         if(productsViewModel==null){
             modelFactory.getCredentialsModel();
@@ -74,22 +82,34 @@ public class ViewModelFactory {
         }
         return ordersViewModel;
     }
+
     public static AdminViewModel getAdminViewModel(){
         if(adminViewModel == null){
             adminViewModel = new AdminViewModel(modelFactory.getAdminModel());
         }
         return adminViewModel;
     }
+
     public static WorkersOverviewViewModel getWorkersOverviewViewModel(){
         if(workersOverviewViewModel==null){
             workersOverviewViewModel=new WorkersOverviewViewModel(modelFactory.getManagerModel());
         }
         return workersOverviewViewModel;
     }
+
     public static OrderOverviewViewModel getOrdersOverviewViewModel(){
         if(orderOverviewViewModel ==null){
             orderOverviewViewModel =new OrderOverviewViewModel(modelFactory.getManagerModel());
         }
         return orderOverviewViewModel;
+    }
+
+
+    public static AccSettingsViewModel getAccSettingsViewModel()
+    {
+        if (accSettingsViewModel == null){
+            accSettingsViewModel = new AccSettingsViewModel(modelFactory.getCredentialsModel());
+        }
+        return accSettingsViewModel;
     }
 }

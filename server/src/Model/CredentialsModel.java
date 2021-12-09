@@ -19,4 +19,6 @@ public interface CredentialsModel extends Subject
 
   Customer loginCustomer(String username, String password);
   Employee loginEmployee(int ID, int pin);
+
+  void deleteCustomer(int customerId);
 }

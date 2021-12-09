@@ -2,6 +2,7 @@ package Core;
 
 import View.Admin.AdminViewController;
 import View.Admin.ManagerDetailViewController;
+import View.AccountSettings.AccSettingsViewController;
 import View.Browser.ProductDetailController;
 import View.Checkout.CheckoutViewController;
 import View.Manager.ManagerTabViewController;
@@ -219,6 +220,23 @@ public class ViewHandler {
             view.init();
             Scene scene = new Scene(root);
             stage.setTitle("Orders");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openAccSettingsPane()
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../View/AccountSettings/AccSettingsView.fxml"));
+            Parent root = loader.load();
+            AccSettingsViewController view = loader.getController();
+            view.init();
+            Scene scene = new Scene(root);
+            stage.setTitle("Account Settings");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

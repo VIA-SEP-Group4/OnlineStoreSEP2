@@ -266,6 +266,20 @@ public class Server implements RMIServer_Remote{
     credentialsModelManager.editEmployee(e);
   }
 
+  @Override public String deleteCustomer(int customerId) throws RemoteException
+  {
+    String reply;
+    try
+    {
+      credentialsModelManager.deleteCustomer(customerId);
+      reply = "Account deleted successfully";
+    }catch (RuntimeException e){
+      System.out.println(e.getMessage());
+      reply = e.getMessage();
+    }
+    return reply;
+  }
+
   @Override
   public ArrayList<Employee> getWorkers() throws RemoteException {
     return credentialsModelManager.getWorkers();

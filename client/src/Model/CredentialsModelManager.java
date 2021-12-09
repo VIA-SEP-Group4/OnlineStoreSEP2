@@ -50,7 +50,15 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     return client.getLoggedEmployee();
   }
 
+  @Override public void editUser()
+  {
+    System.out.println("user requested to be edited - " + getLoggedCustomer());
+  }
 
+  @Override public void deleteCustomer()
+  {
+    client.deleteCustomer();
+  }
 
 
   @Override

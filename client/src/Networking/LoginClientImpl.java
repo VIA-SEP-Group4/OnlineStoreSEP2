@@ -2,6 +2,7 @@ package Networking;
 
 import Model.Models.Customer;
 import Model.Models.Employee;
+import View.AccountSettings.AccountDeletedExceptionReply;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -16,7 +17,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
     private String clientId;
     private PropertyChangeSupport support;
     private Customer loggedCustomer = null;
-    private Employee loggedEmployee=null;
+    private Employee loggedEmployee = null;
     private boolean started=false;
 
     public LoginClientImpl() {
@@ -64,7 +65,6 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         String reply = "denied";
         try {
             reply = serverStub.loginCustomer(username, password, this);
-            support.firePropertyChange("LoggedCustomerObj", null, loggedCustomer);
         } catch (RemoteException | RuntimeException e) {
             System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
@@ -84,6 +84,17 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override public void deleteCustomer()
+    {
+        String reply;
+        try {
+            reply = serverStub.deleteCustomer(loggedCustomer.getCustomerId());
+        } catch (RemoteException e) {
+            reply = "Account deleting failed";
+        }
+        throw new AccountDeletedExceptionReply(reply);
     }
 
     @Override
@@ -116,6 +127,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
 
     @Override public void setLoggedCustomer(Customer loggedCustomer) throws RemoteException {
         this.loggedCustomer = loggedCustomer;
+        support.firePropertyChange("LoggedCustomerObj", null, loggedCustomer);
     }
 
     public Customer getLoggedCustomer() {

@@ -1,21 +1,20 @@
 package Model.Models;
 
-import Model.Models.Order;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Customer implements Serializable
 {
 
-
+  private int customerId = -1;
   private String username;
   private String password;
   private String email;
   private String firstName;
   private String lastName;
+
   private ArrayList<Order> orders;
-  private int customerId = -1;
+  private ArrayList<Product> cart;
 
   //when registered ->created without ID(DB takes care of it)
   public Customer(String username, String password, String email, String firstName, String lastName) {
@@ -25,6 +24,7 @@ public class Customer implements Serializable
     this.firstName = firstName;
     this.lastName = lastName;
 
+    cart = new ArrayList<>();
     orders = new ArrayList<>();
   }
 
@@ -38,6 +38,7 @@ public class Customer implements Serializable
     this.customerId = customerId;
 
     orders = new ArrayList<>();
+    cart = new ArrayList<>();
   }
 
 
@@ -70,6 +71,10 @@ public class Customer implements Serializable
   public ArrayList<Order> getOrders()
   {
     return orders;
+  }
+
+  public ArrayList<Product> getCart() {
+    return cart;
   }
 
   public void setOrders(ArrayList<Order> orders)

@@ -11,4 +11,6 @@ public interface CredentialsModel extends Subject
   Customer getLoggedCustomer();
   Employee getLoggedEmployee();
 
+  void editUser();
+  void deleteCustomer();
 }

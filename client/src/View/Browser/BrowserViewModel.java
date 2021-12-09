@@ -127,10 +127,8 @@ public class BrowserViewModel implements PropertyChangeListener
 
   public void getSearch()
   {
-    browserTable.clear();
-    browserTable.addAll(searchList(search.getValue(),customerModel.getProducts()));
+    browserTable.setAll(searchList(search.getValue(), new ArrayList<>(getBrowserTable())));
   }
-
   private ArrayList<Product> searchList(String searchWord, ArrayList<Product> listOfProducts)
   {
     List<String> searchWordArray = Arrays.asList(searchWord.trim().split(""));

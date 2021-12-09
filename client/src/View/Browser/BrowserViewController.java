@@ -18,8 +18,9 @@ public class BrowserViewController
   public TextField searchTextField;
   public Button loginButton;
   public Button logoutButton;
+  public Button accSettingsBtn;
   public Label userLabel;
-  public Button basketButton;
+  public Button checkoutButton;
 
   public TableView<Product> browserTable;
   public TableColumn<Product, String> nameColumn;
@@ -29,7 +30,6 @@ public class BrowserViewController
   public TableColumn<Product, Integer> quantityColumn;
   public TableColumn<Product, Void> addBtnCol;
   public TableColumn<Product, Void> desiredQuantityCol;
-
 
   private ViewHandler viewHandler;
   private BrowserViewModel viewModel;
@@ -47,10 +47,11 @@ public class BrowserViewController
     userLabel.textProperty().bind(viewModel.userNameProperty());
 
     //logged In/Out dependents
-    basketButton.visibleProperty().bind(viewModel.logInProperty());
+    checkoutButton.visibleProperty().bind(viewModel.logInProperty());
     userLabel.visibleProperty().bind(viewModel.logInProperty());
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
     logoutButton.visibleProperty().bind(viewModel.logInProperty());
+    accSettingsBtn.visibleProperty().bind(viewModel.logInProperty());
 
     //table
     browserTable.setItems(viewModel.getBrowserTable());
@@ -171,4 +172,8 @@ public class BrowserViewController
   }
 
 
+  public void accSettingsBtnPressed(ActionEvent actionEvent)
+  {
+    viewHandler.openAccSettingsPane();
+  }
 }

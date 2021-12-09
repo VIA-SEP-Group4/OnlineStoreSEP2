@@ -43,4 +43,7 @@ public interface RMIServer_Remote extends Remote
   void removeWorker(Employee e) throws RemoteException;
   void removeManager(Employee manager) throws  RemoteException;
   void editEmployee(Employee e) throws RemoteException;
+
+  //TODO ... added 9.12.12:50
+  String deleteCustomer(int customerId) throws RemoteException;
 }

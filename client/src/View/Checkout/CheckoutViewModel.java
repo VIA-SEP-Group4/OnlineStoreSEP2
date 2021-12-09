@@ -4,11 +4,9 @@ import Model.CredentialsModel;
 import Model.CustomerModel;
 import Model.Models.Order;
 import Model.Models.Product;
-
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
@@ -28,10 +26,10 @@ public class CheckoutViewModel
     this.credentialsModel=credentialsModel;
 
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.addAll(customerModel.getCartProducts());
+    cartProducts.setAll(customerModel.getCartProducts());
 
     orders = FXCollections.observableArrayList();
-    orders.addAll(customerModel.fetchCustomerOrders());
+    orders.setAll(customerModel.fetchCustomerOrders());
     orderProducts = FXCollections.observableArrayList();
 
     status = new SimpleObjectProperty<>();
@@ -127,18 +125,17 @@ public class CheckoutViewModel
   public void filterBy(String stat)
   {
     orders.clear();
-    if (status.getValue() != null && stat.equals("All orders"))
+
+    if (status.getValue() != null)
+    {
+      for (Order o : customerModel.fetchCustomerOrders()){
+        if (o.getState().equalsIgnoreCase(stat))
+          orders.add(o);
+      }
+    }
+    else
     {
       orders.setAll(customerModel.fetchCustomerOrders());
-    }
-    else if (status.getValue() != null)
-    {
-      orders.clear();
-      for (int i = 0; i < customerModel.fetchCustomerOrders().size(); i++)
-      {
-        if (customerModel.fetchCustomerOrders().get(i).getState().equals(stat))
-          orders.add(customerModel.fetchCustomerOrders().get(i));
-      }
     }
   }
 }

@@ -17,4 +17,5 @@ public interface CredentialsDataAccessor extends Subject
 
   void editEmployee(Employee e);
   void removeEmployee(Employee e);
+  void deleteCustomer(int customerId);
 }

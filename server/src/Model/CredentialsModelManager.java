@@ -7,6 +7,7 @@ import Model.Models.Employee;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class CredentialsModelManager implements CredentialsModel, PropertyChangeListener
@@ -48,6 +49,13 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
   public Employee loginEmployee(int ID, int pin) {
     return credentialsDataAccessor.loginEmployee(ID,pin);
   }
+
+  @Override public void deleteCustomer(int customerId)
+  {
+    credentialsDataAccessor.deleteCustomer(customerId);
+  }
+
+
   @Override
   public void removeEmployee(Employee e) {
     credentialsDataAccessor.removeEmployee(e);

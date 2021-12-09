@@ -12,36 +12,34 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class CustomerModelImpl implements CustomerModel, PropertyChangeListener {
-    private ArrayList<Product> cart;
     private PropertyChangeSupport support;
-    private CustomerClient customer;
-    private LoginClient login;
+    private CustomerClient customerClient;
+    private LoginClient loginClient;
     private Customer loggedCustomer = null;
 
-    public CustomerModelImpl(CustomerClient customer, LoginClient login) {
-        this.customer = customer;
-        this.login = login;
-        customer.startClient();
-        if(!login.isStarted()) login.startClient();
+    public CustomerModelImpl(CustomerClient customerClient, LoginClient loginClient) {
+        this.customerClient = customerClient;
+        this.loginClient = loginClient;
+        customerClient.startClient();
+        if(!loginClient.isStarted()) loginClient.startClient();
         support=new PropertyChangeSupport(this);
-        cart=new ArrayList<>();
 
-        login.addListener("LoggedCustomerObj", this::setLoggedCustomer);
-        customer.addListener("ProductsReply",this);
-        customer.addListener("newOrder", this);
+        this.loginClient.addListener("LoggedCustomerObj", this::setLoggedCustomer);
+        this.customerClient.addListener("ProductsReply",this);
+        this.customerClient.addListener("newOrder", this);
     }
 
 
     @Override
     public void processOrder(Order o) {
-        cart.clear();
-        customer.processOrder(o);
+        loggedCustomer.getCart().clear();
+        customerClient.processOrder(o);
     }
 
     @Override
-    public void addToCart(Product p,int desiredQuantity) {
+    public void addToCart(Product p, int desiredQuantity) {
         boolean contains = false;
-        for (Product currP : cart){
+        for (Product currP : loggedCustomer.getCart()){
             if (currP.getProductId()==p.getProductId()){
                 currP.setQuantityP(currP.getQuantity()+desiredQuantity);
                 contains = true;
@@ -51,45 +49,42 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
         if (!contains){
             Product orderedProduct = p.copy();
             orderedProduct.setQuantityP(desiredQuantity);
-            cart.add(orderedProduct);
+            loggedCustomer.getCart().add(orderedProduct);
         }
 
-        customer.addToCart(p, desiredQuantity);
+        customerClient.addToCart(p, desiredQuantity);
     }
 
     @Override public void removeFromCart(Product p, int desiredQuantity)
     {
-        for (int i = 0; i < cart.size(); i++)
+        for (int i = 0; i < loggedCustomer.getCart().size(); i++)
         {
-            if(cart.get(i).getProductId()==p.getProductId())
+            if(loggedCustomer.getCart().get(i).getProductId() == p.getProductId())
             {
-                cart.remove(i);
+                loggedCustomer.getCart().remove(i);
             }
         }
-        customer.addToCart(p, desiredQuantity);
+        customerClient.addToCart(p, desiredQuantity);
     }
 
-    public void addToCart(Product p){
-        cart.add(p);
-    }
 
     @Override public ArrayList<Order> fetchCustomerOrders() {
-        return customer.getOrders(loggedCustomer.getCustomerId());
+        return customerClient.getOrders(loggedCustomer.getCustomerId());
     }
 
     @Override
     public ArrayList<Product> getCartProducts() {
-        return cart;
+        return loggedCustomer.getCart();
     }
 
     @Override
     public ArrayList<Product> getProducts() {
-        return customer.getProducts();
+        return customerClient.getProducts();
     }
 
     @Override
     public Customer getLoggedCustomer() {
-        loggedCustomer=login.getLoggedCustomer();
+        loggedCustomer= loginClient.getLoggedCustomer();
         return loggedCustomer;
     }
 
