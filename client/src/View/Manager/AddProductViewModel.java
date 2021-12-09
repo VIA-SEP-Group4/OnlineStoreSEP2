@@ -1,8 +1,8 @@
 package View.Manager;
 
-import Model.ManagerModel;
 import Model.Models.Product;
 
+import Model.ProductsModel;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,7 +13,7 @@ import java.beans.PropertyChangeListener;
 
 public class AddProductViewModel implements PropertyChangeListener
 {
-  private ManagerModel managerModel;
+  private ProductsModel productsModel;
   private StringProperty prodName;
   private StringProperty prodType;
   private SimpleIntegerProperty prodPrice;
@@ -22,9 +22,9 @@ public class AddProductViewModel implements PropertyChangeListener
   private StringProperty errorLabel;
   private boolean isEdit=false;
   private int tempId=0;
-  public AddProductViewModel(ManagerModel managerModel)
+  public AddProductViewModel(ProductsModel productsModel)
   {
-    this.managerModel = managerModel;
+    this.productsModel = productsModel;
     prodName = new SimpleStringProperty();
     prodType = new SimpleStringProperty();
     prodPrice = new SimpleIntegerProperty();
@@ -32,7 +32,7 @@ public class AddProductViewModel implements PropertyChangeListener
     prodDescription = new SimpleStringProperty();
     errorLabel = new SimpleStringProperty();
 
-    managerModel.addListener("ProductsReply",this);
+    productsModel.addListener("ProductsReply",this);
   }
 
 
@@ -45,12 +45,12 @@ public class AddProductViewModel implements PropertyChangeListener
     {
       if(!isEdit) {
         Product product = new Product(prodName.getValue(), prodType.getValue(), prodPrice.getValue(), prodDescription.getValue(), prodQuantity.getValue());
-        managerModel.addProduct(product);
+        productsModel.addProduct(product);
         return true;
       }
       else {
         Product p=new Product(prodName.getValue(),prodType.getValue(),prodPrice.getValue(),prodDescription.getValue(),prodQuantity.getValue(),tempId);
-        managerModel.editProduct(p);
+        productsModel.editProduct(p);
         isEdit=false;
         tempId=0;
         return true;

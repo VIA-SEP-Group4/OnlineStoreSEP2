@@ -1,7 +1,7 @@
 package View.Admin;
 
 import Enums.EmployeeType;
-import Model.AdminModel;
+import Model.CredentialsModel;
 import Model.Models.Employee;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -11,7 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 public class AdminViewModel {
-    private AdminModel adminModel;
+    private CredentialsModel model;
     private ObservableList<Employee> managers;
     private StringProperty firstName;
     private StringProperty lastName;
@@ -20,17 +20,17 @@ public class AdminViewModel {
     private BooleanProperty isAdded;
     private boolean isEdit=false;
     private int tempId=0;
-    public AdminViewModel(AdminModel adminModel) {
-        this.adminModel=adminModel;
+    public AdminViewModel(CredentialsModel model) {
+        this.model = model;
         firstName=new SimpleStringProperty();
         lastName=new SimpleStringProperty();
         pin=new SimpleStringProperty();
         error=new SimpleStringProperty();
         isAdded=new SimpleBooleanProperty();
         managers= FXCollections.observableArrayList();
-        managers.addAll(adminModel.getManagerEmployees());
-        adminModel.addListener("ManagerAddReply",this::replyAdd);
-        adminModel.addListener("AdminReply",this::managersUpdate);
+        managers.addAll(model.getEmployees("Manager"));
+        model.addListener("ManagerAddReply",this::replyAdd);
+        model.addListener("AdminReply",this::managersUpdate);
     }
 
     private void managersUpdate(PropertyChangeEvent event) {
@@ -49,7 +49,7 @@ public class AdminViewModel {
         return managers;
     }
     public void removeManager(Employee manager) {
-        adminModel.removeManager(manager);
+        model.removeEmployee(manager);
     }
 
     public void editManager(Employee e) {
@@ -68,10 +68,10 @@ public class AdminViewModel {
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
             else if(!isEdit) {
-                adminModel.addManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
+                model.addEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
                 clearFields();
             }else{
-                adminModel.editManager(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.MANAGER,tempId));
+                model.editEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.MANAGER,tempId));
                 isEdit=false;
                 isAdded.setValue(true);
                 clearFields();

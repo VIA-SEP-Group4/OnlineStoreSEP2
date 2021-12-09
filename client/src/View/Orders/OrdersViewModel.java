@@ -1,10 +1,9 @@
 package View.Orders;
 
-import Model.CustomerModel;
 import Model.Models.Order;
 import Model.Models.Product;
 
-import Model.WorkerModel;
+import Model.OrdersModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -13,14 +12,14 @@ import java.util.List;
 
 public class OrdersViewModel
 {
-    private WorkerModel workerModel;
+    private OrdersModel model;
     private ObservableList<Order> openOrders;
     private ObservableList<Product> openOrdersDetail;
     private ObservableList<Order> myOrders;
     private ObservableList<Product> myOrdersDetail;
 
-    public OrdersViewModel(WorkerModel workerModel){
-        this.workerModel = workerModel;
+    public OrdersViewModel(OrdersModel ordersModel){
+        this.model = ordersModel;
         openOrders = FXCollections.observableArrayList();
 //        Product prod1 = new Product("Slinky", "Toy", 52.6, "desc", 5);
 //        Product prod2 = new Product("Woody", "Toy", 31.1, "desc", 50);
@@ -40,7 +39,7 @@ public class OrdersViewModel
     }
 
     public void getOrders(){
-        ArrayList<Order> orders = workerModel.getAllOrders();
+        ArrayList<Order> orders = model.getAllOrders();
         for (Order o : orders)
         {
             openOrders.add(o);
@@ -48,7 +47,7 @@ public class OrdersViewModel
     }
 
     void changeOrderAssignee(Order order, boolean toRemove){
-        workerModel.changeOrderAssignee(order, toRemove);
+        model.changeOrderAssignee(order, toRemove);
     }
 
     public ObservableList<Order> getOpenOrders()

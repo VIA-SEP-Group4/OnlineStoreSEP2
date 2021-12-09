@@ -35,7 +35,7 @@ public class ViewModelFactory {
 
     public static LoginViewModel getLoginViewModel() {
         if(loginViewModel==null){
-            loginViewModel=new LoginViewModel(modelFactory.getCredentialsModel());
+            loginViewModel=new LoginViewModel(modelFactory.getCredentialsModel(), modelFactory.getProductsModel());
         }
         return loginViewModel;
     }
@@ -50,7 +50,7 @@ public class ViewModelFactory {
     public static BrowserViewModel getBrowserViewModel(){
         if(browserViewModel==null){
             modelFactory.getCredentialsModel();
-            browserViewModel=new BrowserViewModel(modelFactory.getCustomerModel(),modelFactory.getCredentialsModel());
+            browserViewModel=new BrowserViewModel(modelFactory.getProductsModel(),modelFactory.getCredentialsModel());
         }
         return browserViewModel;
     }
@@ -58,48 +58,48 @@ public class ViewModelFactory {
     public static ProductsViewModel getProductsViewModel(){
         if(productsViewModel==null){
             modelFactory.getCredentialsModel();
-            productsViewModel=new ProductsViewModel(modelFactory.getManagerModel());
+            productsViewModel=new ProductsViewModel(modelFactory.getProductsModel());
         }
         return productsViewModel;
     }
     public static   AddProductViewModel getAddProductViewModel(){
         if(addProductViewModel==null){
-            addProductViewModel=new AddProductViewModel(modelFactory.getManagerModel());
+            addProductViewModel=new AddProductViewModel(modelFactory.getProductsModel());
         }
         return addProductViewModel;
     }
 
     public static CheckoutViewModel getCheckoutViewModel(){
         if(checkoutViewModel == null){
-            checkoutViewModel = new CheckoutViewModel(modelFactory.getCustomerModel(),modelFactory.getCredentialsModel());
+            checkoutViewModel = new CheckoutViewModel(modelFactory.getProductsModel(),modelFactory.getCredentialsModel(), modelFactory.getOrdersModel());
         }
         return checkoutViewModel;
     }
 
     public static OrdersViewModel getOrdersViewModel(){
         if(ordersViewModel == null){
-            ordersViewModel = new OrdersViewModel(modelFactory.getWorkerModel());
+            ordersViewModel = new OrdersViewModel(modelFactory.getOrdersModel());
         }
         return ordersViewModel;
     }
 
     public static AdminViewModel getAdminViewModel(){
         if(adminViewModel == null){
-            adminViewModel = new AdminViewModel(modelFactory.getAdminModel());
+            adminViewModel = new AdminViewModel(modelFactory.getCredentialsModel());
         }
         return adminViewModel;
     }
 
     public static WorkersOverviewViewModel getWorkersOverviewViewModel(){
         if(workersOverviewViewModel==null){
-            workersOverviewViewModel=new WorkersOverviewViewModel(modelFactory.getManagerModel());
+            workersOverviewViewModel=new WorkersOverviewViewModel(modelFactory.getCredentialsModel(), modelFactory.getOrdersModel());
         }
         return workersOverviewViewModel;
     }
 
     public static OrderOverviewViewModel getOrdersOverviewViewModel(){
         if(orderOverviewViewModel ==null){
-            orderOverviewViewModel =new OrderOverviewViewModel(modelFactory.getManagerModel());
+            orderOverviewViewModel =new OrderOverviewViewModel(modelFactory.getOrdersModel());
         }
         return orderOverviewViewModel;
     }

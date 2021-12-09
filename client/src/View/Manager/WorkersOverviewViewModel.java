@@ -1,9 +1,10 @@
 package View.Manager;
 
 import Enums.EmployeeType;
-import Model.ManagerModel;
+import Model.CredentialsModel;
 import Model.Models.Employee;
 import Model.Models.Order;
+import Model.OrdersModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,7 +16,8 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 public class WorkersOverviewViewModel {
-    private ManagerModel model;
+    private CredentialsModel model;
+    private OrdersModel ordersModel;
     private ObservableList<Employee> employees;
     private ObservableList<Order> responsibleFor;
     private StringProperty firstName;
@@ -25,11 +27,12 @@ public class WorkersOverviewViewModel {
     private BooleanProperty isAdded;
     private boolean isEdit=false;
     private int tempID=0;
-    public WorkersOverviewViewModel(ManagerModel managerModel) {
-        model=managerModel;
+    public WorkersOverviewViewModel(CredentialsModel model,OrdersModel ordersModel) {
+        this.ordersModel=ordersModel;
+        this.model=model;
         employees= FXCollections.observableArrayList();
         responsibleFor= FXCollections.observableArrayList();
-        employees.addAll(model.getWorkers());
+        employees.addAll(model.getEmployees("Worker"));
         firstName=new SimpleStringProperty();
         lastName=new SimpleStringProperty();
         pin=new SimpleStringProperty();
@@ -63,7 +66,7 @@ public class WorkersOverviewViewModel {
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
             else if(!isEdit){
-                model.addWorker(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.WAREHOUSE_WORKER,0));
+                model.addEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.WAREHOUSE_WORKER,0));
                 clearFields();
             }else {
                 model.editEmployee(new Employee(firstName.get(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.WAREHOUSE_WORKER,tempID));
@@ -79,7 +82,7 @@ public class WorkersOverviewViewModel {
         }
     }
     public void removeWorker(Employee e) {
-        model.removeWorker(e);
+        model.removeEmployee(e);
     }
 
     public String getFirstName() {
@@ -129,7 +132,7 @@ public class WorkersOverviewViewModel {
 
 
     public void setWorkerOrders(int wwId) {
-        responsibleFor.setAll(model.getWorkerOrdersForManager(wwId));
+        responsibleFor.setAll(ordersModel.getWorkerOrdersForManager(wwId));
     }
     public ObservableList<Order> getWorkerOrders(){
         return responsibleFor;

@@ -1,6 +1,5 @@
 package Networking;
 
-import Model.Models.Order;
 import Model.Models.Product;
 
 import java.beans.PropertyChangeListener;
@@ -12,12 +11,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient {
-    private RMIServer_Remote serverStub;
+public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     private PropertyChangeSupport support;
+    private ProductsServerRemote serverStub;
 
-    public CustomerClientImpl() {
-        support = new PropertyChangeSupport(this);
+    public ProductsClientImpl() {
+        support=new PropertyChangeSupport(this);
     }
 
     @Override
@@ -27,41 +26,56 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
             UnicastRemoteObject.exportObject(this, 0);
 
             //lookup server stub
-            serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
+            serverStub = (ProductsServerRemote) Naming.lookup("rmi://localhost:1099/productsServer");
             serverStub.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[CustomerClient.startClient()]");
+            e.printStackTrace();
+            System.err.println("failed to initialize client-object ...[ProductsClientImpl.startClient()]");
         }
     }
 
     @Override
-    public void processOrder(Order newOrder) {
+    public void addProduct(Product p) {
         try {
-            serverStub.addNewOrder(newOrder);
+            serverStub.addProduct(p);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
-    @Override public ArrayList<Order> getOrders(int customerId)
-    {
-        try
-        {
-            return serverStub.getOrders(customerId);
-        }
-        catch (RemoteException e)
-        {
+    @Override
+    public void deleteProduct(Product p) {
+        try {
+            serverStub.deleteProduct(p);
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
-        return new ArrayList<Order>();
     }
 
-    @Override public void addToCart(Product p, int desiredQuantity)
-    {
+    @Override
+    public void editProduct(Product p) {
         try {
-            serverStub.addToCart(p, desiredQuantity);
+            serverStub.editProduct(p);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
-        catch (RemoteException e) {
+    }
+
+    @Override
+    public ArrayList<Product> getAllProducts() {
+        try {
+            return serverStub.getProducts();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void addToCart(Product p, int desiredQuantity) {
+        try {
+            serverStub.addToCart(p,desiredQuantity);
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -76,25 +90,8 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         support.removePropertyChangeListener(eventName,listener);
     }
 
-
-    @Override
-    public ArrayList<Product> getProducts() {
-        try {
-            return serverStub.getProducts();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
     @Override
     public void receiveUpdatedProducts(Object products) throws RemoteException {
         support.firePropertyChange("ProductsReply",null,products);
-    }
-
-    @Override public void receiveUpdatedOrders(Object orders) throws RemoteException
-    {
-        support.firePropertyChange("newOrder", null, orders);
     }
 }

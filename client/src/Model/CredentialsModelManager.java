@@ -1,63 +1,88 @@
 package Model;
 import Model.Models.Customer;
 import Model.Models.Employee;
-import Networking.LoginClient;
+import Networking.CredentialsClient;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class CredentialsModelManager implements CredentialsModel, PropertyChangeListener
 {
 
-  private LoginClient loginClient;
+  private CredentialsClient credentialsClient;
   private PropertyChangeSupport support;
 
 
-  public CredentialsModelManager(LoginClient client)
+  public CredentialsModelManager(CredentialsClient client)
   {
     support=new PropertyChangeSupport(this);
-    this.loginClient = client;
-    loginClient.startClient();
-    loginClient.addListener("LoginReply",this);
-    loginClient.addListener("RegistrationReply",this);
-    loginClient.addListener("BrowserReply",this);
+    this.credentialsClient = client;
+    credentialsClient.startClient();
+    credentialsClient.addListener("LoginReply",this);
+    credentialsClient.addListener("RegistrationReply",this);
+    credentialsClient.addListener("AddedWorker",this);
+    credentialsClient.addListener("ManagerAddReply",this);
+    credentialsClient.addListener("AdminReply",this);
+    credentialsClient.addListener("ManagerWorkersReply",this);
+    credentialsClient.addListener("LoggedCustomerObj",this);
   }
 
 
   @Override
   public void login(String username, String password, String type) {
     if(type.equals("Customer")){
-      loginClient.loginCustomer(username,password);
+      credentialsClient.loginCustomer(username,password);
     }
     else if(type.equals("Employee")){
-      loginClient.loginEmployee(Integer.parseInt(username),Integer.parseInt(password));
+      credentialsClient.loginEmployee(Integer.parseInt(username),Integer.parseInt(password));
     }
   }
 
   @Override public void registerUser(Customer newCustomer)
   {
-    loginClient.registerUser(newCustomer);
+    credentialsClient.registerUser(newCustomer);
   }
 
   @Override
   public Customer getLoggedCustomer() {
-    return loginClient.getLoggedCustomer();
+    return credentialsClient.getLoggedCustomer();
   }
 
   @Override
   public Employee getLoggedEmployee() {
-    return loginClient.getLoggedEmployee();
+    return credentialsClient.getLoggedEmployee();
+  }
+
+  @Override
+  public void addEmployee(Employee e) {
+    credentialsClient.addEmployee(e);
+  }
+
+  @Override
+  public void removeEmployee(Employee e) {
+    credentialsClient.removeEmployee(e);
+  }
+
+  @Override
+  public void editEmployee(Employee e) {
+    credentialsClient.editEmployee(e);
+  }
+
+  @Override
+  public ArrayList<Employee> getEmployees(String type) {
+    return credentialsClient.getEmployees(type);
   }
 
   @Override public void editCustomer(Customer editedCustomer)
   {
-    loginClient.editCustomer(editedCustomer);
+    credentialsClient.editCustomer(editedCustomer);
   }
 
   @Override public void deleteCustomer()
   {
-    loginClient.deleteCustomer();
+    credentialsClient.deleteCustomer();
   }
 
 

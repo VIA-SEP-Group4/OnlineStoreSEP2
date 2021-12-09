@@ -1,11 +1,11 @@
 
-import Enums.EmployeeType;
 import Model.CredentialsModelManager;
-import Model.Models.Employee;
-import Model.Models.Product;
 import Model.OrdersModelManager;
 import Model.ProductsModelManager;
-import Networking.Server;
+import Networking.CredentialsServer;
+import Networking.OrdersServer;
+import Networking.ProductsServer;
+
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,15 +17,18 @@ public class RunServer {
         //create registry
         createRegistry();
 
-        //create and start server
+        //create and start servers
         CredentialsModelManager cmm = new CredentialsModelManager();
         ProductsModelManager pmm = new ProductsModelManager();
         OrdersModelManager omm = new OrdersModelManager();
 
         try {
-//            Server server = new Server(serverModelManager);
-            Server server = new Server(cmm, pmm, omm);
-            server.start();
+            ProductsServer productsServer = new ProductsServer(pmm);
+            CredentialsServer credentialsServer = new CredentialsServer(cmm);
+            OrdersServer ordersServer = new OrdersServer(omm);
+            productsServer.start();
+            credentialsServer.start();
+            ordersServer.start();
             System.out.println("Server running ...");
 
         } catch (RemoteException | MalformedURLException e)

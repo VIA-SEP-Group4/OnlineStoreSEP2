@@ -1,20 +1,18 @@
 package Model;
 
 import Model.Models.Customer;
-import Model.Models.Order;
 import Model.Models.Product;
 import Utils.Subject;
 
 import java.util.ArrayList;
 
-public interface CustomerModel  extends Subject {
-    void processOrder(Order o);
+public interface ProductsModel extends Subject {
+    void addProduct(Product p);
+    void deleteProduct(Product p);
+    void editProduct(Product p);
+    ArrayList<Product> getAllProducts();
     void addToCart(Product p, int desiredQuantity);
     void removeFromCart(Product p, int desiredQuantity);
-
-    ArrayList<Order> fetchCustomerOrders();
     ArrayList<Product> getCartProducts();
-    ArrayList<Product> getProducts();
-
-    Customer getLoggedCustomer();
+    void setLoggedCustomer(Customer c);
 }

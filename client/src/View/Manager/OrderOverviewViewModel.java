@@ -1,20 +1,19 @@
 package View.Manager;
 
-import Model.ManagerModel;
 import Model.Models.Order;
 import Model.Models.Product;
+import Model.OrdersModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 public class OrderOverviewViewModel {
-    private ManagerModel model;
+    private OrdersModel model;
     private ObservableList<Order> orders;
     private ObservableList<Product> products;
-    public OrderOverviewViewModel(ManagerModel model) {
+    public OrderOverviewViewModel(OrdersModel model) {
         this.model = model;
         orders= FXCollections.observableArrayList();
         products=FXCollections.observableArrayList();

@@ -1,8 +1,8 @@
 package View.Manager;
 
-import Model.ManagerModel;
 import Model.Models.Product;
 
+import Model.ProductsModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,14 +14,14 @@ public class ProductsViewModel implements PropertyChangeListener
 {
   private ObservableList<Product> products;
  
-  private ManagerModel managerModel;
+  private ProductsModel productsModel;
 
-  public ProductsViewModel(ManagerModel managerModel)
+  public ProductsViewModel(ProductsModel productsModel)
   {
-    this.managerModel = managerModel;
+    this.productsModel = productsModel;
     this.products = FXCollections.observableArrayList();
-    products.setAll(managerModel.getProducts());
-    managerModel.addListener("ProductsReply",this);
+    products.setAll(productsModel.getAllProducts());
+    productsModel.addListener("ProductsReply",this);
   }
 
   public ObservableList<Product> getProducts()
@@ -30,7 +30,7 @@ public class ProductsViewModel implements PropertyChangeListener
   }
 
   public void removeProduct(Product p){
-    managerModel.deleteProduct(p);
+    productsModel.deleteProduct(p);
   }
 
   @Override public void propertyChange(PropertyChangeEvent evt)

@@ -1,9 +1,10 @@
 package View.Checkout;
 
 import Model.CredentialsModel;
-import Model.CustomerModel;
 import Model.Models.Order;
 import Model.Models.Product;
+import Model.OrdersModel;
+import Model.ProductsModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,35 +13,38 @@ import java.util.ArrayList;
 
 public class CheckoutViewModel
 {
-  private CustomerModel customerModel;
+  private ProductsModel productsModel;
   private CredentialsModel credentialsModel;
+  private OrdersModel ordersModel;
   private ObservableList<Product> cartProducts;
   private ObservableList<Order> orders;
   private ObservableList<Product> orderProducts;
   private StringProperty orderDetailLabel;
   private ObjectProperty<String> status;
 
-  public CheckoutViewModel(CustomerModel customerModel, CredentialsModel credentialsModel)
+  public CheckoutViewModel(ProductsModel productsModel, CredentialsModel credentialsModel, OrdersModel ordersModel)
   {
-    this.customerModel = customerModel;
+    this.productsModel = productsModel;
     this.credentialsModel=credentialsModel;
+    this.ordersModel=ordersModel;
 
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.setAll(customerModel.getCartProducts());
+    cartProducts.setAll(productsModel.getCartProducts());
 
     orders = FXCollections.observableArrayList();
-    orders.setAll(customerModel.fetchCustomerOrders());
+    orders.setAll(ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId()));
     orderProducts = FXCollections.observableArrayList();
 
     status = new SimpleObjectProperty<>();
 
     orderDetailLabel = new SimpleStringProperty();
 
-    customerModel.addListener("newOrder", this::updateOrders);
+    ordersModel.addListener("newOrder", this::updateOrders);
   }
 
   private void updateOrders(PropertyChangeEvent evt)
   {
+
     orders.setAll((ArrayList<Order>)evt.getNewValue());
   }
 
@@ -71,7 +75,7 @@ public class CheckoutViewModel
       Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
 
 //      orders.add(newOrder);
-      customerModel.processOrder(newOrder);
+      ordersModel.processOrder(newOrder);
 
       cartProducts.clear();
     }
@@ -98,21 +102,21 @@ public class CheckoutViewModel
   public void fetchCart()
   {
     cartProducts.clear();
-    cartProducts.setAll(customerModel.getCartProducts());
+    cartProducts.setAll(productsModel.getCartProducts());
   }
 
   public void removeFromCart(Product p,int quantityProd)
   {
     if (quantityProd<0)
     {
-      ArrayList<Product> tempProducts = customerModel.getProducts();
+      ArrayList<Product> tempProducts = productsModel.getAllProducts();
       Product selectProd = null;
       for (Product tempProduct : tempProducts)
       {
         if (tempProduct.getProductId() == p.getProductId())
           selectProd = tempProduct;
       }
-      customerModel.removeFromCart(selectProd, quantityProd);
+      productsModel.removeFromCart(selectProd, quantityProd);
       fetchCart();
     }
     else
@@ -128,14 +132,14 @@ public class CheckoutViewModel
 
     if (status.getValue() != null)
     {
-      for (Order o : customerModel.fetchCustomerOrders()){
+      for (Order o : ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId())){
         if (o.getState().equalsIgnoreCase(stat))
           orders.add(o);
       }
     }
     else
     {
-      orders.setAll(customerModel.fetchCustomerOrders());
+      orders.setAll(ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId()));
     }
   }
 }

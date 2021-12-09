@@ -2,7 +2,7 @@ package View.Register;
 
 import Model.CredentialsModel;
 import Model.CredentialsModelManager;
-import Networking.LoginClientImpl;
+import Networking.CredentialsClientImpl;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,7 +25,7 @@ class RegisterViewModelTest {
     }
     @BeforeEach
     void setUp() {
-        model=new CredentialsModelManager(new LoginClientImpl());
+        model=new CredentialsModelManager(new CredentialsClientImpl());
         rvm=new RegisterViewModel(model);
     }
     @Test

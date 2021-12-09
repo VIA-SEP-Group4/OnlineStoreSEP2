@@ -2,8 +2,11 @@ package View.Login;
 
 import Model.CredentialsModel;
 import Model.CredentialsModelManager;
-import Networking.LoginClientImpl;
+import Model.ProductsModel;
+import Model.ProductsModelManager;
+import Networking.CredentialsClientImpl;
 
+import Networking.ProductsClientImpl;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.embed.swing.JFXPanel;
@@ -21,13 +24,15 @@ class LoginViewModelTest
   }
 
   private CredentialsModel cm;
+  private ProductsModel pm;
   private LoginViewModel lvm;
 
 
   @BeforeEach
   public void setUp(){
-    cm = new CredentialsModelManager(new LoginClientImpl());
-    lvm = new LoginViewModel(cm);
+    cm = new CredentialsModelManager(new CredentialsClientImpl());
+    pm = new ProductsModelManager(new ProductsClientImpl());
+    lvm = new LoginViewModel(cm,pm);
   }
 
 
