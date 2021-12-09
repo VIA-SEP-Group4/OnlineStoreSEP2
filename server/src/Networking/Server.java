@@ -280,6 +280,16 @@ public class Server implements RMIServer_Remote{
     return reply;
   }
 
+  @Override public ArrayList<Product> getProducts(int page, int pagQuant) throws RemoteException
+  {
+    return productsModelManager.getProducts(page,pagQuant);
+  }
+
+  @Override public ArrayList<Product> getFilterProd(int page, int pagQuant, String type) throws RemoteException
+  {
+    return productsModelManager.getFilterProd(page,pagQuant,type);
+  }
+
   @Override
   public ArrayList<Employee> getWorkers() throws RemoteException {
     return credentialsModelManager.getWorkers();

@@ -82,6 +82,16 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
         return customerClient.getProducts();
     }
 
+    @Override public ArrayList<Product> getProducts(int page, int pagQuant)
+    {
+        return customerClient.getProducts(page,pagQuant);
+    }
+
+    @Override public ArrayList<Product> getFilterProd(int page, int pagQuant, String type)
+    {
+        return customerClient.getFilterProd(page,pagQuant,type);
+    }
+
     @Override
     public Customer getLoggedCustomer() {
         loggedCustomer= loginClient.getLoggedCustomer();

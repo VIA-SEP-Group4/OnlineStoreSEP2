@@ -11,8 +11,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BrowserViewModel implements PropertyChangeListener
 {
@@ -21,7 +21,9 @@ public class BrowserViewModel implements PropertyChangeListener
   private StringProperty search;
   private StringProperty items;
   private StringProperty userName;
+  private IntegerProperty page;
 
+  private ObjectProperty<Integer> pagQuant;
   private ObservableList<String> typeList;
   private ObjectProperty<String> type;
   private ObservableList<Product> browserTable;
@@ -37,6 +39,8 @@ public class BrowserViewModel implements PropertyChangeListener
     search = new SimpleStringProperty("");
     items = new SimpleStringProperty("");
     userName = new SimpleStringProperty();
+    page = new SimpleIntegerProperty();
+    pagQuant = new SimpleObjectProperty<>();
 
     typeList = FXCollections.observableArrayList();
     type = new SimpleObjectProperty();
@@ -51,11 +55,20 @@ public class BrowserViewModel implements PropertyChangeListener
     customerModel.addListener("ProductsReply",this);
   }
 
+  public IntegerProperty pageProperty()
+  {
+    return page;
+  }
+
+  public ObjectProperty<Integer> pagQuantProperty()
+  {
+    return pagQuant;
+  }
+
   public StringProperty searchProperty()
   {
     return search;
   }
-
 
   public StringProperty itemsProperty()
   {
@@ -82,14 +95,19 @@ public class BrowserViewModel implements PropertyChangeListener
     return logIn;
   }
 
-  public void setLogIn(boolean logIn)
+  public void setType(String type)
   {
-    this.logIn.set(logIn);
+    this.type.set(type);
   }
 
-  public void setLogOut(boolean logOut)
+  public ObjectProperty<String> getTypeProperty()
   {
-    this.logOut.set(logOut);
+    return type;
+  }
+
+  public ObservableList<String> getAllTypes()
+  {
+    return typeList;
   }
 
   public void setSelectedProd(Product selectedProd)
@@ -103,7 +121,9 @@ public class BrowserViewModel implements PropertyChangeListener
   }
 
   public void fetchProducts(){
-    browserTable.addAll(customerModel.getProducts());
+    checkNotNull();
+    browserTable.clear();
+    browserTable.addAll(customerModel.getProducts(page.getValue(),pagQuant.getValue()));
   }
 
   public void reset()
@@ -151,38 +171,39 @@ public class BrowserViewModel implements PropertyChangeListener
     }
   }
 
+  public int setMaxPage()
+  {
+    checkNotNull();
+    return (((customerModel.getProducts().size())-1)/(pagQuant.getValue()))+1;
+  }
+
+  public void checkNotNull()
+  {
+    if (pagQuant.getValue() == null)
+    {
+      assert pagQuant != null;
+      pagQuant.setValue(10);
+    }
+  }
+
   public void filterBy()
   {
     if (type.getValue() != null && type.getValue().equals("Available"))
     {
-      browserTable.clear();
-      for (int i = 0; i < customerModel.getProducts().size(); i++)
-      {
-        if (customerModel.getProducts().get(i).getQuantity() > 0)
-          browserTable.add(customerModel.getProducts().get(i));
-      }
+      fetchProducts();
+      IntStream.range(0, browserTable.size())
+          .filter(i -> browserTable.get(i).getQuantity() == 0)
+          .forEach(i -> browserTable.remove(i));
     }
     else if (type.getValue() != null && type.getValue().equals("All products"))
     {
-      browserTable.clear();
-      browserTable.addAll(customerModel.getProducts());
+      fetchProducts();
     }
     else if (type.getValue() != null)
     {
-    browserTable.clear();
-    for (int i = 0; i < customerModel.getProducts().size(); i++)
-    {
-      if (customerModel.getProducts().get(i).getType().equals(type.getValue()))
-        browserTable.add(customerModel.getProducts().get(i));
+      browserTable.clear();
+      browserTable.addAll(customerModel.getFilterProd(page.getValue(),pagQuant.getValue(),type.getValue()));
     }
-    }
-  }
-
-  @Override public void propertyChange(PropertyChangeEvent evt)
-  {
-    ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
-    System.out.println(products);
-    browserTable.setAll(products);
   }
 
   public void addToCart(Product p, int desiredQuantity)
@@ -190,6 +211,7 @@ public class BrowserViewModel implements PropertyChangeListener
     if (desiredQuantity>0 && desiredQuantity<=p.getQuantity())
     {
       customerModel.addToCart(p, desiredQuantity);
+      items.setValue("(Items("+credsModel.getLoggedCustomer().getCart().size()+")");
       reset();
     }
     else
@@ -199,18 +221,10 @@ public class BrowserViewModel implements PropertyChangeListener
     }
   }
 
-  public void setType(String type)
+  @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    this.type.set(type);
-  }
-
-  public ObjectProperty<String> getTypeProperty()
-  {
-    return type;
-  }
-
-  public ObservableList<String> getAllTypes()
-  {
-    return typeList;
+    ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
+    System.out.println(products);
+    browserTable.setAll(products);
   }
 }

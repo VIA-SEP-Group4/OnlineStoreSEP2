@@ -9,18 +9,21 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-
 import java.util.ArrayList;
 
 public class BrowserViewController
 {
   public ComboBox<String> filterByComboBox;
+  public ComboBox<Integer> pagQuantityProd;
   public TextField searchTextField;
+
+  public Label userLabel;
+  public Label itemsLabel;
   public Button loginButton;
   public Button logoutButton;
   public Button accSettingsBtn;
-  public Label userLabel;
   public Button checkoutButton;
+  public Pagination pagination;
 
   public TableView<Product> browserTable;
   public TableColumn<Product, String> nameColumn;
@@ -43,12 +46,18 @@ public class BrowserViewController
     this.viewModel = ViewModelFactory.getBrowserViewModel();
     filterByComboBox.setItems(viewModel.getAllTypes());
     filterByComboBox.valueProperty().bindBidirectional(viewModel.getTypeProperty());
+    pagQuantityProd.getItems().addAll( 10, 20, 50, 100);
+    pagQuantityProd.valueProperty().bindBidirectional(viewModel.pagQuantProperty());
+    pagination.setMaxPageIndicatorCount(viewModel.setMaxPage());
+    pagination.currentPageIndexProperty().bindBidirectional(viewModel.pageProperty());
+    itemsLabel.textProperty().bindBidirectional(viewModel.itemsProperty());
     searchTextField.textProperty().bindBidirectional(viewModel.searchProperty());
     userLabel.textProperty().bind(viewModel.userNameProperty());
 
     //logged In/Out dependents
     checkoutButton.visibleProperty().bind(viewModel.logInProperty());
     userLabel.visibleProperty().bind(viewModel.logInProperty());
+    itemsLabel.visibleProperty().bind(viewModel.logInProperty());
     loginButton.visibleProperty().bind(viewModel.logOutProperty());
     logoutButton.visibleProperty().bind(viewModel.logInProperty());
     accSettingsBtn.visibleProperty().bind(viewModel.logInProperty());
@@ -111,7 +120,22 @@ public class BrowserViewController
     }
   }
 
+  public void accSettingsBtnPressed(ActionEvent actionEvent)
+  {
+    viewHandler.openAccSettingsPane();
+  }
 
+  public void onSetNumbProd(ActionEvent event)
+  {
+    viewModel.fetchProducts();
+    viewModel.filterBy();
+  }
+
+  public void onClick(MouseEvent mouseEvent)
+  {
+    viewModel.fetchProducts();
+    viewModel.filterBy();
+  }
 
   private Callback<TableColumn<Product, Void>, TableCell<Product, Void>> addButtonToTable() {
 
@@ -169,11 +193,5 @@ public class BrowserViewController
     };
 
     return cellFactory;
-  }
-
-
-  public void accSettingsBtnPressed(ActionEvent actionEvent)
-  {
-    viewHandler.openAccSettingsPane();
   }
 }

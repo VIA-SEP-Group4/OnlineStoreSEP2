@@ -26,13 +26,8 @@ public class ProductsDataManager implements ProductsDataAcessor {
      */
     @Override
     public ArrayList<Product> getProducts() {
-        int pageIndex = 1;
-        int numberOfProductsPerPage = 10;
 
-        int offset = (pageIndex -1) * numberOfProductsPerPage;
-        int limit = numberOfProductsPerPage;
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
-        //        String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " OFFSET "+offset+ "LIMIT "+limit;
         ArrayList<Product> products = new ArrayList<>();
 
         try (Connection conn =  DBSConnection.getInstance().connect();
@@ -52,7 +47,53 @@ public class ProductsDataManager implements ProductsDataAcessor {
         return products;
     }
 
+    @Override public ArrayList<Product> getProducts(int page, int pagQuant)
+    {
+        int offset = (page) * pagQuant;
+        String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " OFFSET "+offset+ "LIMIT "+pagQuant;
 
+        ArrayList<Product> products = new ArrayList<>();
+
+        try (Connection conn =  DBSConnection.getInstance().connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL))
+        {
+            while (rs.next())
+            {
+                products.add(new Product(rs.getString("product_name"), rs.getString("type"), rs.getDouble("price"),
+                    rs.getString("description"), rs.getInt("quantity"), rs.getInt("product_id")));
+
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println(products);
+        return products;
+    }
+
+    @Override public ArrayList<Product> getFilterProd(int page, int pagQuant,String type)
+    {
+        int offset = (page) * pagQuant;
+        String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " WHERE type ="+ " '"+type+"' "+ "LIMIT " +pagQuant+ " OFFSET "+offset ;
+
+        ArrayList<Product> products = new ArrayList<>();
+
+        try (Connection conn =  DBSConnection.getInstance().connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL))
+        {
+            while (rs.next())
+            {
+                products.add(new Product(rs.getString("product_name"), rs.getString("type"), rs.getDouble("price"),
+                    rs.getString("description"), rs.getInt("quantity"), rs.getInt("product_id")));
+
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println(products);
+        return products;
+    }
     /**
      * Method that adds a product to the database
      * @param p the product to be added

@@ -87,6 +87,25 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         return null;
     }
 
+    @Override public ArrayList<Product> getProducts(int page, int pagQuant)
+    {
+        try {
+            return serverStub.getProducts(page,pagQuant);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override public ArrayList<Product> getFilterProd(int page, int pagQuant, String type)
+    {
+        try {
+            return serverStub.getFilterProd(page,pagQuant,type);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public void receiveUpdatedProducts(Object products) throws RemoteException {
