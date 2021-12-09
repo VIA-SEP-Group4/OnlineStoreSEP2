@@ -36,9 +36,14 @@ public class WorkerModelImpl implements WorkerModel,PropertyChangeListener {
 
     }
 
-    @Override public void changeOrderAssignee(Order order)
+    @Override public void changeOrderAssignee(Order order, boolean toRemove)
     {
-        order.setWorkerID(getLoggedEmployee().getID());
+        if(toRemove){
+            order.setWorkerID(-1);
+        }
+        else {
+            order.setWorkerID(getLoggedEmployee().getID());
+        }
         workerClient.changeOrderAssignee(order);
     }
 

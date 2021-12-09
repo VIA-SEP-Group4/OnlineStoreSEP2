@@ -47,8 +47,8 @@ public class OrdersViewModel
         }
     }
 
-    void changeOrderAssignee(Order order){
-        workerModel.changeOrderAssignee(order);
+    void changeOrderAssignee(Order order, boolean toRemove){
+        workerModel.changeOrderAssignee(order, toRemove);
     }
 
     public ObservableList<Order> getOpenOrders()

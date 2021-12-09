@@ -183,8 +183,56 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   @Override public ArrayList<Order> getOrders(String orderStatus)
   {
-    return null;
-  }
+    // TODO: 09/12/2021  this method
+    //fetch order's products first:
+
+    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE + " WHERE status=" +orderStatus;
+    ArrayList<Order> orders = new ArrayList<>();
+
+    try (Connection conn =  DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(SQL))
+    {
+
+      //for each order
+      while (rs.next())
+      {
+        int currOrderId = rs.getInt("order_id");
+        String productsSQL = "select * from eshop.ordered_products o_p join eshop.products prod on o_p.product_id=prod.product_id WHERE order_id=" +currOrderId;
+
+        Statement productsStmt = conn.createStatement();
+        ResultSet productsRs = productsStmt.executeQuery(productsSQL);
+        ArrayList<Product> currProducts = new ArrayList<>();
+        //for each product
+        while (productsRs.next())
+        {
+          currProducts.add(new Product(
+                  productsRs.getString("product_name"),
+                  productsRs.getString("type"),
+                  productsRs.getDouble("price"),
+                  productsRs.getString("description"),
+                  productsRs.getInt("quantity"),
+                  productsRs.getInt("product_id")
+              )
+          );
+        }
+        productsRs.close();
+
+        orders.add(new Order(
+            rs.getInt("order_id"),
+            rs.getInt("customer_id"),
+            rs.getInt("warehouse_worker_id"),
+            rs.getString("status"),
+            rs.getTimestamp("timestamp"),
+            currProducts)
+        );
+      }
+
+    } catch (SQLException ex){
+      System.out.println(ex.getMessage());
+    }
+
+    return orders;  }
 
   @Override
   public ArrayList<Order> getWorkerOrdersForManager(int workerId) {
@@ -226,23 +274,27 @@ public class OrdersDataManager implements OrdersDataAccessor
   }
   @Override public void changeOrderAssignee(Order order)
   {
-//    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
+    String orderSQL = "UPDATE " +SCHEMA+ "." +TABLE + " SET warehouse_worker_id = " + order.getWorkerID() + " WHERE order_id = " + order.getOrderId();
+    String disableTriggerSQL = "ALTER TABLE " +SCHEMA+ "." +TABLE + " DISABLE TRIGGER ALL";
+    String enableTriggerSQL = "ALTER TABLE " +SCHEMA+ "." +TABLE + " ENABLE TRIGGER ALL";
 
     try (Connection conn =  DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement())
     {
-      String orderSQL = "UPDATE " +SCHEMA+ "." +TABLE + " SET warehouse_worker_id = " + order.getWorkerID() + " WHERE order_id = " + order.getOrderId();
-      stmt.executeUpdate(orderSQL);
-//      ResultSet rs = stmt.executeQuery(SQL);
-//      while (rs.next()){
-//        //display values for testing
-//        System.out.println("Order ID: " + rs.getInt("order_id"));
-//        System.out.println("Customer ID: " + rs.getInt("customer_id"));
-//        System.out.println("Worker ID: " + rs.getInt("warehouse_worker_id"));
-//        System.out.println("Status: " + rs.getString("status"));
-//        System.out.println("Timestamp: " + rs.getTimestamp("timestamp"));
-//      }
-//      rs.close();
+      if(order.getWorkerID() == -1){
+        stmt.executeUpdate(disableTriggerSQL);
+        int affectedRows = stmt.executeUpdate(orderSQL);
+        if (affectedRows <= 0)
+          throw new RuntimeException("Order status update failed");
+        stmt.executeUpdate(enableTriggerSQL);
+      }
+      else{
+        int affectedRows = stmt.executeUpdate(orderSQL);
+        if (affectedRows <= 0)
+          throw new RuntimeException("Order status update failed");
+      }
+      support.firePropertyChange("newOrder",null,getAllOrders());
+
     } catch (SQLException ex){
       System.out.println(ex.getMessage());
     }
