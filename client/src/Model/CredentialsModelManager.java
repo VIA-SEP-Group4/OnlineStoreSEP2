@@ -10,54 +10,54 @@ import java.beans.PropertyChangeSupport;
 public class CredentialsModelManager implements CredentialsModel, PropertyChangeListener
 {
 
-  private LoginClient client;
+  private LoginClient loginClient;
   private PropertyChangeSupport support;
 
 
   public CredentialsModelManager(LoginClient client)
   {
     support=new PropertyChangeSupport(this);
-    this.client = client;
-    client.startClient();
-    client.addListener("LoginReply",this);
-    client.addListener("RegistrationReply",this);
-    client.addListener("BrowserReply",this);
+    this.loginClient = client;
+    loginClient.startClient();
+    loginClient.addListener("LoginReply",this);
+    loginClient.addListener("RegistrationReply",this);
+    loginClient.addListener("BrowserReply",this);
   }
 
 
   @Override
   public void login(String username, String password, String type) {
     if(type.equals("Customer")){
-      client.loginCustomer(username,password);
+      loginClient.loginCustomer(username,password);
     }
     else if(type.equals("Employee")){
-      client.loginEmployee(Integer.parseInt(username),Integer.parseInt(password));
+      loginClient.loginEmployee(Integer.parseInt(username),Integer.parseInt(password));
     }
   }
 
   @Override public void registerUser(Customer newCustomer)
   {
-    client.registerUser(newCustomer);
+    loginClient.registerUser(newCustomer);
   }
 
   @Override
   public Customer getLoggedCustomer() {
-    return client.getLoggedCustomer();
+    return loginClient.getLoggedCustomer();
   }
 
   @Override
   public Employee getLoggedEmployee() {
-    return client.getLoggedEmployee();
+    return loginClient.getLoggedEmployee();
   }
 
-  @Override public void editUser()
+  @Override public void editCustomer(Customer editedCustomer)
   {
-    System.out.println("user requested to be edited - " + getLoggedCustomer());
+    loginClient.editCustomer(editedCustomer);
   }
 
   @Override public void deleteCustomer()
   {
-    client.deleteCustomer();
+    loginClient.deleteCustomer();
   }
 
 

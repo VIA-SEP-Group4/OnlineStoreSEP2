@@ -120,7 +120,7 @@ public class BrowserViewModel implements PropertyChangeListener
     else {
       logOut.setValue(false);
       logIn.setValue(true);
-      userName.setValue("Hello, "+credsModel.getLoggedCustomer().getLastName());
+      userName.setValue("Hello, "+credsModel.getLoggedCustomer().getFirstName());
 
     }
   }

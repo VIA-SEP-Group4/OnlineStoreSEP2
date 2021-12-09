@@ -7,9 +7,8 @@ import javafx.beans.property.StringProperty;
 
 public class AccSettingsViewModel
 {
-  private CredentialsModel credentialsModel;
 
-  private CredentialsModel model;
+  private CredentialsModel credentialsModel;
   private StringProperty fName;
   private StringProperty lName;
   private StringProperty userName;
@@ -21,7 +20,7 @@ public class AccSettingsViewModel
   private StringProperty success;
 
   public AccSettingsViewModel(CredentialsModel model) {
-    this.model = model;
+    this.credentialsModel = model;
     fName = new SimpleStringProperty();
     lName = new SimpleStringProperty();
     userName = new SimpleStringProperty();
@@ -49,8 +48,9 @@ public class AccSettingsViewModel
         errorPass.setValue("Passwords don't match");
       }
       else {
-        model.editUser();
-        clearLabels();
+        Customer editedCustomer = new Customer(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue());
+        clearFields();
+        credentialsModel.editCustomer(editedCustomer);
       }
     }
     else{
@@ -151,6 +151,6 @@ public class AccSettingsViewModel
 
   public void deleteCustomer()
   {
-    model.deleteCustomer();
+    credentialsModel.deleteCustomer();
   }
 }

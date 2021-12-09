@@ -92,10 +92,15 @@ public class CredentialsDataManager implements CredentialsDataAccessor
          ResultSet rs = stmt.executeQuery(SQL))
     {
       rs.next();
-//      System.out.println(rs.getRow());
+
       if (rs.getRow()==1 && rs.getString(2).equals(username) && rs.getString(3).equals(password)){
-        loggedCustomer = new Customer(rs.getString(1), rs.getString(2),
-                rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt("customer_id"));
+        loggedCustomer = new Customer(
+            rs.getString("user_name"),
+            rs.getString("pass"),
+            rs.getString("email"),
+            rs.getString("first_name"),
+            rs.getString("last_name"),
+            rs.getInt("customer_id"));
       }
       else {
         throw new RuntimeException("Wrong credentials - access denied");
@@ -165,6 +170,23 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       int affectedRows = stmt.executeUpdate(SQL);
       if (affectedRows <= 0)
         throw new RuntimeException("Customer deletion failed");
+    }catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
+    }
+  }
+
+  @Override public void editCustomer(Customer editedCustomer)
+  {
+    String table = "customers";
+    String SQL = "UPDATE " +SCHEMA+"."+table+ " set user_name='"+editedCustomer.getUsername()+"'" + ", first_name="+"'"+editedCustomer.getFirstName()+"'"+", last_name="+"'"+editedCustomer.getLastName()+"'"+",  pass ='"+editedCustomer.getPassword()+ "'"+ ", email ='"+editedCustomer.getEmail()+"'" +" where customer_id="+editedCustomer.getCustomerId();
+
+    try (Connection conn = DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement())
+    {
+      int affectedRows = stmt.executeUpdate(SQL);
+      if (affectedRows <= 0)
+        throw new RuntimeException("Customer update failed");
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
