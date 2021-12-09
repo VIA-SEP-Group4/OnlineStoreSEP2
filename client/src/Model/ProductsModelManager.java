@@ -83,6 +83,16 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
         loggedCustomer=c;
     }
 
+    @Override public ArrayList<Product> getProducts(int page, int pagQuant)
+    {
+        return productsClient.getProducts(page,pagQuant);
+    }
+
+    @Override public ArrayList<Product> getFilterProd(int page, int pagQuant, String type)
+    {
+        return productsClient.getFilterProd(page,pagQuant,type);
+    }
+
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);

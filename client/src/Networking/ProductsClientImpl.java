@@ -79,7 +79,25 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
             e.printStackTrace();
         }
     }
+    @Override public ArrayList<Product> getProducts(int page, int pagQuant)
+    {
+        try {
+            return serverStub.getProducts(page,pagQuant);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    @Override public ArrayList<Product> getFilterProd(int page, int pagQuant, String type)
+    {
+        try {
+            return serverStub.getFilterProd(page,pagQuant,type);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);

@@ -15,4 +15,6 @@ public interface ProductsModel extends Subject {
     void removeFromCart(Product p, int desiredQuantity);
     ArrayList<Product> getCartProducts();
     void setLoggedCustomer(Customer c);
+    ArrayList<Product> getProducts(int page, int pagQuant);
+    ArrayList<Product> getFilterProd(int page, int pagQuant, String type);
 }

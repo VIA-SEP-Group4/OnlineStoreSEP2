@@ -14,4 +14,6 @@ public interface ProductsServerRemote extends Remote {
     void addToCart(Product p, int desiredQuantity) throws RemoteException;
     void registerClient(ProductsClientRemote client) throws RemoteException;
     void removeClient(ProductsClientRemote client) throws RemoteException;
+    ArrayList<Product> getProducts(int page, int pagQuant) throws RemoteException;
+    ArrayList<Product> getFilterProd(int page, int pagQuant, String type) throws RemoteException;
 }
