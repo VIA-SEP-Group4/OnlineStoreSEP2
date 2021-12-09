@@ -27,6 +27,16 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
     return productsDataAcessor.getProducts();
   }
 
+  @Override public ArrayList<Product> getProducts(int page, int pagQuant)
+  {
+    return productsDataAcessor.getProducts(page,pagQuant);
+  }
+
+  @Override public ArrayList<Product> getFilterProd(int page, int pagQuant, String type)
+  {
+    return productsDataAcessor.getFilterProd(page,pagQuant,type);
+  }
+
   @Override public void addProduct(Product p) {
     productsDataAcessor.addProduct(p);
   }
