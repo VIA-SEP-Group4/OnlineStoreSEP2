@@ -40,7 +40,12 @@ public class AccSettingsViewController
 
   public void editBtnPressed(ActionEvent actionEvent)
   {
-    viewModel.sendEditedData();
+    try
+    {
+      viewModel.sendEditedData();
+    }catch (AccountEditedExceptionReply exReply){
+      createAlert(Alert.AlertType.INFORMATION, exReply.getMessage()).showAndWait();
+    }
   }
 
   public void deleteBtnPressed(ActionEvent actionEvent)

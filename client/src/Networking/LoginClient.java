@@ -16,4 +16,5 @@ public interface LoginClient extends Subject {
 
     //TODO ... added 9.12.12:50
     void deleteCustomer();
+  void editCustomer(Customer editedCustomer);
 }

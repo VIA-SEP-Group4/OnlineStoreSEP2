@@ -3,6 +3,7 @@ package Networking;
 import Model.Models.Customer;
 import Model.Models.Employee;
 import View.AccountSettings.AccountDeletedExceptionReply;
+import View.AccountSettings.AccountEditedExceptionReply;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -95,6 +96,26 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             reply = "Account deleting failed";
         }
         throw new AccountDeletedExceptionReply(reply);
+    }
+
+    @Override public void editCustomer(Customer editedCustomer)
+    {
+        //add orders and ID to the edited customer
+        Customer tempCustomer = new Customer(editedCustomer.getUsername(),
+            editedCustomer.getPassword(), editedCustomer.getEmail(),
+            editedCustomer.getFirstName(), editedCustomer.getLastName(),
+            loggedCustomer.getCustomerId());
+        tempCustomer.setOrders(loggedCustomer.getOrders());
+
+
+        String reply;
+        try {
+            reply = serverStub.editCustomer(tempCustomer, this);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            reply = "Customer's information editing failed";
+        }
+        throw new AccountEditedExceptionReply(reply);
     }
 
     @Override

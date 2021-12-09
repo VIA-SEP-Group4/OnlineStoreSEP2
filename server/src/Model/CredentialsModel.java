@@ -21,4 +21,5 @@ public interface CredentialsModel extends Subject
   Employee loginEmployee(int ID, int pin);
 
   void deleteCustomer(int customerId);
+  void editCustomer(Customer editedCustomer);
 }

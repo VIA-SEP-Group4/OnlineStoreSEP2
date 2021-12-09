@@ -156,7 +156,6 @@ public class Server implements RMIServer_Remote{
       Customer loggedCustomer = credentialsModelManager.loginCustomer(username,password);
       reply = "successful login ";
       client.setLoggedCustomer(loggedCustomer);
-
     }catch (RuntimeException e){
       reply = e.getMessage();
     }
@@ -269,13 +268,25 @@ public class Server implements RMIServer_Remote{
   @Override public String deleteCustomer(int customerId) throws RemoteException
   {
     String reply;
-    try
-    {
+    try {
       credentialsModelManager.deleteCustomer(customerId);
       reply = "Account deleted successfully";
     }catch (RuntimeException e){
       System.out.println(e.getMessage());
       reply = e.getMessage();
+    }
+    return reply;
+  }
+
+  @Override public String editCustomer(Customer editedCustomer, LoginRemoteClient loginClient) throws RemoteException
+  {
+    String reply = "Customer's information edited successfully";
+    try
+    {
+      credentialsModelManager.editCustomer(editedCustomer);
+      loginClient.setLoggedCustomer(editedCustomer);
+    }catch (RuntimeException ex){
+      reply = ex.getMessage();
     }
     return reply;
   }

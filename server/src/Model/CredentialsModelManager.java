@@ -7,7 +7,6 @@ import Model.Models.Employee;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class CredentialsModelManager implements CredentialsModel, PropertyChangeListener
@@ -55,6 +54,10 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     credentialsDataAccessor.deleteCustomer(customerId);
   }
 
+  @Override public void editCustomer(Customer editedCustomer)
+  {
+    credentialsDataAccessor.editCustomer(editedCustomer);
+  }
 
   @Override
   public void removeEmployee(Employee e) {

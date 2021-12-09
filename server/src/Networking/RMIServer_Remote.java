@@ -47,6 +47,7 @@ public interface RMIServer_Remote extends Remote
 
   //TODO ... added 9.12.12:50
   String deleteCustomer(int customerId) throws RemoteException;
+  String editCustomer(Customer editedCustomer, LoginRemoteClient loginClient) throws RemoteException;
   ArrayList<Product> getProducts(int page, int pagQuant) throws RemoteException;
   ArrayList<Product> getFilterProd(int page, int pagQuant, String type) throws RemoteException;
 }
