@@ -13,7 +13,8 @@ public interface CustomerClient extends Subject {
     ArrayList<Product> getFilterProd(int page, int pagQuant, String type);
     void startClient();
     void processOrder(Order newOrder);
+    void updateOrderStatus(Order order, String status);
     ArrayList<Order> getOrders(int customerId);
-    void addToCart(Product p, int desiredQuantity);
+    void updateStock(Product p, int desiredQuantity);
 
 }

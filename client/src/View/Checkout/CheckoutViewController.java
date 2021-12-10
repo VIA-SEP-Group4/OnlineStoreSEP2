@@ -60,6 +60,7 @@ public class CheckoutViewController
 
     //orders table
     ordersTable.setItems(viewModel.getOrders());
+    ordersTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> viewModel.setSelectedOrder(newValue));
     orderIdCol.setCellValueFactory(new PropertyValueFactory<>("orderId"));
     orderTotalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
     timestampCol.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
@@ -85,9 +86,11 @@ public class CheckoutViewController
     viewHandler.openBrowserPane();
   }
 
-  public void checkOrderedProductDetail(MouseEvent mouseEvent)
+  public void onDoubleClick(MouseEvent mouseEvent)
   {
-    if (mouseEvent.getButton().equals(MouseButton.PRIMARY) && mouseEvent.getClickCount() == 2){
+    if (mouseEvent.getClickCount() == 2 && !mouseEvent.isConsumed())
+    {
+      mouseEvent.consume();
       Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();
       if (tempOrder != null)
         viewModel.showOrderDetails(tempOrder.getOrderId());
@@ -100,15 +103,36 @@ public class CheckoutViewController
     Product tempProduct = cartProductsTable.getSelectionModel().getSelectedItem();
    if (tempProduct != null)
    {
-     int quantityProd = -tempProduct.getQuantity();
+     int quantityProd = tempProduct.getQuantity();
      viewModel.removeFromCart(tempProduct, quantityProd);
    }
-    //TODO .. put it in some label so customer can see what's going on
-    System.out.println("error label ->no product to remove ...");
+   else
+   {
+     //TODO .. put it in some label so customer can see what's going on
+     System.out.println("error label ->no product to remove 1 ...");
+   }
   }
 
   public void filterBy(ActionEvent event)
   {
     viewModel.filterBy(filterByComboBox.valueProperty().get());
+  }
+
+  public void cancelOrder(ActionEvent event)
+  {
+    Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();
+    if (tempOrder != null && tempOrder.getState().equals("Waiting"))
+    {
+      viewModel.cancelOrder(tempOrder);
+    }
+    else if (tempOrder == null)
+    {
+      //TODO .. put it in some label so customer can see what's going on
+      System.out.println("error label ->no order to cancel...");
+    }
+    else
+    {
+      System.out.println("error label ->Can't cancel order ...");
+    }
   }
 }

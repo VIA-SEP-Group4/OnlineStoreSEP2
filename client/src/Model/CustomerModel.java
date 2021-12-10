@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public interface CustomerModel  extends Subject {
     void processOrder(Order o);
+    void cancelOrder(Order order, String canceled);
     void addToCart(Product p, int desiredQuantity);
     void removeFromCart(Product p, int desiredQuantity);
 
@@ -21,5 +22,4 @@ public interface CustomerModel  extends Subject {
     ArrayList<Product> getFilterProd(int page, int pagQuant, String type);
 
     Customer getLoggedCustomer();
-
 }

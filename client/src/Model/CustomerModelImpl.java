@@ -35,6 +35,14 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
         loggedCustomer.getCart().clear();
         customerClient.processOrder(o);
     }
+    @Override public void cancelOrder(Order order, String status)
+    {
+        for (int i = 0; i < order.getProducts().size(); i++)
+        {
+            customerClient.updateStock(order.getProducts().get(i), order.getProducts().get(i).getQuantity());
+        }
+        customerClient.updateOrderStatus(order,status);
+    }
 
     @Override
     public void addToCart(Product p, int desiredQuantity) {
@@ -52,7 +60,7 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
             loggedCustomer.getCart().add(orderedProduct);
         }
 
-        customerClient.addToCart(p, desiredQuantity);
+        customerClient.updateStock(p, -desiredQuantity);
     }
 
     @Override public void removeFromCart(Product p, int desiredQuantity)
@@ -64,7 +72,7 @@ public class CustomerModelImpl implements CustomerModel, PropertyChangeListener 
                 loggedCustomer.getCart().remove(i);
             }
         }
-        customerClient.addToCart(p, desiredQuantity);
+        customerClient.updateStock(p, desiredQuantity);
     }
 
 

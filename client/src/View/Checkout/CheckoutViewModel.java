@@ -16,6 +16,7 @@ public class CheckoutViewModel
   private CredentialsModel credentialsModel;
   private ObservableList<Product> cartProducts;
   private ObservableList<Order> orders;
+  private ObjectProperty<Order> selectedOrder;
   private ObservableList<Product> orderProducts;
   private StringProperty orderDetailLabel;
   private ObjectProperty<String> status;
@@ -23,7 +24,7 @@ public class CheckoutViewModel
   public CheckoutViewModel(CustomerModel customerModel, CredentialsModel credentialsModel)
   {
     this.customerModel = customerModel;
-    this.credentialsModel=credentialsModel;
+    this.credentialsModel = credentialsModel;
 
     cartProducts = FXCollections.observableArrayList();
     cartProducts.setAll(customerModel.getCartProducts());
@@ -31,6 +32,7 @@ public class CheckoutViewModel
     orders = FXCollections.observableArrayList();
     orders.setAll(customerModel.fetchCustomerOrders());
     orderProducts = FXCollections.observableArrayList();
+    selectedOrder = new SimpleObjectProperty<>();
 
     status = new SimpleObjectProperty<>();
 
@@ -41,7 +43,22 @@ public class CheckoutViewModel
 
   private void updateOrders(PropertyChangeEvent evt)
   {
-    orders.setAll((ArrayList<Order>)evt.getNewValue());
+    orders.setAll((ArrayList<Order>) evt.getNewValue());
+  }
+
+  public Order getSelectedOrder()
+  {
+    return selectedOrder.get();
+  }
+
+  public ObjectProperty<Order> selectedOrderProperty()
+  {
+    return selectedOrder;
+  }
+
+  public void setSelectedOrder(Order selectedOrder)
+  {
+    this.selectedOrder.set(selectedOrder);
   }
 
   public ObservableList<Order> getOrders()
@@ -64,35 +81,38 @@ public class CheckoutViewModel
     return status;
   }
 
+  public Property<String> getDetailLabelProperty()
+  {
+    return orderDetailLabel;
+  }
+
   public void processOrder()
   {
-    if (!cartProducts.isEmpty()){
+    if (!cartProducts.isEmpty())
+    {
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
+      Order newOrder = new Order(
+          credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
 
-//      orders.add(newOrder);
       customerModel.processOrder(newOrder);
-
       cartProducts.clear();
     }
-    else {
+    else
+    {
       System.out.println("Nothing to order ...");
       //ToDO ...show label instead
     }
   }
 
-  public void showOrderDetails(int orderId){
+  public void showOrderDetails(int orderId)
+  {
     orderProducts.clear();
-    for (Order o : orders){
+    for (Order o : orders)
+    {
       if (o.getOrderId() == orderId)
         orderProducts.addAll(o.getProducts());
     }
     orderDetailLabel.setValue("Order n." + orderId + " detail:");
-  }
-
-  public Property<String> getDetailLabelProperty()
-  {
-    return orderDetailLabel;
   }
 
   public void fetchCart()
@@ -101,25 +121,10 @@ public class CheckoutViewModel
     cartProducts.setAll(customerModel.getCartProducts());
   }
 
-  public void removeFromCart(Product p,int quantityProd)
+  public void removeFromCart(Product p, int quantityProd)
   {
-    if (quantityProd<0)
-    {
-      ArrayList<Product> tempProducts = customerModel.getProducts();
-      Product selectProd = null;
-      for (Product tempProduct : tempProducts)
-      {
-        if (tempProduct.getProductId() == p.getProductId())
-          selectProd = tempProduct;
-      }
-      customerModel.removeFromCart(selectProd, quantityProd);
+      customerModel.removeFromCart(p, quantityProd);
       fetchCart();
-    }
-    else
-    {
-      //TODO .. put it in some label so customer can see what's going on
-      System.out.println("error label ->no product to remove ...");
-    }
   }
 
   public void filterBy(String stat)
@@ -128,7 +133,8 @@ public class CheckoutViewModel
 
     if (status.getValue() != null)
     {
-      for (Order o : customerModel.fetchCustomerOrders()){
+      for (Order o : customerModel.fetchCustomerOrders())
+      {
         if (o.getState().equalsIgnoreCase(stat))
           orders.add(o);
       }
@@ -137,5 +143,10 @@ public class CheckoutViewModel
     {
       orders.setAll(customerModel.fetchCustomerOrders());
     }
+  }
+
+  public void cancelOrder(Order order)
+  {
+    customerModel.cancelOrder(order, "Canceled");
   }
 }

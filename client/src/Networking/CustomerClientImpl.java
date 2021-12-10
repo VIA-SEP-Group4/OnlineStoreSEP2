@@ -43,6 +43,14 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         }
     }
 
+    @Override public void updateOrderStatus(Order order, String status)
+    {
+        try {
+            serverStub.updateOrderStatus(order, status);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
     @Override public ArrayList<Order> getOrders(int customerId)
     {
         try
@@ -56,10 +64,11 @@ public class CustomerClientImpl implements CustomerClient, CustomerRemoteClient 
         return new ArrayList<Order>();
     }
 
-    @Override public void addToCart(Product p, int desiredQuantity)
+    @Override public void updateStock(Product p, int desiredQuantity)
     {
         try {
-            serverStub.addToCart(p, desiredQuantity);
+
+            serverStub.updateStock(p, desiredQuantity);
         }
         catch (RemoteException e) {
             e.printStackTrace();

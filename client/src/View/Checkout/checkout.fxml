@@ -38,7 +38,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="ordersTable" layoutX="6.0" layoutY="23.0" onMousePressed="#checkOrderedProductDetail" prefHeight="297.0" prefWidth="310.0" AnchorPane.topAnchor="23.0">
+                        <TableView fx:id="ordersTable" layoutX="6.0" layoutY="23.0" onMouseClicked="#onDoubleClick" prefHeight="297.0" prefWidth="310.0" AnchorPane.topAnchor="23.0">
                            <columns>
                               <TableColumn fx:id="orderIdCol" prefWidth="55.999969482421875" text="order_id" />
                               <TableColumn fx:id="orderTotalPrice" prefWidth="69.33331298828125" text="total price" />
@@ -56,6 +56,7 @@
                         </TableView>
                         <Label fx:id="orderDetailLabel" layoutX="343.0" layoutY="32.0" prefHeight="17.0" prefWidth="243.0" text="..." />
                         <ComboBox fx:id="filterByComboBox" layoutX="166.0" layoutY="331.0" onAction="#filterBy" prefWidth="150.0" promptText="Filter by" />
+                        <Button layoutX="343.0" layoutY="331.0" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="26.0" prefWidth="99.0" text="Cancel Order" />
                      </children>
                   </AnchorPane>
             </content>
