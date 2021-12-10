@@ -1,43 +1,30 @@
 package Core;
 
+import Model.Models.Order;
 import Networking.*;
 
 public class ClientFactory {
 
-    private LoginClient loginClient;
-    private CustomerClient customerClient;
-    private AdminClient adminClient;
-    private ManagerClient managerClient;
-    private WorkerClient workerClient;
+    private CredentialsClient credentialsClient;
+    private ProductsClient productsClient;
+    private OrdersClient ordersClient;
+    public CredentialsClient getCredentialsClient() {
+        if(credentialsClient ==null){
+            credentialsClient =new CredentialsClientImpl();
+        }
+        return credentialsClient;
+    }
+    public ProductsClient getProductsClient() {
+        if(productsClient ==null){
+            productsClient =new ProductsClientImpl();
+        }
+        return productsClient;
+    }
+    public OrdersClient getOrdersClient() {
+        if(ordersClient ==null){
+            ordersClient =new OrdersClientImpl();
+        }
+        return ordersClient;
+    }
 
-    public LoginClient getLoginClient() {
-        if(loginClient==null){
-            loginClient=new LoginClientImpl();
-        }
-        return loginClient;
-    }
-    public CustomerClient getCustomerClient() {
-        if(customerClient==null){
-            customerClient=new CustomerClientImpl();
-        }
-        return customerClient;
-    }
-    public AdminClient getAdminClient() {
-        if(adminClient==null){
-            adminClient=new AdminClientImpl();
-        }
-        return adminClient;
-    }
-    public ManagerClient getManagerClient() {
-        if(managerClient==null){
-            managerClient=new ManagerClientImpl();
-        }
-        return managerClient;
-    }
-    public WorkerClient getWorkerClient() {
-        if(workerClient==null){
-            workerClient=new WorkerClientImpl();
-        }
-        return workerClient;
-    }
 }

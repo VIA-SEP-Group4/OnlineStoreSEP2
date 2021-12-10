@@ -1,5 +1,6 @@
 package Networking;
 
+import Enums.EmployeeType;
 import Model.Models.Customer;
 import Model.Models.Employee;
 import View.AccountSettings.AccountDeletedExceptionReply;
@@ -12,16 +13,15 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
-public class LoginClientImpl implements LoginClient, LoginRemoteClient{
-    private RMIServer_Remote serverStub;
-    private String clientId;
+public class CredentialsClientImpl implements CredentialsClient, CredentialsClientRemote {
+    private CredentialsServerRemote serverStub;
     private PropertyChangeSupport support;
     private Customer loggedCustomer = null;
     private Employee loggedEmployee = null;
-    private boolean started=false;
 
-    public LoginClientImpl() {
+    public CredentialsClientImpl() {
         support = new PropertyChangeSupport(this);
     }
 
@@ -32,18 +32,14 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
             UnicastRemoteObject.exportObject(this, 0);
 
             //lookup server stub
-            serverStub = (RMIServer_Remote) Naming.lookup("rmi://localhost:1099/server");
+            serverStub = (CredentialsServerRemote) Naming.lookup("rmi://localhost:1099/credentialsServer");
             serverStub.registerClient(this);
-            started = true;
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
-            System.err.println("failed to initialize client-object ...[LoginClientImpl.startClient()]");
+            System.err.println("failed to initialize client-object ...[CredentialsClientImpl.startClient()]");
         }
     }
 
-    /**
-     * Method used to get the user that has just been successfully logged in
-     * @return user as type Customer
-     */
+
     @Override
     public void loginEmployee(int ID, int pin)  {
         String reply = "denied";
@@ -73,10 +69,7 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         support.firePropertyChange("LoginReply",null, reply);
     }
 
-    @Override
-    public boolean isStarted() {
-        return started;
-    }
+
 
     @Override
     public void editEmployee(Employee e) {
@@ -85,6 +78,47 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void addEmployee(Employee e) {
+        String reply="Denied";
+        try {
+            reply=serverStub.addEmployee(e);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+        if(e.getType()== EmployeeType.WAREHOUSE_WORKER)
+            support.firePropertyChange("AddedWorker",null,reply);
+        else if(e.getType()==EmployeeType.MANAGER) support.firePropertyChange("ManagerAddReply",null,reply);
+    }
+
+    @Override
+    public void removeEmployee(Employee e) {
+        try {
+            serverStub.removeEmployee(e);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public ArrayList<Employee> getEmployees(String type) {
+        if(type.equals("Worker")) {
+            try {
+                return serverStub.getWorkers();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(type.equals("Manager")){
+            try {
+                return serverStub.getManagerEmployees();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     @Override public void deleteCustomer()
@@ -162,5 +196,12 @@ public class LoginClientImpl implements LoginClient, LoginRemoteClient{
 
     public void setLoggedEmployee(Employee loggedEmployee) {
         this.loggedEmployee = loggedEmployee;
+    }
+
+    @Override
+    public void receiveUpdatedEmployees(Object employees) throws RemoteException {
+        ArrayList<Employee> temp=(ArrayList<Employee>) employees;
+        if(temp.get(0).getType()==EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,temp);
+        else if(temp.get(0).getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerWorkersReply",null,temp);
     }
 }

@@ -32,6 +32,11 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener
     return ordersDataAccessor.getOrders(customerId);
   }
 
+  @Override public ArrayList<Order> getOrders(String status)
+  {
+    return ordersDataAccessor.getOrders(status);
+  }
+
   @Override
   public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
     return ordersDataAccessor.getWorkerOrdersForManager(workerID);

@@ -10,6 +10,7 @@ public interface OrdersModel extends Subject
 {
   void addNewOrder(Order newOrder);
   ArrayList<Order> getOrders(int customerId);
+  ArrayList<Order> getOrders(String status);
   ArrayList<Order> getAllOrders();
   ArrayList<Order> getWorkerOrdersForManager(int workerID);
   ArrayList<Order> getOrdersForWorker(int workerID);

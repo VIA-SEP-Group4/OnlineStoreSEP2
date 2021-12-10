@@ -1,6 +1,7 @@
 package View.Login;
 
 import Model.CredentialsModel;
+import Model.ProductsModel;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,14 +12,16 @@ import java.beans.PropertyChangeListener;
 public class LoginViewModel implements PropertyChangeListener {
 
     private CredentialsModel credentialsModel;
+    private ProductsModel productsModel;
     private StringProperty userName;
     private StringProperty password;
     private StringProperty errorUser;
     private StringProperty errorPass;
     private StringProperty success;
 
-    public LoginViewModel(CredentialsModel credentialsModel) {
+    public LoginViewModel(CredentialsModel credentialsModel, ProductsModel productsModel) {
         this.credentialsModel = credentialsModel;
+        this.productsModel = productsModel;
         userName=new SimpleStringProperty();
         password=new SimpleStringProperty();
         errorPass=new SimpleStringProperty();
@@ -99,7 +102,7 @@ public class LoginViewModel implements PropertyChangeListener {
         }
         else if (reply.toLowerCase().contains("success"))
         {
-
+            productsModel.setLoggedCustomer(credentialsModel.getLoggedCustomer());
             success.setValue(reply);
             errorPass.setValue("");
             errorUser.setValue("");

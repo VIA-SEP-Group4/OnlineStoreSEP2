@@ -183,10 +183,9 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   @Override public ArrayList<Order> getOrders(String orderStatus)
   {
-    // TODO: 09/12/2021  this method
     //fetch order's products first:
 
-    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE + " WHERE status=" +orderStatus;
+    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE + " WHERE status = '" +orderStatus + "'";
     ArrayList<Order> orders = new ArrayList<>();
 
     try (Connection conn =  DBSConnection.getInstance().connect();
@@ -302,7 +301,7 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   @Override public void updateOrderStatus(Order order, String status)
   {
-    String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status='"+(status)+ "' WHERE order_id = '" +order.getOrderId()+ "'";
+    String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status = '" + status + "' WHERE order_id =" +order.getOrderId();
 
     try (Connection conn = DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement())

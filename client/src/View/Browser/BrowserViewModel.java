@@ -1,8 +1,8 @@
 package View.Browser;
 
 import Model.CredentialsModel;
-import Model.CustomerModel;
 import Model.Models.Product;
+import Model.ProductsModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 public class BrowserViewModel implements PropertyChangeListener
 {
-  private CustomerModel customerModel;
+  private ProductsModel productsModel;
   private CredentialsModel credsModel;
   private StringProperty search;
   private StringProperty items;
@@ -33,9 +33,9 @@ public class BrowserViewModel implements PropertyChangeListener
   private BooleanProperty logIn;
 
 
-  public BrowserViewModel(CustomerModel customerModel, CredentialsModel credsModel)
+  public BrowserViewModel(ProductsModel productsModel, CredentialsModel credsModel)
   {
-    this.customerModel = customerModel;
+    this.productsModel = productsModel;
     search = new SimpleStringProperty("");
     items = new SimpleStringProperty("");
     userName = new SimpleStringProperty();
@@ -52,7 +52,7 @@ public class BrowserViewModel implements PropertyChangeListener
     logOut = new SimpleBooleanProperty(true);
     logIn = new SimpleBooleanProperty(false);
 
-    customerModel.addListener("ProductsReply",this);
+    productsModel.addListener("ProductsReply",this);
   }
 
   public IntegerProperty pageProperty()
@@ -122,7 +122,7 @@ public class BrowserViewModel implements PropertyChangeListener
 
   public void fetchProducts(){
     browserTable.clear();
-    browserTable.addAll(customerModel.getProducts(page.getValue(),pagQuant.getValue()));
+    browserTable.addAll(productsModel.getProducts(page.getValue(),pagQuant.getValue()));
   }
 
   public void reset()
@@ -208,7 +208,7 @@ public class BrowserViewModel implements PropertyChangeListener
     else if (type.getValue() != null)
     {
       browserTable.clear();
-      browserTable.addAll(customerModel.getFilterProd(page.getValue(),pagQuant.getValue(),type.getValue()));
+      browserTable.addAll(productsModel.getFilterProd(page.getValue(),pagQuant.getValue(),type.getValue()));
     }
   }
 
@@ -216,7 +216,7 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     if (desiredQuantity>0 && desiredQuantity<=p.getQuantity())
     {
-      customerModel.addToCart(p, desiredQuantity);
+      productsModel.addToCart(p, desiredQuantity);
       reset();
     }
     else

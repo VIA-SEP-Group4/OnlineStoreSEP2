@@ -13,4 +13,5 @@ public interface ProductsDataAcessor extends Subject {
     void deleteProduct(Product p);
   void updateStock(Product p, int desiredQuantity);
   void editProduct(Product p);
+
 }

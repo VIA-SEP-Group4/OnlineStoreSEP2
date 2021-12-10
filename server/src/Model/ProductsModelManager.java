@@ -67,6 +67,6 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    support.firePropertyChange(evt.getPropertyName(),evt.getOldValue(),evt.getNewValue());
+    support.firePropertyChange(evt);
   }
 }
