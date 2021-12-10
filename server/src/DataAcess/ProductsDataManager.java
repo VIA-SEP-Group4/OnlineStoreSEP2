@@ -141,7 +141,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
 
     @Override public void updateStock(Product p, int desiredQuantity)
     {
-        String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET quantity="+(p.getQuantity()-desiredQuantity)+ " WHERE product_id = '" +p.getProductId()+ "'";
+        String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET quantity=quantity +"+(desiredQuantity)+ " WHERE product_id = '" +p.getProductId()+ "'";
 
         try (Connection conn = DBSConnection.getInstance().connect();
             Statement stmt = conn.createStatement())

@@ -121,7 +121,6 @@ public class BrowserViewModel implements PropertyChangeListener
   }
 
   public void fetchProducts(){
-    checkNotNull();
     browserTable.clear();
     browserTable.addAll(customerModel.getProducts(page.getValue(),pagQuant.getValue()));
   }
@@ -130,6 +129,7 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     browserTable.clear();
     fetchProducts();
+    itemQuantity();
     loadTypes();
     if(credsModel.getLoggedCustomer() == null)
     {
@@ -153,10 +153,8 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     List<String> searchWordArray = Arrays.asList(searchWord.trim().split(""));
 
-    return (ArrayList<Product>) listOfProducts.stream().filter(input -> {
-      return searchWordArray.stream().allMatch(word ->
-          input.getDescription().toLowerCase().contains(word.toLowerCase()));
-    }).collect(Collectors.toList());
+    return (ArrayList<Product>) listOfProducts.stream().filter(input -> searchWordArray.stream().allMatch(word ->
+        input.getDescription().toLowerCase().contains(word.toLowerCase()))).collect(Collectors.toList());
   }
 
   private void loadTypes()
@@ -170,20 +168,28 @@ public class BrowserViewModel implements PropertyChangeListener
         typeList.add(getBrowserTable().get(i).getType());
     }
   }
-
-  public int setMaxPage()
+  public void itemQuantity()
   {
-    checkNotNull();
-    return (((customerModel.getProducts().size())-1)/(pagQuant.getValue()))+1;
+    if (customerModel.getLoggedCustomer()!= null)
+    {
+      ArrayList<Product> tempProd = customerModel.getLoggedCustomer().getCart();
+      int iQ = 0;
+      for (Product product : tempProd)
+      {
+        iQ += product.getQuantity();
+      }
+      items.setValue("(" + iQ + ") items");
+    }
   }
 
-  public void checkNotNull()
+  public int setMaxPage()
   {
     if (pagQuant.getValue() == null)
     {
       assert pagQuant != null;
       pagQuant.setValue(10);
     }
+    return (((customerModel.getProducts().size())-1)/(pagQuant.getValue()))+1;
   }
 
   public void filterBy()
@@ -211,7 +217,6 @@ public class BrowserViewModel implements PropertyChangeListener
     if (desiredQuantity>0 && desiredQuantity<=p.getQuantity())
     {
       customerModel.addToCart(p, desiredQuantity);
-      items.setValue("(Items("+credsModel.getLoggedCustomer().getCart().size()+")");
       reset();
     }
     else

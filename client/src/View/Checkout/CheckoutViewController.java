@@ -95,7 +95,6 @@ public class CheckoutViewController
       if (tempOrder != null)
         viewModel.showOrderDetails(tempOrder.getOrderId());
     }
-    ordersTable.getSelectionModel().clearSelection();
   }
 
   public void deleteProdCart(ActionEvent event)

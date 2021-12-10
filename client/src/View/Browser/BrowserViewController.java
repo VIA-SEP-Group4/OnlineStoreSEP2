@@ -46,9 +46,9 @@ public class BrowserViewController
     this.viewModel = ViewModelFactory.getBrowserViewModel();
     filterByComboBox.setItems(viewModel.getAllTypes());
     filterByComboBox.valueProperty().bindBidirectional(viewModel.getTypeProperty());
-    pagQuantityProd.getItems().addAll( 10, 20, 50, 100);
+    pagQuantityProd.getItems().addAll( 3, 5, 20, 50, 100);
     pagQuantityProd.valueProperty().bindBidirectional(viewModel.pagQuantProperty());
-    pagination.setMaxPageIndicatorCount(viewModel.setMaxPage());
+    pagination.setPageCount(viewModel.setMaxPage());
     pagination.currentPageIndexProperty().bindBidirectional(viewModel.pageProperty());
     itemsLabel.textProperty().bindBidirectional(viewModel.itemsProperty());
     searchTextField.textProperty().bindBidirectional(viewModel.searchProperty());
@@ -127,6 +127,7 @@ public class BrowserViewController
 
   public void onSetNumbProd(ActionEvent event)
   {
+    pagination.setPageCount(viewModel.setMaxPage());
     viewModel.fetchProducts();
     viewModel.filterBy();
   }
