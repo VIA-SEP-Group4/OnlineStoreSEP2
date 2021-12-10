@@ -28,6 +28,11 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
         return ordersClient.getAllOrders();
     }
 
+    @Override public ArrayList<Order> getOrders(String status)
+    {
+        return ordersClient.getOrders(status);
+    }
+
     @Override
     public void changeOrderAssignee(Order order, boolean toRemove) {
         if(toRemove){
@@ -37,6 +42,11 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
             order.setWorkerID(2);
         }
         ordersClient.changeOrderAssignee(order);
+    }
+
+    @Override public void updateOrderStatus(Order order, String status)
+    {
+        ordersClient.updateOrderStatus(order, status);
     }
 
     @Override

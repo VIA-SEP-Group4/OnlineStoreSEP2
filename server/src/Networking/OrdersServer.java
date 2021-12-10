@@ -49,6 +49,11 @@ public class OrdersServer implements OrdersServerRemote {
         return modelManager.getAllOrders();
     }
 
+    @Override public ArrayList<Order> getOrders(String status)
+    {
+        return modelManager.getOrders(status);
+    }
+
     @Override
     public ArrayList<Order> getWorkerOrdersForManager(int workerID) throws RemoteException {
         return modelManager.getWorkerOrdersForManager(workerID);

@@ -43,11 +43,28 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
         return null;
     }
 
+    @Override public ArrayList<Order> getOrders(String status)
+    {
+        return serverStub.getOrders(status);
+    }
+
     @Override
     public void changeOrderAssignee(Order order) {
         try {
             serverStub.changeOrderAssignee(order);
         } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override public void updateOrderStatus(Order order, String status)
+    {
+        try
+        {
+            serverStub.updateOrderStatus(order, status);
+        }
+        catch (RemoteException e)
+        {
             e.printStackTrace();
         }
     }
