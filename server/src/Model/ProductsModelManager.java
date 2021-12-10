@@ -46,9 +46,9 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
     productsDataAcessor.deleteProduct(p);
   }
 
-  @Override public void updateStock(Product p, int desiredQuantity)
+  @Override public void updateStock(Product p, int prodQuantity)
   {
-    productsDataAcessor.updateStock(p, desiredQuantity);
+    productsDataAcessor.updateStock(p, prodQuantity);
   }
 
   @Override

@@ -4,6 +4,8 @@ import Core.ViewHandler;
 import Core.ViewModelFactory;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 
 public class LoginViewController
@@ -81,5 +83,33 @@ public class LoginViewController
   {
       usernameLabel.setText("Employee ID");
       passwordLabel.setText("PIN");
+  }
+
+  public void onEnter(KeyEvent keyEvent)
+  {
+    if (keyEvent.getCode() == KeyCode.ENTER)
+    {
+      RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
+      viewModel.login(selected.getText());
+
+      if (successLabel.textProperty().getValue() != null && successLabel.textProperty().getValue().contains("success")
+          && selected.getText().equals("Customer"))
+      {
+        viewHandler.openBrowserPane();
+      }
+      else if (successLabel.textProperty().getValue() != null && successLabel.textProperty().getValue().contains("MANAGER"))
+      {
+        viewHandler.openManagerPane();
+      }
+      else if (successLabel.textProperty().getValue() != null && successLabel.textProperty().getValue().contains("ADMIN"))
+      {
+        viewHandler.openAdminPane();
+      }
+      else if (successLabel.textProperty().getValue() != null && successLabel.textProperty().getValue()
+          .contains("WAREHOUSE_WORKER"))
+      {
+        viewHandler.openOrdersPane();
+      }
+    }
   }
 }

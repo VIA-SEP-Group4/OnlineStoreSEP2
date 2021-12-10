@@ -63,6 +63,7 @@ public class ViewHandler {
             Scene scene = new Scene(root);
             stage.setTitle("Login");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,6 +80,7 @@ public class ViewHandler {
             Scene scene = new Scene(root);
             stage.setTitle("Register");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,6 +97,7 @@ public class ViewHandler {
             Scene scene = new Scene(root);
             stage.setTitle("Browser");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,6 +145,7 @@ public class ViewHandler {
             Scene scene = new Scene(root);
             stage.setTitle("Detail Product");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -159,6 +163,7 @@ public class ViewHandler {
           Scene scene = new Scene(root);
           stage.setTitle("Checkout");
           stage.setScene(scene);
+          stage.setResizable(false);
           stage.show();
       } catch (IOException e) {
           e.printStackTrace();

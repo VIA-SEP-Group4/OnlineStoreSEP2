@@ -299,9 +299,9 @@ public class OrdersDataManager implements OrdersDataAccessor
     }
   }
 
-  @Override public void updateOrderStatus(Order order, String status)
+  @Override public void updateOrderState(Order order, String state)
   {
-    String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status = '" + status + "' WHERE order_id =" +order.getOrderId();
+    String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status = '" + state + "' WHERE order_id =" +order.getOrderId();
 
     try (Connection conn = DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement())

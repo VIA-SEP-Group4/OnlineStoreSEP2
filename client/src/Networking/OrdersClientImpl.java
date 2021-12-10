@@ -57,11 +57,11 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
         }
     }
 
-    @Override public void updateOrderStatus(Order order, String status)
+    @Override public void updateOrderState(Order order, String state)
     {
         try
         {
-            serverStub.updateOrderStatus(order, status);
+            serverStub.updateOrderState(order, state);
         }
         catch (RemoteException e)
         {

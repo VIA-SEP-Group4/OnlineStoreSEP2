@@ -94,7 +94,7 @@ public class OrdersViewModel
         }
         openOrders.remove(toRemove.get(0));
         myOrders.add(toRemove.get(0));
-        model.updateOrderStatus(toRemove.get(0), toRemove.get(0).getState());
+        model.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
     }
 
@@ -109,7 +109,7 @@ public class OrdersViewModel
         }
         myOrders.remove(toRemove.get(0));
         openOrders.add(toRemove.get(0));
-        model.updateOrderStatus(toRemove.get(0), toRemove.get(0).getState());
+        model.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
     }
 
@@ -117,7 +117,7 @@ public class OrdersViewModel
         for (Order o : myOrders){
             if (o.getOrderId() == id){
                 o.setStatus("READY");
-                model.updateOrderStatus(o, o.getState());
+                model.updateOrderState(o, o.getState());
             }
         }
     }

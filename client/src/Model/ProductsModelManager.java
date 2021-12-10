@@ -61,7 +61,11 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
     }
 
     @Override
-    public void removeFromCart(Product p, int desiredQuantity) {
+    public void addProdToStock(Product p, int prodQuantity){
+        productsClient.updateStock(p, prodQuantity);
+    }
+    @Override
+    public void removeFromCart(Product p, int prodQuantity) {
         for (int i = 0; i < loggedCustomer.getCart().size(); i++)
         {
             if(loggedCustomer.getCart().get(i).getProductId() == p.getProductId())
@@ -69,7 +73,7 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
                 loggedCustomer.getCart().remove(i);
             }
         }
-        productsClient.updateStock(p, desiredQuantity);
+        productsClient.updateStock(p, prodQuantity);
     }
 
     @Override

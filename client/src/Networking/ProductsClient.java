@@ -11,7 +11,7 @@ public interface ProductsClient extends Subject {
     void deleteProduct(Product p);
     void editProduct(Product p);
     ArrayList<Product> getAllProducts();
-    void updateStock(Product p, int desiredQuantity);
+    void updateStock(Product p, int prodQuantity);
     ArrayList<Product> getProducts(int page, int pagQuant);
     ArrayList<Product> getFilterProd(int page, int pagQuant, String type);
 }

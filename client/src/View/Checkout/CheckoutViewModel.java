@@ -49,16 +49,6 @@ public class CheckoutViewModel
     orders.setAll((ArrayList<Order>) evt.getNewValue());
   }
 
-  public Order getSelectedOrder()
-  {
-    return selectedOrder.get();
-  }
-
-  public ObjectProperty<Order> selectedOrderProperty()
-  {
-    return selectedOrder;
-  }
-
   public void setSelectedOrder(Order selectedOrder)
   {
     this.selectedOrder.set(selectedOrder);
@@ -132,8 +122,7 @@ public class CheckoutViewModel
   public void filterBy(String stat)
   {
     orders.clear();
-
-    if (status.getValue() != null)
+    if (status.getValue() != null && !status.getValue().equals("All orders"))
     {
       for (Order o : ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId())){
         if (o.getState().equalsIgnoreCase(stat))
@@ -148,6 +137,10 @@ public class CheckoutViewModel
 
   public void cancelOrder(Order order)
   {
+    for (int i = 0; i < order.getProducts().size(); i++)
+    {
+      productsModel.addProdToStock(order.getProducts().get(i),order.getProducts().get(i).getQuantity());
+    }
     ordersModel.cancelOrder(order, "Canceled");
   }
 }

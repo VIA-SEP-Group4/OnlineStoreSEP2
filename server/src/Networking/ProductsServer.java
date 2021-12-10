@@ -61,8 +61,8 @@ public class ProductsServer implements ProductsServerRemote {
     }
 
     @Override
-    public void addToCart(Product p, int desiredQuantity) throws RemoteException {
-        modelManager.updateStock(p, desiredQuantity);
+    public void updateStock(Product p, int prodQuantity) throws RemoteException {
+        modelManager.updateStock(p, prodQuantity);
     }
     @Override public ArrayList<Product> getProducts(int page, int pagQuant) throws RemoteException
     {

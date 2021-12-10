@@ -12,7 +12,8 @@ public interface ProductsModel extends Subject {
     void editProduct(Product p);
     ArrayList<Product> getAllProducts();
     void addToCart(Product p, int desiredQuantity);
-    void removeFromCart(Product p, int desiredQuantity);
+    void addProdToStock(Product p, int prodQuantity);
+    void removeFromCart(Product p, int prodQuantity);
     ArrayList<Product> getCartProducts();
     void setLoggedCustomer(Customer c);
     ArrayList<Product> getProducts(int page, int pagQuant);

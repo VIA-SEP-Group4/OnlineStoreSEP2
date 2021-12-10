@@ -20,7 +20,7 @@ public interface OrdersDataAccessor extends Subject
   //change worker ID on a specific order
   void changeOrderAssignee(Order order);
   //change order status
-  void updateOrderStatus(Order order, String status);
+  void updateOrderState(Order order, String state);
 
 
 }

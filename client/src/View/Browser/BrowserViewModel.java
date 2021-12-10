@@ -147,6 +147,7 @@ public class BrowserViewModel implements PropertyChangeListener
 
   public void getSearch()
   {
+    fetchProducts();
     browserTable.setAll(searchList(search.getValue(), new ArrayList<>(getBrowserTable())));
   }
   private ArrayList<Product> searchList(String searchWord, ArrayList<Product> listOfProducts)
@@ -170,9 +171,9 @@ public class BrowserViewModel implements PropertyChangeListener
   }
   public void itemQuantity()
   {
-    if (customerModel.getLoggedCustomer()!= null)
+    if (credsModel.getLoggedCustomer()!= null)
     {
-      ArrayList<Product> tempProd = customerModel.getLoggedCustomer().getCart();
+      ArrayList<Product> tempProd = credsModel.getLoggedCustomer().getCart();
       int iQ = 0;
       for (Product product : tempProd)
       {
@@ -189,7 +190,7 @@ public class BrowserViewModel implements PropertyChangeListener
       assert pagQuant != null;
       pagQuant.setValue(10);
     }
-    return (((customerModel.getProducts().size())-1)/(pagQuant.getValue()))+1;
+    return (((productsModel.getProducts(0,1000).size())-1)/(pagQuant.getValue()))+1;
   }
 
   public void filterBy()

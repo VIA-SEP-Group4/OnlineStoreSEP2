@@ -11,7 +11,7 @@ public interface ProductsDataAcessor extends Subject {
     ArrayList<Product> getFilterProd(int page, int pagQuant, String type);
     void addProduct(Product p);
     void deleteProduct(Product p);
-  void updateStock(Product p, int desiredQuantity);
+  void updateStock(Product p, int prodQuantity);
   void editProduct(Product p);
 
 }

@@ -72,9 +72,9 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     }
 
     @Override
-    public void updateStock(Product p, int desiredQuantity) {
+    public void updateStock(Product p, int prodQuantity) {
         try {
-            serverStub.updateStock(p,desiredQuantity);
+            serverStub.updateStock(p,prodQuantity);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
