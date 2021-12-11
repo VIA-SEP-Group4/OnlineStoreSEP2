@@ -17,6 +17,7 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
         this.ordersClient = ordersClient;
         ordersClient.startClient();
         ordersClient.addListener("newOrder",this);
+        ordersClient.addListener("updatedOrderStatus",this);
     }
 
     @Override

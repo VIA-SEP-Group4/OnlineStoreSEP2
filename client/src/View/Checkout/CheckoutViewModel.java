@@ -5,6 +5,7 @@ import Model.Models.Order;
 import Model.Models.Product;
 import Model.OrdersModel;
 import Model.ProductsModel;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,16 +43,23 @@ public class CheckoutViewModel
     orderDetailLabel = new SimpleStringProperty();
 
     ordersModel.addListener("newOrder", this::updateOrders);
+    ordersModel.addListener("updatedOrderStatus", this::updateOrders);
   }
 
   private void updateOrders(PropertyChangeEvent evt)
   {
-    Order updatedOrder = (Order)evt.getNewValue();
-    for (Order o : orders)
-      if (o.getOrderId() == updatedOrder.getOrderId())
-        orders.remove(o);
-
-    orders.add(updatedOrder);
+    Order order= (Order) evt.getNewValue();
+    boolean found=false;
+    for(int i=0;i<orders.size();i++){
+      if(orders.get(i).getOrderId()== order.getOrderId()){
+        orders.set(i,order);
+        found=true;
+        break;
+      }
+    }
+    if(!found){
+      orders.add(order);
+    }
   }
 
   public void setSelectedOrder(Order selectedOrder)

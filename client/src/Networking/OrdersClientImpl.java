@@ -2,6 +2,7 @@ package Networking;
 
 import Model.Models.Order;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.MalformedURLException;
@@ -111,7 +112,11 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
 
     @Override
     public void receiveUpdatedOrder(Object updatedOrder) throws RemoteException {
-        System.out.println((Order) updatedOrder);
-        support.firePropertyChange("newOrder",null,updatedOrder);
+        PropertyChangeEvent event=(PropertyChangeEvent) updatedOrder;
+        if(event.getPropertyName().equals("newOrder")){
+        support.firePropertyChange("newOrder",null,event.getNewValue());}
+        else{
+            support.firePropertyChange("updatedOrderStatus",null,event.getNewValue());
+        }
     }
 }

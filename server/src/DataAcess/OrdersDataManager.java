@@ -271,7 +271,7 @@ public class OrdersDataManager implements OrdersDataAccessor
   public void removeListener(String eventName, PropertyChangeListener listener) {
     support.removePropertyChangeListener(eventName,listener);
   }
-  @Override public void changeOrderAssignee(Order order)
+  @Override public synchronized void changeOrderAssignee(Order order)
   {
     String orderSQL = "UPDATE " +SCHEMA+ "." +TABLE + " SET warehouse_worker_id = " + order.getWorkerID() + " WHERE order_id = " + order.getOrderId();
     String disableTriggerSQL = "ALTER TABLE " +SCHEMA+ "." +TABLE + " DISABLE TRIGGER ALL";
@@ -299,7 +299,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     }
   }
 
-  @Override public void updateOrderState(Order order, String state)
+  @Override public synchronized void updateOrderState(Order order, String state)
   {
     order.setStatus(state);
     String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status = '" + order.getState() + "' WHERE order_id =" +order.getOrderId();
@@ -310,7 +310,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       int affectedRows = stmt.executeUpdate(SQL);
       if (affectedRows <= 0)
         throw new RuntimeException("Order status update failed");
-      support.firePropertyChange("newOrder",null,order);
+      support.firePropertyChange("updatedOrderStatus",null,order);
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());

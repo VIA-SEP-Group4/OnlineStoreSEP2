@@ -19,11 +19,22 @@ public class OrderOverviewViewModel {
         products=FXCollections.observableArrayList();
         orders.setAll(model.getAllOrders());
         model.addListener("newOrder",this::updateOrders);
+        model.addListener("updatedOrderStatus", this::updateOrders);
     }
 
     private void updateOrders(PropertyChangeEvent event) {
-        ArrayList<Order> temp=(ArrayList<Order>) event.getNewValue();
-        orders.setAll(temp);
+        Order order= (Order) event.getNewValue();
+        boolean found=false;
+        for(int i=0;i<orders.size();i++){
+            if(orders.get(i).getOrderId()== order.getOrderId()){
+                orders.set(i,order);
+                found=true;
+                break;
+            }
+        }
+        if(!found){
+            orders.add(order);
+        }
     }
 
     public ObservableList<Order> getAllOrders() {

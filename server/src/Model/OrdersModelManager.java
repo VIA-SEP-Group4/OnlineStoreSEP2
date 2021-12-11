@@ -20,6 +20,7 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener
     support=new PropertyChangeSupport(this);
 
     ordersDataAccessor.addListener("newOrder",this);
+    ordersDataAccessor.addListener("updatedOrderStatus",this);
   }
 
 

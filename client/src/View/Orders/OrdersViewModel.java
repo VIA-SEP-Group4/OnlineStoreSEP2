@@ -31,7 +31,7 @@ public class OrdersViewModel
         myOrdersDetail = FXCollections.observableArrayList();
 
         ordersModel.addListener("newOrder", this::newOrder);
-        ordersModel.addListener("updatedOrder", this::updateOrder);
+        ordersModel.addListener("updatedOrderStatus", this::updateOrder);
     }
 
     private void newOrder(PropertyChangeEvent evt)
@@ -53,7 +53,6 @@ public class OrdersViewModel
             for (Order o : openOrders){
                 if (o.getOrderId() == updatedOrder.getOrderId()){
                     inOpenOrders = true;
-                    openOrders.remove(o);
                     myOrders.add(updatedOrder);
                     break;
                 }
@@ -68,7 +67,21 @@ public class OrdersViewModel
 
     private void updateOrder(PropertyChangeEvent evt)
     {
-
+        Order o= (Order) evt.getNewValue();
+        for(Order order: openOrders){
+            if(o.getOrderId()==o.getOrderId()) {
+                openOrders.remove(order);
+                openOrders.add(o);
+                break;
+            }
+        }
+        for(Order order: myOrders){
+            if(o.getOrderId()==o.getOrderId()) {
+                myOrders.remove(order);
+                myOrders.add(o);
+                break;
+            }
+        }
     }
 
     // TODO: 10/12/2021 get order based on worker ID - where to get that?  
@@ -137,7 +150,7 @@ public class OrdersViewModel
                 toRemove.add(o);
             }
         }
-        openOrders.remove(toRemove.get(0));
+      openOrders.remove(toRemove.get(0));
 //        myOrders.add(toRemove.get(0));
         ordersModel.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
@@ -152,8 +165,8 @@ public class OrdersViewModel
                 toRemove.add(o);
             }
         }
-        myOrders.remove(toRemove.get(0));
-        openOrders.add(toRemove.get(0));
+        //myOrders.remove(toRemove.get(0));
+        //openOrders.add(toRemove.get(0));
         ordersModel.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
     }

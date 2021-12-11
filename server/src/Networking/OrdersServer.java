@@ -19,7 +19,10 @@ public class OrdersServer implements OrdersServerRemote {
         this.modelManager = modelManager;
         clients=new ArrayList<>();
         modelManager.addListener("newOrder",this::ordersUpdate);
+        modelManager.addListener("updatedOrderStatus",this::ordersUpdate);
     }
+
+
     public void start() throws RemoteException, MalformedURLException {
         UnicastRemoteObject.exportObject(this, 1099);
         Naming.rebind("ordersServer", this);
@@ -28,7 +31,7 @@ public class OrdersServer implements OrdersServerRemote {
     private void ordersUpdate(PropertyChangeEvent event) {
         for(OrdersClientRemote client: clients){
             try {
-                client.receiveUpdatedOrder(event.getNewValue());
+                client.receiveUpdatedOrder(event);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
