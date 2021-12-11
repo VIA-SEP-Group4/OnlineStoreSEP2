@@ -10,40 +10,49 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Login.LoginViewController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Login.LoginViewController">
    <children>
-      <TextField fx:id="usernameTextField" layoutX="164.0" layoutY="141.0" prefHeight="25.0" prefWidth="272.0" />
+      <TextField fx:id="usernameTextField" layoutX="218.0" layoutY="140.0" prefHeight="25.0" prefWidth="272.0" AnchorPane.topAnchor="100.0" />
 
-      <PasswordField fx:id="passwordTextField" layoutX="164.0" layoutY="188.0" prefHeight="25.0" prefWidth="272.0" />
+      <PasswordField fx:id="passwordTextField" layoutX="218.0" layoutY="187.0" onKeyPressed="#onEnter" prefHeight="25.0" prefWidth="272.0" AnchorPane.topAnchor="160.0" />
 
-      <Text fx:id="usernameLabel" layoutX="82.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" textAlignment="RIGHT" wrappingWidth="75.0">
+      <Text fx:id="usernameLabel" fontSmoothingType="LCD" layoutX="128.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="75.0" AnchorPane.leftAnchor="130.0">
          <font>
-            <Font name="Bauhaus 93" size="12.0" />
+            <Font size="14.0" />
          </font>
       </Text>
-      <Text fx:id="passwordLabel" layoutX="82.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" textAlignment="RIGHT" wrappingWidth="75.0">
+      <Text fx:id="passwordLabel" fontSmoothingType="LCD" layoutX="128.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="75.0" AnchorPane.leftAnchor="130.0">
          <font>
-            <Font name="Bauhaus 93" size="12.0" />
+            <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="391.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
-      <Button layoutX="526.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRegister" text="Register">
+      <Text layoutX="473.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
+      <Button layoutX="526.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRegister" prefHeight="30.0" prefWidth="70.0" text="Register" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="20.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="usernameErrorLabel" layoutX="165.0" layoutY="166.0" textFill="#dd0000" />
+      <Label fx:id="usernameErrorLabel" layoutX="226.0" layoutY="251.0" prefHeight="18.0" prefWidth="15.0" textFill="#dd0000" />
       <Label fx:id="passwordErrorLabel" layoutX="165.0" layoutY="218.0" textFill="RED" />
-      <Text layoutX="133.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To The Fictional Store">
+      <Text layoutX="187.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To The Fictional Store" AnchorPane.topAnchor="40.0">
          <font>
             <Font name="Bauhaus 93" size="24.0" />
          </font>
       </Text>
-      <Button layoutX="166.0" layoutY="283.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="27.0" prefWidth="272.0" text="Login" />
+      <Button layoutX="218.0" layoutY="283.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="30.0" prefWidth="272.0" text="Login" AnchorPane.topAnchor="280.0" />
       <Label fx:id="successLabel" layoutX="165.0" layoutY="339.0" textFill="#88ff00" />
-      <RadioButton fx:id="customerButton" layoutX="229.0" layoutY="245.0" mnemonicParsing="false" onAction="#customerSelected" selected="true" text="Customer" />
-      <RadioButton fx:id="employeeButton" layoutX="317.0" layoutY="245.0" mnemonicParsing="false" onAction="#employeeSelected" text="Employee" />
-      <Text layoutX="164.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in as : " />
-      <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#backBtnPressed" text="Back" />
+      <RadioButton fx:id="customerButton" layoutX="312.0" layoutY="220.0" mnemonicParsing="false" onAction="#customerSelected" selected="true" text="Customer" AnchorPane.topAnchor="220.0">
+         <font>
+            <Font size="14.0" />
+         </font></RadioButton>
+      <RadioButton fx:id="employeeButton" layoutX="416.0" layoutY="245.0" mnemonicParsing="false" onAction="#employeeSelected" text="Employee" AnchorPane.topAnchor="220.0">
+         <font>
+            <Font size="14.0" />
+         </font></RadioButton>
+      <Text layoutX="218.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in as : " AnchorPane.topAnchor="220.0">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
+      <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#backBtnPressed" prefHeight="30.0" prefWidth="70.0" text="Back" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" />
    </children>
 </AnchorPane>

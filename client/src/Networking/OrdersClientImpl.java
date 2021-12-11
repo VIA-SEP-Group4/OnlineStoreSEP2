@@ -110,7 +110,8 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     }
 
     @Override
-    public void receiveUpdatedOrders(Object orders) throws RemoteException {
-        support.firePropertyChange("newOrder",null,orders);
+    public void receiveUpdatedOrder(Object updatedOrder) throws RemoteException {
+        System.out.println((Order) updatedOrder);
+        support.firePropertyChange("newOrder",null,updatedOrder);
     }
 }

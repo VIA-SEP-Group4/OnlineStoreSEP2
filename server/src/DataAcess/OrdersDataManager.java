@@ -75,7 +75,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
-    support.firePropertyChange("newOrder",null,getAllOrders());
+    support.firePropertyChange("newOrder",null,newOrder);
   }
 
   @Override public ArrayList<Order> getAllOrders()
@@ -292,7 +292,7 @@ public class OrdersDataManager implements OrdersDataAccessor
         if (affectedRows <= 0)
           throw new RuntimeException("Order status update failed");
       }
-      support.firePropertyChange("newOrder",null,getAllOrders());
+      support.firePropertyChange("newOrder",null, order);
 
     } catch (SQLException ex){
       System.out.println(ex.getMessage());
@@ -301,7 +301,8 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   @Override public void updateOrderState(Order order, String state)
   {
-    String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status = '" + state + "' WHERE order_id =" +order.getOrderId();
+    order.setStatus(state);
+    String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status = '" + order.getState() + "' WHERE order_id =" +order.getOrderId();
 
     try (Connection conn = DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement())
@@ -309,7 +310,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       int affectedRows = stmt.executeUpdate(SQL);
       if (affectedRows <= 0)
         throw new RuntimeException("Order status update failed");
-      support.firePropertyChange("newOrder",null,getAllOrders());
+      support.firePropertyChange("newOrder",null,order);
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());

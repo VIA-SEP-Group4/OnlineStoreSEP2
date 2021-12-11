@@ -14,7 +14,6 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
   private CredentialsClient credentialsClient;
   private PropertyChangeSupport support;
 
-
   public CredentialsModelManager(CredentialsClient client)
   {
     support=new PropertyChangeSupport(this);

@@ -3,6 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,25 +14,44 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <MenuBar layoutY="-18.0" prefHeight="30.0" prefWidth="700.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane prefHeight="400.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.topAnchor="30.0">
         <tabs>
           <Tab fx:id="cartTab" text="shopping cart">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="cartProductsTable" prefHeight="203.0" prefWidth="600.0" AnchorPane.topAnchor="30.0">
+                        <TableView fx:id="cartProductsTable" layoutX="21.0" prefHeight="280.0" prefWidth="660.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0">
                           <columns>
                             <TableColumn fx:id="productNameCol" prefWidth="130.66665649414062" text="name" />
                             <TableColumn fx:id="productQuantityCol" prefWidth="56.666656494140625" text="quantity" />
-                              <TableColumn fx:id="pricePerPieceCol" prefWidth="91.3333740234375" text="price per piece" />
-                              <TableColumn fx:id="totalPriceCol" prefWidth="78.6666259765625" text="total price" />
+                              <TableColumn fx:id="pricePerPieceCol" prefWidth="79.0" text="price per piece" />
+                              <TableColumn fx:id="totalPriceCol" prefWidth="92.0" text="total price" />
                               <TableColumn fx:id="productDescriptionCol" prefWidth="240.66668701171875" text="description" />
                           </columns>
                         </TableView>
-                        <Label layoutY="5.0" text="My Shopping cart" AnchorPane.leftAnchor="10.0" />
-                        <Button layoutX="512.0" layoutY="325.0" mnemonicParsing="false" onAction="#orderBtn" prefHeight="25.0" prefWidth="73.0" text="Order" />
-                        <Button layoutX="14.0" layoutY="325.0" mnemonicParsing="false" onAction="#continueShoppingBtn" text="Continue shopping" />
-                        <Button layoutX="252.0" layoutY="325.0" mnemonicParsing="false" onAction="#deleteProdCart" text="Remove Product" />
+                        <Label layoutY="5.0" text="My Shopping cart" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
+                        <Button layoutX="512.0" layoutY="325.0" mnemonicParsing="false" onAction="#orderBtn" prefHeight="30.0" prefWidth="73.0" text="Order" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="325.0" />
+                        <Button layoutX="14.0" layoutY="325.0" mnemonicParsing="false" onAction="#continueShoppingBtn" prefHeight="30.0" text="Continue shopping" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="325.0" />
+                        <Button layoutX="298.0" layoutY="325.0" mnemonicParsing="false" onAction="#deleteProdCart" prefHeight="30.0" text="Remove Product" AnchorPane.leftAnchor="298.0" AnchorPane.topAnchor="325.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -38,24 +60,26 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="ordersTable" layoutX="6.0" layoutY="23.0" onMousePressed="#checkOrderedProductDetail" prefHeight="297.0" prefWidth="310.0" AnchorPane.topAnchor="23.0">
+                        <TableView fx:id="ordersTable" layoutX="24.0" layoutY="14.0" onMouseClicked="#onDoubleClick" prefHeight="297.0" prefWidth="340.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="30.0">
                            <columns>
                               <TableColumn fx:id="orderIdCol" prefWidth="55.999969482421875" text="order_id" />
-                              <TableColumn fx:id="orderTotalPrice" prefWidth="69.33331298828125" text="total price" />
-                              <TableColumn fx:id="timestampCol" prefWidth="122.00003051757812" text="timestamp" />
-                              <TableColumn fx:id="orderStateCol" prefWidth="65.99993896484375" text="state" />
+                              <TableColumn fx:id="orderTotalPrice" prefWidth="75.0" text="total price" />
+                              <TableColumn fx:id="timestampCol" prefWidth="118.0" text="timestamp" />
+                              <TableColumn fx:id="orderStateCol" prefWidth="90.0" text="state" />
                            </columns>
                         </TableView>
-                        <Button layoutX="14.0" layoutY="331.0" mnemonicParsing="false" onAction="#continueShoppingBtn" text="Continue shopping" />
-                        <TableView fx:id="orderProductsTable" layoutX="343.0" layoutY="49.0" prefHeight="272.0" prefWidth="244.0">
+                        <Button layoutX="24.0" layoutY="327.0" mnemonicParsing="false" onAction="#continueShoppingBtn" prefHeight="30.0" text="Continue shopping" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="325.0" />
+                        <TableView fx:id="orderProductsTable" layoutX="380.0" layoutY="41.0" prefHeight="270.0" prefWidth="300.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0">
                            <columns>
-                              <TableColumn fx:id="productNameCol1" prefWidth="130.66668701171875" text="name" />
-                              <TableColumn fx:id="productQuantityCol1" prefWidth="36.66668701171875" text="q" />
-                              <TableColumn fx:id="pricePerPieceCol1" prefWidth="76.00006103515625" text="price/pcs." />
+                              <TableColumn fx:id="productNameCol1" prefWidth="175.0" text="name" />
+                              <TableColumn fx:id="productQuantityCol1" prefWidth="35.0" text="q" />
+                              <TableColumn fx:id="pricePerPieceCol1" prefWidth="89.0" text="price/pcs." />
                            </columns>
                         </TableView>
                         <Label fx:id="orderDetailLabel" layoutX="343.0" layoutY="32.0" prefHeight="17.0" prefWidth="243.0" text="..." />
-                        <ComboBox fx:id="filterByComboBox" layoutX="166.0" layoutY="331.0" onAction="#filterBy" prefWidth="150.0" promptText="Filter by" />
+                        <ComboBox fx:id="filterByComboBox" layoutX="214.0" layoutY="327.0" onAction="#filterBy" prefHeight="30.0" prefWidth="150.0" promptText="Filter by" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="325.0" />
+                        <Button layoutX="581.0" layoutY="327.0" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="30.0" prefWidth="99.0" text="Cancel Order" />
+                        <Label layoutX="7.0" layoutY="6.0" text="My Orders" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
                      </children>
                   </AnchorPane>
             </content>

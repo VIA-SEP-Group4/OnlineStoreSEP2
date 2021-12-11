@@ -1,17 +1,14 @@
 package Model;
 
-import Model.Models.Customer;
-import Model.Models.Employee;
 import Model.Models.Order;
-import Networking.CredentialsClient;
 import Networking.OrdersClient;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
+
     private OrdersClient ordersClient;
     private PropertyChangeSupport support;
 
@@ -20,7 +17,6 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
         this.ordersClient = ordersClient;
         ordersClient.startClient();
         ordersClient.addListener("newOrder",this);
-
     }
 
     @Override
@@ -39,12 +35,12 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
     }
 
     @Override
-    public void changeOrderAssignee(Order order, boolean toRemove) {
+    public void changeOrderAssignee(Order order, boolean toRemove, int workerId) {
         if(toRemove){
             order.setWorkerID(-1);
         }
         else {
-            order.setWorkerID(2);
+            order.setWorkerID(workerId);
         }
         ordersClient.changeOrderAssignee(order);
     }

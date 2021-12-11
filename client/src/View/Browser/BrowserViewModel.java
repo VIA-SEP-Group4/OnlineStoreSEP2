@@ -217,7 +217,7 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     if (desiredQuantity>0 && desiredQuantity<=p.getQuantity())
     {
-      productsModel.addToCart(p, desiredQuantity);
+      productsModel.addToCart(p, desiredQuantity, credsModel.getLoggedCustomer());
       reset();
     }
     else

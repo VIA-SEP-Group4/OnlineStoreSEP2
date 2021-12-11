@@ -78,7 +78,7 @@ public class ViewModelFactory {
 
     public static OrdersViewModel getOrdersViewModel(){
         if(ordersViewModel == null){
-            ordersViewModel = new OrdersViewModel(modelFactory.getOrdersModel());
+            ordersViewModel = new OrdersViewModel(modelFactory.getOrdersModel(), modelFactory.getCredentialsModel());
         }
         return ordersViewModel;
     }

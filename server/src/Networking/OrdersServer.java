@@ -28,7 +28,7 @@ public class OrdersServer implements OrdersServerRemote {
     private void ordersUpdate(PropertyChangeEvent event) {
         for(OrdersClientRemote client: clients){
             try {
-                client.receiveUpdatedOrders(event.getNewValue());
+                client.receiveUpdatedOrder(event.getNewValue());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

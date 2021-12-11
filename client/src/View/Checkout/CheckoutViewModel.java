@@ -30,7 +30,7 @@ public class CheckoutViewModel
     this.ordersModel=ordersModel;
 
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.setAll(productsModel.getCartProducts());
+    cartProducts.setAll(productsModel.getCartProducts(credentialsModel.getLoggedCustomer()));
 
     orders = FXCollections.observableArrayList();
     orders.setAll(ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId()));
@@ -46,7 +46,12 @@ public class CheckoutViewModel
 
   private void updateOrders(PropertyChangeEvent evt)
   {
-    orders.setAll((ArrayList<Order>) evt.getNewValue());
+    Order updatedOrder = (Order)evt.getNewValue();
+    for (Order o : orders)
+      if (o.getOrderId() == updatedOrder.getOrderId())
+        orders.remove(o);
+
+    orders.add(updatedOrder);
   }
 
   public void setSelectedOrder(Order selectedOrder)
@@ -84,10 +89,8 @@ public class CheckoutViewModel
     if (!cartProducts.isEmpty())
     {
       ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      Order newOrder = new Order(
-          credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
+      Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
 
-//      orders.add(newOrder);
       ordersModel.processOrder(newOrder);
 
       cartProducts.clear();
@@ -110,13 +113,13 @@ public class CheckoutViewModel
   public void fetchCart()
   {
     cartProducts.clear();
-    cartProducts.setAll(productsModel.getCartProducts());
+    cartProducts.setAll(productsModel.getCartProducts(credentialsModel.getLoggedCustomer()));
   }
 
   public void removeFromCart(Product p, int quantityProd)
   {
-    productsModel.removeFromCart(p, quantityProd);
-      fetchCart();
+    productsModel.removeFromCart(p, quantityProd, credentialsModel.getLoggedCustomer());
+    fetchCart();
   }
 
   public void filterBy(String stat)

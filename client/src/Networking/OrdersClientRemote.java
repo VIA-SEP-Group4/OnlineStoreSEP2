@@ -4,5 +4,5 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface OrdersClientRemote extends Remote {
-    void receiveUpdatedOrders(Object orders) throws RemoteException;
+    void receiveUpdatedOrder(Object updatedOrder) throws RemoteException;
 }

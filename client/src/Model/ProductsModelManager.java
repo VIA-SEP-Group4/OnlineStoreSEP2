@@ -10,9 +10,10 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class ProductsModelManager implements ProductsModel, PropertyChangeListener {
+
     private PropertyChangeSupport support;
     private ProductsClient productsClient;
-    private Customer loggedCustomer=null;
+
     public ProductsModelManager(ProductsClient productsClient) {
         support=new PropertyChangeSupport(this);
         this.productsClient = productsClient;
@@ -42,7 +43,7 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
     }
 
     @Override
-    public void addToCart(Product p, int desiredQuantity) {
+    public void addToCart(Product p, int desiredQuantity, Customer loggedCustomer) {
         boolean contains = false;
         for (Product currP : loggedCustomer.getCart()){
             if (currP.getProductId()==p.getProductId()){
@@ -65,7 +66,7 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
         productsClient.updateStock(p, prodQuantity);
     }
     @Override
-    public void removeFromCart(Product p, int prodQuantity) {
+    public void removeFromCart(Product p, int prodQuantity, Customer loggedCustomer) {
         for (int i = 0; i < loggedCustomer.getCart().size(); i++)
         {
             if(loggedCustomer.getCart().get(i).getProductId() == p.getProductId())
@@ -77,15 +78,10 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
     }
 
     @Override
-    public ArrayList<Product> getCartProducts() {
+    public ArrayList<Product> getCartProducts(Customer loggedCustomer) {
         return loggedCustomer.getCart();
     }
 
-    @Override
-    public void setLoggedCustomer(Customer c) {
-
-        loggedCustomer=c;
-    }
 
     @Override public ArrayList<Product> getProducts(int page, int pagQuant)
     {

@@ -1,5 +1,6 @@
 package View.Orders;
 
+import Model.CredentialsModel;
 import Model.Models.Order;
 import Model.Models.Product;
 
@@ -7,28 +8,72 @@ import Model.OrdersModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersViewModel
 {
-    private OrdersModel model;
+    private OrdersModel ordersModel;
+    private CredentialsModel credentialsModel;
+
     private ObservableList<Order> openOrders;
     private ObservableList<Product> openOrdersDetail;
     private ObservableList<Order> myOrders;
     private ObservableList<Product> myOrdersDetail;
 
-    public OrdersViewModel(OrdersModel ordersModel){
-        this.model = ordersModel;
+    public OrdersViewModel(OrdersModel ordersModel, CredentialsModel credentialsModel){
+        this.ordersModel = ordersModel;
+        this.credentialsModel = credentialsModel;
         openOrders = FXCollections.observableArrayList();
         openOrdersDetail = FXCollections.observableArrayList();
         myOrders = FXCollections.observableArrayList();
         myOrdersDetail = FXCollections.observableArrayList();
+
+        ordersModel.addListener("newOrder", this::newOrder);
+        ordersModel.addListener("updatedOrder", this::updateOrder);
+    }
+
+    private void newOrder(PropertyChangeEvent evt)
+    {
+        Order updatedOrder = (Order) evt.getNewValue();
+        boolean inMyOrders = false;
+        boolean inOpenOrders = false;
+
+        for (Order o : myOrders){
+            if (o.getOrderId() == updatedOrder.getOrderId()){
+                myOrders.remove(o);
+                openOrders.add(updatedOrder);
+                inMyOrders = true;
+                break;
+            }
+        }
+
+        if (!inMyOrders){
+            for (Order o : openOrders){
+                if (o.getOrderId() == updatedOrder.getOrderId()){
+                    inOpenOrders = true;
+                    openOrders.remove(o);
+                    myOrders.add(updatedOrder);
+                    break;
+                }
+            }
+        }
+
+        if (!inOpenOrders){
+            openOrders.add(updatedOrder);
+        }
+
+    }
+
+    private void updateOrder(PropertyChangeEvent evt)
+    {
+
     }
 
     // TODO: 10/12/2021 get order based on worker ID - where to get that?  
     public void getOrders(){
-        ArrayList<Order> orders = model.getOrders("WAITING");
+        ArrayList<Order> orders = ordersModel.getOrders("waiting");
         for (Order o : orders)
         {
             openOrders.add(o);
@@ -44,7 +89,7 @@ public class OrdersViewModel
 //    }
 
     void changeOrderAssignee(Order order, boolean toRemove){
-        model.changeOrderAssignee(order, toRemove);
+        ordersModel.changeOrderAssignee(order, toRemove, credentialsModel.getLoggedEmployee().getID());
     }
 
     public ObservableList<Order> getOpenOrders()
@@ -88,13 +133,13 @@ public class OrdersViewModel
         List<Order> toRemove = new ArrayList<>();
         for (Order o : openOrders){
             if (o.getOrderId() == id){
-                o.setStatus("IN_PROCESS");
+                o.setStatus("in process");
                 toRemove.add(o);
             }
         }
         openOrders.remove(toRemove.get(0));
-        myOrders.add(toRemove.get(0));
-        model.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
+//        myOrders.add(toRemove.get(0));
+        ordersModel.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
     }
 
@@ -103,21 +148,21 @@ public class OrdersViewModel
         List<Order> toRemove = new ArrayList<>();
         for (Order o : myOrders){
             if (o.getOrderId() == id){
-                o.setStatus("WAITING");
+                o.setStatus("waiting");
                 toRemove.add(o);
             }
         }
         myOrders.remove(toRemove.get(0));
         openOrders.add(toRemove.get(0));
-        model.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
+        ordersModel.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
     }
 
     public void completeOrder(int id){
         for (Order o : myOrders){
             if (o.getOrderId() == id){
-                o.setStatus("READY");
-                model.updateOrderState(o, o.getState());
+                o.setStatus("ready");
+                ordersModel.updateOrderState(o, o.getState());
             }
         }
     }

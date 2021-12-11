@@ -102,7 +102,6 @@ public class LoginViewModel implements PropertyChangeListener {
         }
         else if (reply.toLowerCase().contains("success"))
         {
-            productsModel.setLoggedCustomer(credentialsModel.getLoggedCustomer());
             success.setValue(reply);
             errorPass.setValue("");
             errorUser.setValue("");
