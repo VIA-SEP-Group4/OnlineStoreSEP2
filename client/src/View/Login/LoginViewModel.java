@@ -77,6 +77,7 @@ public class LoginViewModel implements PropertyChangeListener {
         {
             success.setValue(reply);
         }
+        else
         prompt(reply,"Access Denied");
     }
 }
