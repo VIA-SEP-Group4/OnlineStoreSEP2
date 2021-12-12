@@ -32,15 +32,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="usernameErrorLabel" layoutX="226.0" layoutY="251.0" prefHeight="18.0" prefWidth="15.0" textFill="#dd0000" />
-      <Label fx:id="passwordErrorLabel" layoutX="165.0" layoutY="218.0" textFill="RED" />
       <Text layoutX="187.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To The Fictional Store" AnchorPane.topAnchor="40.0">
          <font>
             <Font name="Bauhaus 93" size="24.0" />
          </font>
       </Text>
       <Button layoutX="218.0" layoutY="283.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="30.0" prefWidth="272.0" text="Login" AnchorPane.topAnchor="280.0" />
-      <Label fx:id="successLabel" layoutX="165.0" layoutY="339.0" textFill="#88ff00" />
       <RadioButton fx:id="customerButton" layoutX="312.0" layoutY="220.0" mnemonicParsing="false" onAction="#customerSelected" selected="true" text="Customer" AnchorPane.topAnchor="220.0">
          <font>
             <Font size="14.0" />
@@ -54,5 +51,6 @@
             <Font size="14.0" />
          </font></Text>
       <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#backBtnPressed" prefHeight="30.0" prefWidth="70.0" text="Back" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" />
+      <Label fx:id="successLabel" layoutX="340.0" layoutY="250.0" />
    </children>
 </AnchorPane>

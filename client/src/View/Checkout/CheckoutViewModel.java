@@ -130,6 +130,18 @@ public class CheckoutViewModel
     productsModel.removeFromCart(p, quantityProd, credentialsModel.getLoggedCustomer());
     fetchCart();
   }
+  public void remoProdCartWhenClose()
+  {
+    if (credentialsModel.getLoggedCustomer() != null)
+    {
+      ArrayList<Product> tempProducts = credentialsModel.getLoggedCustomer().getCart();
+      for (Product tempProduct : tempProducts)
+      {
+        productsModel.removeFromCart(tempProduct, tempProduct.getQuantity(),
+            credentialsModel.getLoggedCustomer());
+      }
+    }
+  }
 
   public void filterBy(String stat)
   {

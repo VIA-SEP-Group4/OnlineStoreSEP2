@@ -31,9 +31,8 @@ public class BrowserViewModel implements PropertyChangeListener
   private ObservableList<Product> browserTable;
   private ObjectProperty<Product> selectedProd;
 
-  private BooleanProperty logOut;
   private BooleanProperty logIn;
-
+  private StringProperty logButton;
 
   public BrowserViewModel(ProductsModel productsModel, CredentialsModel credsModel)
   {
@@ -51,8 +50,8 @@ public class BrowserViewModel implements PropertyChangeListener
     browserTable = FXCollections.observableArrayList();
     selectedProd = new SimpleObjectProperty<>();
 
-    logOut = new SimpleBooleanProperty(true);
     logIn = new SimpleBooleanProperty(false);
+    logButton = new SimpleStringProperty();
 
     productsModel.addListener("ProductsReply",this);
     productsModel.addListener("productDeleted",this::deletedProduct);
@@ -98,11 +97,6 @@ public class BrowserViewModel implements PropertyChangeListener
     return browserTable;
   }
 
-  public BooleanProperty logOutProperty()
-  {
-    return logOut;
-  }
-
   public BooleanProperty logInProperty()
   {
     return logIn;
@@ -133,6 +127,11 @@ public class BrowserViewModel implements PropertyChangeListener
     return selectedProd.get();
   }
 
+  public StringProperty logButtonProperty()
+  {
+    return logButton;
+  }
+
   public void fetchProducts(){
     browserTable.setAll(productsModel.getProducts(page.getValue(),pagQuant.getValue()));
   }
@@ -144,13 +143,13 @@ public class BrowserViewModel implements PropertyChangeListener
     loadTypes();
     if(credentialsModel.getLoggedCustomer() == null)
     {
-      logOut.setValue(true);
       logIn.setValue(false);
+      logButtonProperty().setValue("Log in/Register");
       userName.setValue("");
     }
     else {
-      logOut.setValue(false);
       logIn.setValue(true);
+      logButtonProperty().setValue("Log out");
       userName.setValue("Hello, "+ credentialsModel.getLoggedCustomer().getFirstName());
     }
   }
@@ -233,6 +232,19 @@ public class BrowserViewModel implements PropertyChangeListener
     {
       createAlert(Alert.AlertType.ERROR, "Unable to add "+desiredQuantity+ "of product-" + p.getName()
           +"\nselect valid amount please.").showAndWait();
+    }
+  }
+
+  public void remoProdCartWhenClose()
+  {
+    if (credentialsModel.getLoggedCustomer() != null)
+    {
+      ArrayList<Product> tempProducts = credentialsModel.getLoggedCustomer().getCart();
+      for (Product tempProduct : tempProducts)
+      {
+        productsModel.removeFromCart(tempProduct, tempProduct.getQuantity(),
+            credentialsModel.getLoggedCustomer());
+      }
     }
   }
 

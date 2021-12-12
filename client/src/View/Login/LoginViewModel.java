@@ -2,10 +2,9 @@ package View.Login;
 
 import Model.CredentialsModel;
 import Model.ProductsModel;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -15,8 +14,6 @@ public class LoginViewModel implements PropertyChangeListener {
     private ProductsModel productsModel;
     private StringProperty userName;
     private StringProperty password;
-    private StringProperty errorUser;
-    private StringProperty errorPass;
     private StringProperty success;
 
     public LoginViewModel(CredentialsModel credentialsModel, ProductsModel productsModel) {
@@ -24,26 +21,22 @@ public class LoginViewModel implements PropertyChangeListener {
         this.productsModel = productsModel;
         userName=new SimpleStringProperty();
         password=new SimpleStringProperty();
-        errorPass=new SimpleStringProperty();
-        errorUser=new SimpleStringProperty();
         success=new SimpleStringProperty();
+
         credentialsModel.addListener("LoginReply",this);
     }
-
 
     /**
      * Method called when user tries to log in with inserted credentials.
      */
     public void login(String userType) {
-        clearLabels();
+
         if(userName.getValue()==null || userName.getValue().equals("")) {
-            errorUser.setValue("Username cannot be empty");
-            success.setValue("denied");
+            prompt("Username cannot be empty","Wrong Input");
         }
 
         else if(password.getValue()==null || password.getValue().equals("")){
-            errorPass.setValue("Password cannot be empty");
-            success.setValue("denied");
+            prompt("Password cannot be empty","Wrong Input");
         }
 
         else{
@@ -67,70 +60,24 @@ public class LoginViewModel implements PropertyChangeListener {
         return password;
     }
 
-    public String getErrorUser() {
-        return errorUser.get();
-    }
-
-    public StringProperty errorUserProperty() {
-        return errorUser;
-    }
-
-    public String getErrorPass() {
-        return errorPass.get();
-    }
-
-    public StringProperty errorPassProperty() {
-        return errorPass;
-    }
-
-    public StringProperty successProperty() {
+    public StringProperty successProperty()
+    {
         return success;
+    }
+
+    public void prompt(String message, String title)
+    {
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String reply=evt.getNewValue().toString();
-        //success.setValue("denied");
-        success.setValue(reply);
-        if(reply.contains("Password")){ Platform.runLater(()-> {
-            errorPass.setValue(reply);
-        errorUser.setValue("");
-        });
-        }
-        else if(reply.contains("Customer")){ Platform.runLater(()->{
-            errorUser.setValue(reply);
-            errorPass.setValue("");
-        });}
-        else if (reply.contains("database")){
-            Platform.runLater(()->{success.setValue(reply);});
-        }
-        else if (reply.toLowerCase().contains("success"))
+        if (reply.toLowerCase().contains("success"))
         {
             success.setValue(reply);
-            errorPass.setValue("");
-            errorUser.setValue("");
         }
-
-
-        clearFields();
+        else
+        prompt(reply,"Access Denied");
     }
-
-    /**
-     * Method clearing all view fields.
-     */
-    private void clearFields()
-    {
-        userName.set(null);
-        password.set(null);
-    }
-
-    private void clearLabels()
-    {
-        success.setValue("");
-        errorUser.setValue("");
-        errorPass.setValue("");
-    }
-
-
-
 }
