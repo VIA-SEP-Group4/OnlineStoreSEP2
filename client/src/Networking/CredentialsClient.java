@@ -17,7 +17,6 @@ public interface CredentialsClient extends Subject {
     void addEmployee(Employee e);
     void removeEmployee(Employee e);
     ArrayList<Employee> getEmployees(String type);
-    //TODO ... added 9.12.12:50
     void deleteCustomer();
     void editCustomer(Customer editedCustomer);
 }

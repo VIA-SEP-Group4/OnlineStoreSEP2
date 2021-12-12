@@ -8,10 +8,9 @@ import java.util.ArrayList;
 
 public class Order implements Serializable
 {
-  // TODO: 10/12/2021 use the enum?? 
   private int orderId = -1;
   private ArrayList<Product> products;
-  private String state = "WAITING";
+  private String state = "waiting";
   private Timestamp timestamp;
   private int customerId;
   private int wwId = -1;

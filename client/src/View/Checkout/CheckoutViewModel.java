@@ -9,6 +9,8 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
@@ -27,19 +29,18 @@ public class CheckoutViewModel
   public CheckoutViewModel(ProductsModel productsModel, CredentialsModel credentialsModel, OrdersModel ordersModel)
   {
     this.productsModel = productsModel;
-    this.credentialsModel=credentialsModel;
-    this.ordersModel=ordersModel;
+    this.credentialsModel = credentialsModel;
+    this.ordersModel = ordersModel;
 
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.setAll(productsModel.getCartProducts(credentialsModel.getLoggedCustomer()));
+    cartProducts.setAll(credentialsModel.getLoggedCustomer().getCart());
 
     orders = FXCollections.observableArrayList();
     orders.setAll(ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId()));
     orderProducts = FXCollections.observableArrayList();
+
     selectedOrder = new SimpleObjectProperty<>();
-
     status = new SimpleObjectProperty<>();
-
     orderDetailLabel = new SimpleStringProperty();
 
     ordersModel.addListener("newOrder", this::updateOrders);
@@ -96,12 +97,13 @@ public class CheckoutViewModel
   {
     if (!cartProducts.isEmpty())
     {
-      ArrayList<Product> tempProducts = new ArrayList<>(cartProducts);
-      Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), tempProducts);
-
+      Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), new ArrayList<>(cartProducts));
       ordersModel.processOrder(newOrder);
 
+      //clear curr/loaded table
       cartProducts.clear();
+      //clear logged customer's cart/product list !!!
+      credentialsModel.getLoggedCustomer().getCart().clear();
     }
     else {
       System.out.println("Nothing to order ...");
@@ -120,8 +122,7 @@ public class CheckoutViewModel
 
   public void fetchCart()
   {
-    cartProducts.clear();
-    cartProducts.setAll(productsModel.getCartProducts(credentialsModel.getLoggedCustomer()));
+    cartProducts.setAll(credentialsModel.getLoggedCustomer().getCart());
   }
 
   public void removeFromCart(Product p, int quantityProd)
@@ -153,5 +154,32 @@ public class CheckoutViewModel
       productsModel.addProdToStock(order.getProducts().get(i),order.getProducts().get(i).getQuantity());
     }
     ordersModel.cancelOrder(order, "Cancelled");
+  }
+
+  public void pickUp(Order selectedOrder)
+  {
+    String reply;
+
+    if (selectedOrder.getState().equalsIgnoreCase("ready")){
+      ordersModel.updateOrderState(selectedOrder, "picked");
+      reply = "Your Order n."+selectedOrder.getOrderId()+ " was picked! Enjoy:)";
+    }
+    else {
+      reply = "You cannot pick your order up yet!\n its state must be 'ready' to be available for pick-up.";
+    }
+
+    Alert alert = createAlert(Alert.AlertType.INFORMATION, reply);
+    Platform.runLater(()->{alert.showAndWait();});
+  }
+
+
+
+  private Alert createAlert(Alert.AlertType alertType, String alertMsg){
+    Alert alert = new Alert(alertType);
+    alert.setTitle(alertType.toString());
+    alert.setHeaderText(alertMsg);
+    alert.setContentText("");
+
+    return alert;
   }
 }

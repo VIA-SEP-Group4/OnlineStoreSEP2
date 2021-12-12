@@ -77,12 +77,6 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
         productsClient.updateStock(p, prodQuantity);
     }
 
-    @Override
-    public ArrayList<Product> getCartProducts(Customer loggedCustomer) {
-        return loggedCustomer.getCart();
-    }
-
-
     @Override public ArrayList<Product> getProducts(int page, int pagQuant)
     {
         return productsClient.getProducts(page,pagQuant);

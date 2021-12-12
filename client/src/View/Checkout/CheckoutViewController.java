@@ -134,4 +134,9 @@ public class CheckoutViewController
       System.out.println("error label ->Can't cancel order ...");
     }
   }
+
+  public void pickUpBtnPressed(ActionEvent actionEvent)
+  {
+    viewModel.pickUp(ordersTable.getSelectionModel().getSelectedItem());
+  }
 }

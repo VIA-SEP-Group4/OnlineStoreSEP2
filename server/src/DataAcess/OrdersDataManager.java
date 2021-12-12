@@ -40,7 +40,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       throw new RuntimeException(ex.getMessage());
     }
 
-    //get ID of newly-created order:
+    //get and set ID of newly-created order:
     SQL = "Select order_id FROM " +SCHEMA+"."+TABLE+ " WHERE customer_id="+newOrder.getCustomerId()+ " AND " + "timestamp='"+newOrder.getTimestampSQL()+"'";
     try (Connection conn = DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement();

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     private PropertyChangeSupport support;
-    private OrdersServerRemote serverStub;
+    private OrdersServerRemote ordersServer;
 
     public OrdersClientImpl() {
         support=new PropertyChangeSupport(this);
@@ -27,8 +27,8 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
             UnicastRemoteObject.exportObject(this, 0);
 
             //lookup server stub
-            serverStub = (OrdersServerRemote) Naming.lookup("rmi://localhost:1099/ordersServer");
-            serverStub.registerClient(this);
+            ordersServer = (OrdersServerRemote) Naming.lookup("rmi://localhost:1099/ordersServer");
+            ordersServer.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
             System.err.println("failed to initialize client-object ...[OrdersClientImpl.startClient()]");
         }
@@ -37,7 +37,7 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     @Override
     public ArrayList<Order> getAllOrders() {
         try {
-            return serverStub.getAllOrders();
+            return ordersServer.getAllOrders();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -46,13 +46,13 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
 
     @Override public ArrayList<Order> getOrders(String status)
     {
-        return serverStub.getOrders(status);
+        return ordersServer.getOrders(status);
     }
 
     @Override
     public void changeOrderAssignee(Order order) {
         try {
-            serverStub.changeOrderAssignee(order);
+            ordersServer.changeOrderAssignee(order);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     {
         try
         {
-            serverStub.updateOrderState(order, state);
+            ordersServer.updateOrderState(order, state);
         }
         catch (RemoteException e)
         {
@@ -73,7 +73,7 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     @Override
     public ArrayList<Order> getWorkerOrdersForManager(int workerID) {
         try {
-            return serverStub.getWorkerOrdersForManager(workerID);
+            return ordersServer.getWorkerOrdersForManager(workerID);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     @Override
     public void processOrder(Order newOrder) {
         try {
-            serverStub.addNewOrder(newOrder);
+            ordersServer.addNewOrder(newOrder);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -92,7 +92,7 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     @Override
     public ArrayList<Order> getCustomerOrders(int customerId) {
         try {
-            return serverStub.getCustomerOrders(customerId);
+            return ordersServer.getCustomerOrders(customerId);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
