@@ -24,7 +24,9 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     credentialsClient.addListener("AddedWorker",this);
     credentialsClient.addListener("ManagerAddReply",this);
     credentialsClient.addListener("AdminReply",this);
-    credentialsClient.addListener("ManagerWorkersReply",this);
+    credentialsClient.addListener("AdminReplyDelete",this);
+    credentialsClient.addListener("ManagerReplyDelete",this);
+    credentialsClient.addListener("ManagerReply",this);
     credentialsClient.addListener("LoggedCustomerObj",this);
   }
 

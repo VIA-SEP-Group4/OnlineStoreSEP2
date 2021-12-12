@@ -52,4 +52,8 @@ public class Employee implements Serializable {
                 ", type=" + type +
                 '}';
     }
+
+    public void setEmployeeId(int newEmployeeID) {
+        this.ID=newEmployeeID;
+    }
 }

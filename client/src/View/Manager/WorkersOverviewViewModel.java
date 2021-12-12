@@ -4,7 +4,9 @@ import Enums.EmployeeType;
 import Model.CredentialsModel;
 import Model.Models.Employee;
 import Model.Models.Order;
+import Model.Models.Product;
 import Model.OrdersModel;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -38,8 +40,21 @@ public class WorkersOverviewViewModel {
         pin=new SimpleStringProperty();
         error=new SimpleStringProperty();
         isAdded=new SimpleBooleanProperty();
-        model.addListener("ManagerWorkersReply",this::updateWorkers);
+        model.addListener("ManagerReply",this::updateWorkers);
+        model.addListener("ManagerReplyDelete",this::deleteWorkers);
         model.addListener("AddedWorker",this::replyAdd);
+    }
+
+    private void deleteWorkers(PropertyChangeEvent event) {
+        Employee e=(Employee) event.getNewValue();
+        boolean removed=false;
+            for(Employee emp: employees){
+                if(emp.getID()==e.getID()){
+                    removed=employees.remove(emp);
+                    break;
+                }
+            }
+        System.out.println(removed);
     }
 
     private void replyAdd(PropertyChangeEvent event) {
@@ -50,8 +65,18 @@ public class WorkersOverviewViewModel {
     }
 
     private void updateWorkers(PropertyChangeEvent event) {
-        ArrayList<Employee> temp= (ArrayList<Employee>) event.getNewValue();
-        employees.setAll(temp);
+        Employee manager= (Employee) event.getNewValue();
+        boolean found=false;
+        for(int i=0;i<employees.size();i++){
+            if(employees.get(i).getID()== manager.getID()){
+                employees.set(i,manager);
+                found=true;
+                break;
+            }
+        }
+        if(!found){
+            employees.add(manager);
+        }
     }
 
     public ObservableList<Employee> getWorkers() {

@@ -33,11 +33,32 @@ public class AdminViewModel {
         managers.addAll(model.getEmployees("Manager"));
         credentialsModel.addListener("ManagerAddReply",this::replyAdd);
         credentialsModel.addListener("AdminReply",this::managersUpdate);
+        credentialsModel.addListener("AdminReplyDelete",this::managersDelete);
+    }
+
+    private void managersDelete(PropertyChangeEvent event) {
+        Employee e=(Employee) event.getNewValue();
+        for(Employee emp: managers){
+            if(emp.getID()==e.getID()){
+                managers.remove(emp);
+                break;
+            }
+        }
     }
 
     private void managersUpdate(PropertyChangeEvent event) {
-        ArrayList<Employee> temp= (ArrayList<Employee>) event.getNewValue();
-        managers.setAll(temp);
+        Employee manager= (Employee) event.getNewValue();
+        boolean found=false;
+        for(int i=0;i<managers.size();i++){
+            if(managers.get(i).getID()== manager.getID()){
+                managers.set(i,manager);
+                found=true;
+                break;
+            }
+        }
+        if(!found){
+            managers.add(manager);
+        }
     }
 
     private void replyAdd(PropertyChangeEvent event) {

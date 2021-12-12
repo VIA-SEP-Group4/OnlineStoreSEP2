@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface CredentialsModel extends Subject
 {
-  int userCount();
+
   ArrayList<Employee> getManagers();
   ArrayList<Employee> getWorkers();
 

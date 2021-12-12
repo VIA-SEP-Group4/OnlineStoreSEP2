@@ -21,7 +21,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     support = new PropertyChangeSupport(this);
   }
 
-  @Override public synchronized void addNewOrder(Order newOrder)
+  @Override public  void addNewOrder(Order newOrder)
   {
     String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(customer_id, timestamp) " + "VALUES(?,?)";
 
@@ -78,7 +78,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     support.firePropertyChange("newOrder",null,newOrder);
   }
 
-  @Override public synchronized ArrayList<Order> getAllOrders()
+  @Override public  ArrayList<Order> getAllOrders()
   {
     String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
     ArrayList<Order> orders = new ArrayList<>();
@@ -128,7 +128,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     return orders;
   }
 
-  @Override public synchronized ArrayList<Order> getOrders(int customerId)
+  @Override public  ArrayList<Order> getOrders(int customerId)
   {
     //fetch order's products first:
 
@@ -181,7 +181,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     return orders;
   }
 
-  @Override public synchronized ArrayList<Order> getOrders(String orderStatus)
+  @Override public  ArrayList<Order> getOrders(String orderStatus)
   {
     //fetch order's products first:
 
@@ -234,7 +234,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     return orders;  }
 
   @Override
-  public synchronized ArrayList<Order> getWorkerOrdersForManager(int workerId) {
+  public  ArrayList<Order> getWorkerOrdersForManager(int workerId) {
     String SQL = "select order_id,status,timestamp from eshop.orders ord join eshop.employees emp on ord.warehouse_worker_id=emp.employee_id where warehouse_worker_id=" +workerId;
     ArrayList<Order> orders = new ArrayList<>();
 

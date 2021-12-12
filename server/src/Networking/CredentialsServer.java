@@ -22,6 +22,18 @@ public class CredentialsServer implements CredentialsServerRemote {
         clients=new ArrayList<>();
         modelManager.addListener("AdminReply",this::employeeUpdate);
         modelManager.addListener("ManagerReply",this::employeeUpdate);
+        modelManager.addListener("ManagerReplyDelete",this::employeeUpdateDelete);
+        modelManager.addListener("AdminReplyDelete",this::employeeUpdateDelete);
+    }
+
+    private void employeeUpdateDelete(PropertyChangeEvent event) {
+        for(CredentialsClientRemote client: clients){
+            try {
+                client.receiveUpdatedEmployeesDelete(event);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -35,7 +47,7 @@ public class CredentialsServer implements CredentialsServerRemote {
     private void employeeUpdate(PropertyChangeEvent event) {
         for(CredentialsClientRemote client: clients){
             try {
-                client.receiveUpdatedEmployees(event.getNewValue());
+                client.receiveUpdatedEmployees(event);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

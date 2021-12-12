@@ -19,7 +19,8 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
     productsDataAcessor=new ProductsDataManager();
     support=new PropertyChangeSupport(this);
 
-    productsDataAcessor.addListener("ProductReply",this);
+    productsDataAcessor.addListener("ProductsReply",this);
+    productsDataAcessor.addListener("productDeleted",this);
   }
 
 

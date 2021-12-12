@@ -148,7 +148,6 @@ public class OrdersViewModel
             }
         }
       openOrders.remove(toRemove.get(0));
-//        myOrders.add(toRemove.get(0));
         ordersModel.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
     }

@@ -19,7 +19,18 @@ public class ProductsServer implements ProductsServerRemote {
         super();
         this.modelManager = modelManager;
         clients = new ArrayList<>();
-        modelManager.addListener("ProductReply", this::productsUpdate);
+        modelManager.addListener("ProductsReply", this::productsUpdate);
+        modelManager.addListener("productDeleted", this::deletedProduct);
+    }
+
+    private void deletedProduct(PropertyChangeEvent event) {
+        for (ProductsClientRemote client : clients) {
+            try {
+                client.receiveUpdatedProducts(event);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void start() throws RemoteException, MalformedURLException {
@@ -32,7 +43,7 @@ public class ProductsServer implements ProductsServerRemote {
     private void productsUpdate(PropertyChangeEvent event) {
         for (ProductsClientRemote client : clients) {
             try {
-                client.receiveUpdatedProducts(event.getNewValue());
+                client.receiveUpdatedProducts(event);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
