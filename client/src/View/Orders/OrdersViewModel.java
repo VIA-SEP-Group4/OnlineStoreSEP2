@@ -8,6 +8,7 @@ import Model.OrdersModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class OrdersViewModel
     private void newOrder(PropertyChangeEvent evt)
     {
         Order updatedOrder = (Order) evt.getNewValue();
+
         boolean inMyOrders = false;
         boolean inOpenOrders = false;
 
@@ -63,11 +65,14 @@ public class OrdersViewModel
             openOrders.add(updatedOrder);
         }
 
+        System.out.println("After new order evt:\nopen orders: " + openOrders + "\n my orders: " + myOrders);
+
     }
 
     private void updateOrder(PropertyChangeEvent evt)
     {
         Order o= (Order) evt.getNewValue();
+
         for(Order order: openOrders){
             if(order.getOrderId()==o.getOrderId()) {
                 openOrders.remove(order);
@@ -82,21 +87,18 @@ public class OrdersViewModel
                 break;
             }
         }
+        System.out.println("After update order evt:\nopen orders: " + openOrders + "\n my orders: " + myOrders);
     }
 
-    // TODO: 10/12/2021 get order based on worker ID - where to get that?  
-    public void getOrders(){
+    public void getWaitingOrders(){
         ArrayList<Order> orders = ordersModel.getOrders("waiting");
         openOrders.addAll(orders);
     }
 
-//    public void getOrders(){
-//        ArrayList<Order> orders = model.getAllOrders();
-//        for (Order o : orders)
-//        {
-//            openOrders.add(o);
-//        }
-//    }
+    public void getWorkersOrders(){
+        ArrayList<Order> orders = ordersModel.getWorkerOrdersForManager(credentialsModel.getLoggedEmployee().getID());
+        myOrders.addAll(orders);
+    }
 
     void changeOrderAssignee(Order order, boolean toRemove){
         ordersModel.changeOrderAssignee(order, toRemove, credentialsModel.getLoggedEmployee().getID());
@@ -155,7 +157,8 @@ public class OrdersViewModel
     public void removeOrder(int id){
         myOrdersDetail.clear();
         List<Order> toRemove = new ArrayList<>();
-        for (Order o : myOrders){
+        // TODO: 12/12/2021 remember to set back to myOrders
+        for (Order o : openOrders){
             if (o.getOrderId() == id){
                 o.setStatus("waiting");
                 toRemove.add(o);
