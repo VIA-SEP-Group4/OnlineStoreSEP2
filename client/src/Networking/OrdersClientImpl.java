@@ -134,6 +134,19 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
         }
     }
 
+    @Override public ArrayList<Order> getWorkersOrders(int wwId)
+    {
+        ArrayList<Order> workersOrders = new ArrayList<>();
+        try
+        {
+            workersOrders = ordersServer.getOrdersForWorker(wwId);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+        return workersOrders;
+    }
 
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {

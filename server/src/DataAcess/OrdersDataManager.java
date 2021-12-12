@@ -144,25 +144,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       while (rs.next())
       {
         int currOrderId = rs.getInt("order_id");
-        String productsSQL = "select * from eshop.ordered_products o_p join eshop.products prod on o_p.product_id=prod.product_id WHERE order_id=" +currOrderId;
-
-        Statement productsStmt = conn.createStatement();
-        ResultSet productsRs = productsStmt.executeQuery(productsSQL);
-        ArrayList<Product> currProducts = new ArrayList<>();
-        //for each product
-        while (productsRs.next())
-        {
-          currProducts.add(new Product(
-                  productsRs.getString("product_name"),
-                  productsRs.getString("type"),
-                  productsRs.getDouble("price"),
-                  productsRs.getString("description"),
-                  productsRs.getInt("quantity"),
-                  productsRs.getInt("product_id")
-              )
-          );
-        }
-        productsRs.close();
+        ArrayList<Product> currProducts = getOrderProducts(currOrderId);
 
         orders.add(new Order(
             rs.getInt("order_id"),
@@ -197,25 +179,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       while (rs.next())
       {
         int currOrderId = rs.getInt("order_id");
-        String productsSQL = "select * from eshop.ordered_products o_p join eshop.products prod on o_p.product_id=prod.product_id WHERE order_id=" +currOrderId;
-
-        Statement productsStmt = conn.createStatement();
-        ResultSet productsRs = productsStmt.executeQuery(productsSQL);
-        ArrayList<Product> currProducts = new ArrayList<>();
-        //for each product
-        while (productsRs.next())
-        {
-          currProducts.add(new Product(
-                  productsRs.getString("product_name"),
-                  productsRs.getString("type"),
-                  productsRs.getDouble("price"),
-                  productsRs.getString("description"),
-                  productsRs.getInt("quantity"),
-                  productsRs.getInt("product_id")
-              )
-          );
-        }
-        productsRs.close();
+        ArrayList<Product> currProducts = getOrderProducts(currOrderId);
 
         orders.add(new Order(
             rs.getInt("order_id"),
@@ -231,7 +195,8 @@ public class OrdersDataManager implements OrdersDataAccessor
       System.out.println(ex.getMessage());
     }
 
-    return orders;  }
+    return orders;
+  }
 
   @Override
   public  ArrayList<Order> getWorkerOrdersForManager(int workerId) {
@@ -262,15 +227,7 @@ public class OrdersDataManager implements OrdersDataAccessor
     return orders;
   }
 
-  @Override
-  public void addListener(String eventName, PropertyChangeListener listener) {
-    support.addPropertyChangeListener(eventName,listener);
-  }
 
-  @Override
-  public void removeListener(String eventName, PropertyChangeListener listener) {
-    support.removePropertyChangeListener(eventName,listener);
-  }
   @Override public synchronized void changeOrderAssignee(Order order)
   {
     String orderSQL = "UPDATE " +SCHEMA+ "." +TABLE + " SET warehouse_worker_id = " + order.getWorkerID() + " WHERE order_id = " + order.getOrderId();
@@ -317,4 +274,80 @@ public class OrdersDataManager implements OrdersDataAccessor
     }
   }
 
+  @Override public ArrayList<Order> getOrdersForWorker(int workerID)
+  {
+    //fetch order's products first:
+
+    String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE + " WHERE warehouse_worker_id=" +workerID;
+    ArrayList<Order> orders = new ArrayList<>();
+
+    try (Connection conn =  DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(SQL))
+    {
+
+      //for each order
+      while (rs.next())
+      {
+        int currOrderId = rs.getInt("order_id");
+        ArrayList<Product> currProducts = getOrderProducts(currOrderId);
+
+        orders.add(new Order(
+            rs.getInt("order_id"),
+            rs.getInt("customer_id"),
+            rs.getInt("warehouse_worker_id"),
+            rs.getString("status"),
+            rs.getTimestamp("timestamp"),
+            currProducts)
+        );
+      }
+
+    } catch (SQLException ex){
+      System.out.println(ex.getMessage());
+    }
+
+    return orders;
+  }
+
+
+  private ArrayList<Product> getOrderProducts(int currOrderId){
+
+    String productsSQL = "select * from eshop.ordered_products o_p join eshop.products prod on o_p.product_id=prod.product_id WHERE order_id=" +currOrderId;
+    ArrayList<Product> currProducts = new ArrayList<>();
+
+    try (Connection conn =  DBSConnection.getInstance().connect();
+        Statement stmt = conn.createStatement();
+        ResultSet productsRs = stmt.executeQuery(productsSQL))
+    {
+      //for each product
+      while (productsRs.next())
+      {
+        currProducts.add(new Product(
+                productsRs.getString("product_name"),
+                productsRs.getString("type"),
+                productsRs.getDouble("price"),
+                productsRs.getString("description"),
+                productsRs.getInt("quantity"),
+                productsRs.getInt("product_id")
+            )
+        );
+      }
+
+    } catch (SQLException ex){
+      System.out.println(ex.getMessage());
+    }
+
+    return currProducts;
+  }
+
+
+  @Override
+  public void addListener(String eventName, PropertyChangeListener listener) {
+    support.addPropertyChangeListener(eventName,listener);
+  }
+
+  @Override
+  public void removeListener(String eventName, PropertyChangeListener listener) {
+    support.removePropertyChangeListener(eventName,listener);
+  }
 }

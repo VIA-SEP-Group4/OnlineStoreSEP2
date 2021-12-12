@@ -31,12 +31,17 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
         ordersClient.unregisterClient();
     }
 
+    @Override public ArrayList<Order> getWorkersOrders(int wwId)
+    {
+        return ordersClient.getWorkersOrders(wwId);
+    }
+
     @Override
     public ArrayList<Order> getAllOrders() {
         return ordersClient.getAllOrders();
     }
 
-    @Override public ArrayList<Order> getOrders(String status)
+    @Override public ArrayList<Order> getWorkersOrders(String status)
     {
         return ordersClient.getOrders(status);
     }

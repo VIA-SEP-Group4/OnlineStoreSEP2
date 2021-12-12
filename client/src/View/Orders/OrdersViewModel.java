@@ -112,12 +112,13 @@ public class OrdersViewModel
     }
 
     public void getWaitingOrders(){
-        ArrayList<Order> orders = ordersModel.getOrders("waiting");
+        ArrayList<Order> orders = ordersModel.getWorkersOrders("waiting");
         openOrders.setAll(orders);
     }
 
     public void getWorkersOrders(){
-        ArrayList<Order> orders = ordersModel.getWorkerOrdersForManager(credentialsModel.getLoggedEmployee().getID());
+//        ArrayList<Order> orders = ordersModel.getWorkerOrdersForManager(credentialsModel.getLoggedEmployee().getID());
+        ArrayList<Order> orders = ordersModel.getWorkersOrders(credentialsModel.getLoggedEmployee().getID());
         myOrders.addAll(orders);
     }
 

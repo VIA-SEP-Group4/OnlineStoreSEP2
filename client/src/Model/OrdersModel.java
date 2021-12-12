@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface OrdersModel extends Subject {
     ArrayList<Order> getAllOrders();
-    ArrayList<Order> getOrders(String status);
+    ArrayList<Order> getWorkersOrders(String status);
     void cancelOrder(Order order,String state);
     void changeOrderAssignee(Order order, boolean toRemove, int workerId);
     void updateOrderState(Order order, String state);
@@ -16,4 +16,5 @@ public interface OrdersModel extends Subject {
     ArrayList<Order> getCustomerOrders(int customerId);
     void activateListeners();
     void deactivateListeners();
+    ArrayList<Order> getWorkersOrders(int id);
 }
