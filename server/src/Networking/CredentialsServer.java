@@ -23,12 +23,15 @@ public class CredentialsServer implements CredentialsServerRemote {
         modelManager.addListener("AdminReply",this::employeeUpdate);
         modelManager.addListener("ManagerReply",this::employeeUpdate);
     }
+
+
     public void start() throws RemoteException, MalformedURLException
     {
         UnicastRemoteObject.exportObject(this, 1099);
         Naming.rebind("credentialsServer", this);
         System.out.println("Credentials server started");
     }
+
     private void employeeUpdate(PropertyChangeEvent event) {
         for(CredentialsClientRemote client: clients){
             try {
@@ -41,7 +44,7 @@ public class CredentialsServer implements CredentialsServerRemote {
 
 
     @Override
-    public String registerUser(Customer newCustomer) throws RemoteException {
+    public String registerCustomer(Customer newCustomer) throws RemoteException {
         String reply;
         try
         {
@@ -156,5 +159,6 @@ public class CredentialsServer implements CredentialsServerRemote {
     @Override
     public void removeClient(CredentialsClientRemote client) {
         clients.remove(client);
+        System.out.println(clients);
     }
 }

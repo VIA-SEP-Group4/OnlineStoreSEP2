@@ -19,4 +19,6 @@ public interface CredentialsClient extends Subject {
     ArrayList<Employee> getEmployees(String type);
     void deleteCustomer();
     void editCustomer(Customer editedCustomer);
+    void logOutCustomer();
+    void logOutEmployee();
 }

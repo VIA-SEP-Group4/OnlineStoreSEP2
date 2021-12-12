@@ -28,6 +28,7 @@ public class OrdersServer implements OrdersServerRemote {
         Naming.rebind("ordersServer", this);
         System.out.println("Orders server started");
     }
+
     private void ordersUpdate(PropertyChangeEvent event) {
         for(OrdersClientRemote client: clients){
             try {
@@ -37,6 +38,7 @@ public class OrdersServer implements OrdersServerRemote {
             }
         }
     }
+
     @Override
     public void addNewOrder(Order newOrder) throws RemoteException {
         modelManager.addNewOrder(newOrder);

@@ -11,7 +11,8 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 public class AdminViewModel {
-    private CredentialsModel model;
+
+    private CredentialsModel credentialsModel;
     private ObservableList<Employee> managers;
     private StringProperty firstName;
     private StringProperty lastName;
@@ -20,8 +21,9 @@ public class AdminViewModel {
     private BooleanProperty isAdded;
     private boolean isEdit=false;
     private int tempId=0;
+
     public AdminViewModel(CredentialsModel model) {
-        this.model = model;
+        this.credentialsModel = model;
         firstName=new SimpleStringProperty();
         lastName=new SimpleStringProperty();
         pin=new SimpleStringProperty();
@@ -29,8 +31,8 @@ public class AdminViewModel {
         isAdded=new SimpleBooleanProperty();
         managers= FXCollections.observableArrayList();
         managers.addAll(model.getEmployees("Manager"));
-        model.addListener("ManagerAddReply",this::replyAdd);
-        model.addListener("AdminReply",this::managersUpdate);
+        credentialsModel.addListener("ManagerAddReply",this::replyAdd);
+        credentialsModel.addListener("AdminReply",this::managersUpdate);
     }
 
     private void managersUpdate(PropertyChangeEvent event) {
@@ -49,7 +51,7 @@ public class AdminViewModel {
         return managers;
     }
     public void removeManager(Employee manager) {
-        model.removeEmployee(manager);
+        credentialsModel.removeEmployee(manager);
     }
 
     public void editManager(Employee e) {
@@ -68,10 +70,10 @@ public class AdminViewModel {
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
             else if(!isEdit) {
-                model.addEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
+                credentialsModel.addEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.MANAGER,0));
                 clearFields();
             }else{
-                model.editEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.MANAGER,tempId));
+                credentialsModel.editEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.MANAGER,tempId));
                 isEdit=false;
                 isAdded.setValue(true);
                 clearFields();
@@ -82,12 +84,21 @@ public class AdminViewModel {
             error.setValue("None of the fields can be left empty");
         }
     }
+
+    public void logOut()
+    {
+        credentialsModel.logOutEmployee();
+    }
+
+
     public void clearFields(){
        firstName.setValue("");
        lastName.setValue("");
        pin.setValue("");
        error.setValue("");
     }
+
+
     public String getError() {
         return error.get();
     }
@@ -126,5 +137,6 @@ public class AdminViewModel {
     public BooleanProperty isAddedProperty() {
         return isAdded;
     }
+
 }
 

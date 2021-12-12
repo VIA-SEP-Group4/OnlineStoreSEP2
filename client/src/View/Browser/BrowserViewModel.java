@@ -6,6 +6,8 @@ import Model.ProductsModel;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.stream.IntStream;
 public class BrowserViewModel implements PropertyChangeListener
 {
   private ProductsModel productsModel;
-  private CredentialsModel credsModel;
+  private CredentialsModel credentialsModel;
   private StringProperty search;
   private StringProperty items;
   private StringProperty userName;
@@ -45,7 +47,7 @@ public class BrowserViewModel implements PropertyChangeListener
     typeList = FXCollections.observableArrayList();
     type = new SimpleObjectProperty();
 
-    this.credsModel=credsModel;
+    this.credentialsModel =credsModel;
     browserTable = FXCollections.observableArrayList();
     selectedProd = new SimpleObjectProperty<>();
 
@@ -121,17 +123,15 @@ public class BrowserViewModel implements PropertyChangeListener
   }
 
   public void fetchProducts(){
-    browserTable.clear();
-    browserTable.addAll(productsModel.getProducts(page.getValue(),pagQuant.getValue()));
+    browserTable.setAll(productsModel.getProducts(page.getValue(),pagQuant.getValue()));
   }
 
   public void reset()
   {
-    browserTable.clear();
     fetchProducts();
     itemQuantity();
     loadTypes();
-    if(credsModel.getLoggedCustomer() == null)
+    if(credentialsModel.getLoggedCustomer() == null)
     {
       logOut.setValue(true);
       logIn.setValue(false);
@@ -140,8 +140,7 @@ public class BrowserViewModel implements PropertyChangeListener
     else {
       logOut.setValue(false);
       logIn.setValue(true);
-      userName.setValue("Hello, "+credsModel.getLoggedCustomer().getFirstName());
-
+      userName.setValue("Hello, "+ credentialsModel.getLoggedCustomer().getFirstName());
     }
   }
 
@@ -169,15 +168,14 @@ public class BrowserViewModel implements PropertyChangeListener
         typeList.add(getBrowserTable().get(i).getType());
     }
   }
-  public void itemQuantity()
+  private void itemQuantity()
   {
-    if (credsModel.getLoggedCustomer()!= null)
+    if (credentialsModel.getLoggedCustomer()!= null)
     {
-      ArrayList<Product> tempProd = credsModel.getLoggedCustomer().getCart();
       int iQ = 0;
-      for (Product product : tempProd)
+      for (Product cartProduct : credentialsModel.getLoggedCustomer().getCart())
       {
-        iQ += product.getQuantity();
+        iQ += cartProduct.getQuantity();
       }
       items.setValue("(" + iQ + ") items");
     }
@@ -217,13 +215,13 @@ public class BrowserViewModel implements PropertyChangeListener
   {
     if (desiredQuantity>0 && desiredQuantity<=p.getQuantity())
     {
-      productsModel.addToCart(p, desiredQuantity, credsModel.getLoggedCustomer());
+      productsModel.addToCart(p, desiredQuantity, credentialsModel.getLoggedCustomer());
       reset();
     }
     else
     {
-      //TODO .. put it in some label so customer can see what's going on
-      System.out.println("error label ->wrong quantity ...");
+      createAlert(Alert.AlertType.ERROR, "Unable to add "+desiredQuantity+ "of product-" + p.getName()
+          +"\nselect valid amount please.").showAndWait();
     }
   }
 
@@ -232,5 +230,20 @@ public class BrowserViewModel implements PropertyChangeListener
     ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
     System.out.println(products);
     browserTable.setAll(products);
+  }
+
+  public void logOutCustomer()
+  {
+    credentialsModel.logOutCustomer();
+  }
+
+
+  private Alert createAlert(Alert.AlertType alertType, String alertMsg){
+    Alert alert = new Alert(alertType);
+    alert.setTitle(alertType.toString());
+    alert.setHeaderText(alertMsg);
+    alert.setContentText("");
+
+    return alert;
   }
 }

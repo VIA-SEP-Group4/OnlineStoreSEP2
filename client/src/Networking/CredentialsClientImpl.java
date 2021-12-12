@@ -16,7 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class CredentialsClientImpl implements CredentialsClient, CredentialsClientRemote {
-    private CredentialsServerRemote serverStub;
+    private CredentialsServerRemote credentialsServer;
     private PropertyChangeSupport support;
     private Customer loggedCustomer = null;
     private Employee loggedEmployee = null;
@@ -32,8 +32,8 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
             UnicastRemoteObject.exportObject(this, 0);
 
             //lookup server stub
-            serverStub = (CredentialsServerRemote) Naming.lookup("rmi://localhost:1099/credentialsServer");
-            serverStub.registerClient(this);
+            credentialsServer = (CredentialsServerRemote) Naming.lookup("rmi://localhost:1099/credentialsServer");
+            credentialsServer.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
             System.err.println("failed to initialize client-object ...[CredentialsClientImpl.startClient()]");
         }
@@ -44,7 +44,7 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     public void loginEmployee(int ID, int pin)  {
         String reply = "denied";
         try {
-            reply = serverStub.loginEmployee(ID,pin, this);
+            reply = credentialsServer.loginEmployee(ID,pin, this);
         } catch (RemoteException | RuntimeException e) {
             System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     public void loginCustomer(String username, String password) {
         String reply = "denied";
         try {
-            reply = serverStub.loginCustomer(username, password, this);
+            reply = credentialsServer.loginCustomer(username, password, this);
         } catch (RemoteException | RuntimeException e) {
             System.err.println("Server error! Customer logging failed! [RMIClient.registerUser()]");
             e.printStackTrace();
@@ -74,7 +74,7 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     @Override
     public void editEmployee(Employee e) {
         try {
-            serverStub.editEmployee(e);
+            credentialsServer.editEmployee(e);
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
@@ -84,7 +84,7 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     public void addEmployee(Employee e) {
         String reply="Denied";
         try {
-            reply=serverStub.addEmployee(e);
+            reply= credentialsServer.addEmployee(e);
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     @Override
     public void removeEmployee(Employee e) {
         try {
-            serverStub.removeEmployee(e);
+            credentialsServer.removeEmployee(e);
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
@@ -106,14 +106,14 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     public ArrayList<Employee> getEmployees(String type) {
         if(type.equals("Worker")) {
             try {
-                return serverStub.getWorkers();
+                return credentialsServer.getWorkers();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         }
         else if(type.equals("Manager")){
             try {
-                return serverStub.getManagerEmployees();
+                return credentialsServer.getManagerEmployees();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -125,7 +125,7 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     {
         String reply;
         try {
-            reply = serverStub.deleteCustomer(loggedCustomer.getCustomerId());
+            reply = credentialsServer.deleteCustomer(loggedCustomer.getCustomerId());
         } catch (RemoteException e) {
             reply = "Account deleting failed";
         }
@@ -144,12 +144,38 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
 
         String reply;
         try {
-            reply = serverStub.editCustomer(tempCustomer, this);
+            reply = credentialsServer.editCustomer(tempCustomer, this);
         } catch (RemoteException e) {
             e.printStackTrace();
             reply = "Customer's information editing failed";
         }
         throw new AccountEditedExceptionReply(reply);
+    }
+
+    @Override public void logOutCustomer()
+    {
+        try
+        {
+            credentialsServer.removeClient(this);
+            loggedCustomer = null;
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override public void logOutEmployee()
+    {
+        try
+        {
+            credentialsServer.removeClient(this);
+            loggedEmployee = null;
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -169,7 +195,7 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
     @Override public void registerUser(Customer newCustomer)
     {
         try {
-            String reply = serverStub.registerUser(newCustomer);
+            String reply = credentialsServer.registerCustomer(newCustomer);
             System.out.println("Server reply: " + reply);
             support.firePropertyChange("RegistrationReply",null,reply);
         } catch (RemoteException e) {

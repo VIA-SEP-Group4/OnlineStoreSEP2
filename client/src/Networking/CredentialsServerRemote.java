@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface CredentialsServerRemote extends Remote {
-    String registerUser(Customer newCustomer)throws RemoteException;
+    String registerCustomer(Customer newCustomer)throws RemoteException;
     String loginCustomer(String username, String password, CredentialsClientRemote client) throws RemoteException;
     String loginEmployee(int id, int pin, CredentialsClientRemote client) throws RemoteException;
     ArrayList<Employee> getManagerEmployees() throws RemoteException;

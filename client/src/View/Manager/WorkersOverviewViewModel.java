@@ -16,7 +16,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 public class WorkersOverviewViewModel {
-    private CredentialsModel model;
+    private CredentialsModel credentialsModel;
     private OrdersModel ordersModel;
     private ObservableList<Employee> employees;
     private ObservableList<Order> responsibleFor;
@@ -29,7 +29,7 @@ public class WorkersOverviewViewModel {
     private int tempID=0;
     public WorkersOverviewViewModel(CredentialsModel model,OrdersModel ordersModel) {
         this.ordersModel=ordersModel;
-        this.model=model;
+        this.credentialsModel =model;
         employees= FXCollections.observableArrayList();
         responsibleFor= FXCollections.observableArrayList();
         employees.addAll(model.getEmployees("Worker"));
@@ -66,10 +66,10 @@ public class WorkersOverviewViewModel {
         ){
             if(pin.getValue().length()!=4) error.setValue("PIN can only be composed of 4 digits");
             else if(!isEdit){
-                model.addEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.WAREHOUSE_WORKER,0));
+                credentialsModel.addEmployee(new Employee(firstName.getValue(),lastName.getValue(),Integer.parseInt(pin.getValue()), EmployeeType.WAREHOUSE_WORKER,0));
                 clearFields();
             }else {
-                model.editEmployee(new Employee(firstName.get(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.WAREHOUSE_WORKER,tempID));
+                credentialsModel.editEmployee(new Employee(firstName.get(),lastName.getValue(),Integer.parseInt(pin.getValue()),EmployeeType.WAREHOUSE_WORKER,tempID));
                 isEdit=false;
                 tempID=0;
                 isAdded.setValue(true);
@@ -82,7 +82,7 @@ public class WorkersOverviewViewModel {
         }
     }
     public void removeWorker(Employee e) {
-        model.removeEmployee(e);
+        credentialsModel.removeEmployee(e);
     }
 
     public String getFirstName() {
@@ -145,4 +145,9 @@ public class WorkersOverviewViewModel {
         isEdit=true;
         tempID=e.getID();
     }
+
+  public void logOut()
+  {
+      credentialsModel.logOutEmployee();
+  }
 }

@@ -122,5 +122,9 @@ public class OrdersViewController
         }
     }
 
-
+    public void logOut(ActionEvent actionEvent)
+    {
+        viewModel.logOut();
+        viewHandler.openBrowserPane();
+    }
 }

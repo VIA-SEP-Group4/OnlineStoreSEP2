@@ -83,6 +83,10 @@ public class LoginViewModel implements PropertyChangeListener {
         return errorPass;
     }
 
+    public StringProperty successProperty() {
+        return success;
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String reply=evt.getNewValue().toString();
@@ -127,11 +131,6 @@ public class LoginViewModel implements PropertyChangeListener {
         errorPass.setValue("");
     }
 
-    public String getSuccess() {
-        return success.get();
-    }
 
-    public StringProperty successProperty() {
-        return success;
-    }
+
 }

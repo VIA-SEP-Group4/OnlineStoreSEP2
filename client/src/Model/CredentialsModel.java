@@ -18,4 +18,6 @@ public interface CredentialsModel extends Subject
   ArrayList<Employee> getEmployees(String type);
   void editCustomer(Customer editedCustomer);
   void deleteCustomer();
+  void logOutCustomer();
+  void logOutEmployee();
 }

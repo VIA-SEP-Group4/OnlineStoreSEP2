@@ -21,11 +21,14 @@ public class ProductsServer implements ProductsServerRemote {
         clients = new ArrayList<>();
         modelManager.addListener("ProductReply", this::productsUpdate);
     }
+
     public void start() throws RemoteException, MalformedURLException {
         UnicastRemoteObject.exportObject(this, 1099);
         Naming.rebind("productsServer", this);
         System.out.println("Products server started");
     }
+
+
     private void productsUpdate(PropertyChangeEvent event) {
         for (ProductsClientRemote client : clients) {
             try {

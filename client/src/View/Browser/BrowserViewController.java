@@ -75,13 +75,9 @@ public class BrowserViewController
     addBtnCol.setCellFactory(addButtonToTable());
     addBtnCol.visibleProperty().bind(viewModel.logInProperty());
 
-    reset();
-  }
-
-  private void reset()
-  {
     viewModel.reset();
   }
+
 
   public void onLoginButtonBrowser(ActionEvent actionEvent)
   {
@@ -90,9 +86,12 @@ public class BrowserViewController
 
   public void onLogOut(ActionEvent actionEvent)
   {
-    // TODO: 07/12/2021 open the same view with a different visibility 
+    //log out the customer
+    viewModel.logOutCustomer();
+    //reset view
+    viewModel.reset();
+    //display view
     viewHandler.openBrowserPane();
-    reset();
   }
 
   public void onSearchTextFieldEnter(KeyEvent keyEvent)

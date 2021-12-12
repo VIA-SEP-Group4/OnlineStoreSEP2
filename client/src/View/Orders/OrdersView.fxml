@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Orders.OrdersViewController">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="50.0" prefHeight="350.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="openOrdersTab" text="Open orders">
             <content>
@@ -25,7 +25,6 @@
                               <TableColumn fx:id="statusColumn" prefWidth="204.00006103515625" text="Status" />
                           </columns>
                         </TableView>
-                        <Button layoutX="263.0" layoutY="325.0" mnemonicParsing="false" onAction="#pickOrderButton" prefHeight="25.0" prefWidth="73.0" text="Pick order" />
                         <Label layoutX="7.0" layoutY="5.0" prefHeight="18.0" prefWidth="131.0" text="All pending orders">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -83,5 +82,7 @@
           </Tab>
         </tabs>
       </TabPane>
+      <Button layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#logOut" text="&lt; Log out" />
+      <Button layoutX="260.0" layoutY="9.0" mnemonicParsing="false" onAction="#pickOrderButton" prefHeight="33.0" prefWidth="80.0" text="Pick order" />
    </children>
 </AnchorPane>

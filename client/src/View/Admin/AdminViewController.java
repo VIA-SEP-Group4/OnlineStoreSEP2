@@ -43,7 +43,8 @@ public class AdminViewController {
     }
 
 
-    public void backToLogin(ActionEvent actionEvent) {
-        viewHandler.openLoginPane();
+    public void logOut(ActionEvent actionEvent) {
+        viewModel.logOut();
+        viewHandler.openBrowserPane();
     }
 }

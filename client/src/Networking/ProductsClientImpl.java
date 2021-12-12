@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     private PropertyChangeSupport support;
-    private ProductsServerRemote serverStub;
+    private ProductsServerRemote productsServer;
 
     public ProductsClientImpl() {
         support=new PropertyChangeSupport(this);
@@ -26,8 +26,8 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
             UnicastRemoteObject.exportObject(this, 0);
 
             //lookup server stub
-            serverStub = (ProductsServerRemote) Naming.lookup("rmi://localhost:1099/productsServer");
-            serverStub.registerClient(this);
+            productsServer = (ProductsServerRemote) Naming.lookup("rmi://localhost:1099/productsServer");
+            productsServer.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
             e.printStackTrace();
             System.err.println("failed to initialize client-object ...[ProductsClientImpl.startClient()]");
@@ -37,7 +37,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     @Override
     public void addProduct(Product p) {
         try {
-            serverStub.addProduct(p);
+            productsServer.addProduct(p);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     @Override
     public void deleteProduct(Product p) {
         try {
-            serverStub.deleteProduct(p);
+            productsServer.deleteProduct(p);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     @Override
     public void editProduct(Product p) {
         try {
-            serverStub.editProduct(p);
+            productsServer.editProduct(p);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     @Override
     public ArrayList<Product> getAllProducts() {
         try {
-            return serverStub.getProducts();
+            return productsServer.getProducts();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     @Override
     public void updateStock(Product p, int prodQuantity) {
         try {
-            serverStub.updateStock(p,prodQuantity);
+            productsServer.updateStock(p,prodQuantity);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     @Override public ArrayList<Product> getProducts(int page, int pagQuant)
     {
         try {
-            return serverStub.getProducts(page,pagQuant);
+            return productsServer.getProducts(page,pagQuant);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -92,7 +92,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
     @Override public ArrayList<Product> getFilterProd(int page, int pagQuant, String type)
     {
         try {
-            return serverStub.getFilterProd(page,pagQuant,type);
+            return productsServer.getFilterProd(page,pagQuant,type);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

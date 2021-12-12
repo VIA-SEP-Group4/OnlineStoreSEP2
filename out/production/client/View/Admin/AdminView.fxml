@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="478.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Admin.AdminViewController">
    <children>
       <Text layoutX="283.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="43.0" layoutY="68.0" prefHeight="290.0" prefWidth="301.0" vbarPolicy="NEVER">
+      <ScrollPane hbarPolicy="NEVER" layoutX="44.0" layoutY="106.0" prefHeight="290.0" prefWidth="301.0" vbarPolicy="NEVER">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="304.0">
                <children>
@@ -27,10 +27,10 @@
             </AnchorPane>
         </content>
       </ScrollPane>
-      <Text layoutX="43.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Managers" />
-      <Button layoutX="410.0" layoutY="77.0" mnemonicParsing="false" onAction="#addNewManager" text="Add New Manager" />
-      <Button layoutX="410.0" layoutY="161.0" mnemonicParsing="false" onAction="#removeManager" text="Remove Selected Manager" />
-      <Button layoutX="410.0" layoutY="118.0" mnemonicParsing="false" onAction="#editManager" text="Edit Selected Manager" />
-      <Button layoutX="43.0" layoutY="411.0" mnemonicParsing="false" onAction="#backToLogin" text="Back To Login" />
+      <Text layoutX="44.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Managers" />
+      <Button layoutX="411.0" layoutY="115.0" mnemonicParsing="false" onAction="#addNewManager" prefHeight="25.0" prefWidth="158.0" text="Add New Manager" />
+      <Button layoutX="411.0" layoutY="199.0" mnemonicParsing="false" onAction="#removeManager" text="Remove Selected Manager" />
+      <Button layoutX="411.0" layoutY="158.0" mnemonicParsing="false" onAction="#editManager" prefHeight="25.0" prefWidth="158.0" text="Edit Selected Manager" />
+      <Button layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="91.0" text="Log out" />
    </children>
 </AnchorPane>

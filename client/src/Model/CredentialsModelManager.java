@@ -84,6 +84,17 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     credentialsClient.deleteCustomer();
   }
 
+  @Override public void logOutCustomer()
+  {
+    credentialsClient.logOutCustomer();
+  }
+
+  @Override public void logOutEmployee()
+  {
+    credentialsClient.logOutEmployee();
+  }
+
+
 
   @Override
   public void propertyChange(PropertyChangeEvent evt) {

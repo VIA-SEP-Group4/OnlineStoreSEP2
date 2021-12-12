@@ -176,4 +176,9 @@ public class OrdersViewModel
             }
         }
     }
+
+  public void logOut()
+  {
+      credentialsModel.logOutEmployee();
+  }
 }

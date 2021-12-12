@@ -3,11 +3,8 @@ package Core;
 import View.AccountSettings.AccSettingsViewModel;
 import View.Admin.AdminViewModel;
 import View.Checkout.CheckoutViewModel;
-import View.Manager.OrderOverviewViewModel;
-import View.Manager.WorkersOverviewViewModel;
+import View.Manager.*;
 import View.Orders.OrdersViewModel;
-import View.Manager.AddProductViewModel;
-import View.Manager.ProductsViewModel;
 import View.Browser.BrowserViewModel;
 import View.Login.LoginViewModel;
 import View.Register.RegisterViewModel;
@@ -26,6 +23,7 @@ public class ViewModelFactory {
     private static WorkersOverviewViewModel workersOverviewViewModel;
     private static OrderOverviewViewModel orderOverviewViewModel;
     private static AccSettingsViewModel accSettingsViewModel;
+    private static ManagerTabViewModel managerTabViewModel;
 
 
     public ViewModelFactory(ModelFactory modelFactory) {
@@ -111,5 +109,13 @@ public class ViewModelFactory {
             accSettingsViewModel = new AccSettingsViewModel(modelFactory.getCredentialsModel());
         }
         return accSettingsViewModel;
+    }
+
+    public static ManagerTabViewModel getManagerTabViewModel()
+    {
+        if (managerTabViewModel == null){
+            managerTabViewModel = new ManagerTabViewModel(modelFactory.getCredentialsModel());
+        }
+        return managerTabViewModel;
     }
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="446.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Manager.ManagerTabViewController">
+<AnchorPane prefHeight="469.0" prefWidth="887.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Manager.ManagerTabViewController">
    <children>
-      <TabPane layoutY="-1.0" prefHeight="446.0" prefWidth="887.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="29.0" prefHeight="438.0" prefWidth="887.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Products">
             <fx:include fx:id="productsView" source="../Manager/ProductsView.fxml" />
@@ -21,5 +22,6 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Button layoutX="14.0" layoutY="1.0" mnemonicParsing="false" onAction="#logOut" text="&lt; Log out" />
    </children>
 </AnchorPane>
