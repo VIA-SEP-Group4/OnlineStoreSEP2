@@ -15,10 +15,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Browser.BrowserViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Browser.BrowserViewController">
    <children>
-      <Pagination fx:id="pagination" layoutY="548.0" maxPageIndicatorCount="1" onMouseClicked="#onClick" pageCount="5" prefHeight="49.0" prefWidth="702.0" />
-      <MenuBar layoutX="-1.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="700.0" AnchorPane.bottomAnchor="568.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pagination fx:id="pagination" layoutY="550.0" maxPageIndicatorCount="1" onMouseClicked="#onClick" pageCount="5" prefHeight="46.0" prefWidth="702.0" />
+      <MenuBar layoutX="-1.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -37,7 +37,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <HBox prefHeight="30.0" prefWidth="702.0" AnchorPane.topAnchor="70.0">
+      <HBox prefHeight="30.0" prefWidth="702.0" AnchorPane.topAnchor="80.0">
          <children>
             <ComboBox fx:id="filterByComboBox" onAction="#onFilterBy" prefHeight="30.0" prefWidth="90.0" promptText="Filter by">
                <HBox.margin>
@@ -59,19 +59,19 @@
                   <Insets />
                </HBox.margin>
             </TextField>
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#onLogOut" prefHeight="30.0" prefWidth="120.0" text="Log out">
+            <Button fx:id="accSettingsBtn" mnemonicParsing="false" onAction="#accSettingsBtnPressed" prefHeight="30.0" prefWidth="120.0" text="Account settings">
                <HBox.margin>
-                  <Insets left="19.0" />
+                  <Insets left="16.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#onLoginButtonBrowser" prefHeight="30.0" prefWidth="120.0" text="Log in/Register">
+            <Button fx:id="logButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#onLog" prefHeight="30.0" prefWidth="120.0" text="Log in/Register">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="74.0" prefHeight="30.0" prefWidth="702.0" AnchorPane.topAnchor="30.0">
+      <HBox alignment="CENTER_RIGHT" layoutX="-1.0" layoutY="74.0" prefHeight="30.0" prefWidth="702.0" AnchorPane.topAnchor="40.0">
          <children>
             <Label fx:id="userLabel" prefHeight="30.0" prefWidth="232.0" text="User">
                <HBox.margin>
@@ -88,25 +88,23 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="accSettingsBtn" mnemonicParsing="false" onAction="#accSettingsBtnPressed" prefHeight="30.0" prefWidth="120.0" text="Account settings">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-            </Button>
          </children>
       </HBox>
-       <ScrollPane layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="702.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+       <ScrollPane layoutX="8.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="684.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="120.0">
            <content>
-               <TableView fx:id="browserTable" onMouseClicked="#onDoubleClick" prefHeight="440.0" prefWidth="700.0" stylesheets="@BrowserView_Stylesheet.css">
+               <TableView fx:id="browserTable" onMouseClicked="#onDoubleClick" prefHeight="423.0" prefWidth="676.0" stylesheets="@BrowserView_Stylesheet.css">
                    <columns>
                        <TableColumn fx:id="nameColumn" prefWidth="121.99996960163116" text="Name" />
                        <TableColumn fx:id="typeColumn" prefWidth="94.00000762939453" text="Type" />
                        <TableColumn fx:id="priceColumn" prefWidth="64.66664123535156" text="Price" />
                        <TableColumn fx:id="descriptionColumn" prefWidth="197.3333740234375" text="Description" />
-                       <TableColumn fx:id="quantityColumn" prefWidth="65.99996948242188" text="Stock" />
-                        <TableColumn fx:id="desiredQuantityCol" prefWidth="69.3333740234375" text="Q" />
-                        <TableColumn fx:id="addBtnCol" prefWidth="74.6666259765625" text="Add to Cart" />
+                       <TableColumn fx:id="quantityColumn" prefWidth="56.800048828125" text="Stock" />
+                        <TableColumn fx:id="desiredQuantityCol" prefWidth="59.2000732421875" text="Q" />
+                        <TableColumn fx:id="addBtnCol" prefWidth="81.60002441406255" text="Add to Cart" />
                    </columns>
+               <padding>
+                  <Insets left="1.0" right="1.0" />
+               </padding>
                </TableView>
            </content>
       </ScrollPane>

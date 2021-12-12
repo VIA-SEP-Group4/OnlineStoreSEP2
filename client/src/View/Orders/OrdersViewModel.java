@@ -3,12 +3,9 @@ package View.Orders;
 import Model.CredentialsModel;
 import Model.Models.Order;
 import Model.Models.Product;
-
 import Model.OrdersModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.awt.image.AreaAveragingScaleFilter;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +23,38 @@ public class OrdersViewModel
     public OrdersViewModel(OrdersModel ordersModel, CredentialsModel credentialsModel){
         this.ordersModel = ordersModel;
         this.credentialsModel = credentialsModel;
+
         openOrders = FXCollections.observableArrayList();
         openOrdersDetail = FXCollections.observableArrayList();
         myOrders = FXCollections.observableArrayList();
         myOrdersDetail = FXCollections.observableArrayList();
+    }
 
+    public void load(){
+        getWaitingOrders();
+        getWorkersOrders();
+        activateListeners();
+    }
+    public void end(){
+        openOrders.clear();
+        myOrders.clear();
+        deactivateListeners();
+
+        credentialsModel.logOutEmployee();
+    }
+
+    private void activateListeners()
+    {
         ordersModel.addListener("newOrder", this::newOrder);
         ordersModel.addListener("updatedOrderStatus", this::updateOrder);
+        ordersModel.activateListeners();
     }
+    private void deactivateListeners(){
+        ordersModel.removeListener("newOrder", this::newOrder);
+        ordersModel.removeListener("updatedOrderStatus", this::updateOrder);
+        ordersModel.deactivateListeners();
+    }
+
 
     private void newOrder(PropertyChangeEvent evt)
     {
@@ -92,7 +113,7 @@ public class OrdersViewModel
 
     public void getWaitingOrders(){
         ArrayList<Order> orders = ordersModel.getOrders("waiting");
-        openOrders.addAll(orders);
+        openOrders.setAll(orders);
     }
 
     public void getWorkersOrders(){
@@ -150,6 +171,7 @@ public class OrdersViewModel
             }
         }
       openOrders.remove(toRemove.get(0));
+//        myOrders.add(toRemove.get(0));
         ordersModel.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
     }
@@ -179,8 +201,5 @@ public class OrdersViewModel
         }
     }
 
-  public void logOut()
-  {
-      credentialsModel.logOutEmployee();
-  }
+
 }

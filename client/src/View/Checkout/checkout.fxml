@@ -60,7 +60,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="ordersTable" layoutX="24.0" layoutY="14.0" onMouseClicked="#onDoubleClick" prefHeight="297.0" prefWidth="340.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="30.0">
+                        <TableView fx:id="ordersTable" layoutX="24.0" layoutY="14.0" onMouseClicked="#onClick" prefHeight="297.0" prefWidth="340.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="30.0">
                            <columns>
                               <TableColumn fx:id="orderIdCol" prefWidth="55.999969482421875" text="order_id" />
                               <TableColumn fx:id="orderTotalPrice" prefWidth="75.0" text="total price" />

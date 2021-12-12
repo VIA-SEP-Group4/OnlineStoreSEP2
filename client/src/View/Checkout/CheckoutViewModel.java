@@ -10,7 +10,6 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
@@ -33,33 +32,55 @@ public class CheckoutViewModel
     this.ordersModel = ordersModel;
 
     cartProducts = FXCollections.observableArrayList();
-    cartProducts.setAll(credentialsModel.getLoggedCustomer().getCart());
-
     orders = FXCollections.observableArrayList();
-    orders.setAll(ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId()));
     orderProducts = FXCollections.observableArrayList();
 
     selectedOrder = new SimpleObjectProperty<>();
     status = new SimpleObjectProperty<>();
     orderDetailLabel = new SimpleStringProperty();
+  }
 
-    ordersModel.addListener("newOrder", this::updateOrders);
+  public void load()
+  {
+    cartProducts.setAll(credentialsModel.getLoggedCustomer().getCart());
+    orders.setAll(ordersModel.getCustomerOrders(credentialsModel.getLoggedCustomer().getCustomerId()));
+
+    activateListeners();
+  }
+  public void end(){
+    cartProducts.clear();
+    orders.clear();
+    deactivateListeners();
+  }
+
+  private void activateListeners()
+  {
+    ordersModel.addListener("newOrder", this::addOrder);
     ordersModel.addListener("updatedOrderStatus", this::updateOrders);
+    ordersModel.activateListeners();
+  }
+  private void deactivateListeners()
+  {
+    ordersModel.removeListener("newOrder", this::addOrder);
+    ordersModel.removeListener("updatedOrderStatus", this::updateOrders);
+    ordersModel.deactivateListeners();
+  }
+
+  private void addOrder(PropertyChangeEvent evt)
+  {
+    orders.add((Order) evt.getNewValue());
   }
 
   private void updateOrders(PropertyChangeEvent evt)
   {
     Order order= (Order) evt.getNewValue();
-    boolean found=false;
-    for(int i=0;i<orders.size();i++){
-      if(orders.get(i).getOrderId()== order.getOrderId()){
-        orders.set(i,order);
-        found=true;
+
+    for (Order o : orders){
+      if (o.getOrderId() == order.getOrderId()){
+        orders.remove(o);
+        orders.add(order);
         break;
       }
-    }
-    if(!found){
-      orders.add(order);
     }
   }
 
@@ -106,8 +127,8 @@ public class CheckoutViewModel
       credentialsModel.getLoggedCustomer().getCart().clear();
     }
     else {
-      System.out.println("Nothing to order ...");
-      //ToDO ...show label instead
+      Alert alert = createAlert(Alert.AlertType.INFORMATION, "Nothing to order ...\n Choose some products first.");
+      Platform.runLater(()->{alert.showAndWait();});
     }
   }
 
@@ -185,7 +206,6 @@ public class CheckoutViewModel
   }
 
 
-
   private Alert createAlert(Alert.AlertType alertType, String alertMsg){
     Alert alert = new Alert(alertType);
     alert.setTitle(alertType.toString());
@@ -194,4 +214,5 @@ public class CheckoutViewModel
 
     return alert;
   }
+
 }

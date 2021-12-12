@@ -15,9 +15,20 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
     public OrdersModelManager(OrdersClient ordersClient) {
         support=new PropertyChangeSupport(this);
         this.ordersClient = ordersClient;
-        ordersClient.startClient();
+        this.ordersClient.startClient();
+    }
+
+    @Override public void activateListeners()
+    {
         ordersClient.addListener("newOrder",this);
         ordersClient.addListener("updatedOrderStatus",this);
+        ordersClient.registerClient();
+    }
+    @Override public void deactivateListeners()
+    {
+        ordersClient.removeListener("newOrder",this);
+        ordersClient.removeListener("updatedOrderStatus",this);
+        ordersClient.unregisterClient();
     }
 
     @Override
@@ -65,6 +76,7 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
     public ArrayList<Order> getCustomerOrders(int customerId) {
         return ordersClient.getCustomerOrders(customerId);
     }
+
 
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {

@@ -46,9 +46,10 @@ public class OrdersViewController
 
     public void init(){
         this.viewHandler = ViewHandler.getInstance();
-        this.viewModel = ViewModelFactory.getOrdersViewModel();
 
-        viewModel.getWaitingOrders();
+        this.viewModel = ViewModelFactory.getOrdersViewModel();
+        viewModel.load();
+
         openOrdersTable.setItems(viewModel.getOpenOrders());
         IDColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
@@ -62,7 +63,6 @@ public class OrdersViewController
         unitPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        viewModel.getWorkersOrders();
         myOrdersTable.setItems(viewModel.getMyOrders());
         myIDColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         myTotalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
@@ -133,7 +133,7 @@ public class OrdersViewController
 
     public void logOut(ActionEvent actionEvent)
     {
-        viewModel.logOut();
+        viewModel.end();
         viewHandler.openBrowserPane();
     }
 }

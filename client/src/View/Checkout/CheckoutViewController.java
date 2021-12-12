@@ -6,10 +6,7 @@ import Model.Models.Order;
 import Model.Models.Product;
 import View.ViewController;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -47,6 +44,7 @@ public class CheckoutViewController extends ViewController
   {
     this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getCheckoutViewModel();
+    viewModel.load();
 
     //cart-products Table
     cartProductsTable.setItems(viewModel.getCartProducts());
@@ -88,12 +86,13 @@ public class CheckoutViewController extends ViewController
 
   public void continueShoppingBtn(ActionEvent actionEvent)
   {
+    viewModel.end();
     viewHandler.openBrowserPane();
   }
 
-  public void onDoubleClick(MouseEvent mouseEvent)
+  public void onClick(MouseEvent mouseEvent)
   {
-    if (mouseEvent.getClickCount() == 2 && !mouseEvent.isConsumed())
+    if (mouseEvent.getClickCount() == 1 && !mouseEvent.isConsumed())
     {
       mouseEvent.consume();
       Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();
@@ -112,8 +111,7 @@ public class CheckoutViewController extends ViewController
    }
    else
    {
-     //TODO .. put it in some label so customer can see what's going on
-     System.out.println("error label ->no product to remove 1 ...");
+     createAlert(Alert.AlertType.INFORMATION, "no product to remove ...").showAndWait();
    }
   }
 
@@ -125,23 +123,32 @@ public class CheckoutViewController extends ViewController
   public void cancelOrder(ActionEvent event)
   {
     Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();
-    if (tempOrder != null && tempOrder.getState().equalsIgnoreCase("Waiting"))
+    if (tempOrder != null && tempOrder.getState().equalsIgnoreCase("waiting"))
     {
       viewModel.cancelOrder(tempOrder);
     }
     else if (tempOrder == null)
     {
-      //TODO .. put it in some label so customer can see what's going on
-      System.out.println("error label ->no order to cancel...");
+      createAlert(Alert.AlertType.INFORMATION, "no order to cancel...").showAndWait();
     }
     else
     {
-      System.out.println("error label ->Can't cancel order ...");
+      createAlert(Alert.AlertType.INFORMATION, "Can't cancel order ...").showAndWait();
     }
   }
 
   public void pickUpBtnPressed(ActionEvent actionEvent)
   {
     viewModel.pickUp(ordersTable.getSelectionModel().getSelectedItem());
+  }
+
+
+  private Alert createAlert(Alert.AlertType alertType, String alertMsg){
+    Alert alert = new Alert(alertType);
+    alert.setTitle(alertType.toString());
+    alert.setHeaderText(alertMsg);
+    alert.setContentText("");
+
+    return alert;
   }
 }

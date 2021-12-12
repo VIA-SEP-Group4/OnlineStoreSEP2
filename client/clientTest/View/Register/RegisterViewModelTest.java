@@ -98,7 +98,7 @@ class RegisterViewModelTest {
         password.bindBidirectional(rvm.passwordProperty());
         rePassword.bindBidirectional(rvm.rePasswordProperty());
         success.bindBidirectional(rvm.successProperty());
-        error.bindBidirectional(rvm.errorPassProperty());
+//        error.bindBidirectional(rvm.errorPassProperty());
         fName.setValue("Marian");
         lName.setValue("Coianu");
         userName.setValue("sexyBalamuc");
@@ -126,7 +126,7 @@ class RegisterViewModelTest {
         password.bindBidirectional(rvm.passwordProperty());
         rePassword.bindBidirectional(rvm.rePasswordProperty());
         success.bindBidirectional(rvm.successProperty());
-        error.bindBidirectional(rvm.errorFieldsProperty());
+//        error.bindBidirectional(rvm.errorFieldsProperty());
         fName.setValue("Marian");
         lName.setValue("Coianu");
         userName.setValue("sexyBalamuc");

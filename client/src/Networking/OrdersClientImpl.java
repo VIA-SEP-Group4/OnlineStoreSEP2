@@ -28,7 +28,7 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
 
             //lookup server stub
             ordersServer = (OrdersServerRemote) Naming.lookup("rmi://localhost:1099/ordersServer");
-            ordersServer.registerClient(this);
+//            ordersServer.registerClient(this);
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
             System.err.println("failed to initialize client-object ...[OrdersClientImpl.startClient()]");
         }
@@ -46,7 +46,16 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
 
     @Override public ArrayList<Order> getOrders(String status)
     {
-        return ordersServer.getOrders(status);
+        ArrayList<Order> orders = null;
+        try
+        {
+            orders = ordersServer.getOrders(status);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+        return orders;
     }
 
     @Override
@@ -98,6 +107,33 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
         }
         return null;
     }
+
+
+
+    @Override public void unregisterClient()
+    {
+        try
+        {
+            ordersServer.removeClient(this);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override public void registerClient()
+    {
+        try
+        {
+            ordersServer.registerClient(this);
+        }
+        catch (RemoteException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
