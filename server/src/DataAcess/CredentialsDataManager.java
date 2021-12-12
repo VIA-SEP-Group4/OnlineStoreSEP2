@@ -25,7 +25,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
 
 
 
-  public void registerEmployee(Employee newEmployee)
+  public synchronized void  registerEmployee(Employee newEmployee)
   {
     String SQL = "INSERT INTO " +SCHEMA+".employees" +"(first_name,last_name, pin, employee_type) " + "VALUES(?,?,?,?)";
 
@@ -50,7 +50,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
 
-  public void registerCustomer(Customer newCustomer)
+  public synchronized void registerCustomer(Customer newCustomer)
   {
     String SQL = "INSERT INTO " +SCHEMA+".customers" +"(user_name, pass, email, first_name, last_name) " + "VALUES(?,?,?,?,?)";
 
@@ -81,7 +81,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * @param username Username that the user logs in with
    * @param password Password that the user logs in with
    */
-  public Customer loginCustomer(String username, String password)
+  public synchronized Customer loginCustomer(String username, String password)
   {
     Customer loggedCustomer = null;
 
@@ -112,7 +112,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     return loggedCustomer;
   }
   @Override
-  public Employee loginEmployee(int ID, int pin)
+  public synchronized Employee loginEmployee(int ID, int pin)
   {
     Employee loggedEmployee = null;
 
@@ -142,7 +142,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
   }
  //TODO handle exception by sending string back
   @Override
-  public void removeEmployee(Employee e) {
+  public synchronized void removeEmployee(Employee e) {
     String SQL = "DELETE FROM " +SCHEMA+ ".employees WHERE " +SCHEMA+ ".employees"+ ".employee_id = '" +e.getID()+ "'";
 
     try (Connection conn = DBSConnection.getInstance().connect();
@@ -159,7 +159,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
 
-  @Override public void deleteCustomer(int customerId)
+  @Override public synchronized void deleteCustomer(int customerId)
   {
     String table = "customers";
     String SQL = "DELETE FROM " +SCHEMA+"."+table+ " WHERE customer_id = '"+customerId+"'";
@@ -176,7 +176,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
 
-  @Override public void editCustomer(Customer editedCustomer)
+  @Override public synchronized void editCustomer(Customer editedCustomer)
   {
     String table = "customers";
     String SQL = "UPDATE " +SCHEMA+"."+table+ " set user_name='"+editedCustomer.getUsername()+"'" + ", first_name="+"'"+editedCustomer.getFirstName()+"'"+", last_name="+"'"+editedCustomer.getLastName()+"'"+",  pass ='"+editedCustomer.getPassword()+ "'"+ ", email ='"+editedCustomer.getEmail()+"'" +" where customer_id="+editedCustomer.getCustomerId();
@@ -193,7 +193,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
 
-  private ArrayList<Employee> getManagers() {
+  private synchronized ArrayList<Employee> getManagers() {
     String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"MANAGER"+"'";
     ArrayList<Employee> employees=new ArrayList<>();
     try (Connection conn =  DBSConnection.getInstance().connect();
@@ -213,7 +213,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
     return employees;
   }
-  private ArrayList<Employee> getWorkers() {
+  private synchronized ArrayList<Employee> getWorkers() {
     String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"WAREHOUSE_WORKER"+"'";
     ArrayList<Employee> employees=new ArrayList<>();
     try (Connection conn =  DBSConnection.getInstance().connect();
@@ -239,7 +239,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * Check login credentials
    * @return true if passwords matches; false if don't
    */
-  private boolean checkPassword(String pass, String username, String table) {
+  private synchronized boolean checkPassword(String pass, String username, String table) {
     String SQL = "SELECT pass FROM eshop.users WHERE user_name = " + "'"+username+"'";
     try (Connection conn =  DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement();
@@ -260,7 +260,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * @param username
    * @return true or false depending on what the database returns
    */
-  private boolean checkUsername( String username, String table) {
+  private synchronized boolean checkUsername( String username, String table) {
     String SQL = "SELECT user_name FROM " +SCHEMA+"."+table+ " WHERE user_name = " + "'"+username+"'";
     try (Connection conn =  DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement();
@@ -279,7 +279,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * Get user count
    * @return number of users stored in the user-relation
    */
-  @Override public int getUserCount() {
+  @Override public synchronized int getUserCount() {
     int count = 0;
 
     String SQL = "SELECT count(*) FROM " +SCHEMA+ ".users";
@@ -301,7 +301,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * @return users as arrayList
    */
   @Override
-  public ArrayList<Employee> getEmployees() {
+  public synchronized ArrayList<Employee> getEmployees() {
 
     String SQL = "SELECT * FROM " +SCHEMA+ ".employees";
     ArrayList<Employee> employees=new ArrayList<>();
@@ -327,7 +327,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
 
 
   @Override
-  public void editEmployee(Employee e) {
+  public synchronized void editEmployee(Employee e) {
     String SQL = "update eshop.employees set first_name="+"'"+e.getFirstName()+"'"+", last_name="+"'"+e.getLastName()+"'"+",  pin ="+e.getPin()+ " where employee_id="+e.getID();
 
     try (Connection conn = DBSConnection.getInstance().connect();
@@ -344,12 +344,12 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
   @Override
-  public void addListener( String eventName,PropertyChangeListener listener) {
+  public synchronized void addListener( String eventName,PropertyChangeListener listener) {
     support.addPropertyChangeListener(eventName,listener);
   }
 
   @Override
-  public void removeListener(String eventName, PropertyChangeListener listener) {
+  public synchronized void removeListener(String eventName, PropertyChangeListener listener) {
     support.removePropertyChangeListener(eventName,listener);
   }
 }

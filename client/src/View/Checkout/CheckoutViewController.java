@@ -120,7 +120,7 @@ public class CheckoutViewController
   public void cancelOrder(ActionEvent event)
   {
     Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();
-    if (tempOrder != null && tempOrder.getState().equals("Waiting"))
+    if (tempOrder != null && tempOrder.getState().equalsIgnoreCase("Waiting"))
     {
       viewModel.cancelOrder(tempOrder);
     }

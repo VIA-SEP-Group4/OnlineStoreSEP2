@@ -25,7 +25,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
      * @return arraylist of products corresponding to the index that is provided
      */
     @Override
-    public ArrayList<Product> getProducts() {
+    public synchronized ArrayList<Product> getProducts() {
 
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
         ArrayList<Product> products = new ArrayList<>();
@@ -47,7 +47,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
         return products;
     }
 
-    @Override public ArrayList<Product> getProducts(int page, int pagQuant)
+    @Override public synchronized ArrayList<Product> getProducts(int page, int pagQuant)
     {
         int offset = (page) * pagQuant;
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " OFFSET "+offset+ "LIMIT "+pagQuant;
@@ -71,7 +71,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
         return products;
     }
 
-    @Override public ArrayList<Product> getFilterProd(int page, int pagQuant,String type)
+    @Override public synchronized ArrayList<Product> getFilterProd(int page, int pagQuant,String type)
     {
         int offset = (page) * pagQuant;
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " WHERE type ="+ " '"+type+"' "+ "LIMIT " +pagQuant+ " OFFSET "+offset ;
@@ -99,7 +99,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
      * @param p the product to be added
      */
     @Override
-    public void addProduct(Product p) {
+    public synchronized void addProduct(Product p) {
         String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(product_name,description,type,quantity,price) " + "VALUES(?,?,?,?,?)";
 
         try (Connection conn = DBSConnection.getInstance().connect();
@@ -122,7 +122,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
         }
     }
 
-    @Override public void deleteProduct(Product p)
+    @Override public synchronized void deleteProduct(Product p)
     {
         String SQL = "DELETE FROM " +SCHEMA+ "." +TABLE+ " WHERE " +SCHEMA+ "." +TABLE+ ".product_name = '" +p.getName()+ "'";
 
@@ -139,7 +139,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
         }
     }
 
-    @Override public void updateStock(Product p, int prodQuantity)
+    @Override public synchronized void updateStock(Product p, int prodQuantity)
     {
         String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET quantity=quantity +"+(prodQuantity)+ " WHERE product_id = '" +p.getProductId()+ "'";
 
@@ -155,7 +155,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
             throw new RuntimeException(ex.getMessage());
         }
     }
-    @Override public void editProduct(Product p)
+    @Override public synchronized void editProduct(Product p)
     {
         System.out.println(p);
         String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET product_name="+"'"+p.getName()+"'"+",description="+"'"+p.getDescription()+"'"

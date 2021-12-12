@@ -69,14 +69,14 @@ public class OrdersViewModel
     {
         Order o= (Order) evt.getNewValue();
         for(Order order: openOrders){
-            if(o.getOrderId()==o.getOrderId()) {
+            if(order.getOrderId()==o.getOrderId()) {
                 openOrders.remove(order);
                 openOrders.add(o);
                 break;
             }
         }
         for(Order order: myOrders){
-            if(o.getOrderId()==o.getOrderId()) {
+            if(order.getOrderId()==o.getOrderId()) {
                 myOrders.remove(order);
                 myOrders.add(o);
                 break;
@@ -87,10 +87,7 @@ public class OrdersViewModel
     // TODO: 10/12/2021 get order based on worker ID - where to get that?  
     public void getOrders(){
         ArrayList<Order> orders = ordersModel.getOrders("waiting");
-        for (Order o : orders)
-        {
-            openOrders.add(o);
-        }
+        openOrders.addAll(orders);
     }
 
 //    public void getOrders(){
