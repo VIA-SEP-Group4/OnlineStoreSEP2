@@ -2,7 +2,6 @@ package View.Register;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
-import View.Login.LoginViewModel;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,9 +14,7 @@ public class RegisterViewController
     public TextField userNameTextField;
     public TextField passwordTextField;
     public TextField rePasswordTextField;
-    public Label errorRePasswordLabel;
-    public Label fieldsError;
-    public Label succesLabel;
+    public Label successLabel;
 
     private ViewHandler viewHandler;
     private RegisterViewModel viewModel;
@@ -31,13 +28,15 @@ public class RegisterViewController
         userNameTextField.textProperty().bindBidirectional(viewModel.userNameProperty());
         passwordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
         rePasswordTextField.textProperty().bindBidirectional(viewModel.rePasswordProperty());
-        errorRePasswordLabel.textProperty().bindBidirectional(viewModel.errorPassProperty());
-        fieldsError.textProperty().bindBidirectional(viewModel.errorFieldsProperty());
-        succesLabel.textProperty().bindBidirectional(viewModel.successProperty());
+        successLabel.textProperty().bindBidirectional(viewModel.successProperty());
     }
 
     public void onSignUp(ActionEvent actionEvent) {
         viewModel.sendRegisterData();
+        if (successLabel.textProperty().getValue()!= null && successLabel.textProperty().getValue().contains("success"))
+        {
+            viewHandler.openLoginPane();
+        }
     }
 
     public void backToLogin(ActionEvent actionEvent) {

@@ -4,16 +4,16 @@ import Core.ViewHandler;
 import Core.ViewModelFactory;
 import Model.Models.Order;
 import Model.Models.Product;
+import View.ViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-public class CheckoutViewController
+public class CheckoutViewController extends ViewController
 {
   private ViewHandler viewHandler;
   private CheckoutViewModel viewModel;
@@ -74,6 +74,11 @@ public class CheckoutViewController
     productNameCol1.setCellValueFactory(new PropertyValueFactory<>("name"));
     productQuantityCol1.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     pricePerPieceCol1.setCellValueFactory(new PropertyValueFactory<>("price"));
+  }
+
+  @Override public void beforeExitAction()
+  {
+    viewModel.remoProdCartWhenClose();
   }
 
   public void orderBtn(ActionEvent actionEvent)

@@ -12,6 +12,7 @@ import View.Manager.AddProductViewController;
 import View.Browser.BrowserViewController;
 import View.Login.LoginViewController;
 import View.Register.RegisterViewController;
+import View.ViewController;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ViewHandler {
     private Stage stage;
+    private ViewController viewController;
     private static ViewHandler instance;
     private static ReentrantLock lock=new ReentrantLock();
     /**
@@ -45,6 +47,7 @@ public class ViewHandler {
     }
     private <T extends Event> void closeWindowEvent(T t)
     {
+        viewController.beforeExitAction();
         System.exit(0);
     }
 
@@ -92,8 +95,9 @@ public class ViewHandler {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../View/Browser/BrowserView.fxml"));
             Parent root = loader.load();
-            BrowserViewController view = loader.getController();
-            view.init();
+//            BrowserViewController view = loader.getController();
+            viewController = loader.getController();
+            viewController.init();
             Scene scene = new Scene(root);
             stage.setTitle("Browser");
             stage.setScene(scene);

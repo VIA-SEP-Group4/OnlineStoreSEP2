@@ -13,8 +13,6 @@ public class LoginViewController
 
   public TextField usernameTextField;
   public PasswordField passwordTextField;
-  public Label usernameErrorLabel;
-  public Label passwordErrorLabel;
   public Label successLabel;
   public RadioButton customerButton;
   public RadioButton employeeButton;
@@ -30,31 +28,20 @@ public class LoginViewController
     this.viewModel = ViewModelFactory.getLoginViewModel();
     usernameTextField.textProperty().bindBidirectional(viewModel.userNameProperty());
     passwordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
-    usernameErrorLabel.textProperty().bindBidirectional(viewModel.errorUserProperty());
-    passwordErrorLabel.textProperty().bindBidirectional(viewModel.errorPassProperty());
     successLabel.textProperty().bindBidirectional(viewModel.successProperty());
     toggleGroup=new ToggleGroup();
     customerButton.setToggleGroup(toggleGroup);
     employeeButton.setToggleGroup(toggleGroup);
-
-    clearLabels();
-  }
-
-  private void clearLabels()
-  {
-    successLabel.setText("");
-    passwordErrorLabel.setText("");
-    usernameErrorLabel.setText("");
   }
 
   public void onRegister(ActionEvent actionEvent) {
         viewHandler.openRegisterPane();
     }
 
-
     public void onLogin(ActionEvent actionEvent) {
         logIn();
     }
+
     public void onEnter(KeyEvent keyEvent)
     {
       if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -67,7 +54,6 @@ public class LoginViewController
       viewHandler.openBrowserPane();
   }
 
-
   public void customerSelected(ActionEvent actionEvent)
   {
       usernameLabel.setText("Username");
@@ -79,7 +65,6 @@ public class LoginViewController
       usernameLabel.setText("Employee ID");
       passwordLabel.setText("PIN");
   }
-
 
   private void logIn(){
     RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
@@ -107,6 +92,4 @@ public class LoginViewController
       viewHandler.openOrdersPane();
     }
   }
-
-
 }

@@ -3,6 +3,7 @@ package View.Browser;
 import Core.ViewHandler;
 import Core.ViewModelFactory;
 import Model.Models.Product;
+import View.ViewController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import java.util.ArrayList;
 
-public class BrowserViewController
+public class BrowserViewController extends ViewController
 {
   public ComboBox<String> filterByComboBox;
   public ComboBox<Integer> pagQuantityProd;
@@ -19,8 +20,7 @@ public class BrowserViewController
 
   public Label userLabel;
   public Label itemsLabel;
-  public Button loginButton;
-  public Button logoutButton;
+  public Button logButton;
   public Button accSettingsBtn;
   public Button checkoutButton;
   public Pagination pagination;
@@ -53,13 +53,12 @@ public class BrowserViewController
     itemsLabel.textProperty().bindBidirectional(viewModel.itemsProperty());
     searchTextField.textProperty().bindBidirectional(viewModel.searchProperty());
     userLabel.textProperty().bind(viewModel.userNameProperty());
+    logButton.textProperty().bindBidirectional(viewModel.logButtonProperty());
 
     //logged In/Out dependents
     checkoutButton.visibleProperty().bind(viewModel.logInProperty());
     userLabel.visibleProperty().bind(viewModel.logInProperty());
     itemsLabel.visibleProperty().bind(viewModel.logInProperty());
-    loginButton.visibleProperty().bind(viewModel.logOutProperty());
-    logoutButton.visibleProperty().bind(viewModel.logInProperty());
     accSettingsBtn.visibleProperty().bind(viewModel.logInProperty());
 
     //table
@@ -75,23 +74,35 @@ public class BrowserViewController
     addBtnCol.setCellFactory(addButtonToTable());
     addBtnCol.visibleProperty().bind(viewModel.logInProperty());
 
+    reset();
+  }
+
+  @Override public void beforeExitAction()
+  {
+    viewModel.remoProdCartWhenClose();
+    System.out.println("closing event ...");
+  }
+
+  private void reset()
+  {
     viewModel.reset();
   }
 
 
-  public void onLoginButtonBrowser(ActionEvent actionEvent)
+  public void onLog(ActionEvent actionEvent)
   {
+    if(!viewModel.logInProperty().get())
     viewHandler.openLoginPane();
-  }
-
-  public void onLogOut(ActionEvent actionEvent)
-  {
-    //log out the customer
-    viewModel.logOutCustomer();
-    //reset view
-    viewModel.reset();
-    //display view
-    viewHandler.openBrowserPane();
+    else
+    {
+      //log out the customer
+      viewModel.logOutCustomer();
+      //reset view
+      viewModel.reset();
+      //display view
+      viewHandler.openBrowserPane();
+      viewModel.remoProdCartWhenClose();
+    }
   }
 
   public void onSearchTextFieldEnter(KeyEvent keyEvent)
