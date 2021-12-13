@@ -12,7 +12,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
    <children>
       <MenuBar layoutY="-18.0" prefHeight="30.0" prefWidth="700.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -76,7 +76,7 @@
                               <TableColumn fx:id="pricePerPieceCol1" prefWidth="89.0" text="price/pcs." />
                            </columns>
                         </TableView>
-                        <Label fx:id="orderDetailLabel" layoutX="343.0" layoutY="32.0" prefHeight="17.0" prefWidth="243.0" text="..." />
+                        <Label fx:id="orderDetailLabel" layoutX="380.0" layoutY="30.0" prefHeight="18.0" prefWidth="299.0" text="..." />
                         <ComboBox fx:id="filterByComboBox" layoutX="214.0" layoutY="327.0" onAction="#filterBy" prefHeight="30.0" prefWidth="150.0" promptText="Filter by" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="325.0" />
                         <Button layoutX="554.0" layoutY="325.0" mnemonicParsing="false" onAction="#cancelOrder" prefHeight="30.0" prefWidth="100.0" text="Cancel Order" />
                         <Label layoutX="7.0" layoutY="6.0" text="My Orders" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />

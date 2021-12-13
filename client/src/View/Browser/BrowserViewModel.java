@@ -7,6 +7,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -206,9 +207,11 @@ public class BrowserViewModel implements PropertyChangeListener
     if (type.getValue() != null && type.getValue().equals("Available"))
     {
       fetchProducts();
-      IntStream.range(0, browserTable.size())
-          .filter(i -> browserTable.get(i).getQuantity() == 0)
-          .forEach(i -> browserTable.remove(i));
+      for (int i = 0; i < browserTable.size(); i++)
+      {
+        if (browserTable.get(i).getQuantity() == 0)
+          browserTable.remove(i);
+      }
     }
     else if (type.getValue() != null && type.getValue().equals("All products"))
     {
@@ -216,8 +219,7 @@ public class BrowserViewModel implements PropertyChangeListener
     }
     else if (type.getValue() != null)
     {
-      browserTable.clear();
-      browserTable.addAll(productsModel.getFilterProd(page.getValue(),pagQuant.getValue(),type.getValue()));
+      browserTable.setAll(productsModel.getFilterProd(page.getValue(),pagQuant.getValue(),type.getValue()));
     }
   }
 
@@ -240,10 +242,9 @@ public class BrowserViewModel implements PropertyChangeListener
     if (credentialsModel.getLoggedCustomer() != null)
     {
       ArrayList<Product> tempProducts = credentialsModel.getLoggedCustomer().getCart();
-      for (Product tempProduct : tempProducts)
+      for (int i = 0; i < tempProducts.size(); i++)
       {
-        productsModel.removeFromCart(tempProduct, tempProduct.getQuantity(),
-            credentialsModel.getLoggedCustomer());
+        productsModel.removeFromCart(tempProducts.get(i), tempProducts.get(i).getQuantity(),credentialsModel.getLoggedCustomer());
       }
     }
   }
@@ -266,8 +267,17 @@ public class BrowserViewModel implements PropertyChangeListener
 
   public void logOutCustomer()
   {
-    credentialsModel.logOutCustomer();
+    if(credentialsModel.getLoggedCustomer() != null && !credentialsModel.getLoggedCustomer().getCart().isEmpty())
+    {
+    if(createAlert(Alert.AlertType.CONFIRMATION,
+        "If you log out, you will lose your selected products").showAndWait().get() == ButtonType.OK)
+    {
+        credentialsModel.logOutCustomer();
+    }
+    }
+    else credentialsModel.logOutCustomer();
   }
+
 
 
   private Alert createAlert(Alert.AlertType alertType, String alertMsg){

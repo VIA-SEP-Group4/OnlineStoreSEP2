@@ -109,10 +109,6 @@ public class CheckoutViewController extends ViewController
      int quantityProd = tempProduct.getQuantity();
      viewModel.removeFromCart(tempProduct, quantityProd);
    }
-   else
-   {
-     createAlert(Alert.AlertType.INFORMATION, "no product to remove ...").showAndWait();
-   }
   }
 
   public void filterBy(ActionEvent event)
@@ -122,33 +118,11 @@ public class CheckoutViewController extends ViewController
 
   public void cancelOrder(ActionEvent event)
   {
-    Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();
-    if (tempOrder != null && tempOrder.getState().equalsIgnoreCase("waiting"))
-    {
-      viewModel.cancelOrder(tempOrder);
-    }
-    else if (tempOrder == null)
-    {
-      createAlert(Alert.AlertType.INFORMATION, "no order to cancel...").showAndWait();
-    }
-    else
-    {
-      createAlert(Alert.AlertType.INFORMATION, "Can't cancel order ...").showAndWait();
-    }
+    viewModel.cancelOrder(ordersTable.getSelectionModel().getSelectedItem());
   }
 
   public void pickUpBtnPressed(ActionEvent actionEvent)
   {
     viewModel.pickUp(ordersTable.getSelectionModel().getSelectedItem());
-  }
-
-
-  private Alert createAlert(Alert.AlertType alertType, String alertMsg){
-    Alert alert = new Alert(alertType);
-    alert.setTitle(alertType.toString());
-    alert.setHeaderText(alertMsg);
-    alert.setContentText("");
-
-    return alert;
   }
 }

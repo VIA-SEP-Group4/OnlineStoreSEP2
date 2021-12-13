@@ -10,6 +10,8 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
@@ -180,13 +182,29 @@ public class CheckoutViewModel
     }
   }
 
-  public void cancelOrder(Order order)
+  public void cancelOrder(Order selectedOrder)
   {
-    for (int i = 0; i < order.getProducts().size(); i++)
+    if (selectedOrder != null && selectedOrder.getState().equalsIgnoreCase("waiting"))
     {
-      productsModel.addProdToStock(order.getProducts().get(i),order.getProducts().get(i).getQuantity());
+      if (createAlert(Alert.AlertType.CONFIRMATION,
+          "Do you want to cancel the order?").showAndWait().get() == ButtonType.OK)
+      {
+        for (int i = 0; i < selectedOrder.getProducts().size(); i++)
+        {
+          productsModel.addProdToStock(selectedOrder.getProducts().get(i),
+              selectedOrder.getProducts().get(i).getQuantity());
+        }
+        ordersModel.cancelOrder(selectedOrder, "Cancelled");
+      }
     }
-    ordersModel.cancelOrder(order, "Cancelled");
+    else if (selectedOrder == null)
+    {
+      createAlert(Alert.AlertType.ERROR, "no order to cancel").showAndWait();
+    }
+    else
+    {
+      createAlert(Alert.AlertType.INFORMATION, "Your Order n."+selectedOrder.getOrderId()+ " can't be canceled").showAndWait();
+    }
   }
 
   public void pickUp(Order selectedOrder)

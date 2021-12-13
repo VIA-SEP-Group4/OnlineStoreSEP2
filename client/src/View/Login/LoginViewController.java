@@ -14,6 +14,7 @@ public class LoginViewController
   public TextField usernameTextField;
   public PasswordField passwordTextField;
   public Label successLabel;
+  public Label errorLabel;
   public RadioButton customerButton;
   public RadioButton employeeButton;
   public Text usernameLabel;
@@ -29,6 +30,7 @@ public class LoginViewController
     usernameTextField.textProperty().bindBidirectional(viewModel.userNameProperty());
     passwordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
     successLabel.textProperty().bindBidirectional(viewModel.successProperty());
+    errorLabel.textProperty().bindBidirectional(viewModel.errorProperty());
     toggleGroup=new ToggleGroup();
     customerButton.setToggleGroup(toggleGroup);
     employeeButton.setToggleGroup(toggleGroup);
