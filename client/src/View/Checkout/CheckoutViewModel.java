@@ -218,7 +218,7 @@ public class CheckoutViewModel
           productsModel.addProdToStock(selectedOrder.getProducts().get(i),
               selectedOrder.getProducts().get(i).getQuantity());
         }
-        ordersModel.cancelOrder(selectedOrder, "Cancelled");
+        ordersModel.cancelOrder(selectedOrder, "cancelled");
       }
     }
     else if (selectedOrder == null)

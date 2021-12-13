@@ -96,17 +96,10 @@ public class OrdersViewController
     public void removeButton(ActionEvent actionEvent)
     {
         Order tempOrder = myOrdersTable.getSelectionModel().getSelectedItem();
-        if (tempOrder != null){
-            if((tempOrder.getState().equalsIgnoreCase("ready")) || (tempOrder.getState().equalsIgnoreCase("picked up")) ||
-                (tempOrder.getState().equalsIgnoreCase("cancelled")))
-            {
-                createAlert(Alert.AlertType.WARNING,"Order with this status can not be put back into waiting list.").showAndWait();
-            }
-            else
-            {
-                viewModel.changeOrderAssignee(tempOrder, true);
-                viewModel.removeOrder(tempOrder.getOrderId());
-            }
+        if (tempOrder != null)
+        {
+            viewModel.changeOrderAssignee(tempOrder, true);
+            viewModel.removeOrder(tempOrder.getOrderId());
         }
     }
 

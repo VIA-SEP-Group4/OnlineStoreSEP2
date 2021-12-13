@@ -92,7 +92,10 @@ public class OrdersViewModel
         for(Order order: openOrders){
             if(order.getOrderId()==o.getOrderId()) {
                 openOrders.remove(order);
-                openOrders.add(o);
+                if(!o.getState().equalsIgnoreCase("cancelled"))
+                {
+                    openOrders.add(o);
+                }
                 break;
             }
         }
