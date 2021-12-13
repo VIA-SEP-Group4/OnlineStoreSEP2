@@ -124,20 +124,7 @@ public class CheckoutViewController extends ViewController
 
   public void cancelOrder(ActionEvent event)
   {
-    Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();
-    if (tempOrder != null && tempOrder.getState().equalsIgnoreCase("Waiting"))
-    {
-      viewModel.cancelOrder(tempOrder);
-    }
-    else if (tempOrder == null)
-    {
-      //TODO .. put it in some label so customer can see what's going on
-      System.out.println("error label ->no order to cancel...");
-    }
-    else
-    {
-      System.out.println("error label ->Can't cancel order ...");
-    }
+    viewModel.cancelOrder(ordersTable.getSelectionModel().getSelectedItem());
   }
 
   public void pickUpBtnPressed(ActionEvent actionEvent)

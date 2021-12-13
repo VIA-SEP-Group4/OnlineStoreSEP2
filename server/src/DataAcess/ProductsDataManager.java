@@ -43,7 +43,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
-        System.out.println(products);
         return products;
     }
 
@@ -67,7 +66,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
-        System.out.println(products);
         return products;
     }
 
@@ -91,7 +89,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
-        System.out.println(products);
         return products;
     }
     /**
@@ -105,7 +102,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
         try (Connection conn = DBSConnection.getInstance().connect();
              PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
         {
-            System.out.println(p);
             pstmt.setString(1, p.getName());
             pstmt.setString(2, p.getDescription());
             pstmt.setString(3, p.getType());
