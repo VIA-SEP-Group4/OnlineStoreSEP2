@@ -109,11 +109,6 @@ public class CheckoutViewController extends ViewController
      int quantityProd = tempProduct.getQuantity();
      viewModel.removeFromCart(tempProduct, quantityProd);
    }
-   else
-   {
-     //TODO .. put it in some label so customer can see what's going on
-     System.out.println("error label ->no product to remove 1 ...");
-   }
   }
 
   public void filterBy(ActionEvent event)
