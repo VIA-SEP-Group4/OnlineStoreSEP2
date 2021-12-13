@@ -82,7 +82,7 @@ public class OrdersViewModel
             }
         }
 
-        if (!inOpenOrders){
+        if (!inOpenOrders && !inMyOrders){
             openOrders.add(updatedOrder);
         }
 
@@ -178,16 +178,16 @@ public class OrdersViewModel
     }
 
     public void removeOrder(int id){
+        System.out.println("Remove order: ");
         myOrdersDetail.clear();
         List<Order> toRemove = new ArrayList<>();
-        // TODO: 12/12/2021 remember to set back to myOrders
         for (Order o : openOrders){
             if (o.getOrderId() == id){
                 o.setStatus("waiting");
                 toRemove.add(o);
             }
         }
-        //myOrders.remove(toRemove.get(0));
+        myOrders.remove(toRemove.get(0));
         //openOrders.add(toRemove.get(0));
         ordersModel.updateOrderState(toRemove.get(0), toRemove.get(0).getState());
         toRemove.clear();
