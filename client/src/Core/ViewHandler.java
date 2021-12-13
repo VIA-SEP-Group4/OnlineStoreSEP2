@@ -23,15 +23,18 @@ import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ViewHandler {
+
     private Stage stage;
     private ViewController viewController;
     private static ViewHandler instance;
     private static ReentrantLock lock=new ReentrantLock();
+
     /**
      * The constructor for the viewHandler, which creates the views
      */
     private ViewHandler() {
     }
+
     public static ViewHandler getInstance(){
         if(instance==null){
             synchronized (lock){
@@ -42,9 +45,11 @@ public class ViewHandler {
         }
         return instance;
     }
+
     public void initialize(Stage stage){
         this.stage=stage;
     }
+
     private <T extends Event> void closeWindowEvent(T t)
     {
         viewController.beforeExitAction();
