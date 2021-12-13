@@ -5,6 +5,7 @@ import Core.ViewModelFactory;
 import Model.Models.Order;
 import Model.Models.Product;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -83,7 +84,7 @@ public class OrdersViewController
         Order tempOrder = openOrdersTable.getSelectionModel().getSelectedItem();
         if(tempOrder != null){
             if(tempOrder.getState().equalsIgnoreCase("cancelled")){
-                JOptionPane.showMessageDialog(null, "Order with this status can not be picked.", "Warning", JOptionPane.WARNING_MESSAGE);
+                createAlert(Alert.AlertType.WARNING,"Order with this status can not be picked.");
             }
             else{
                 viewModel.changeOrderAssignee(tempOrder, false);
@@ -99,8 +100,7 @@ public class OrdersViewController
             if((tempOrder.getState().equalsIgnoreCase("ready")) || (tempOrder.getState().equalsIgnoreCase("picked up")) ||
                 (tempOrder.getState().equalsIgnoreCase("cancelled")))
             {
-                JOptionPane.showMessageDialog(null,
-                    "Order with this status can not be put back into waiting list.", "Warning", JOptionPane.WARNING_MESSAGE);
+                createAlert(Alert.AlertType.WARNING,"Order with this status can not be put back into waiting list.").showAndWait();
             }
             else
             {
@@ -143,5 +143,14 @@ public class OrdersViewController
     {
         viewModel.end();
         viewHandler.openBrowserPane();
+    }
+
+    private Alert createAlert(Alert.AlertType alertType, String alertMsg){
+        Alert alert = new Alert(alertType);
+        alert.setTitle(alertType.toString());
+        alert.setHeaderText(alertMsg);
+        alert.setContentText("");
+
+        return alert;
     }
 }
