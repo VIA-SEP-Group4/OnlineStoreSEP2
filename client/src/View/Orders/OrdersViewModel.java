@@ -71,7 +71,6 @@ public class OrdersViewModel
                 break;
             }
         }
-
         if (!inMyOrders){
             for (Order o : openOrders){
                 if (o.getOrderId() == updatedOrder.getOrderId()){
@@ -81,13 +80,9 @@ public class OrdersViewModel
                 }
             }
         }
-
         if (!inOpenOrders && !inMyOrders){
             openOrders.add(updatedOrder);
         }
-
-        System.out.println("After new order evt:\nopen orders: " + openOrders + "\n my orders: " + myOrders);
-
     }
 
     private void updateOrder(PropertyChangeEvent evt)
@@ -108,7 +103,6 @@ public class OrdersViewModel
                 break;
             }
         }
-        System.out.println("After update order evt:\nopen orders: " + openOrders + "\n my orders: " + myOrders);
     }
 
     public void getWaitingOrders(){
@@ -117,7 +111,6 @@ public class OrdersViewModel
     }
 
     public void getWorkersOrders(){
-//        ArrayList<Order> orders = ordersModel.getWorkerOrdersForManager(credentialsModel.getLoggedEmployee().getID());
         ArrayList<Order> orders = ordersModel.getWorkersOrders(credentialsModel.getLoggedEmployee().getID());
         myOrders.addAll(orders);
     }
@@ -178,7 +171,6 @@ public class OrdersViewModel
     }
 
     public void removeOrder(int id){
-        System.out.println("Remove order: ");
         myOrdersDetail.clear();
         List<Order> toRemove = new ArrayList<>();
         for (Order o : openOrders){

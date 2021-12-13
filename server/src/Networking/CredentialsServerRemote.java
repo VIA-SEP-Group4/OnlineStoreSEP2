@@ -20,7 +20,6 @@ public interface CredentialsServerRemote extends Remote {
 
     void editEmployee(Employee e) throws RemoteException;
 
-    //TODO ... added 9.12.12:50
     String deleteCustomer(int customerId) throws RemoteException;
     String editCustomer(Customer editedCustomer, CredentialsClientRemote loginClient) throws RemoteException;
 
