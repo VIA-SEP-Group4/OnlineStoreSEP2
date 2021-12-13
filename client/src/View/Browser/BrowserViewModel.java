@@ -3,6 +3,7 @@ package View.Browser;
 import Model.CredentialsModel;
 import Model.Models.Product;
 import Model.ProductsModel;
+import View.AccountSettings.AccountDeletedExceptionReply;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,8 +15,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BrowserViewModel implements PropertyChangeListener
 {
@@ -265,17 +266,27 @@ public class BrowserViewModel implements PropertyChangeListener
     }
   }
 
-  public void logOutCustomer()
+  public boolean logOutCustomer()
   {
     if(credentialsModel.getLoggedCustomer() != null && !credentialsModel.getLoggedCustomer().getCart().isEmpty())
     {
-    if(createAlert(Alert.AlertType.CONFIRMATION,
-        "If you log out, you will lose your selected products").showAndWait().get() == ButtonType.OK)
+      Alert alert = createAlert(Alert.AlertType.CONFIRMATION, "If you log out, you will lose your selected products");
+
+      Optional<ButtonType> res = alert.showAndWait();
+      if(res.isPresent() && res.get().equals(ButtonType.OK)) {
+          remoProdCartWhenClose();
+          credentialsModel.logOutCustomer();
+          return true;
+      }
+      else
+        return false;
+    }
+
+    else
     {
-        credentialsModel.logOutCustomer();
+      credentialsModel.logOutCustomer();
+      return true;
     }
-    }
-    else credentialsModel.logOutCustomer();
   }
 
 

@@ -47,8 +47,11 @@ public class ViewHandler {
     }
     private <T extends Event> void closeWindowEvent(T t)
     {
-        viewController.beforeExitAction();
-        System.exit(0);
+        if(viewController.beforeExitAction()) {
+            System.exit(0);
+        }
+        else
+            t.consume();
     }
 
     public void start() {

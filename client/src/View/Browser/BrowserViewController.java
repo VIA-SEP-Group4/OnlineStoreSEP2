@@ -77,11 +77,15 @@ public class BrowserViewController extends ViewController
     reset();
   }
 
-  @Override public void beforeExitAction()
+  @Override public boolean beforeExitAction()
   {
-    viewModel.remoProdCartWhenClose();
-    viewModel.logOutCustomer();
+    if (viewModel.logOutCustomer())
+    {
+      return true;
+    }
+    return false;
   }
+
 
   private void reset()
   {
@@ -101,7 +105,6 @@ public class BrowserViewController extends ViewController
       viewModel.reset();
       //display view
       viewHandler.openBrowserPane();
-      viewModel.remoProdCartWhenClose();
     }
   }
 

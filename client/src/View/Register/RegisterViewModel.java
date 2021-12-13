@@ -4,6 +4,7 @@ import Model.CredentialsModel;
 import Model.Models.Customer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
@@ -75,7 +76,7 @@ public class RegisterViewModel implements PropertyChangeListener {
         {
             if(!password.getValue().equals(rePassword.getValue()))
             {
-                prompt("Passwords don't match","Wrong Input");
+                createAlert(Alert.AlertType.ERROR,"Passwords don't match").showAndWait();
             }
             else {
                 model.registerUser(new Customer(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
@@ -83,13 +84,17 @@ public class RegisterViewModel implements PropertyChangeListener {
             }
         }
         else{
-            prompt("Fields cannot be empty on registering","Wrong Input");
+            createAlert(Alert.AlertType.ERROR,"Fields cannot be empty on registering").showAndWait();
         }
     }
 
-    public void prompt(String message, String title)
-    {
-        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+    private Alert createAlert(Alert.AlertType alertType, String alertMsg){
+        Alert alert = new Alert(alertType);
+        alert.setTitle(alertType.toString());
+        alert.setHeaderText(alertMsg);
+        alert.setContentText("");
+
+        return alert;
     }
     /**
      * Method clearing all view fields.
@@ -108,13 +113,13 @@ public class RegisterViewModel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         String reply=evt.getNewValue().toString();
         if(reply.contains("approved")){
-            prompt("Registration was successful!","User Register");
+            createAlert(Alert.AlertType.INFORMATION,"Registration was successful!").showAndWait();
             success.setValue("success");
             //->change view to LogIn-view automatically?
         }
         else
         {
-            prompt("Registration failed","Error");
+            createAlert(Alert.AlertType.INFORMATION,"Registration failed").showAndWait();
         }
         clearFields();
     }

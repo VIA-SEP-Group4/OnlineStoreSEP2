@@ -74,9 +74,13 @@ public class CheckoutViewController extends ViewController
     pricePerPieceCol1.setCellValueFactory(new PropertyValueFactory<>("price"));
   }
 
-  @Override public void beforeExitAction()
+  @Override public boolean beforeExitAction()
   {
-    viewModel.remoProdCartWhenClose();
+    if (viewModel.logOutCustomer())
+    {
+      return true;
+    }
+    return false;
   }
 
   public void orderBtn(ActionEvent actionEvent)

@@ -34,6 +34,8 @@ public class LoginViewController
     toggleGroup=new ToggleGroup();
     customerButton.setToggleGroup(toggleGroup);
     employeeButton.setToggleGroup(toggleGroup);
+
+    clearErrorLabels();
   }
 
   public void onRegister(ActionEvent actionEvent) {
@@ -69,6 +71,7 @@ public class LoginViewController
   }
 
   private void logIn(){
+
     RadioButton selected = (RadioButton) toggleGroup.getSelectedToggle();
     viewModel.login(selected.getText());
 
@@ -93,5 +96,11 @@ public class LoginViewController
     {
       viewHandler.openOrdersPane();
     }
+  }
+
+  private void clearErrorLabels()
+  {
+    errorLabel.setText("");
+    successLabel.setText("");
   }
 }

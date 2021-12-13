@@ -4,6 +4,8 @@ import Model.CredentialsModel;
 import Model.ProductsModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
+
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -71,10 +73,13 @@ public class LoginViewModel implements PropertyChangeListener {
         return error;
     }
 
+    private Alert createAlert(Alert.AlertType alertType, String alertMsg){
+        Alert alert = new Alert(alertType);
+        alert.setTitle(alertType.toString());
+        alert.setHeaderText(alertMsg);
+        alert.setContentText("");
 
-    public void prompt(String message, String title)
-    {
-        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+        return alert;
     }
 
     @Override
@@ -82,10 +87,12 @@ public class LoginViewModel implements PropertyChangeListener {
         String reply=evt.getNewValue().toString();
         if (reply.toLowerCase().contains("success"))
         {
-            error.setValue("");
             success.setValue(reply);
         }
         else
-        prompt(reply,"Access Denied");
+        {
+            error.setValue("");
+            createAlert(Alert.AlertType.ERROR,reply).showAndWait();
+        }
     }
 }

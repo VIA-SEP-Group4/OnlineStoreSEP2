@@ -14,6 +14,7 @@ import javafx.scene.control.ButtonType;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class CheckoutViewModel
 {
@@ -153,6 +154,29 @@ public class CheckoutViewModel
     productsModel.removeFromCart(p, quantityProd, credentialsModel.getLoggedCustomer());
     fetchCart();
   }
+  public boolean logOutCustomer()
+  {
+    if(credentialsModel.getLoggedCustomer() != null && !credentialsModel.getLoggedCustomer().getCart().isEmpty())
+    {
+      Alert alert = createAlert(Alert.AlertType.CONFIRMATION, "If you log out, you will lose your selected products");
+
+      Optional<ButtonType> res = alert.showAndWait();
+      if(res.isPresent() && res.get().equals(ButtonType.OK)) {
+        remoProdCartWhenClose();
+        credentialsModel.logOutCustomer();
+        return true;
+      }
+      else
+        return false;
+    }
+
+    else
+    {
+      credentialsModel.logOutCustomer();
+      return true;
+    }
+  }
+
   public void remoProdCartWhenClose()
   {
     if (credentialsModel.getLoggedCustomer() != null)
