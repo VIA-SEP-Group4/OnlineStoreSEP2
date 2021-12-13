@@ -15,6 +15,7 @@ public class LoginViewModel implements PropertyChangeListener {
     private StringProperty userName;
     private StringProperty password;
     private StringProperty success;
+    private StringProperty error;
 
     public LoginViewModel(CredentialsModel credentialsModel, ProductsModel productsModel) {
         this.credentialsModel = credentialsModel;
@@ -22,6 +23,7 @@ public class LoginViewModel implements PropertyChangeListener {
         userName=new SimpleStringProperty();
         password=new SimpleStringProperty();
         success=new SimpleStringProperty();
+        error=new SimpleStringProperty();
 
         credentialsModel.addListener("LoginReply",this);
     }
@@ -32,11 +34,11 @@ public class LoginViewModel implements PropertyChangeListener {
     public void login(String userType) {
 
         if(userName.getValue()==null || userName.getValue().equals("")) {
-            prompt("Username cannot be empty","Wrong Input");
+            error.setValue("Username cannot be empty");
         }
 
         else if(password.getValue()==null || password.getValue().equals("")){
-            prompt("Password cannot be empty","Wrong Input");
+            error.setValue("Password cannot be empty");
         }
 
         else{
@@ -65,6 +67,11 @@ public class LoginViewModel implements PropertyChangeListener {
         return success;
     }
 
+    public StringProperty errorProperty() {
+        return error;
+    }
+
+
     public void prompt(String message, String title)
     {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
@@ -75,6 +82,7 @@ public class LoginViewModel implements PropertyChangeListener {
         String reply=evt.getNewValue().toString();
         if (reply.toLowerCase().contains("success"))
         {
+            error.setValue("");
             success.setValue(reply);
         }
         else

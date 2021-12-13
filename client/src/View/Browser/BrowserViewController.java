@@ -80,6 +80,7 @@ public class BrowserViewController extends ViewController
   @Override public void beforeExitAction()
   {
     viewModel.remoProdCartWhenClose();
+    viewModel.logOutCustomer();
   }
 
   private void reset()

@@ -52,5 +52,6 @@
          </font></Text>
       <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#backBtnPressed" prefHeight="30.0" prefWidth="70.0" text="Back" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="20.0" />
       <Label fx:id="successLabel" layoutX="340.0" layoutY="250.0" />
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="240.0" layoutY="191.0" prefHeight="18.0" prefWidth="229.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>

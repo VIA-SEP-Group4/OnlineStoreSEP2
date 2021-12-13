@@ -82,8 +82,13 @@ public class OrdersViewController
     {
         Order tempOrder = openOrdersTable.getSelectionModel().getSelectedItem();
         if(tempOrder != null){
-            viewModel.changeOrderAssignee(tempOrder, false);
-            viewModel.pickOrder(tempOrder.getOrderId());
+            if(tempOrder.getState().equalsIgnoreCase("cancelled")){
+                JOptionPane.showMessageDialog(null, "Order with this status can not be picked.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                viewModel.changeOrderAssignee(tempOrder, false);
+                viewModel.pickOrder(tempOrder.getOrderId());
+            }
         }
     }
 
@@ -91,8 +96,17 @@ public class OrdersViewController
     {
         Order tempOrder = myOrdersTable.getSelectionModel().getSelectedItem();
         if (tempOrder != null){
-            viewModel.changeOrderAssignee(tempOrder, true);
-            viewModel.removeOrder(tempOrder.getOrderId());
+            if((tempOrder.getState().equalsIgnoreCase("ready")) || (tempOrder.getState().equalsIgnoreCase("picked up")) ||
+                (tempOrder.getState().equalsIgnoreCase("cancelled")))
+            {
+                JOptionPane.showMessageDialog(null,
+                    "Order with this status can not be put back into waiting list.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+            else
+            {
+                viewModel.changeOrderAssignee(tempOrder, true);
+                viewModel.removeOrder(tempOrder.getOrderId());
+            }
         }
     }
 
@@ -100,16 +114,10 @@ public class OrdersViewController
     {
         Order tempOrder = myOrdersTable.getSelectionModel().getSelectedItem();
         if (tempOrder != null){
-            if((!tempOrder.getState().equalsIgnoreCase("ready")) && (!tempOrder.getState().equalsIgnoreCase("picked up")) &&
-                (!tempOrder.getState().equalsIgnoreCase("cancelled"))){
-                viewModel.completeOrder(tempOrder.getOrderId());
-                myOrdersTable.refresh();
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Order with this status can not be put back into waiting list.", "Warning", JOptionPane.WARNING_MESSAGE);
+            viewModel.completeOrder(tempOrder.getOrderId());
+            myOrdersTable.refresh();
             }
         }
-    }
 
     public void checkOpenOrderDetail(MouseEvent mouseEvent)
     {
