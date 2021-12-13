@@ -2,6 +2,7 @@ package Networking;
 
 import Model.Models.Product;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.MalformedURLException;
@@ -110,6 +111,7 @@ public class ProductsClientImpl implements ProductsClient,ProductsClientRemote {
 
     @Override
     public void receiveUpdatedProducts(Object products) throws RemoteException {
-        support.firePropertyChange("ProductsReply",null,products);
+        PropertyChangeEvent event=(PropertyChangeEvent) products;
+        support.firePropertyChange(event);
     }
 }

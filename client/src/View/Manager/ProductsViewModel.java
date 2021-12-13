@@ -1,5 +1,6 @@
 package View.Manager;
 
+import Model.Models.Order;
 import Model.Models.Product;
 
 import Model.ProductsModel;
@@ -31,12 +32,23 @@ public class ProductsViewModel implements PropertyChangeListener
 
   public void removeProduct(Product p){
     productsModel.deleteProduct(p);
+    products.remove(p);
   }
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    ArrayList<Product> product= (ArrayList<Product>) evt.getNewValue();
-    products.setAll(product);
+    Product product= (Product) evt.getNewValue();
+    boolean found=false;
+    for(int i=0;i<products.size();i++){
+      if(products.get(i).getProductId()== product.getProductId()){
+        products.set(i,product);
+        found=true;
+        break;
+      }
+    }
+    if(!found){
+      products.add(product);
+    }
   }
 
   public void reset()

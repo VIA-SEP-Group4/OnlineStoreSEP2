@@ -26,6 +26,8 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
     //listeners
     credentialsDataAccessor.addListener("AdminReply",this);
     credentialsDataAccessor.addListener("ManagerReply",this);
+    credentialsDataAccessor.addListener("ManagerReplyDelete",this);
+    credentialsDataAccessor.addListener("AdminReplyDelete",this);
   }
 
 
@@ -70,10 +72,6 @@ public class CredentialsModelManager implements CredentialsModel, PropertyChange
   }
 
 
-  @Override public int userCount()
-  {
-    return credentialsDataAccessor.getUserCount();
-  }
 
 
   @Override

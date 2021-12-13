@@ -55,6 +55,17 @@ public class BrowserViewModel implements PropertyChangeListener
     logButton = new SimpleStringProperty();
 
     productsModel.addListener("ProductsReply",this);
+    productsModel.addListener("productDeleted",this::deletedProduct);
+  }
+
+  private void deletedProduct(PropertyChangeEvent propertyChangeEvent) {
+    Product prod=(Product) propertyChangeEvent.getNewValue();
+    for(Product p: browserTable){
+      if(p.getProductId()==prod.getProductId()){
+        browserTable.remove(p);
+        break;
+      }
+    }
   }
 
   public IntegerProperty pageProperty()
@@ -234,8 +245,18 @@ public class BrowserViewModel implements PropertyChangeListener
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    ArrayList<Product> products = (ArrayList<Product>) evt.getNewValue();
-    browserTable.setAll(products);
+    Product product= (Product) evt.getNewValue();
+    boolean found=false;
+    for(int i=0;i<browserTable.size();i++){
+      if(browserTable.get(i).getProductId()== product.getProductId()){
+        browserTable.set(i,product);
+        found=true;
+        break;
+      }
+    }
+    if(!found){
+      browserTable.add(product);
+    }
   }
 
   public void logOutCustomer()

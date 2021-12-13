@@ -41,6 +41,9 @@ public class Employee implements Serializable {
     public EmployeeType getType() {
         return type;
     }
+    public void setEmployeeId(int newEmployeeID) {
+        this.ID=newEmployeeID;
+    }
 
     @Override
     public String toString() {

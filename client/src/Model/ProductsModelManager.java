@@ -19,6 +19,7 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
         this.productsClient = productsClient;
         productsClient.startClient();
         productsClient.addListener("ProductsReply",this);
+        productsClient.addListener("productDeleted",this);
 
     }
 
@@ -105,6 +106,7 @@ public class ProductsModelManager implements ProductsModel, PropertyChangeListen
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
         support.firePropertyChange(evt);
     }
 }

@@ -61,6 +61,10 @@ public class Product implements Serializable
         return price;
     }
 
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
     public void setPrice(double price)
     {
         this.price = price;

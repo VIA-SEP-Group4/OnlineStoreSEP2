@@ -6,6 +6,7 @@ import Model.Models.Employee;
 import View.AccountSettings.AccountDeletedExceptionReply;
 import View.AccountSettings.AccountEditedExceptionReply;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.MalformedURLException;
@@ -226,8 +227,12 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
 
     @Override
     public void receiveUpdatedEmployees(Object employees) throws RemoteException {
-        ArrayList<Employee> temp=(ArrayList<Employee>) employees;
-        if(temp.get(0).getType()==EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,temp);
-        else if(temp.get(0).getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerWorkersReply",null,temp);
+        PropertyChangeEvent event=(PropertyChangeEvent) employees;
+        support.firePropertyChange(event);
+    }
+
+    @Override
+    public void receiveUpdatedEmployeesDelete(PropertyChangeEvent event) throws RemoteException {
+        support.firePropertyChange(event);
     }
 }

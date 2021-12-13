@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+import javax.swing.*;
+
 public class OrdersViewController
 {
     private ViewHandler viewHandler;
@@ -44,9 +46,10 @@ public class OrdersViewController
 
     public void init(){
         this.viewHandler = ViewHandler.getInstance();
-        this.viewModel = ViewModelFactory.getOrdersViewModel();
 
-        viewModel.getOrders();
+        this.viewModel = ViewModelFactory.getOrdersViewModel();
+        viewModel.load();
+
         openOrdersTable.setItems(viewModel.getOpenOrders());
         IDColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
@@ -97,9 +100,15 @@ public class OrdersViewController
     {
         Order tempOrder = myOrdersTable.getSelectionModel().getSelectedItem();
         if (tempOrder != null){
-            viewModel.completeOrder(tempOrder.getOrderId());
+            if((!tempOrder.getState().equalsIgnoreCase("ready")) && (!tempOrder.getState().equalsIgnoreCase("picked up")) &&
+                (!tempOrder.getState().equalsIgnoreCase("cancelled"))){
+                viewModel.completeOrder(tempOrder.getOrderId());
+                myOrdersTable.refresh();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Order with this status can not be put back into waiting list.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
         }
-        myOrdersTable.refresh();
     }
 
     public void checkOpenOrderDetail(MouseEvent mouseEvent)
@@ -124,7 +133,7 @@ public class OrdersViewController
 
     public void logOut(ActionEvent actionEvent)
     {
-        viewModel.logOut();
+        viewModel.end();
         viewHandler.openBrowserPane();
     }
 }

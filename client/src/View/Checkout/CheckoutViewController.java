@@ -6,10 +6,7 @@ import Model.Models.Order;
 import Model.Models.Product;
 import View.ViewController;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -47,6 +44,7 @@ public class CheckoutViewController extends ViewController
   {
     this.viewHandler = ViewHandler.getInstance();
     this.viewModel = ViewModelFactory.getCheckoutViewModel();
+    viewModel.load();
 
     //cart-products Table
     cartProductsTable.setItems(viewModel.getCartProducts());
@@ -88,12 +86,13 @@ public class CheckoutViewController extends ViewController
 
   public void continueShoppingBtn(ActionEvent actionEvent)
   {
+    viewModel.end();
     viewHandler.openBrowserPane();
   }
 
-  public void onDoubleClick(MouseEvent mouseEvent)
+  public void onClick(MouseEvent mouseEvent)
   {
-    if (mouseEvent.getClickCount() == 2 && !mouseEvent.isConsumed())
+    if (mouseEvent.getClickCount() == 1 && !mouseEvent.isConsumed())
     {
       mouseEvent.consume();
       Order tempOrder = ordersTable.getSelectionModel().getSelectedItem();

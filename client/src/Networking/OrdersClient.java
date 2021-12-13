@@ -14,4 +14,7 @@ public interface OrdersClient extends Subject {
     ArrayList<Order> getWorkerOrdersForManager(int workerID);
     void processOrder(Order newOrder);
     ArrayList<Order> getCustomerOrders(int customerId);
+    void unregisterClient();
+    void registerClient();
+    ArrayList<Order> getWorkersOrders(int wwId);
 }

@@ -28,6 +28,10 @@ public class ProductsDataManager implements ProductsDataAcessor {
     public synchronized ArrayList<Product> getProducts() {
 
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE;
+        return getProducts(SQL);
+    }
+
+    private ArrayList<Product> getProducts(String SQL) {
         ArrayList<Product> products = new ArrayList<>();
 
         try (Connection conn =  DBSConnection.getInstance().connect();
@@ -43,65 +47,37 @@ public class ProductsDataManager implements ProductsDataAcessor {
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
+        System.out.println(products);
         return products;
     }
 
-    @Override public synchronized ArrayList<Product> getProducts(int page, int pagQuant)
+    @Override public  ArrayList<Product> getProducts(int page, int pagQuant)
     {
         int offset = (page) * pagQuant;
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " OFFSET "+offset+ "LIMIT "+pagQuant;
 
-        ArrayList<Product> products = new ArrayList<>();
-
-        try (Connection conn =  DBSConnection.getInstance().connect();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL))
-        {
-            while (rs.next())
-            {
-                products.add(new Product(rs.getString("product_name"), rs.getString("type"), rs.getDouble("price"),
-                    rs.getString("description"), rs.getInt("quantity"), rs.getInt("product_id")));
-
-            }
-        } catch (SQLException ex){
-            System.out.println(ex.getMessage());
-        }
-        return products;
+        return getProducts(SQL);
     }
 
-    @Override public synchronized ArrayList<Product> getFilterProd(int page, int pagQuant,String type)
+    @Override public  ArrayList<Product> getFilterProd(int page, int pagQuant,String type)
     {
         int offset = (page) * pagQuant;
         String SQL = "SELECT * FROM " +SCHEMA+ "." +TABLE+ " WHERE type ="+ " '"+type+"' "+ "LIMIT " +pagQuant+ " OFFSET "+offset ;
 
-        ArrayList<Product> products = new ArrayList<>();
-
-        try (Connection conn =  DBSConnection.getInstance().connect();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL))
-        {
-            while (rs.next())
-            {
-                products.add(new Product(rs.getString("product_name"), rs.getString("type"), rs.getDouble("price"),
-                    rs.getString("description"), rs.getInt("quantity"), rs.getInt("product_id")));
-
-            }
-        } catch (SQLException ex){
-            System.out.println(ex.getMessage());
-        }
-        return products;
+        return getProducts(SQL);
     }
     /**
      * Method that adds a product to the database
      * @param p the product to be added
      */
     @Override
-    public synchronized void addProduct(Product p) {
+    public  void addProduct(Product p) {
         String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(product_name,description,type,quantity,price) " + "VALUES(?,?,?,?,?)";
 
         try (Connection conn = DBSConnection.getInstance().connect();
              PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
         {
+            System.out.println(p);
             pstmt.setString(1, p.getName());
             pstmt.setString(2, p.getDescription());
             pstmt.setString(3, p.getType());
@@ -111,14 +87,28 @@ public class ProductsDataManager implements ProductsDataAcessor {
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows <= 0)
                 throw new RuntimeException("Product insertion failed");
-            support.firePropertyChange("ProductReply",null,getProducts());
+
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
+        String SQL2 = "Select product_id FROM " +SCHEMA+"."+TABLE+ " WHERE product_name="+"'"+p.getName()+"'";
+        try (Connection conn = DBSConnection.getInstance().connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(SQL2))
+        {
+            rs.next();
+            int newProductID = rs.getInt("product_id");
+            p.setProductId(newProductID);
+        }
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+        }
+        support.firePropertyChange("ProductsReply",null,p);
     }
 
-    @Override public synchronized void deleteProduct(Product p)
+    @Override public  void deleteProduct(Product p)
     {
         String SQL = "DELETE FROM " +SCHEMA+ "." +TABLE+ " WHERE " +SCHEMA+ "." +TABLE+ ".product_name = '" +p.getName()+ "'";
 
@@ -133,9 +123,10 @@ public class ProductsDataManager implements ProductsDataAcessor {
             System.out.println(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
+        support.firePropertyChange("productDeleted",null,p);
     }
 
-    @Override public synchronized void updateStock(Product p, int prodQuantity)
+    @Override public  void updateStock(Product p, int prodQuantity)
     {
         String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET quantity=quantity +"+(prodQuantity)+ " WHERE product_id = '" +p.getProductId()+ "'";
 
@@ -145,13 +136,13 @@ public class ProductsDataManager implements ProductsDataAcessor {
             int affectedRows = stmt.executeUpdate(SQL);
             if (affectedRows <= 0)
                 throw new RuntimeException("Product update failed");
-            support.firePropertyChange("ProductReply",null,getProducts());
+            support.firePropertyChange("ProductsReply",null,p);
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
-    @Override public synchronized void editProduct(Product p)
+    @Override public  void editProduct(Product p)
     {
         System.out.println(p);
         String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET product_name="+"'"+p.getName()+"'"+",description="+"'"+p.getDescription()+"'"
@@ -164,7 +155,7 @@ public class ProductsDataManager implements ProductsDataAcessor {
             int affectedRows = stmt.executeUpdate(SQL);
             if (affectedRows <= 0)
                 throw new RuntimeException("Product update failed");
-            support.firePropertyChange("ProductReply",null,getProducts());
+            support.firePropertyChange("ProductsReply",null,p);
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw new RuntimeException(ex.getMessage());

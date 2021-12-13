@@ -45,7 +45,7 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener
 
   @Override
   public ArrayList<Order> getOrdersForWorker(int workerID) {
-    return null;
+    return ordersDataAccessor.getOrdersForWorker(workerID);
   }
 
 

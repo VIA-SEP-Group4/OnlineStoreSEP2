@@ -25,7 +25,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
 
 
 
-  public synchronized void  registerEmployee(Employee newEmployee)
+  public  void  registerEmployee(Employee newEmployee)
   {
     String SQL = "INSERT INTO " +SCHEMA+".employees" +"(first_name,last_name, pin, employee_type) " + "VALUES(?,?,?,?)";
 
@@ -41,16 +41,30 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)
         throw new RuntimeException("Register failed");
-      if(newEmployee.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
-      else if(newEmployee.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
+
 
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
+    String SQL2 = "Select employee_id FROM " +SCHEMA+".employees"+ " WHERE first_name="+"'"+newEmployee.getFirstName()+"'"+"and last_name="+"'"+newEmployee.getLastName()+"'";
+    try (Connection conn = DBSConnection.getInstance().connect();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(SQL2))
+    {
+      rs.next();
+      int newEmployeeID = rs.getInt("employee_id");
+      newEmployee.setEmployeeId(newEmployeeID);
+    }
+    catch (SQLException ex) {
+      System.out.println(ex.getMessage());
+      throw new RuntimeException(ex.getMessage());
+    }
+    if(newEmployee.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,newEmployee);
+    else if(newEmployee.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,newEmployee);
   }
 
-  public synchronized void registerCustomer(Customer newCustomer)
+  public  void registerCustomer(Customer newCustomer)
   {
     String SQL = "INSERT INTO " +SCHEMA+".customers" +"(user_name, pass, email, first_name, last_name) " + "VALUES(?,?,?,?,?)";
 
@@ -81,7 +95,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
    * @param username Username that the user logs in with
    * @param password Password that the user logs in with
    */
-  public synchronized Customer loginCustomer(String username, String password)
+  public Customer loginCustomer(String username, String password)
   {
     Customer loggedCustomer = null;
 
@@ -112,7 +126,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     return loggedCustomer;
   }
   @Override
-  public synchronized Employee loginEmployee(int ID, int pin)
+  public  Employee loginEmployee(int ID, int pin)
   {
     Employee loggedEmployee = null;
 
@@ -142,8 +156,8 @@ public class CredentialsDataManager implements CredentialsDataAccessor
   }
  //TODO handle exception by sending string back
   @Override
-  public synchronized void removeEmployee(Employee e) {
-    String SQL = "DELETE FROM " +SCHEMA+ ".employees WHERE " +SCHEMA+ ".employees"+ ".employee_id = '" +e.getID()+ "'";
+  public  void removeEmployee(Employee e) {
+    String SQL = "DELETE FROM " +SCHEMA+ ".employees WHERE employee_id = '"+e.getID()+"'";
 
     try (Connection conn = DBSConnection.getInstance().connect();
          Statement stmt = conn.createStatement())
@@ -151,15 +165,15 @@ public class CredentialsDataManager implements CredentialsDataAccessor
       int affectedRows = stmt.executeUpdate(SQL);
       if (affectedRows <= 0)
         throw new RuntimeException("Employee deletion failed");
-      if(e.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
-      else if(e.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
+    if(e.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReplyDelete",null,e);
+    else if(e.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReplyDelete",null,e);
   }
 
-  @Override public synchronized void deleteCustomer(int customerId)
+  @Override public  void deleteCustomer(int customerId)
   {
     String table = "customers";
     String SQL = "DELETE FROM " +SCHEMA+"."+table+ " WHERE customer_id = '"+customerId+"'";
@@ -176,7 +190,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
 
-  @Override public synchronized void editCustomer(Customer editedCustomer)
+  @Override public  void editCustomer(Customer editedCustomer)
   {
     String table = "customers";
     String SQL = "UPDATE " +SCHEMA+"."+table+ " set user_name='"+editedCustomer.getUsername()+"'" + ", first_name="+"'"+editedCustomer.getFirstName()+"'"+", last_name="+"'"+editedCustomer.getLastName()+"'"+",  pass ='"+editedCustomer.getPassword()+ "'"+ ", email ='"+editedCustomer.getEmail()+"'" +" where customer_id="+editedCustomer.getCustomerId();
@@ -193,7 +207,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
   }
 
-  private synchronized ArrayList<Employee> getManagers() {
+  private  ArrayList<Employee> getManagers() {
     String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"MANAGER"+"'";
     ArrayList<Employee> employees=new ArrayList<>();
     try (Connection conn =  DBSConnection.getInstance().connect();
@@ -213,7 +227,7 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     }
     return employees;
   }
-  private synchronized ArrayList<Employee> getWorkers() {
+  private  ArrayList<Employee> getWorkers() {
     String SQL = "SELECT * FROM " +SCHEMA+ ".employees WHERE employee_type=" +"'"+"WAREHOUSE_WORKER"+"'";
     ArrayList<Employee> employees=new ArrayList<>();
     try (Connection conn =  DBSConnection.getInstance().connect();
@@ -235,32 +249,14 @@ public class CredentialsDataManager implements CredentialsDataAccessor
   }
 
 
-  /**
-   * Check login credentials
-   * @return true if passwords matches; false if don't
-   */
-  private synchronized boolean checkPassword(String pass, String username, String table) {
-    String SQL = "SELECT pass FROM eshop.users WHERE user_name = " + "'"+username+"'";
-    try (Connection conn =  DBSConnection.getInstance().connect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(SQL))
-    {
-      rs.next();
-      System.out.println(rs.getString(1));
-      return rs.getString(1).equals(pass);
-    } catch (SQLException ex) {
-      System.out.println(ex.getMessage());
-    }
 
-    return false;
-  }
 
   /** Method that checks if username exists
    *
    * @param username
    * @return true or false depending on what the database returns
    */
-  private synchronized boolean checkUsername( String username, String table) {
+  private  boolean checkUsername( String username, String table) {
     String SQL = "SELECT user_name FROM " +SCHEMA+"."+table+ " WHERE user_name = " + "'"+username+"'";
     try (Connection conn =  DBSConnection.getInstance().connect();
         Statement stmt = conn.createStatement();
@@ -275,33 +271,14 @@ public class CredentialsDataManager implements CredentialsDataAccessor
     return false;
   }
 
-  /**
-   * Get user count
-   * @return number of users stored in the user-relation
-   */
-  @Override public synchronized int getUserCount() {
-    int count = 0;
 
-    String SQL = "SELECT count(*) FROM " +SCHEMA+ ".users";
-    try (Connection conn = DBSConnection.getInstance().connect();
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(SQL))
-    {
-      rs.next();
-      count = rs.getInt(1);
-    } catch (SQLException ex) {
-      System.out.println(ex.getMessage());
-    }
-
-    return count;
-  }
 
   /**
    * Get all rows in the users-relation
    * @return users as arrayList
    */
   @Override
-  public synchronized ArrayList<Employee> getEmployees() {
+  public  ArrayList<Employee> getEmployees() {
 
     String SQL = "SELECT * FROM " +SCHEMA+ ".employees";
     ArrayList<Employee> employees=new ArrayList<>();
@@ -327,29 +304,30 @@ public class CredentialsDataManager implements CredentialsDataAccessor
 
 
   @Override
-  public synchronized void editEmployee(Employee e) {
-    String SQL = "update eshop.employees set first_name="+"'"+e.getFirstName()+"'"+", last_name="+"'"+e.getLastName()+"'"+",  pin ="+e.getPin()+ " where employee_id="+e.getID();
+  public  void editEmployee(Employee e) {
+    String SQL = "update eshop.employees set first_name="+"'"+e.getFirstName()+"'"+", last_name="+"'"+e.getLastName()+"'"+",  pin ="+e.getPin()+ " where employee_id= '"+e.getID()+"'";
 
     try (Connection conn = DBSConnection.getInstance().connect();
          Statement stmt = conn.createStatement())
     {
       int affectedRows = stmt.executeUpdate(SQL);
+      System.out.println(affectedRows);
       if (affectedRows <= 0)
         throw new RuntimeException("Employee update failed");
-      if(e.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,getManagers());
-      else if(e.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,getWorkers());
+      if(e.getType()== EmployeeType.MANAGER) support.firePropertyChange("AdminReply",null,e);
+      else if(e.getType()==EmployeeType.WAREHOUSE_WORKER) support.firePropertyChange("ManagerReply",null,e);
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
   }
   @Override
-  public synchronized void addListener( String eventName,PropertyChangeListener listener) {
+  public  void addListener( String eventName,PropertyChangeListener listener) {
     support.addPropertyChangeListener(eventName,listener);
   }
 
   @Override
-  public synchronized void removeListener(String eventName, PropertyChangeListener listener) {
+  public void removeListener(String eventName, PropertyChangeListener listener) {
     support.removePropertyChangeListener(eventName,listener);
   }
 }

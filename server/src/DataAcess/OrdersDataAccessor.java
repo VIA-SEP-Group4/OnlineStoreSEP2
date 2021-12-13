@@ -22,5 +22,5 @@ public interface OrdersDataAccessor extends Subject
   //change order status
   void updateOrderState(Order order, String state);
 
-
+  ArrayList<Order> getOrdersForWorker(int workerID);
 }
