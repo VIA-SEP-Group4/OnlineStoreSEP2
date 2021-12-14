@@ -108,7 +108,7 @@ public class AdminViewModel {
 
     public void logOut()
     {
-        credentialsModel.logOutEmployee();
+        //credentialsModel.logOutEmployee();
     }
 
 

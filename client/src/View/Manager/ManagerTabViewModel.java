@@ -12,6 +12,6 @@ public class ManagerTabViewModel
 
   public void logOut()
   {
-    credentialsModel.logOutEmployee();
+    //credentialsModel.logOutEmployee();
   }
 }
