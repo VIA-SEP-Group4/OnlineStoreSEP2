@@ -12,7 +12,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Checkout.CheckoutViewController">
    <children>
       <MenuBar layoutY="-18.0" prefHeight="30.0" prefWidth="700.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -35,7 +35,7 @@
       </MenuBar>
       <TabPane prefHeight="400.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.topAnchor="30.0">
         <tabs>
-          <Tab fx:id="cartTab" text="shopping cart">
+          <Tab fx:id="cartTab" text="Shopping cart">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -51,12 +51,12 @@
                         <Label layoutY="5.0" text="My Shopping cart" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
                         <Button layoutX="512.0" layoutY="325.0" mnemonicParsing="false" onAction="#orderBtn" prefHeight="30.0" prefWidth="73.0" text="Order" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="325.0" />
                         <Button layoutX="14.0" layoutY="325.0" mnemonicParsing="false" onAction="#continueShoppingBtn" prefHeight="30.0" text="Continue shopping" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="325.0" />
-                        <Button layoutX="298.0" layoutY="325.0" mnemonicParsing="false" onAction="#deleteProdCart" prefHeight="30.0" text="Remove Product" AnchorPane.leftAnchor="298.0" AnchorPane.topAnchor="325.0" />
+                        <Button layoutX="298.0" layoutY="325.0" mnemonicParsing="false" onAction="#deleteProdCart" prefHeight="30.0" text="Remove product" AnchorPane.leftAnchor="298.0" AnchorPane.topAnchor="325.0" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="ordersTab" text="my orders">
+          <Tab fx:id="ordersTab" text="My orders">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

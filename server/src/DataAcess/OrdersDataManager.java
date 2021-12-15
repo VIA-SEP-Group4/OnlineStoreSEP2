@@ -249,7 +249,6 @@ public class OrdersDataManager implements OrdersDataAccessor
         if (affectedRows <= 0)
           throw new RuntimeException("Order status update failed");
       }
-      support.firePropertyChange("newOrder",null, order);
 
     } catch (SQLException ex){
       System.out.println(ex.getMessage());
@@ -258,7 +257,6 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   @Override public synchronized void updateOrderState(Order order, String state)
   {
-    order.setStatus(state);
     String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET status = '" + order.getState() + "' WHERE order_id =" +order.getOrderId();
 
     try (Connection conn = DBSConnection.getInstance().connect();
@@ -267,7 +265,7 @@ public class OrdersDataManager implements OrdersDataAccessor
       int affectedRows = stmt.executeUpdate(SQL);
       if (affectedRows <= 0)
         throw new RuntimeException("Order status update failed");
-      support.firePropertyChange("updatedOrderStatus",null,order);
+
     }catch (SQLException ex) {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());

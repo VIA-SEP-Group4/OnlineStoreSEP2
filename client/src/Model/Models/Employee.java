@@ -4,6 +4,7 @@ import Enums.EmployeeType;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Employee implements Serializable {
     private String firstName;
@@ -11,8 +12,10 @@ public class Employee implements Serializable {
     private int pin;
     private int ID;
     private EmployeeType type;
-    @Serial
-    private static final long serialVersionUID = 1L;
+    private ArrayList<Order> openOrders;
+    private ArrayList<Order> myOrders;
+
+    @Serial private static final long serialVersionUID = 1L;
 
     public Employee(String firstName, String lastName, int pin, EmployeeType type,int ID) {
         this.firstName = firstName;
@@ -43,6 +46,32 @@ public class Employee implements Serializable {
     }
     public void setEmployeeId(int newEmployeeID) {
         this.ID=newEmployeeID;
+    }
+
+    public ArrayList<Order> getOpenOrders()
+    {
+        return openOrders;
+    }
+    public void setOpenOrders(ArrayList<Order> openOrders)
+    {
+        this.openOrders = openOrders;
+    }
+
+    public ArrayList<Order> getMyOrders()
+    {
+        return myOrders;
+    }
+    public void setMyOrders(ArrayList<Order> myOrders)
+    {
+        this.myOrders = myOrders;
+    }
+
+    public void removeFromOpenOrders(int orderId){
+        openOrders.removeIf(o -> o.getOrderId() == orderId);
+    }
+
+    public void removeFromMyOrders(int orderId){
+        myOrders.removeIf(o -> o.getOrderId() == orderId);
     }
 
     @Override

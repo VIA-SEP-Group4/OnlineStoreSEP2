@@ -26,7 +26,8 @@ public class ManagerTabViewController {
 
   public void logOut(ActionEvent actionEvent)
   {
-    viewModel.logOut();
+//    viewModel.logOut();
+    orderOverviewController.deactivateListeners();
     ViewHandler.getInstance().openBrowserPane();
   }
 }

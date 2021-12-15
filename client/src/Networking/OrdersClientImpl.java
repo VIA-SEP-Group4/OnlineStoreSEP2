@@ -58,14 +58,6 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
         return orders;
     }
 
-    @Override
-    public void changeOrderAssignee(Order order) {
-        try {
-            ordersServer.changeOrderAssignee(order);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override public void updateOrderState(Order order, String state)
     {
@@ -151,7 +143,6 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     @Override
     public void addListener(String eventName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(eventName,listener);
-
     }
 
     @Override
@@ -163,7 +154,8 @@ public class OrdersClientImpl implements OrdersClient, OrdersClientRemote {
     public void receiveUpdatedOrder(Object updatedOrder) throws RemoteException {
         PropertyChangeEvent event=(PropertyChangeEvent) updatedOrder;
         if(event.getPropertyName().equals("newOrder")){
-        support.firePropertyChange("newOrder",null,event.getNewValue());}
+            support.firePropertyChange("newOrder",null,event.getNewValue());
+        }
         else{
             support.firePropertyChange("updatedOrderStatus",null,event.getNewValue());
         }

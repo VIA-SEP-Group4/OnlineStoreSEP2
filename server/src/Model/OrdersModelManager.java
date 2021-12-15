@@ -55,14 +55,13 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener
   }
 
 
-  @Override public void changeOrderAssignee(Order order)
-  {
-    ordersDataAccessor.changeOrderAssignee(order);
-  }
-
   @Override public void updateOrderState(Order order, String state)
   {
+    order.setStatus(state);
     ordersDataAccessor.updateOrderState(order,state);
+    ordersDataAccessor.changeOrderAssignee(order);
+
+    support.firePropertyChange("updatedOrderStatus",null, order);
   }
 
   @Override public void addListener(String eventName, PropertyChangeListener listener) {

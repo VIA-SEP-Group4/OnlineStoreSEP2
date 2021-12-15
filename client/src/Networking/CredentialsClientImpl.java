@@ -171,6 +171,8 @@ public class CredentialsClientImpl implements CredentialsClient, CredentialsClie
         try
         {
             credentialsServer.removeClient(this);
+
+            loggedEmployee.getOpenOrders().clear();
             loggedEmployee = null;
         }
         catch (RemoteException e)

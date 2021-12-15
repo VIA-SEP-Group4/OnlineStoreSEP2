@@ -46,21 +46,8 @@ public class OrdersModelManager implements OrdersModel, PropertyChangeListener {
         return ordersClient.getOrders(status);
     }
 
-    @Override public void cancelOrder(Order order, String state)
-    {
-        ordersClient.updateOrderState(order,state);
-    }
 
-    @Override
-    public void changeOrderAssignee(Order order, boolean toRemove, int workerId) {
-        if(toRemove){
-            order.setWorkerID(-1);
-        }
-        else {
-            order.setWorkerID(workerId);
-        }
-        ordersClient.changeOrderAssignee(order);
-    }
+
 
     @Override public void updateOrderState(Order order, String status)
     {

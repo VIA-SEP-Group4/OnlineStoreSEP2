@@ -70,11 +70,6 @@ public class OrdersServer implements OrdersServerRemote {
     }
 
     @Override
-    public void changeOrderAssignee(Order order) throws RemoteException {
-        modelManager.changeOrderAssignee(order);
-    }
-
-    @Override
     public void updateOrderState(Order order, String state) throws RemoteException {
         modelManager.updateOrderState(order,state);
     }

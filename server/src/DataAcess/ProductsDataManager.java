@@ -47,7 +47,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
         } catch (SQLException ex){
             System.out.println(ex.getMessage());
         }
-        System.out.println(products);
         return products;
     }
 
@@ -77,7 +76,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
         try (Connection conn = DBSConnection.getInstance().connect();
              PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
         {
-            System.out.println(p);
             pstmt.setString(1, p.getName());
             pstmt.setString(2, p.getDescription());
             pstmt.setString(3, p.getType());
@@ -144,7 +142,6 @@ public class ProductsDataManager implements ProductsDataAcessor {
     }
     @Override public  void editProduct(Product p)
     {
-        System.out.println(p);
         String SQL = "UPDATE " +SCHEMA+ "." +TABLE+ " SET product_name="+"'"+p.getName()+"'"+",description="+"'"+p.getDescription()+"'"
                 +",type="+"'"+p.getType()+"'"+",quantity="+p.getQuantity()+",price="+p.getPrice()
                 + " WHERE product_id = '" +p.getProductId()+ "'";
