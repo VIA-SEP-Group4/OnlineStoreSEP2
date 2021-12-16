@@ -205,7 +205,7 @@ public class ViewHandler {
             AdminViewController view = loader.getController();
             view.init();
             Scene scene = new Scene(root);
-            stage.setTitle("Orders");
+            stage.setTitle("Administrator");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
