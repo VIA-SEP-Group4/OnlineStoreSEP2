@@ -29,6 +29,8 @@ public class OrderOverviewController {
 
     public void init() {
         this.viewModel = ViewModelFactory.getOrdersOverviewViewModel();
+        viewModel.activateListeners();
+
         ordersTable.setItems(viewModel.getAllOrders());
         orderIdCol.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("state"));
@@ -41,6 +43,10 @@ public class OrderOverviewController {
         typeProdCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+    }
+
+    public void deactivateListeners(){
+        viewModel.deactivateListeners();
     }
 
     public void onSelectOrder(javafx.scene.input.MouseEvent mouseEvent) {

@@ -72,6 +72,9 @@ public class Customer implements Serializable
   {
     return orders;
   }
+  public void removeFromOrders(int orderId){
+    orders.removeIf(o -> o.getOrderId() == orderId);
+  }
 
   public ArrayList<Product> getCart() {
     return cart;

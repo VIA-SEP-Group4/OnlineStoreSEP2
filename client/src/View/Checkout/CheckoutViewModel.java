@@ -11,12 +11,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class CheckoutViewModel
+public class CheckoutViewModel implements PropertyChangeListener
 {
   private ProductsModel productsModel;
   private CredentialsModel credentialsModel;
@@ -58,34 +58,18 @@ public class CheckoutViewModel
 
   private void activateListeners()
   {
-    ordersModel.addListener("newOrder", this::addOrder);
-    ordersModel.addListener("updatedOrderStatus", this::updateOrders);
+    ordersModel.addListener("newOrder", this);
+    ordersModel.addListener("updatedOrderStatus", this);
     ordersModel.activateListeners();
   }
   private void deactivateListeners()
   {
-    ordersModel.removeListener("newOrder", this::addOrder);
-    ordersModel.removeListener("updatedOrderStatus", this::updateOrders);
+    ordersModel.removeListener("newOrder", this);
+    ordersModel.removeListener("updatedOrderStatus", this);
     ordersModel.deactivateListeners();
   }
 
-  private void addOrder(PropertyChangeEvent evt)
-  {
-    orders.add((Order) evt.getNewValue());
-  }
 
-  private void updateOrders(PropertyChangeEvent evt)
-  {
-    Order order= (Order) evt.getNewValue();
-
-    for (Order o : orders){
-      if (o.getOrderId() == order.getOrderId()){
-        orders.remove(o);
-        orders.add(order);
-        break;
-      }
-    }
-  }
 
   public void setSelectedOrder(Order selectedOrder)
   {
@@ -227,7 +211,7 @@ public class CheckoutViewModel
           productsModel.addProdToStock(selectedOrder.getProducts().get(i),
               selectedOrder.getProducts().get(i).getQuantity());
         }
-        ordersModel.cancelOrder(selectedOrder, "cancelled");
+        ordersModel.updateOrderState(selectedOrder, "cancelled");
       }
     }
     else if (selectedOrder == null)
@@ -266,4 +250,26 @@ public class CheckoutViewModel
     return alert;
   }
 
+  @Override public void propertyChange(PropertyChangeEvent evt)
+  {
+    if (evt.getPropertyName().equals("newOrder"))
+      addOrder((Order) evt.getNewValue());
+
+    else if (evt.getPropertyName().equals("updatedOrderStatus"))
+      updateOrders((Order) evt.getNewValue());
+
+    orders.clear();
+    orders.setAll(credentialsModel.getLoggedCustomer().getOrders());
+  }
+
+  private void addOrder(Order newOrder)
+  {
+    credentialsModel.getLoggedCustomer().getOrders().add((newOrder));
+  }
+
+  private void updateOrders(Order updatedOrder)
+  {
+    credentialsModel.getLoggedCustomer().removeFromOrders(updatedOrder.getOrderId());
+    credentialsModel.getLoggedCustomer().getOrders().add(updatedOrder);
+  }
 }

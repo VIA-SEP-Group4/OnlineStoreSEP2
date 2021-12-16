@@ -87,8 +87,7 @@ public class OrdersViewController
                 createAlert(Alert.AlertType.WARNING,"Order with this status can not be picked.");
             }
             else{
-                viewModel.changeOrderAssignee(tempOrder, false);
-                viewModel.pickOrder(tempOrder.getOrderId());
+                viewModel.pickOrderButton2(tempOrder);
             }
         }
     }
@@ -98,8 +97,7 @@ public class OrdersViewController
         Order tempOrder = myOrdersTable.getSelectionModel().getSelectedItem();
         if (tempOrder != null)
         {
-            viewModel.changeOrderAssignee(tempOrder, true);
-            viewModel.removeOrder(tempOrder.getOrderId());
+            viewModel.removeOrder2(tempOrder);
         }
     }
 
@@ -107,8 +105,7 @@ public class OrdersViewController
     {
         Order tempOrder = myOrdersTable.getSelectionModel().getSelectedItem();
         if (tempOrder != null){
-            viewModel.completeOrder(tempOrder.getOrderId());
-            myOrdersTable.refresh();
+            viewModel.completeOrder(tempOrder);
             }
         }
 

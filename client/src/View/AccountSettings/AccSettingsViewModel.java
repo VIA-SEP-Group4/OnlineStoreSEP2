@@ -140,7 +140,6 @@ public class AccSettingsViewModel
   }
 
 
-
   public String getSuccess() {
     return success.get();
   }
@@ -152,5 +151,18 @@ public class AccSettingsViewModel
   public void deleteCustomer()
   {
     credentialsModel.deleteCustomer();
+  }
+
+
+  public void prefillFields()
+  {
+    Customer c = credentialsModel.getLoggedCustomer();
+
+    fName.setValue(c.getFirstName());
+    lName.set(c.getLastName());
+    userName.set(c.getUsername());
+    email.set(c.getEmail());
+    password.set(c.getPassword());
+    rePassword.set(c.getPassword());
   }
 }

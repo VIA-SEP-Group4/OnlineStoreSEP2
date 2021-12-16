@@ -2,6 +2,7 @@ package View.AccountSettings;
 
 import Core.ViewHandler;
 import Core.ViewModelFactory;
+import Model.Models.Customer;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
@@ -35,6 +36,8 @@ public class AccSettingsViewController
     errorRePasswordLabel.textProperty().bindBidirectional(viewModel.errorPassProperty());
     fieldsError.textProperty().bindBidirectional(viewModel.errorFieldsProperty());
     succesLabel.textProperty().bindBidirectional(viewModel.successProperty());
+
+    viewModel.prefillFields();
   }
 
 
@@ -45,6 +48,7 @@ public class AccSettingsViewController
       viewModel.sendEditedData();
     }catch (AccountEditedExceptionReply exReply){
       createAlert(Alert.AlertType.INFORMATION, exReply.getMessage()).showAndWait();
+      viewHandler.openBrowserPane();
     }
   }
 
@@ -60,11 +64,16 @@ public class AccSettingsViewController
         }catch (AccountDeletedExceptionReply exReply){
           //show pop-up with message about deletion AND logout
           createAlert(Alert.AlertType.INFORMATION, exReply.getMessage()).showAndWait();
-          //TODO... logout missing !!!
+          logout();
           viewHandler.openBrowserPane();
         }
       }
     }
+  }
+
+  private void logout()
+  {
+    //TODO ...
   }
 
   public void backBtnPressed(ActionEvent actionEvent)

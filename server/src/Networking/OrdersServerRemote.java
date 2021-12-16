@@ -13,7 +13,6 @@ public interface OrdersServerRemote extends Remote {
     ArrayList<Order> getOrders(String status) throws RemoteException;
     ArrayList<Order> getWorkerOrdersForManager(int workerID) throws RemoteException;
     ArrayList<Order> getOrdersForWorker(int workerID) throws RemoteException;
-    void changeOrderAssignee(Order order) throws RemoteException;
     void updateOrderState(Order order, String state) throws RemoteException;
     void registerClient(OrdersClientRemote client) throws RemoteException;
     void removeClient(OrdersClientRemote client) throws RemoteException;

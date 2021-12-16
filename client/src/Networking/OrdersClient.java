@@ -9,7 +9,6 @@ public interface OrdersClient extends Subject {
     void startClient();
     ArrayList<Order> getAllOrders();
     ArrayList<Order> getOrders(String status);
-    void changeOrderAssignee(Order order);
     void updateOrderState(Order order, String state);
     ArrayList<Order> getWorkerOrdersForManager(int workerID);
     void processOrder(Order newOrder);
