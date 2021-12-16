@@ -2,6 +2,7 @@ package View.Register;
 
 import Model.CredentialsModel;
 import Model.Models.Customer;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -76,7 +77,9 @@ public class RegisterViewModel implements PropertyChangeListener {
         {
             if(!password.getValue().equals(rePassword.getValue()))
             {
-                createAlert(Alert.AlertType.ERROR,"Passwords don't match").showAndWait();
+                Platform.runLater(() -> {
+                    createAlert(Alert.AlertType.ERROR,"Passwords don't match").showAndWait();
+                });
             }
             else {
                 model.registerUser(new Customer(userName.getValue(), password.getValue(), email.getValue(), fName.getValue(), lName.getValue()));
@@ -84,7 +87,9 @@ public class RegisterViewModel implements PropertyChangeListener {
             }
         }
         else{
-            createAlert(Alert.AlertType.ERROR,"Fields cannot be empty on registering").showAndWait();
+            Platform.runLater(() -> {
+                createAlert(Alert.AlertType.ERROR,"Fields cannot be empty on registering").showAndWait();
+            });
         }
     }
 
@@ -113,13 +118,17 @@ public class RegisterViewModel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         String reply=evt.getNewValue().toString();
         if(reply.contains("approved")){
-            createAlert(Alert.AlertType.INFORMATION,"Registration was successful!").showAndWait();
+            Platform.runLater(() ->{
+                createAlert(Alert.AlertType.INFORMATION,"Registration was successful!").showAndWait();
+            });
             success.setValue("success");
             //->change view to LogIn-view automatically?
         }
         else
         {
-            createAlert(Alert.AlertType.INFORMATION,"Registration failed").showAndWait();
+            Platform.runLater(() -> {
+                createAlert(Alert.AlertType.INFORMATION,"Registration failed").showAndWait();
+            });
         }
         clearFields();
     }
