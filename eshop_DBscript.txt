@@ -56,8 +56,31 @@ CREATE TABLE eshop.ordered_products
 	PRIMARY KEY (order_id, product_id)
 );
 
--- => for testing purposes !!! <=
-INSERT INTO eshop.employees(employee_id, first_name, last_name, pin, employee_type) VALUES(1, 'fname', 'lname', 1111, 'ADMIN');
-INSERT INTO eshop.customers(user_name, pass, email, first_name, last_name) VALUES('username', 'pass', 'email', 'fname', 'lname');
-INSERT INTO eshop.products(product_name, description, type, quantity, price) VALUES('product', 'description ...', 'type', 100, 9.99);
-INSERT INTO eshop.products(product_name, description, type, quantity, price) VALUES('prod', 'desadsd s..', 'type-bb', 55, 15.99);
+
+
+-- ================================
+-- Inserts:
+
+-- employees:
+INSERT INTO eshop.employees (first_name, last_name, pin, employee_type) VALUES ('admin-first name', 'admin last name', 1111, 'ADMIN');
+INSERT INTO eshop.employees (first_name, last_name, pin, employee_type) VALUES ('Ben', 'Bar', 1111, 'WAREHOUSE_WORKER');
+
+-- products:
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (10, 'prod4', 'asdjhasjj nf of iwej fosadi ', 'type-A', 493, 5.5);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (17, 'prod11', 'tsdf s dbv', 'type-B', 105, 545);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (12, 'prod6', 'sdsf hjsdkh ', 'type-C', 319, 550);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (18, 'product12', 'cvb vcb kbjhprtio wu', 'type-X', 765, 11.11);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (16, 'product10', 'dfhhdhdh hjdhhh', 'type-E', 75, 54.33);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (9, 'prod3', 'asd sad asd ..asd sad. as.d. as.dsa.dsf g sdfgh dfjkdn', 'type-A', 248, 15.8);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (11, 'prod5', 'jj cxk lvxcj knek nasdklf naklfnklsdafjksdlf jkl
+sdkfj s', 'type-B', 78, 120.3);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (15, 'prod9', 'asdj haswiqoeutqyo73 uhweg  cvg', 'type-A', 234, 123.12);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (7, 'product1', 'dscrpt ....', 'type-A', 48, 19.99);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (14, 'prod8', 'vxmznbv ,wer b', 'type-D', 471, 90.33);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (13, 'prod7', 'sajdh asjhjjjj nx nmxcz,v nv., weury ', 'type-C', 652, 361.34);
+INSERT INTO eshop.products (product_id, product_name, description, type, quantity, price) VALUES (8, 'product2', 'dscrpt .as ds...sa d', 'type-B', 198, 9.49);
+
+
+-- customers
+INSERT INTO eshop.customers (customer_id, user_name, pass, email, first_name, last_name) VALUES (3, 'username', 'pass', 'email', 'fname', 'lname');
+INSERT INTO eshop.customers (customer_id, user_name, pass, email, first_name, last_name) VALUES (9, 'banny', 'qwe123', 'benjamin.bartosik@gmail.com', 'Benjamin', 'Bartosik');

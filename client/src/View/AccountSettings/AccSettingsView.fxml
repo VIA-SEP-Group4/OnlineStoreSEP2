@@ -7,43 +7,43 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.AccountSettings.AccSettingsViewController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.AccountSettings.AccSettingsViewController">
    <children>
       <Text layoutX="221.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change Account details" AnchorPane.topAnchor="40.0">
          <font>
             <Font name="Bauhaus 93" size="24.0" />
          </font>
       </Text>
-      <Label layoutX="-24.0" layoutY="100.0" prefHeight="20.0" prefWidth="88.0" text="First Name" AnchorPane.leftAnchor="40.0">
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="38.0" layoutY="103.0" prefHeight="20.0" prefWidth="88.0" text="First Name" AnchorPane.leftAnchor="38.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextField fx:id="firstNameTextField" layoutX="132.0" layoutY="97.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="370.0" layoutY="103.0" prefHeight="20.0" prefWidth="100.0" text="Last Name" AnchorPane.leftAnchor="370.0">
+      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="404.0" layoutY="103.0" prefHeight="20.0" prefWidth="100.0" text="Last Name" AnchorPane.leftAnchor="404.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextField fx:id="lastNameTextField" layoutX="493.0" layoutY="98.0" prefHeight="25.0" prefWidth="149.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="370.0" layoutY="163.0" prefHeight="20.0" prefWidth="100.0" text="Email" AnchorPane.leftAnchor="370.0">
+      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="404.0" layoutY="163.0" prefHeight="20.0" prefWidth="100.0" text="Email" AnchorPane.leftAnchor="404.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextField fx:id="emailTextField" layoutX="493.0" layoutY="151.0" prefHeight="25.0" prefWidth="149.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="160.0" />
-      <Label layoutX="38.0" layoutY="154.0" prefHeight="20.0" prefWidth="88.0" text="User Name">
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="38.0" layoutY="163.0" prefHeight="20.0" prefWidth="88.0" text="User Name">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextField fx:id="userNameTextField" layoutX="132.0" layoutY="150.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="160.0" />
-      <Label layoutX="38.0" layoutY="209.0" prefHeight="20.0" prefWidth="88.0" text="Password">
+      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="38.0" layoutY="223.0" prefHeight="20.0" prefWidth="88.0" text="Password">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="370.0" layoutY="223.0" prefHeight="20.0" prefWidth="126.0" text="Re-enter password" AnchorPane.leftAnchor="370.0">
+      <Label alignment="BOTTOM_RIGHT" contentDisplay="CENTER" layoutX="370.0" layoutY="223.0" prefHeight="20.0" prefWidth="126.0" text="Re-enter password" AnchorPane.leftAnchor="370.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -55,6 +55,6 @@
       <Label fx:id="errorRePasswordLabel" layoutX="367.0" layoutY="238.0" prefHeight="17.0" prefWidth="273.0" textFill="RED" />
       <Label fx:id="fieldsError" layoutX="45.0" layoutY="238.0" prefHeight="17.0" prefWidth="333.0" textFill="#f80101" />
       <Label fx:id="succesLabel" layoutX="350.0" layoutY="68.0" textFill="#1eff00" />
-      <Button layoutX="290.0" layoutY="339.0" mnemonicParsing="false" onAction="#deleteBtnPressed" prefHeight="30.0" prefWidth="120.0" text="Delete Account" AnchorPane.bottomAnchor="31.0" />
+      <Button layoutX="290.0" layoutY="339.0" mnemonicParsing="false" onAction="#deleteBtnPressed" prefHeight="30.0" prefWidth="120.0" text="Delete account" AnchorPane.bottomAnchor="31.0" />
    </children>
 </AnchorPane>

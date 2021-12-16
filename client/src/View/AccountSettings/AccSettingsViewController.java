@@ -47,8 +47,14 @@ public class AccSettingsViewController
     {
       viewModel.sendEditedData();
     }catch (AccountEditedExceptionReply exReply){
-      createAlert(Alert.AlertType.INFORMATION, exReply.getMessage()).showAndWait();
-      viewHandler.openBrowserPane();
+      if (exReply.getMessage().toLowerCase().contains("error")){
+        createAlert(Alert.AlertType.ERROR, exReply.getMessage()).showAndWait();
+        viewModel.prefillFields();
+      }
+      else {
+        createAlert(Alert.AlertType.INFORMATION, exReply.getMessage()).showAndWait();
+        viewHandler.openBrowserPane();
+      }
     }
   }
 
