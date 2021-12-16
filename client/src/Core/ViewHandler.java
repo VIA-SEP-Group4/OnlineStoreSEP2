@@ -35,11 +35,15 @@ public class ViewHandler {
     private ViewHandler() {
     }
 
-    public static ViewHandler getInstance(){
-        if(instance==null){
-            synchronized (lock){
-                if(instance==null){
-                    instance=new ViewHandler();
+    public static ViewHandler getInstance()
+    {
+        if (instance == null)
+        {
+            synchronized (lock)
+            {
+                if (instance == null)
+                {
+                    instance = new ViewHandler();
                 }
             }
         }

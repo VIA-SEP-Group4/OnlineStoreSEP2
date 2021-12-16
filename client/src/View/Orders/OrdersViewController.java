@@ -84,7 +84,7 @@ public class OrdersViewController
         Order tempOrder = openOrdersTable.getSelectionModel().getSelectedItem();
         if(tempOrder != null){
             if(tempOrder.getState().equalsIgnoreCase("cancelled")){
-                createAlert(Alert.AlertType.WARNING,"Order with this status can not be picked.");
+                createAlert(Alert.AlertType.WARNING,"Order with this status can not be picked.").showAndWait();
             }
             else{
                 viewModel.pickOrderButton2(tempOrder);
@@ -97,7 +97,13 @@ public class OrdersViewController
         Order tempOrder = myOrdersTable.getSelectionModel().getSelectedItem();
         if (tempOrder != null)
         {
-            viewModel.removeOrder2(tempOrder);
+            if(tempOrder.getState().equalsIgnoreCase("ready")){
+                createAlert(Alert.AlertType.WARNING,"Order with this status can not be removed.").showAndWait();
+            }
+            else
+            {
+                viewModel.removeOrder2(tempOrder);
+            }
         }
     }
 
