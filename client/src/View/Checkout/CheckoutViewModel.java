@@ -105,13 +105,22 @@ public class CheckoutViewModel implements PropertyChangeListener
   {
     if (!cartProducts.isEmpty())
     {
-      Order newOrder = new Order(credentialsModel.getLoggedCustomer().getCustomerId(), new ArrayList<>(cartProducts));
-      ordersModel.processOrder(newOrder);
+      Alert alert = createAlert(Alert.AlertType.CONFIRMATION, "Do you want to complete the order?");
 
-      //clear curr/loaded table
-      cartProducts.clear();
-      //clear logged customer's cart/product list !!!
-      credentialsModel.getLoggedCustomer().getCart().clear();
+      Optional<ButtonType> res = alert.showAndWait();
+      if(res.isPresent() && res.get().equals(ButtonType.OK))
+      {
+
+        Order newOrder = new Order(
+            credentialsModel.getLoggedCustomer().getCustomerId(), new ArrayList<>(cartProducts));
+        ordersModel.processOrder(newOrder);
+
+        //clear curr/loaded table
+        cartProducts.clear();
+        //clear logged customer's cart/product list !!!
+        credentialsModel.getLoggedCustomer().getCart().clear();
+        createAlert(Alert.AlertType.INFORMATION,"The order has been placed!").showAndWait();
+      }
     }
     else {
       Alert alert = createAlert(Alert.AlertType.INFORMATION, "Nothing to order ...\n Choose some products first.");
@@ -211,7 +220,7 @@ public class CheckoutViewModel implements PropertyChangeListener
     }
     else
     {
-      createAlert(Alert.AlertType.INFORMATION, "Your Order n."+selectedOrder.getOrderId()+ " can't be canceled").showAndWait();
+      createAlert(Alert.AlertType.INFORMATION, "Your Order n."+selectedOrder.getOrderId()+ " can't be cancelled").showAndWait();
     }
   }
 
