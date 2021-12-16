@@ -2,6 +2,7 @@ package View.Login;
 
 import Model.CredentialsModel;
 import Model.ProductsModel;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -92,7 +93,7 @@ public class LoginViewModel implements PropertyChangeListener {
         else
         {
             error.setValue("");
-            createAlert(Alert.AlertType.ERROR,reply).showAndWait();
+            Platform.runLater(() -> {createAlert(Alert.AlertType.ERROR, reply).showAndWait();});
         }
     }
 }

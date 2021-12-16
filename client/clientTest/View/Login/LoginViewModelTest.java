@@ -5,7 +5,6 @@ import Model.CredentialsModelManager;
 import Model.ProductsModel;
 import Model.ProductsModelManager;
 import Networking.CredentialsClientImpl;
-
 import Networking.ProductsClientImpl;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -81,7 +80,7 @@ class LoginViewModelTest
     lvm.login("Customer");
     waitForRunLater();
 
-    assertFalse(success.getValue().contains("success"), "Expected user exist");
+    assertNull(success.getValue(), "Expected user exist");
   }
 
   @Test
@@ -104,7 +103,7 @@ class LoginViewModelTest
     lvm.login("Customer");
     waitForRunLater();
 
-    assertFalse(success.getValue().contains("success"), "Expected user exist");
+    assertNull(success.getValue(), "Expected user exist");
   }
 
   @Test
@@ -127,7 +126,7 @@ class LoginViewModelTest
     lvm.login("Customer");
     waitForRunLater();
 
-    assertFalse(success.getValue().contains("success"), "Expected user exist");
+    assertNull(success.getValue(), "Expected user exist");
   }
 
   @Test
@@ -150,7 +149,8 @@ class LoginViewModelTest
     lvm.login("Customer");
     waitForRunLater();
 
-    assertFalse(success.getValue().contains("success"), "Expected user exist");
+//    assertFalse(success.getValue().contains("success"), "Expected user exist");
+    assertNull(success.getValue(), "Expected user exist");
   }
 
   @Test
@@ -173,6 +173,7 @@ class LoginViewModelTest
     lvm.login("Customer");
     waitForRunLater();
 
-    assertFalse(success.getValue().contains("success"), "Expected user exist");
+//    assertTrue(error.getValue().length()>0, "Expected user exist");
+    assertNull(success.getValue(), "Expected user exist");
   }
 }

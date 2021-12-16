@@ -23,58 +23,54 @@ public class OrdersDataManager implements OrdersDataAccessor
 
   @Override public  void addNewOrder(Order newOrder)
   {
-    String SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(customer_id, timestamp) " + "VALUES(?,?)";
+    String SQL;
+    int affectedRows;
 
-    try (Connection conn = DBSConnection.getInstance().connect();
-        PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
+    try (Connection conn = DBSConnection.getInstance().connect())
     {
+      SQL = "INSERT INTO " +SCHEMA+ "." +TABLE+ "(customer_id, timestamp) " + "VALUES(?,?)";
+      PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
       pstmt.setInt(1, newOrder.getCustomerId());
       pstmt.setTimestamp(2, newOrder.getTimestampSQL());
 
-      int affectedRows = pstmt.executeUpdate();
+      affectedRows = pstmt.executeUpdate();
       if (affectedRows <= 0)
         throw new RuntimeException("Order insertion failed");
-    }
-    catch (SQLException ex) {
-      System.out.println(ex.getMessage());
-      throw new RuntimeException(ex.getMessage());
-    }
+      pstmt.close();
 
-    //get and set ID of newly-created order:
-    SQL = "Select order_id FROM " +SCHEMA+"."+TABLE+ " WHERE customer_id="+newOrder.getCustomerId()+ " AND " + "timestamp='"+newOrder.getTimestampSQL()+"'";
-    try (Connection conn = DBSConnection.getInstance().connect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(SQL))
-    {
+      //get and set ID of newly-created order:
+      SQL = "Select order_id FROM " +SCHEMA+"."+TABLE+ " WHERE customer_id="+newOrder.getCustomerId()+ " AND " + "timestamp='"+newOrder.getTimestampSQL()+"'";
+      Statement stmt = conn.createStatement();
+      ResultSet rs = stmt.executeQuery(SQL);
       rs.next();
       int newOrderId = rs.getInt("order_id");
       newOrder.setOrderId(newOrderId);
-    }
-    catch (SQLException ex) {
-      System.out.println(ex.getMessage());
-      throw new RuntimeException(ex.getMessage());
-    }
 
+      stmt.close();
+      rs.close();
 
-    SQL = "INSERT INTO " +SCHEMA+ "." +TABLE2+ "(product_id, order_id, quantity) " + "VALUES(?,?,?)";
-    try (Connection conn = DBSConnection.getInstance().connect();
-        PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS))
-    {
+      //update ordered_products table accordingly
+      SQL = "INSERT INTO " +SCHEMA+ "." +TABLE2+ "(product_id, order_id, quantity) " + "VALUES(?,?,?)";
+      pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
       for (Product p : newOrder.getProducts())
       {
         pstmt.setInt(1, p.getProductId());
         pstmt.setInt(2, newOrder.getOrderId());
         pstmt.setInt(3, p.getQuantity());
 
-        int affectedRows = pstmt.executeUpdate();
+        affectedRows = pstmt.executeUpdate();
         if (affectedRows <= 0)
           throw new RuntimeException("Product insertion failed");
       }
+      pstmt.close();
     }
-    catch (SQLException ex) {
+    catch (SQLException ex)
+    {
       System.out.println(ex.getMessage());
       throw new RuntimeException(ex.getMessage());
     }
+
+    //notify
     support.firePropertyChange("newOrder",null,newOrder);
   }
 
